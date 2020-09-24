@@ -10,8 +10,11 @@ import android.widget.EditText
 import android.widget.TextView
 import ar.edu.ort.instituto.echeff.R
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class LoginFragment : Fragment() {
+    val db = Firebase.firestore
     lateinit var v: View
     lateinit var textViewTitulo: TextView
     lateinit var editTextTextUsuario: EditText
@@ -40,6 +43,8 @@ class LoginFragment : Fragment() {
         buttonGoogle = v.findViewById(R.id.buttonGoogle)
         buttonFacebook = v.findViewById(R.id.buttonFacebook)
 
+
+
         return v
     }
 
@@ -47,6 +52,14 @@ class LoginFragment : Fragment() {
         super.onStart()
         buttonIngresar.setOnClickListener {
             Snackbar.make(it, "buttonIngresar.setOnClickListener", Snackbar.LENGTH_SHORT).show()
+            val city = hashMapOf(
+                "platoPrincipal" to "Los Angeles",
+                "state" to "CA",
+                "country" to "USA"
+            )
+
+
+            db.collection("reservas").add(city)
         }
 
         buttonRegistrate.setOnClickListener {
