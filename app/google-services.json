@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "721025845188",
+    "firebase_url": "https://pf2020-echeff.firebaseio.com",
+    "project_id": "pf2020-echeff",
+    "storage_bucket": "pf2020-echeff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:721025845188:android:fe5a631caccf557a1ac691",
+        "android_client_info": {
+          "package_name": "ar.edu.ort.instituto.echeff"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "721025845188-udnep92fgn26ff576u6er3hn73mt2pt7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZKIV-A6UnpnHksfnoM8JiS8_9iLIeb2c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "721025845188-udnep92fgn26ff576u6er3hn73mt2pt7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
