@@ -3,11 +3,180 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navgraph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/inicio1Fragment">
 
     <fragment
         android:id="@+id/loginFragment"
         android:name="ar.edu.ort.instituto.echeff.fragments.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_registroUsuarioFragment"
+            app:destination="@id/registroUsuarioFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_homeChefFragment"
+            app:destination="@id/homeChefFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_homeClienteFragment"
+            app:destination="@id/homeClienteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/inicio1Fragment"
+        android:name="ar.edu.ort.instituto.echeff.fragments.Inicio1Fragment"
+        android:label="fragment_inicio"
+        tools:layout="@layout/fragment_inicio" >
+        <action
+            android:id="@+id/action_inicio1Fragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registroUsuarioFragment"
+        android:name="ar.edu.ort.instituto.echeff.fragments.RegistroUsuarioFragment"
+        android:label="fragment_registro_usuario"
+        tools:layout="@layout/fragment_registro_usuario" >
+        <action
+            android:id="@+id/action_registroUsuarioFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeClienteFragment"
+        android:name="ar.edu.ort.instituto.echeff.fragments.cliente.HomeClienteFragment"
+        android:label="fragment_home_cliente"
+        tools:layout="@layout/fragment_home_cliente" >
+        <action
+            android:id="@+id/action_homeClienteFragment_to_formularioReservaFragment"
+            app:destination="@id/formularioReservaFragment" />
+        <action
+            android:id="@+id/action_homeClienteFragment_to_confirmacionReservaFragment2"
+            app:destination="@id/confirmacionReservaFragment2" />
+        <action
+            android:id="@+id/action_homeClienteFragment_to_configuracionUsuarioFragment2"
+            app:destination="@id/configuracionUsuarioFragment2" />
+        <action
+            android:id="@+id/action_homeClienteFragment_to_vistaReservasFragment"
+            app:destination="@id/vistaReservasFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeChefFragment"
+        android:name="ar.edu.ort.instituto.echeff.fragments.chef.HomeChefFragment"
+        android:label="fragment_home_chef"
+        tools:layout="@layout/fragment_home_chef" >
+        <action
+            android:id="@+id/action_homeChefFragment_to_detalleReservaFragment"
+            app:destination="@id/detalleReservaFragment" />
+        <action
+            android:id="@+id/action_homeChefFragment_to_perfilChefFragment"
+            app:destination="@id/perfilChefFragment" />
+        <action
+            android:id="@+id/action_homeChefFragment_to_configuracionUsuarioFragment2"
+            app:destination="@id/configuracionUsuarioFragment2" />
+        <action
+            android:id="@+id/action_homeChefFragment_to_vistaPropuestasFragment"
+            app:destination="@id/vistaPropuestasFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/formularioReservaFragment"
+        android:name="ar.edu.ort.instituto.echeff.fragments.cliente.FormularioReservaFragment"
+        android:label="fragment_formulario_reserva"
+        tools:layout="@layout/fragment_formulario_reserva" >
+        <action
+            android:id="@+id/action_formularioReservaFragment_to_homeClienteFragment"
+            app:destination="@id/homeClienteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/confirmacionReservaFragment2"
+        android:name="ar.edu.ort.instituto.echeff.fragments.cliente.ConfirmacionReservaFragment"
+        android:label="fragment_confirmacion_reserva"
+        tools:layout="@layout/fragment_confirmacion_reserva" >
+        <action
+            android:id="@+id/action_confirmacionReservaFragment2_to_modificacionReservaFragment"
+            app:destination="@id/modificacionReservaFragment" />
+        <action
+            android:id="@+id/action_confirmacionReservaFragment2_to_pagoReservaFragment"
+            app:destination="@id/pagoReservaFragment" />
+        <action
+            android:id="@+id/action_confirmacionReservaFragment2_to_perfilChefFragment"
+            app:destination="@id/perfilChefFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/modificacionReservaFragment"
+        android:name="ar.edu.ort.instituto.echeff.fragments.cliente.ModificacionReservaFragment"
+        android:label="fragment_modificacion_reserva"
+        tools:layout="@layout/fragment_modificacion_reserva" >
+        <action
+            android:id="@+id/action_modificacionReservaFragment_to_homeClienteFragment"
+            app:destination="@id/homeClienteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pagoReservaFragment"
+        android:name="ar.edu.ort.instituto.echeff.fragments.cliente.PagoReservaFragment"
+        android:label="fragment_pago_reserva"
+        tools:layout="@layout/fragment_pago_reserva" >
+        <action
+            android:id="@+id/action_pagoReservaFragment_to_homeClienteFragment"
+            app:destination="@id/homeClienteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detalleReservaFragment"
+        android:name="ar.edu.ort.instituto.echeff.fragments.chef.DetalleReservaFragment"
+        android:label="fragment_detalle_reserva"
+        tools:layout="@layout/fragment_detalle_reserva" >
+        <action
+            android:id="@+id/action_detalleReservaFragment_to_formularioPropuestaFragment"
+            app:destination="@id/formularioPropuestaFragment" />
+        <action
+            android:id="@+id/action_detalleReservaFragment_to_homeChefFragment"
+            app:destination="@id/homeChefFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/formularioPropuestaFragment"
+        android:name="ar.edu.ort.instituto.echeff.fragments.chef.FormularioPropuestaFragment"
+        android:label="fragment_formulario_propuesta"
+        tools:layout="@layout/fragment_formulario_propuesta" >
+        <action
+            android:id="@+id/action_formularioPropuestaFragment_to_homeChefFragment"
+            app:destination="@id/homeChefFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/perfilChefFragment"
+        android:name="ar.edu.ort.instituto.echeff.fragments.chef.PerfilChefFragment"
+        android:label="fragment_perfil_chef"
+        tools:layout="@layout/fragment_perfil_chef" >
+        <action
+            android:id="@+id/action_perfilChefFragment_to_homeChefFragment"
+            app:destination="@id/homeChefFragment" />
+        <action
+            android:id="@+id/action_perfilChefFragment_to_confirmacionReservaFragment2"
+            app:destination="@id/confirmacionReservaFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/configuracionUsuarioFragment2"
+        android:name="ar.edu.ort.instituto.echeff.fragments.ConfiguracionUsuarioFragment"
+        android:label="fragment_configuracion_usuario"
+        tools:layout="@layout/fragment_configuracion_usuario" >
+        <action
+            android:id="@+id/action_configuracionUsuarioFragment2_to_homeClienteFragment"
+            app:destination="@id/homeClienteFragment" />
+        <action
+            android:id="@+id/action_configuracionUsuarioFragment2_to_homeChefFragment"
+            app:destination="@id/homeChefFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/vistaPropuestasFragment"
+        android:name="ar.edu.ort.instituto.echeff.fragments.chef.VistaPropuestasFragment"
+        android:label="fragment_vista_propuestas"
+        tools:layout="@layout/fragment_vista_propuestas" >
+        <action
+            android:id="@+id/action_vistaPropuestasFragment_to_homeChefFragment"
+            app:destination="@id/homeChefFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/vistaReservasFragment"
+        android:name="ar.edu.ort.instituto.echeff.fragments.cliente.VistaReservasFragment"
+        android:label="fragment_vista_reservas"
+        tools:layout="@layout/fragment_vista_reservas" >
+        <action
+            android:id="@+id/action_vistaReservasFragment_to_homeClienteFragment"
+            app:destination="@id/homeClienteFragment" />
+    </fragment>
 </navigation>
