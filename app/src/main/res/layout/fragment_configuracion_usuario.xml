@@ -1,14 +1,240 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:nestedScrollingEnabled="true"
+    android:visibility="visible"
     tools:context=".fragments.ConfiguracionUsuarioFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/textViewConfiguracion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Configuracion"
+        android:textColor="#D97014"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/textViewNumberLikes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:contextClickable="false"
+        android:cursorVisible="false"
+        android:ems="10"
+        android:focusable="auto"
+        android:foregroundTint="#FFFFFF"
+        android:inputType="number"
+        android:text="0"
+        android:textAlignment="textStart"
+        android:textColor="#D97014"
+        android:textSize="36sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintEnd_toStartOf="@+id/guideline7"
+        app:layout_constraintStart_toEndOf="@+id/imageViewLikes"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNombreUsuario" />
+
+    <ImageView
+        android:id="@+id/imageViewUsuario"
+        android:layout_width="120sp"
+        android:layout_height="120sp"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        tools:src="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/imageViewLikes"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:layout_marginStart="8dp"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintStart_toEndOf="@+id/imageViewUsuario"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNombreUsuario"
+        tools:src="@android:drawable/star_on" />
+
+    <TextView
+        android:id="@+id/textViewNombreUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Nombre del usuario"
+        android:textColor="#D97014"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewUsuario"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="5dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="62dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="182dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="30dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="30dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="15dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="15dp" />
+
+    <Switch
+        android:id="@+id/switchNotificaciones"
+        android:layout_width="0dp"
+        android:layout_height="50sp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/style_border_text"
+        android:text="Recibir Notificaciones"
+        android:textAlignment="textStart"
+        android:textColor="#D97014"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline7"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
+    <Switch
+        android:id="@+id/switchNewsletter"
+        android:layout_width="0dp"
+        android:layout_height="50sp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/style_border_text"
+        android:text="Recibir Newsletter"
+        android:textAlignment="textStart"
+        android:textColor="#D97014"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline7"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@id/switchNotificaciones" />
+
+    <Switch
+        android:id="@+id/switchPromociones"
+        android:layout_width="0dp"
+        android:layout_height="50sp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/style_border_text"
+        android:text="Promociones"
+        android:textAlignment="textStart"
+        android:textColor="#D97014"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline7"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@id/switchNewsletter" />
+
+    <Switch
+        android:id="@+id/switchEmail"
+        android:layout_width="0dp"
+        android:layout_height="50sp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/style_border_text"
+        android:text="Confirmacion via e-Mail"
+        android:textAlignment="textStart"
+        android:textColor="#D97014"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline7"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@id/switchPromociones" />
+
+    <Button
+        android:id="@+id/buttonModificarContrasenia"
+        android:layout_width="0dp"
+        android:layout_height="50sp"
+        android:layout_marginTop="8dp"
+        android:background="#D97014"
+        android:text="Modificar Contraseña"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toStartOf="@+id/guideline7"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/switchEmail" />
+
+    <Button
+        android:id="@+id/buttonCerrarSesion"
+        android:layout_width="0dp"
+        android:layout_height="50sp"
+        android:layout_marginTop="8dp"
+        android:background="#D97014"
+        android:text="Cerrar Sesión"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toStartOf="@+id/guideline7"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/buttonModificarContrasenia" />
+
+    <Button
+        android:id="@+id/buttonBorrarCuenta"
+        android:layout_width="0dp"
+        android:layout_height="50sp"
+        android:layout_marginTop="8dp"
+        android:background="#D97014"
+        android:text="Borrar Cuenta"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toStartOf="@+id/guideline7"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCerrarSesion" />
+
+    <Button
+        android:id="@+id/buttonModificarCBU"
+        android:layout_width="0dp"
+        android:layout_height="50sp"
+        android:layout_marginTop="8dp"
+        android:background="#D97014"
+        android:text="Modificar CBU"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toStartOf="@+id/guideline7"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/buttonBorrarCuenta" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
