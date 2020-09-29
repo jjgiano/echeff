@@ -5,29 +5,30 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
+import androidx.core.view.get
+import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.fragment_mesa_ayuda.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [MesaAyudaFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MesaAyudaFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    val db = Firebase.firestore
+
+    lateinit var v: View
+
+    lateinit var spinner: Spinner
+    lateinit var editText: EditText
+    lateinit var button: Button
+
+    lateinit var stringItemSelected: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -35,26 +36,29 @@ class MesaAyudaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mesa_ayuda, container, false)
+        v = inflater.inflate(R.layout.fragment_mesa_ayuda, container, false)
+
+        spinner = v.findViewById(R.id.spinnerSugerenciasMesaAyuda)
+        val adapter = ArrayAdapter.createFromResource(v.context,R.array.spinner_values,R.layout.spinner_item)
+        spinner.adapter = adapter
+
+        editText = v.findViewById(R.id.editTextMesaAyuda)
+        button = v.findViewById(R.id.buttonMesaAyuda)
+
+        return v
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MesaAyudaFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MesaAyudaFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onStart() {
+        super.onStart()
+
+        button.setOnClickListener {
+            //v.findNavController().navigate(MesaAyudaFragmentDirections.actionMesaAyudaFragmentToHomeChefFragment())
+            //v.findNavController().navigate(MesaAyudaFragmentDirections.actionMesaAyudaFragmentToHomeClienteFragment())
+            stringItemSelected = spinner.selectedItem.toString()
+            Snackbar.make(it, stringItemSelected, Snackbar.LENGTH_SHORT).show()
+        }
+
+
     }
+
 }

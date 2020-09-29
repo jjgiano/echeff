@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navgraph"
-    app:startDestination="@id/inicio1Fragment">
+    app:startDestination="@id/mesaAyudaFragment2">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -178,5 +178,17 @@
         <action
             android:id="@+id/action_vistaReservasFragment_to_homeClienteFragment"
             app:destination="@id/homeClienteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mesaAyudaFragment2"
+        android:name="ar.edu.ort.instituto.echeff.fragments.MesaAyudaFragment"
+        android:label="fragment_mesa_ayuda"
+        tools:layout="@layout/fragment_mesa_ayuda" >
+        <action
+            android:id="@+id/action_mesaAyudaFragment2_to_homeClienteFragment"
+            app:destination="@id/homeClienteFragment" />
+        <action
+            android:id="@+id/action_mesaAyudaFragment2_to_homeChefFragment"
+            app:destination="@id/homeChefFragment" />
     </fragment>
 </navigation>

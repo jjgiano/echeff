@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinner_values">
+        <item>No puedo ir a la fecha pactada</item>
+        <item>Necesito cambiar la fecha de mi reserva</item>
+        <item>Otra</item>
+    </string-array>
+</resources>
