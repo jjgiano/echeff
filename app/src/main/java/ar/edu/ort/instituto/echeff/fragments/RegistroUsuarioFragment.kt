@@ -5,56 +5,64 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.EditText
 import ar.edu.ort.instituto.echeff.R
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import androidx.core.view.get
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [RegistroUsuarioFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RegistroUsuarioFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    val db = Firebase.firestore
+
+    lateinit var v: View
+
+    lateinit var buttonRegistroGoogle: Button
+    lateinit var buttonRegistroFacebook: Button
+    lateinit var checkBoxSoyChef: CheckBox
+    lateinit var nombre: EditText
+    lateinit var password: EditText
+    lateinit var email: EditText
+    lateinit var telefono: EditText
+    lateinit var buttonRegistro: Button
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_registro_usuario, container, false)
+        v = inflater.inflate(R.layout.fragment_registro_usuario, container, false)
+
+        buttonRegistroGoogle = v.findViewById(R.id.buttonRegistroGoogleCliente)
+        buttonRegistroFacebook = v.findViewById(R.id.buttonRegistroFacebookCliente)
+        checkBoxSoyChef = v.findViewById(R.id.checkBoxRegistroClienteSoyChef)
+        nombre = v.findViewById(R.id.editTextNombreRegistroCliente)
+        password = v.findViewById(R.id.editTextPasswordRegistroCliente)
+        email = v.findViewById(R.id.editTextEmailRegistroCliente)
+        telefono = v.findViewById(R.id.editTextTelefonoRegistroCliente)
+        buttonRegistro = v.findViewById(R.id.buttonRegistroCliente)
+
+        return v
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RegistroUsuarioFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RegistroUsuarioFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onStart() {
+        super.onStart()
+
+        buttonRegistroGoogle.setOnClickListener{
+
+        }
+        buttonRegistroFacebook.setOnClickListener{
+
+        }
+        buttonRegistro.setOnClickListener{
+
+        }
     }
 }
