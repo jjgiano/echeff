@@ -58,7 +58,24 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <Button
-        android:id="@+id/btnEnviarCambios"
+        android:id="@+id/btnVolverHomeCliente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_press"
+        android:paddingStart="50sp"
+        android:paddingEnd="50sp"
+        android:text="Volver a inicio"
+        android:textColor="@color/gray10"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtCambiosReserva" />
+
+    <Button
+        android:id="@+id/btnEnviarModificaion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
