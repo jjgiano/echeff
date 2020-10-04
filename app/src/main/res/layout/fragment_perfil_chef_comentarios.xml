@@ -61,7 +61,7 @@
             app:layout_constraintTop_toBottomOf="@+id/lblNombreChef" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/btnAgregarMeGusta"
             android:layout_width="32dp"
             android:layout_height="33dp"
             android:layout_marginStart="56dp"
@@ -78,7 +78,7 @@
             android:layout_marginTop="28dp"
             android:text="0"
             android:textSize="24sp"
-            app:layout_constraintStart_toEndOf="@+id/imageView3"
+            app:layout_constraintStart_toEndOf="@+id/btnAgregarMeGusta"
             app:layout_constraintTop_toBottomOf="@+id/lblNombreChef" />
 
         <TextView

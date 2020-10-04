@@ -1,6 +1,7 @@
 package ar.edu.ort.instituto.echeff.fragments.chef
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +29,8 @@ class PerfilChefFragment : Fragment() {
     lateinit var revComentarioCliente: RecyclerView
     lateinit var revHistoriasChef: RecyclerView
     lateinit var btnVerMasComentarios: Button
+    lateinit var btnConfiguracionPerfilChef: Button
+    lateinit var btnAgregarMeGusta: Button
 
     private var comentariosFakeList: MutableList<Comentario> = ArrayList()
     private var historiasFakeList: MutableList<Historia> = ArrayList()
@@ -81,7 +84,6 @@ class PerfilChefFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_perfil_chef, container, false)
 
         imgChefPerfil = v.findViewById(R.id.imgChefPerfil)
@@ -92,6 +94,9 @@ class PerfilChefFragment : Fragment() {
         revComentarioCliente = v.findViewById(R.id.revComentarioCliente)
         btnVerMasComentarios = v.findViewById(R.id.btnVerMasComentarios)
         revHistoriasChef = v.findViewById(R.id.revHisotriasChef)
+        btnConfiguracionPerfilChef = v.findViewById(R.id.btnConfiguracionPerfilChef)
+        btnAgregarMeGusta = v.findViewById(R.id.btnAgregarMeGusta)
+
         return v
     }
 
@@ -107,13 +112,13 @@ class PerfilChefFragment : Fragment() {
         revHistoriasChef.isNestedScrollingEnabled = false
         revHistoriasChef.layoutManager = linearLayoutManagerHistoria
 
-
+        var cantidadDeMegusta = 7
         val bio =
             "Desde muy niño, Santiago Moras Mom ha incursionado en la confeccion de Carnes Rojas. \"Asar carne a la parrilla requiere conocer los tiempos de asado de cada carne y por ende su orden de cocción.\" Estudio para ser Cheff para poder dedicarle su vida a lo que mas le gusta hacer, y lo comparte con todos los comensales."
         txtBiografiaChef.text = getString(R.string.biografia_chef, bio)
         lblNombreChef.text = getString(R.string.nombre_chef, "Santiago Moras Mom ")
         lblCantidadComentarios.text = getString(R.string.cantidad_comentarios_chef, 5)
-        lblCantidadMeGusta.text = getString(R.string.cantidad_megusta_chef, 7)
+        lblCantidadMeGusta.text = getString(R.string.cantidad_megusta_chef, cantidadDeMegusta)
         Glide.with(this)
             .load("https://sumicorp.com/wp-content/uploads/2018/10/user.png")
             .centerInside()
@@ -126,10 +131,22 @@ class PerfilChefFragment : Fragment() {
         historiasListAdapter = HistoriasListAdapter(historiasFakeList, requireContext())
         revHistoriasChef.adapter = historiasListAdapter
 
+        //Listeners
         btnVerMasComentarios.setOnClickListener() {
             val perfilComentarioChef =
                 PerfilChefFragmentDirections.actionPerfilChefFragmentToPerfilChefComentariosFragment()
             v.findNavController().navigate(perfilComentarioChef)
+        }
+
+        btnAgregarMeGusta.setOnClickListener() {
+            cantidadDeMegusta += 1;
+            lblCantidadMeGusta.text = getString(R.string.cantidad_megusta_chef, cantidadDeMegusta)
+        }
+
+        btnConfiguracionPerfilChef.setOnClickListener() {
+            val perfilConfiguracionChef =
+                PerfilChefFragmentDirections.actionPerfilChefFragmentToPerfilChefConfiguracionFragment();
+            v.findNavController().navigate(perfilConfiguracionChef)
         }
     }
 }

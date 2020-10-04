@@ -151,6 +151,9 @@
         <action
             android:id="@+id/action_perfilChefFragment_to_perfilChefComentariosFragment"
             app:destination="@id/perfilChefComentariosFragment" />
+        <action
+            android:id="@+id/action_perfilChefFragment_to_perfilChefConfiguracionFragment"
+            app:destination="@id/perfilChefConfiguracionFragment" />
     </fragment>
     <fragment
         android:id="@+id/configuracionUsuarioFragment2"
@@ -198,4 +201,8 @@
         android:id="@+id/perfilChefComentariosFragment"
         android:name="ar.edu.ort.instituto.echeff.fragments.chef.PerfilChefComentariosFragment"
         android:label="PerfilChefComentariosFragment" />
+    <fragment
+        android:id="@+id/perfilChefConfiguracionFragment"
+        android:name="ar.edu.ort.instituto.echeff.fragments.chef.PerfilChefConfiguracionFragment"
+        android:label="PerfilChefConfiguracionFragment" />
 </navigation>
