@@ -9,40 +9,39 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
-import ar.edu.ort.instituto.echeff.entities.Propuesta
+import ar.edu.ort.instituto.echeff.entities.Reserva
 import com.bumptech.glide.Glide
 
-class VistaPropuestasAdapter(
-    private var propuestas: MutableList<Propuesta>,
+class VistaReservasAdapter(
+    private var reservas: MutableList<Reserva>,
     var context: Context,
     val onItemClick: (Int) -> Unit
-) : RecyclerView.Adapter<VistaPropuestasAdapter.PropuestaHolder>() {
+) : RecyclerView.Adapter<VistaReservasAdapter.ReservaHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PropuestaHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_propuesta, parent, false)
-        return (PropuestaHolder(view))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReservaHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_reserva, parent, false)
+        return (ReservaHolder(view))
     }
 
     override fun getItemCount(): Int {
-        return propuestas.size
+        return reservas.size
     }
 
-    fun setData(newData: ArrayList<Propuesta>) {
-        this.propuestas = newData
+    fun setData(newData: ArrayList<Reserva>) {
+        this.reservas = newData
         this.notifyDataSetChanged()
     }
 
-    override fun onBindViewHolder(holder: PropuestaHolder, position: Int) {
+    override fun onBindViewHolder(holder: ReservaHolder, position: Int) {
         Glide
             .with(context)
-            .load("https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/2_avatar-256.png")
+            .load("https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/12_avatar-256.png")
             .centerInside()
             .into(holder.getImageView());
 
-        holder.setDireccion(StringBuilder().append(propuestas[position].total).toString())
-        holder.setNroComensales(propuestas[position].id)
-        holder.setEstiloComida(StringBuilder().append(propuestas[position].snack).toString())
+        holder.setDireccion(StringBuilder().append(reservas[position].dieccion).toString())
+        holder.setNroComensales(reservas[position].comensales)
+        holder.setEstiloComida(StringBuilder().append(reservas[position].estiloCocina).toString())
 
         holder.getCardLayout().setOnClickListener {
             onItemClick(position)
@@ -50,7 +49,7 @@ class VistaPropuestasAdapter(
 
     }
 
-    class PropuestaHolder(v: View) : RecyclerView.ViewHolder(v) {
+    class ReservaHolder(v: View) : RecyclerView.ViewHolder(v) {
 
         private var view: View
 
@@ -74,11 +73,11 @@ class VistaPropuestasAdapter(
         }
 
         fun getCardLayout(): CardView {
-            return view.findViewById(R.id.cvItemPropuesta)
+            return view.findViewById(R.id.cvItemReserva)
         }
 
         fun getImageView(): ImageView {
-            return view.findViewById(R.id.ivChef)
+            return view.findViewById(R.id.ivCliente)
         }
 
     }

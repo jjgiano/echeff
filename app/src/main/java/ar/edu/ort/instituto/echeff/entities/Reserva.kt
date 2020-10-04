@@ -1,8 +1,14 @@
 package ar.edu.ort.instituto.echeff.entities
 
 class Reserva(
-    id: Int, fecha: String, hora: String, direccion: String, tipoCocina: String, comensales: Int,
-    estiloCocina: String, idUsuario: Int
+    id: Int,
+    fecha: String,
+    hora: String,
+    direccion: String,
+    tipoCocina: String,
+    comensales: Int,
+    estiloCocina: String,
+    idUsuario: Int
 ) {
     var id: Int
     var fecha: String
