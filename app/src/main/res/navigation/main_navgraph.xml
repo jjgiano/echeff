@@ -200,9 +200,12 @@
     <fragment
         android:id="@+id/perfilChefComentariosFragment"
         android:name="ar.edu.ort.instituto.echeff.fragments.chef.PerfilChefComentariosFragment"
-        android:label="PerfilChefComentariosFragment" />
+        android:label="PerfilChefComentariosFragment"
+        tools:layout="@layout/fragment_perfil_chef_comentarios"
+        />
     <fragment
         android:id="@+id/perfilChefConfiguracionFragment"
         android:name="ar.edu.ort.instituto.echeff.fragments.chef.PerfilChefConfiguracionFragment"
-        android:label="PerfilChefConfiguracionFragment" />
+        android:label="PerfilChefConfiguracionFragment"
+        tools:layout="@layout/fragment_perfil_chef_configuracion"/>
 </navigation>
