@@ -2,4 +2,9 @@
     <string name="app_name">E-CHEFF</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nombre_chef">%s</string>
+    <string name="biografia_chef">%s</string>
+    <string name="cantidad_megusta_chef">%d</string>
+    <string name="cantidad_comentarios_chef">%d</string>
+    <string name="comentario_puntuacion_cliente">Calificacion: %d</string>
 </resources>
