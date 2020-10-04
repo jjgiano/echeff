@@ -5,29 +5,34 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.TextView
+import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
+import ar.edu.ort.instituto.echeff.entities.Reserva
+import kotlinx.android.synthetic.main.fragment_detalle_reserva.view.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [DetalleReservaFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class DetalleReservaFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    lateinit var v :View
+    lateinit var id: TextView
+    lateinit var fecha: TextView
+    lateinit var hora: TextView
+    lateinit var direccion: TextView
+    lateinit var tipoCocina: TextView
+    lateinit var tieneHorno: CheckBox
+    lateinit var comensales: TextView
+    lateinit var estiloCocina: TextView
+    lateinit var tipoServicio : TextView
+    lateinit var notas: TextView
+    lateinit var idUsuario: TextView
+    lateinit var reserva : Reserva
+    lateinit var btn_ArmaPropuesta : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -35,26 +40,44 @@ class DetalleReservaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detalle_reserva, container, false)
+        v = inflater.inflate(R.layout.fragment_detalle_reserva, container, false)
+        fecha = v.findViewById(R.id.text_DatoFecha)
+        hora = v.findViewById(R.id.text_DatoHora)
+        direccion = v.findViewById(R.id.text_DatoDireccion)
+        tipoCocina = v.findViewById(R.id.text_DatoTipoCocina)
+        tieneHorno = v.findViewById(R.id.checkBox_TieneHorno)
+        comensales = v.findViewById(R.id.text_DatoComensales)
+        estiloCocina = v.findViewById(R.id.text_DatoEstiloCocina)
+        tipoServicio = v.findViewById(R.id.text_DatoTipoServicio)
+        notas = v.findViewById(R.id.text_DatoNotas)
+        btn_ArmaPropuesta = v.findViewById(R.id.btn_ArmaPropuesta)
+        return v
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DetalleReservaFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DetalleReservaFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onStart() {
+        super.onStart()
+        reserva = DetalleReservaFragmentArgs.fromBundle(requireArguments()).argReserva
+        fecha.text = reserva.fecha
+        hora.text = reserva.hora
+        direccion.text = reserva.direccion
+        tipoCocina.text = reserva.tipoCocina
+        tieneHorno.text = reserva.tieneHorno
+        comensales.text =  reserva.comensales.toString()
+        estiloCocina.text = reserva.estiloCocina
+        tipoServicio.text = reserva.tipoServicio
+        notas.text = reserva.notas
+
+        /*Glide.with(this)
+            .load(pelota.imagen)
+            .into(imagen);
+           */
+
+        btn_ArmaPropuesta.setOnClickListener {
+            val action = DetalleReservaFragmentDirections.actionDetalleReservaFragmentToFormularioPropuestaFragment(reserva)
+            v.findNavController().navigate(action)
+        }
+
     }
+
+
 }

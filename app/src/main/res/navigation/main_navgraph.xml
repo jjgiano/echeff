@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navgraph"
-    app:startDestination="@id/mesaAyudaFragment2">
+    app:startDestination="@id/homeChefFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -127,6 +127,9 @@
         <action
             android:id="@+id/action_detalleReservaFragment_to_homeChefFragment"
             app:destination="@id/homeChefFragment" />
+        <argument
+            android:name="argReserva"
+            app:argType="ar.edu.ort.instituto.echeff.entities.Reserva" />
     </fragment>
     <fragment
         android:id="@+id/formularioPropuestaFragment"
@@ -136,6 +139,9 @@
         <action
             android:id="@+id/action_formularioPropuestaFragment_to_homeChefFragment"
             app:destination="@id/homeChefFragment" />
+        <argument
+            android:name="formularioPropuestaArg"
+            app:argType="ar.edu.ort.instituto.echeff.entities.Reserva" />
     </fragment>
     <fragment
         android:id="@+id/perfilChefFragment"

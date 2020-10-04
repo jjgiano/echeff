@@ -11,25 +11,46 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_Reserva"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:clickable="true"
-        app:cardCornerRadius="10dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Armar Propuesta Menú"
+        android:textColor="#D97014"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline6"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_itemsReserva"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginTop="32dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline8"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toBottomOf="@+id/textView2">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:background="@drawable/style_border_text"
+            android:paddingLeft="5dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="5dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/image_Usuario"
                 android:layout_width="100sp"
                 android:layout_height="100sp"
+                android:layout_marginStart="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -46,17 +67,17 @@
                 android:text="Dirección:"
                 android:textColor="#D97014"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@+id/image_Usuario"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/text_DatosDireccion"
+                android:id="@+id/text_DatoDireccion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView"
                 android:textColor="#D97014"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@+id/image_Usuario"
                 app:layout_constraintTop_toBottomOf="@+id/text_Direccion" />
 
             <TextView
@@ -68,8 +89,8 @@
                 android:text="TextView"
                 android:textColor="#D97014"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@+id/text_DatosDireccion" />
+                app:layout_constraintStart_toEndOf="@+id/image_Usuario"
+                app:layout_constraintTop_toBottomOf="@+id/text_DatoDireccion" />
 
             <TextView
                 android:id="@+id/text_EstiloComida"
@@ -80,7 +101,7 @@
                 android:text="Estilo Comida:"
                 android:textColor="#D97014"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@+id/image_Usuario"
                 app:layout_constraintTop_toBottomOf="@+id/text_DatosComensales" />
 
             <TextView
@@ -93,24 +114,12 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@+id/image_Usuario"
                 app:layout_constraintTop_toBottomOf="@+id/text_EstiloComida" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
     </androidx.cardview.widget.CardView>
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="Armar Propuesta Menú"
-        android:textColor="#D97014"
-        android:textSize="28sp"
-        app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline6"
         android:layout_width="wrap_content"
@@ -137,7 +146,7 @@
         android:textColor="#9C9595"
         app:layout_constraintEnd_toStartOf="@+id/guideline8"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toBottomOf="@+id/card_Reserva" />
+        app:layout_constraintTop_toBottomOf="@+id/card_itemsReserva" />
 
     <EditText
         android:id="@+id/editText_Entrada"

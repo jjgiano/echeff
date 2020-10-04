@@ -5,56 +5,45 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import ar.edu.ort.instituto.echeff.R
+import ar.edu.ort.instituto.echeff.entities.Reserva
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FormularioPropuestaFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FormularioPropuestaFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    lateinit var v: View
+
+    lateinit var direccion : TextView
+    lateinit var comensales :TextView
+    lateinit var estilococina :TextView
+    lateinit var reserva : Reserva
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
         }
-    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_formulario_propuesta, container, false)
-    }
+        v = inflater.inflate(R.layout.fragment_formulario_propuesta, container, false)
+        direccion = v.findViewById(R.id.text_DatoDireccion)
+        comensales = v.findViewById(R.id.text_DatosComensales)
+        estilococina = v.findViewById(R.id.text_DatosEstiloComida)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FormularioPropuestaFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FormularioPropuestaFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        return v
+    }
+    override fun onStart() {
+        super.onStart()
+        reserva = FormularioPropuestaFragmentArgs.fromBundle(requireArguments()).formularioPropuestaArg
+        direccion.text = reserva.direccion
+        comensales.text = reserva.comensales.toString() + " Comensales"
+        estilococina.text = reserva.estiloCocina
+
+
+
     }
 }
