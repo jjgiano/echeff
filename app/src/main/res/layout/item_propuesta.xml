@@ -11,7 +11,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clItemPropuesta"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
 
         <ImageView
             android:id="@+id/ivChef"
@@ -26,6 +28,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Direccion:"
+            android:textColor="#D97014"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivChef"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,6 +39,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Calle falsa 123, CABA"
+            android:textColor="#D97014"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivChef"
             app:layout_constraintTop_toBottomOf="@+id/tvDireccionLabel" />
@@ -44,6 +50,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Comensal/es"
+            android:textColor="#D97014"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivChef"
             app:layout_constraintTop_toBottomOf="@+id/tvDireccion" />
@@ -53,6 +61,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Estilo Comida:"
+            android:textColor="#D97014"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivChef"
             app:layout_constraintTop_toBottomOf="@+id/tvNroComensales" />
@@ -62,6 +72,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Mediterranea"
+            android:textColor="#D97014"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivChef"
             app:layout_constraintTop_toBottomOf="@+id/tvEstiloComidaLabel" />

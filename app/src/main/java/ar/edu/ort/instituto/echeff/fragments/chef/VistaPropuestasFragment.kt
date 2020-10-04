@@ -40,8 +40,8 @@ class VistaPropuestasFragment : Fragment() {
         super.onCreate(savedInstanceState)
         propuestasAConfirmar.add(Propuesta(1,"snack1", "entrada1", "plato1", "postre1", "adicional1", 100.1, 1, 1))
         propuestasAConfirmar.add(Propuesta(2,"snack2", "entrada2", "plato2", "postre2", "adicional2", 100.2, 1, 2))
-//        propuestasAConfirmar.add(Propuesta(3,"snack3", "entrada3", "plato3", "postre3", "adicional3", 100.3, 1, 3))
-//        propuestasAConfirmar.add(Propuesta(4,"snack4", "entrada4", "plato4", "postre4", "adicional4", 100.4, 1, 4))
+        propuestasAConfirmar.add(Propuesta(3,"snack3", "entrada3", "plato3", "postre3", "adicional3", 100.3, 1, 3))
+        propuestasAConfirmar.add(Propuesta(4,"snack4", "entrada4", "plato4", "postre4", "adicional4", 100.4, 1, 4))
 
         propuestasConfirmadas.add(Propuesta(5,"snack5", "entrada5", "plato5", "postre5", "adicional5", 100.5, 1, 5))
         propuestasConfirmadas.add(Propuesta(6,"snack6", "entrada6", "plato6", "postre6", "adicional6", 100.6, 1, 6))
@@ -72,6 +72,7 @@ class VistaPropuestasFragment : Fragment() {
         rvPropuestasAConfirmar = v.findViewById(R.id.rvPropuestasAConfirmar)
         rvPropuestasConfirmadas = v.findViewById(R.id.rvPropuestasConfirmadas)
         rvPropuestasFinalizadas = v.findViewById(R.id.rvPropuestasFinalizadas)
+
         return v
     }
 
