@@ -36,8 +36,8 @@ class LoginFragment : Fragment() {
         v = inflater.inflate(R.layout.fragment_login, container, false)
 
         textViewTitulo = v.findViewById(R.id.textViewTitulo)
-        editTextTextUsuario = v.findViewById(R.id.editTextTextUsuario)
-        editTextTextPassword = v.findViewById(R.id.editTextTextPassword)
+        editTextTextUsuario = v.findViewById(R.id.emailEditText)
+        editTextTextPassword = v.findViewById(R.id.passwordEditText)
         buttonIngresar = v.findViewById(R.id.buttonIngresar)
         buttonRegistrate = v.findViewById(R.id.buttonRegistrate)
         buttonGoogle = v.findViewById(R.id.buttonGoogle)
