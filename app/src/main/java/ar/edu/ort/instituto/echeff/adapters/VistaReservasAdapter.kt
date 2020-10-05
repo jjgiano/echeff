@@ -58,17 +58,17 @@ class VistaReservasAdapter(
         }
 
         fun setDireccion(direccion: String) {
-            val tv: TextView = view.findViewById(R.id.tvDireccion)
+            val tv: TextView = view.findViewById(R.id.text_DatoUsuario)
             tv.text = direccion
         }
 
         fun setNroComensales(nroComensales: Int) {
-            val tv: TextView = view.findViewById(R.id.tvNroComensales)
+            val tv: TextView = view.findViewById(R.id.text_DatosComensales)
             tv.text = StringBuilder().append(nroComensales).append(" Comensal/es").toString()
         }
 
         fun setEstiloComida(estiloComida: String) {
-            val tv: TextView = view.findViewById(R.id.tvEstiloComida)
+            val tv: TextView = view.findViewById(R.id.text_DatosEstiloComida)
             tv.text = estiloComida
         }
 
