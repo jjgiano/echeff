@@ -216,7 +216,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/image_Usuario"
                 android:layout_width="100sp"
                 android:layout_height="100sp"
                 android:layout_marginStart="7dp"
@@ -236,7 +236,7 @@
                 android:textColor="#D97014"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@+id/image_Usuario"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -250,7 +250,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.486"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@+id/image_Usuario"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.764" />
 
