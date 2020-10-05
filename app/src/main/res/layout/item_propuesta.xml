@@ -1,13 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cvItemPropuesta"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clItemPropuesta"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
 
+        <ImageView
+            android:id="@+id/ivChef"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/tvDireccionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Direccion:"
+            android:textColor="#D97014"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivChef"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvDireccion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calle falsa 123, CABA"
+            android:textColor="#D97014"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivChef"
+            app:layout_constraintTop_toBottomOf="@+id/tvDireccionLabel" />
+
+        <TextView
+            android:id="@+id/tvNroComensales"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Comensal/es"
+            android:textColor="#D97014"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivChef"
+            app:layout_constraintTop_toBottomOf="@+id/tvDireccion" />
+
+        <TextView
+            android:id="@+id/tvEstiloComidaLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Estilo Comida:"
+            android:textColor="#D97014"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivChef"
+            app:layout_constraintTop_toBottomOf="@+id/tvNroComensales" />
+
+        <TextView
+            android:id="@+id/tvEstiloComida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mediterranea"
+            android:textColor="#D97014"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivChef"
+            app:layout_constraintTop_toBottomOf="@+id/tvEstiloComidaLabel" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

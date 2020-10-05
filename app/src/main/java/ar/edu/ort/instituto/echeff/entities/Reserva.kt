@@ -7,6 +7,7 @@ import androidx.annotation.RequiresApi
 
 class Reserva(id: Int, fecha: String, hora: String, direccion: String, tipoCocina: String, tieneHorno: String,  comensales: Int, tipoServicio: String, estiloCocina: String, notas : String, idUsuario: Int) :
     Parcelable {
+
     var id: Int
     var fecha: String
     var hora: String

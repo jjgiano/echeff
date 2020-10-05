@@ -5,7 +5,8 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.cliente.ModificacionReservaFragment">
+    tools:context=".fragments.cliente.ModificacionReservaFragment"
+    android:layout_marginEnd="10dp">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -39,7 +40,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine"
+        android:id="@+id/txtCambiosReserva"
         android:layout_width="0dp"
         android:layout_height="344dp"
         android:layout_marginStart="10dp"
@@ -51,14 +52,30 @@
         android:inputType="textMultiLine"
         android:padding="10sp"
         android:textColor="@color/gray50"
-        app:layout_constraintDimensionRatio="w,1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_TituloPropuesta" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnVolverHomeCliente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_press"
+        android:paddingStart="50sp"
+        android:paddingEnd="50sp"
+        android:text="Volver a inicio"
+        android:textColor="@color/gray10"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtCambiosReserva" />
+
+    <Button
+        android:id="@+id/btnEnviarModificaion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -71,6 +88,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine" />
+        app:layout_constraintTop_toBottomOf="@+id/txtCambiosReserva" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
