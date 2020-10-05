@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 .idea/misc.xml
+.idea/codeStyles/Project.xml
+
