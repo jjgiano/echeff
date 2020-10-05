@@ -18,25 +18,25 @@
         tools:layout_editor_absoluteX="176dp" />
 
     <EditText
-        android:id="@+id/editTextTextUsuario"
+        android:id="@+id/emailEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:ems="10"
-        android:hint="Usuario"
+        android:hint="Email"
         android:inputType="text"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="95dp" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/passwordEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:ems="10"
         android:hint="Contraseña"
         android:inputType="textPassword"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextUsuario"
+        app:layout_constraintTop_toBottomOf="@+id/emailEditText"
         tools:layout_editor_absoluteX="95dp" />
 
     <Button
@@ -48,7 +48,7 @@
         android:text="Ingresar"
         app:layout_constraintEnd_toStartOf="@+id/buttonRegistrate"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
 
     <Button
         android:id="@+id/buttonRegistrate"
@@ -58,7 +58,7 @@
         android:layout_marginEnd="92dp"
         android:text="Registrate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
 
     <Button
         android:id="@+id/buttonGoogle"
