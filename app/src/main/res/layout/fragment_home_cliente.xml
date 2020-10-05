@@ -1,44 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.cliente.HomeClienteFragment">
+    android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayoutHomeCliente"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        tools:context=".fragments.cliente.HomeClienteFragment">
 
         <TextView
-            android:id="@+id/username"
-            android:layout_width="169dp"
-            android:layout_height="120dp"
-            android:text="@string/hello_blank_fragment"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.537"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.328" />
+            android:id="@+id/textViewSaludoCliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hola, Cliente"
+            android:textColor="@color/orange80"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
+            app:layout_constraintTop_toTopOf="@+id/guidelineArriba" />
 
         <Button
-            android:id="@+id/signout"
+            android:id="@+id/buttonIniciarReserva"
             android:layout_width="wrap_content"
-            android:layout_height="61dp"
-            android:text="Signout"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.579" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/button_press"
+            android:paddingStart="50sp"
+            android:paddingEnd="50sp"
+            android:text="Iniciar Reserva"
+            android:textColor="@color/gray10"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineDerecha"
+            app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
+            app:layout_constraintTop_toBottomOf="@+id/textViewSaludoCliente" />
+
+        <TextView
+            android:id="@+id/textViewProximasReservas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Tu proxima reserva"
+            android:textColor="#D97014"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
+            app:layout_constraintTop_toBottomOf="@+id/buttonIniciarReserva" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvProximaReserva"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineDerecha"
+            app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
+            app:layout_constraintTop_toBottomOf="@+id/textViewProximasReservas" />
+
+        <TextView
+            android:id="@+id/textViewReservasAConfirmar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Reservas a confirmar"
+            android:textColor="#D97014"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
+            app:layout_constraintTop_toBottomOf="@+id/rvProximaReserva" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvReservasAConfirmar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineDerecha"
+            app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
+            app:layout_constraintTop_toBottomOf="@+id/textViewReservasAConfirmar" />
+
+        <TextView
+            android:id="@+id/textViewReservasPendientes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Reservas pendientes"
+            android:textColor="#D97014"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
+            app:layout_constraintTop_toBottomOf="@+id/rvReservasAConfirmar" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvReservasPendientes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineDerecha"
+            app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
+            app:layout_constraintTop_toBottomOf="@+id/textViewReservasPendientes" />
+
+        <Button
+            android:id="@+id/buttonVerMisReservas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/button_press"
+            android:paddingStart="50sp"
+            android:paddingEnd="50sp"
+            android:text="Ver mis reservas"
+            android:textColor="@color/gray10"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineDerecha"
+            app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
+            app:layout_constraintTop_toBottomOf="@+id/rvReservasPendientes" />
+
+        <TextView
+            android:id="@+id/textViewPropuestasDestacadas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Propuestas destacadas"
+            android:textColor="#D97014"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
+            app:layout_constraintTop_toBottomOf="@+id/buttonVerMisReservas" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPropuestasDestacadas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineDerecha"
+            app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPropuestasDestacadas" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineArriba"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="5dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineAbajo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="5dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineIzquierda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="15dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineDerecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="0dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+</ScrollView>
 
-</FrameLayout>
+
+
