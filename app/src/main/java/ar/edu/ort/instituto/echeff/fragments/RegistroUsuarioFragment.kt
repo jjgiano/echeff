@@ -1,17 +1,23 @@
 package ar.edu.ort.instituto.echeff.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import ar.edu.ort.instituto.echeff.MainActivity
 import ar.edu.ort.instituto.echeff.R
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import androidx.core.view.get
+import kotlin.properties.Delegates
+
 
 class RegistroUsuarioFragment : Fragment() {
 
@@ -27,13 +33,20 @@ class RegistroUsuarioFragment : Fragment() {
     lateinit var email: EditText
     lateinit var telefono: EditText
     lateinit var buttonRegistro: Button
-
+    lateinit var user: FirebaseUser
+    var isNew = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        user = (activity!!.intent.extras!!.get("user") as FirebaseUser?)!!
+        isNew = (activity!!.intent.extras!!.get("isNew") as Boolean?)!!
     }
 
+    fun goToInicio() {
+       val action = RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeClienteFragment(user)
+        v.findNavController().navigate(action)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,6 +67,9 @@ class RegistroUsuarioFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        if(!isNew) {
+            goToInicio()
+        }
 
         buttonRegistroGoogle.setOnClickListener{
 
@@ -62,7 +78,7 @@ class RegistroUsuarioFragment : Fragment() {
 
         }
         buttonRegistro.setOnClickListener{
-
+            goToInicio()
         }
     }
 }
