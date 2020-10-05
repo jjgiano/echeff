@@ -44,17 +44,18 @@ class RegistroUsuarioFragment : Fragment() {
     }
 
     fun goToInicio() {
-       val action = RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeClienteFragment(user)
+        val action =
+            RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeClienteFragment(
+                user
+            )
         v.findNavController().navigate(action)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         v = inflater.inflate(R.layout.fragment_registro_usuario, container, false)
-
-        buttonRegistroGoogle = v.findViewById(R.id.buttonRegistroGoogleCliente)
-        buttonRegistroFacebook = v.findViewById(R.id.buttonRegistroFacebookCliente)
         checkBoxSoyChef = v.findViewById(R.id.checkBoxRegistroClienteSoyChef)
         nombre = v.findViewById(R.id.editTextNombreRegistroCliente)
         password = v.findViewById(R.id.editTextPasswordRegistroCliente)
@@ -67,17 +68,17 @@ class RegistroUsuarioFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        if(!isNew) {
+        if (!isNew) {
             goToInicio()
         }
 
-        buttonRegistroGoogle.setOnClickListener{
+        buttonRegistroGoogle.setOnClickListener {
 
         }
-        buttonRegistroFacebook.setOnClickListener{
+        buttonRegistroFacebook.setOnClickListener {
 
         }
-        buttonRegistro.setOnClickListener{
+        buttonRegistro.setOnClickListener {
             goToInicio()
         }
     }
