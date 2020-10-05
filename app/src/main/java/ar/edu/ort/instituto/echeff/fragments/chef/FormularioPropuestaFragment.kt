@@ -119,6 +119,8 @@ class FormularioPropuestaFragment : Fragment() {
             btn_Propuesta.setVisibility(View.VISIBLE);
 
             editText_Snack.setFocusable(true)
+            editText_Snack.setClickable(true)
+
             editText_Entrada.setFocusable(true)
             editText_PlatoPricipal.setFocusable(true)
             editText_Postre.setFocusable(true)
