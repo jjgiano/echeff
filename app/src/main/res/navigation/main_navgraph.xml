@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navgraph"
-    app:startDestination="@id/homeChefFragment">
+    app:startDestination="@id/inicio1Fragment">
 
     <fragment
         android:id="@+id/inicio1Fragment"
@@ -71,6 +71,9 @@
         <action
             android:id="@+id/action_formularioReservaFragment_to_homeClienteFragment"
             app:destination="@id/homeClienteFragment" />
+        <action
+            android:id="@+id/action_formularioReservaFragment_to_formularioReservaDosFragment3"
+            app:destination="@id/formularioReservaDosFragment3" />
     </fragment>
     <fragment
         android:id="@+id/confirmacionReservaFragment2"
@@ -204,4 +207,13 @@
         android:name="ar.edu.ort.instituto.echeff.LoginActivity"
         android:label="activity_login"
         tools:layout="@layout/activity_login" />
+    <fragment
+        android:id="@+id/formularioReservaDosFragment3"
+        android:name="ar.edu.ort.instituto.echeff.fragments.cliente.FormularioReservaDosFragment"
+        android:label="fragment_formulario_reserva_dos"
+        tools:layout="@layout/fragment_formulario_reserva_dos" >
+        <action
+            android:id="@+id/action_formularioReservaDosFragment3_to_homeClienteFragment"
+            app:destination="@id/homeClienteFragment" />
+    </fragment>
 </navigation>
