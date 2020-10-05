@@ -39,7 +39,7 @@ class VistaReservasAdapter(
             .centerInside()
             .into(holder.getImageView());
 
-        holder.setDireccion(StringBuilder().append(reservas[position].dieccion).toString())
+        holder.setDireccion(StringBuilder().append(reservas[position].direccion).toString())
         holder.setNroComensales(reservas[position].comensales)
         holder.setEstiloComida(StringBuilder().append(reservas[position].estiloCocina).toString())
 
@@ -73,11 +73,11 @@ class VistaReservasAdapter(
         }
 
         fun getCardLayout(): CardView {
-            return view.findViewById(R.id.cvItemReserva)
+            return view.findViewById(R.id.card_itemsReserva)
         }
 
         fun getImageView(): ImageView {
-            return view.findViewById(R.id.ivCliente)
+            return view.findViewById(R.id.image_Usuario)
         }
 
     }

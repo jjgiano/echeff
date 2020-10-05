@@ -32,28 +32,28 @@ class VistaReservasFragment : Fragment() {
     lateinit var rvReservasConfirmadas: RecyclerView
     lateinit var rvReservasFinalizadas: RecyclerView
 
-    var reservasAConfirmar: MutableList<Reserva> = ArrayList<Reserva>()
-    var reservasConfirmadas: MutableList<Reserva> = ArrayList<Reserva>()
-    var reservasFinalizadas: MutableList<Reserva> = ArrayList<Reserva>()
+    var reservasAConfirmar: MutableList<Reserva> = ArrayList()
+    var reservasConfirmadas: MutableList<Reserva> = ArrayList()
+    var reservasFinalizadas: MutableList<Reserva> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        reservasAConfirmar.add(Reserva(1, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", 1, "Mediterranea", 2))
-        reservasAConfirmar.add(Reserva(2, "02/12/2019", "14:02", "Calle falsa 123, CABA", "Electrica", 2, "Marina", 2))
-        reservasAConfirmar.add(Reserva(3, "03/12/2019", "14:03", "Calle falsa 123, CABA", "Induccion", 3, "Montaña", 2))
-        reservasAConfirmar.add(Reserva(4, "04/12/2019", "14:04", "Calle falsa 123, CABA", "Horno de barro", 4, "Polar", 2))
+        reservasAConfirmar.add(Reserva(1, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
+        reservasAConfirmar.add(Reserva(2, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
+        reservasAConfirmar.add(Reserva(3, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
+        reservasAConfirmar.add(Reserva(4, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
 
-        reservasConfirmadas.add(Reserva(5, "05/12/2019", "14:05", "Calle falsa 123, CABA", "Tradicional", 5, "Mediterranea", 2))
-        reservasConfirmadas.add(Reserva(6, "06/12/2019", "14:06", "Calle falsa 123, CABA", "Electrica", 6, "Marina", 2))
-        reservasConfirmadas.add(Reserva(7, "07/12/2019", "14:07", "Calle falsa 123, CABA", "Induccion", 7, "Montaña", 2))
-        reservasConfirmadas.add(Reserva(8, "08/12/2019", "14:08", "Calle falsa 123, CABA", "Horno de barro", 8, "Polar", 2))
 
-        reservasFinalizadas.add(Reserva(9, "09/12/2019", "14:09", "Calle falsa 123, CABA", "Tradicional", 9, "Mediterranea", 2))
-        reservasFinalizadas.add(Reserva(10, "10/12/2019", "14:10", "Calle falsa 123, CABA", "Electrica", 10, "Marina", 2))
-        reservasFinalizadas.add(Reserva(11, "11/12/2019", "14:11", "Calle falsa 123, CABA", "Induccion", 11, "Montaña", 2))
-        reservasFinalizadas.add(Reserva(12, "12/12/2019", "14:12", "Calle falsa 123, CABA", "Horno de barro", 12, "Polar", 2))
+        reservasConfirmadas.add(Reserva(5, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
+        reservasConfirmadas.add(Reserva(6, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
+        reservasConfirmadas.add(Reserva(7, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
+        reservasConfirmadas.add(Reserva(8, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
 
+        reservasFinalizadas.add(Reserva(9, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
+        reservasFinalizadas.add(Reserva(10, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
+        reservasFinalizadas.add(Reserva(11, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
+        reservasFinalizadas.add(Reserva(12, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
     }
 
     override fun onCreateView(

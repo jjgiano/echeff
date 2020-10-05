@@ -2,41 +2,22 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_navgraph"
-    app:startDestination="@id/registroUsuarioFragment">
+    android:id="@+id/main_navgraph">
 
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="ar.edu.ort.instituto.echeff.fragments.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
-        <action
-            android:id="@+id/action_loginFragment_to_registroUsuarioFragment"
-            app:destination="@id/registroUsuarioFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_homeChefFragment"
-            app:destination="@id/homeChefFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_homeClienteFragment"
-            app:destination="@id/homeClienteFragment" />
-    </fragment>
     <fragment
         android:id="@+id/inicio1Fragment"
         android:name="ar.edu.ort.instituto.echeff.fragments.Inicio1Fragment"
         android:label="fragment_inicio"
         tools:layout="@layout/fragment_inicio" >
         <action
-            android:id="@+id/action_inicio1Fragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_inicio1Fragment_to_loginActivity"
+            app:destination="@id/loginActivity" />
     </fragment>
     <fragment
         android:id="@+id/registroUsuarioFragment"
         android:name="ar.edu.ort.instituto.echeff.fragments.RegistroUsuarioFragment"
         android:label="fragment_registro_usuario"
         tools:layout="@layout/fragment_registro_usuario" >
-        <action
-            android:id="@+id/action_registroUsuarioFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
         <action
             android:id="@+id/action_registroUsuarioFragment_to_homeClienteFragment"
             app:destination="@id/homeClienteFragment" />
@@ -184,11 +165,7 @@
         android:id="@+id/vistaPropuestasFragment"
         android:name="ar.edu.ort.instituto.echeff.fragments.chef.VistaPropuestasFragment"
         android:label="fragment_vista_propuestas"
-        tools:layout="@layout/fragment_vista_propuestas" >
-        <action
-            android:id="@+id/action_vistaPropuestasFragment_to_homeChefFragment"
-            app:destination="@id/homeChefFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_vista_propuestas" />
     <fragment
         android:id="@+id/vistaReservasFragment"
         android:name="ar.edu.ort.instituto.echeff.fragments.cliente.VistaReservasFragment"
@@ -221,4 +198,9 @@
         android:name="ar.edu.ort.instituto.echeff.fragments.chef.PerfilChefConfiguracionFragment"
         android:label="PerfilChefConfiguracionFragment"
         tools:layout="@layout/fragment_perfil_chef_configuracion"/>
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="ar.edu.ort.instituto.echeff.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
 </navigation>

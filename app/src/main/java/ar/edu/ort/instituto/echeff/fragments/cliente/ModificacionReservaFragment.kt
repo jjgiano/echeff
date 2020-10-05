@@ -44,14 +44,18 @@ class ModificacionReservaFragment : Fragment() {
             btnEnviarModificaion.visibility = View.INVISIBLE
             btnVolverHomeCliente.visibility = View.VISIBLE
         }
-        btnVolverHomeCliente.setOnClickListener(){
+        btnVolverHomeCliente.setOnClickListener() {
             volverVistaHome();
         }
     }
 
 
     private fun volverVistaHome() {
-       var homeCliente = ModificacionReservaFragmentDirections.actionModificacionReservaFragmentToHomeClienteFragment();
+        //todo enviar un usuario
+        var homeCliente =
+            ModificacionReservaFragmentDirections.actionModificacionReservaFragmentToHomeClienteFragment(
+                null
+            );
         v.findNavController().navigate(homeCliente);
     }
 }
