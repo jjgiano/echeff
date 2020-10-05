@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.entities.Reserva
 
-class adapterListReserva (private var reservaList : MutableList<Reserva>, var context: Context, val onItemClick : (Int) -> Unit) : RecyclerView.Adapter<adapterListReserva.ReservaHolder>()  {
+class adapterListReservaConfirmar (private var reservaList : MutableList<Reserva>, var context: Context, val onItemClick : (Int) -> Unit) : RecyclerView.Adapter<adapterListReservaConfirmar.ReservaHolder>()  {
 
 
 

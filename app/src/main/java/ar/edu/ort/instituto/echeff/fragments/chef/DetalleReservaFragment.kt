@@ -11,7 +11,6 @@ import android.widget.TextView
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.entities.Reserva
-import kotlinx.android.synthetic.main.fragment_detalle_reserva.view.*
 
 
 class DetalleReservaFragment : Fragment() {
@@ -29,7 +28,7 @@ class DetalleReservaFragment : Fragment() {
     lateinit var notas: TextView
     lateinit var idUsuario: TextView
     lateinit var reserva : Reserva
-    lateinit var btn_ArmaPropuesta : Button
+    private lateinit var btn_ArmaPropuesta : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +42,7 @@ class DetalleReservaFragment : Fragment() {
         v = inflater.inflate(R.layout.fragment_detalle_reserva, container, false)
         fecha = v.findViewById(R.id.text_DatoFecha)
         hora = v.findViewById(R.id.text_DatoHora)
-        direccion = v.findViewById(R.id.text_DatoDireccion)
+        direccion = v.findViewById(R.id.text_DatoUsuario)
         tipoCocina = v.findViewById(R.id.text_DatoTipoCocina)
         tieneHorno = v.findViewById(R.id.checkBox_TieneHorno)
         comensales = v.findViewById(R.id.text_DatoComensales)
@@ -61,7 +60,12 @@ class DetalleReservaFragment : Fragment() {
         hora.text = reserva.hora
         direccion.text = reserva.direccion
         tipoCocina.text = reserva.tipoCocina
-        tieneHorno.text = reserva.tieneHorno
+
+        if (reserva.tieneHorno.equals("Si"))
+            tieneHorno.setChecked(true)
+        else
+            tieneHorno.setChecked(false)
+
         comensales.text =  reserva.comensales.toString()
         estiloCocina.text = reserva.estiloCocina
         tipoServicio.text = reserva.tipoServicio
@@ -76,7 +80,6 @@ class DetalleReservaFragment : Fragment() {
             val action = DetalleReservaFragmentDirections.actionDetalleReservaFragmentToFormularioPropuestaFragment(reserva)
             v.findNavController().navigate(action)
         }
-
     }
 
 
