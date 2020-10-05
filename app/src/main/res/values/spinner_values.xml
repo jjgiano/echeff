@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="spinner_values">
+    <string-array name="spinner_values_mesaDeAyudaSugerencias">
         <item>No puedo ir a la fecha pactada</item>
         <item>Necesito cambiar la fecha de mi reserva</item>
         <item>Otra</item>
+    </string-array>
+    <string-array name="spinner_values_estilosComida">
+        <item>Mediterranea</item>
+        <item>Armenia</item>
+        <item>Peruana</item>
+        <item>China</item>
+    </string-array>
+    <string-array name="spinner_values_tiposServicio">
+        <item>Estandar</item>
+        <item>Especial</item>
+        <item>Premium</item>
+    </string-array>
+    <string-array name="spinner_values_tiposCocina">
+        <item>Electrica</item>
+        <item>Gas</item>
+        <item>Ceramica</item>
+        <item>Induccion</item>
     </string-array>
 </resources>
