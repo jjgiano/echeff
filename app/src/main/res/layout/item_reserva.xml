@@ -19,7 +19,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/style_border_text"
+        android:background="@drawable/style_border_gris"
         android:paddingLeft="5dp"
         android:paddingTop="5dp"
         android:paddingEnd="5dp"
