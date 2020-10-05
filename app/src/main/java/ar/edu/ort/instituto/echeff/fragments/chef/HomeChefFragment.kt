@@ -7,14 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import ar.edu.ort.instituto.echeff.R
-import ar.edu.ort.instituto.echeff.adapters.adapterListReserva
-import ar.edu.ort.instituto.echeff.adapters.adapterListReservaConfirmadas
-import ar.edu.ort.instituto.echeff.adapters.adapterListReservaConfirmar
 import ar.edu.ort.instituto.echeff.entities.Reserva
+import ar.edu.ort.instituto.echeff.fragments.chef.home.ReservasConfirmadasFragment
+import ar.edu.ort.instituto.echeff.fragments.chef.home.ReservasConfirmarFragment
+import ar.edu.ort.instituto.echeff.fragments.chef.home.ReservasDisponiblesFragment
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 
 class HomeChefFragment : Fragment() {
@@ -25,19 +28,8 @@ class HomeChefFragment : Fragment() {
 
     //La lista para el recicleView
     var reservas : MutableList<Reserva> = ArrayList<Reserva>()
-
-    //los RecicleViews
-    lateinit var rvReservaDisponibles : RecyclerView
-    lateinit var rvReservaConfirmar : RecyclerView
-    lateinit var rvReservaConfirmadas : RecyclerView
-
-    private lateinit var linearLayoutManager: LinearLayoutManager
-    private lateinit var linearLayoutManagerConfirmar: LinearLayoutManager
-    private lateinit var linearLayoutManagerConfirmadas: LinearLayoutManager
-
-    private lateinit var reservaAdapterList: adapterListReserva
-    private lateinit var reservaAdapterListConfirmar: adapterListReservaConfirmar
-    private lateinit var reservaAdapterListConfirmadas: adapterListReservaConfirmadas
+    lateinit var viewPager: ViewPager2
+    lateinit var tabLayout: TabLayout
 
 
     //Boton para ver Propuestas
@@ -62,9 +54,9 @@ class HomeChefFragment : Fragment() {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_home_chef, container, false)
 
-        rvReservaDisponibles = v.findViewById(R.id.recicleView_ReservasDispoibles)
-        rvReservaConfirmar = v.findViewById(R.id.recicleView_ReservasConfirmar)
-        rvReservaConfirmadas = v.findViewById(R.id.recilceView_ReservasConfirmadas)
+        tabLayout = v.findViewById(R.id.TabLayout)
+
+        viewPager = v.findViewById(R.id.viewpage)
 
         btn_VerProuestas = v.findViewById(R.id.btn_VerPropuetasChef)
 
@@ -76,31 +68,20 @@ class HomeChefFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        // Los RicicleViews
-        rvReservaDisponibles.setHasFixedSize(true)
-        rvReservaConfirmar.setHasFixedSize(true)
-        rvReservaConfirmadas.setHasFixedSize(true)
-
-        linearLayoutManager = LinearLayoutManager(context)
-        linearLayoutManagerConfirmar = LinearLayoutManager(context)
-        linearLayoutManagerConfirmadas = LinearLayoutManager(context)
-
-        rvReservaDisponibles.layoutManager = linearLayoutManager
-        rvReservaConfirmar.layoutManager = linearLayoutManagerConfirmar
-        rvReservaConfirmadas.layoutManager = linearLayoutManagerConfirmadas
-
-        reservaAdapterList = adapterListReserva(reservas,requireContext()){ position -> onItemClick(position)}
-        reservaAdapterListConfirmar = adapterListReservaConfirmar(reservas,requireContext()){ position -> onItemClick(position)}
-        reservaAdapterListConfirmadas = adapterListReservaConfirmadas(reservas,requireContext()){ position -> onItemClick(position)}
-
-        rvReservaDisponibles.adapter = reservaAdapterList
-        rvReservaConfirmar.adapter = reservaAdapterListConfirmar
-        rvReservaConfirmadas.adapter = reservaAdapterListConfirmadas
-        //Hasta aca RecicleViews
+        viewPager.setAdapter(createCardAdapter())
+        // viewPager.isUserInputEnabled = false
+        TabLayoutMediator(tabLayout, viewPager, TabLayoutMediator.TabConfigurationStrategy { tab, position ->
+            when (position) {
+                0 -> tab.text = "Dispobibles"
+                1 -> tab.text = "A Confirmar"
+                2 -> tab.text = "Confirmadas"
+                else -> tab.text = "undefined"
+            }
+        }).attach()
 
         //Seteo el nombre del chef
         nombreChef.text = "Hola Chef,"  //Hay que agtregar el nombre del Usuario
-        
+
 
         //Boton de Navegacion
         btn_VerProuestas.setOnClickListener{
@@ -110,8 +91,33 @@ class HomeChefFragment : Fragment() {
 
     }
 
+    private fun createCardAdapter(): HomeChefFragment.ViewPagerAdapter? {
+        return HomeChefFragment.ViewPagerAdapter(requireActivity(), reservas)
+    }
+
     private fun onItemClick(position : Int){
         val irareserva = HomeChefFragmentDirections.actionHomeChefFragmentToDetalleReservaFragment(reservas[position])
         v.findNavController().navigate(irareserva);
+    }
+
+    class ViewPagerAdapter(fragmentActivity: FragmentActivity, val reservas : MutableList<Reserva>) : FragmentStateAdapter(fragmentActivity) {
+        override fun createFragment(position: Int): Fragment {
+
+            return when(position){
+                0 -> ReservasDisponiblesFragment(reservas)
+                1 -> ReservasConfirmarFragment(reservas)
+                2 -> ReservasConfirmadasFragment(reservas)
+
+                else -> ReservasDisponiblesFragment(reservas)
+            }
+        }
+
+        override fun getItemCount(): Int {
+            return TAB_COUNT
+        }
+
+        companion object {
+            private const val TAB_COUNT = 3
+        }
     }
 }
