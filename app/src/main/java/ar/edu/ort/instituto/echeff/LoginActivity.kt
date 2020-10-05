@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUserMetadata
+
 
 class LoginActivity : AppCompatActivity() {
     val AUTH_REQUEST_CODE = 1234
@@ -28,10 +30,15 @@ class LoginActivity : AppCompatActivity() {
         listener = FirebaseAuth.AuthStateListener { p0 ->
             val user = p0.currentUser
             if (user != null) {
-                val isNew = p0.pendingAuthResult?.result?.additionalUserInfo?.isNewUser
+                var isNew = false
+                val metadata: FirebaseUserMetadata = user.metadata!!
+                if (metadata.creationTimestamp == metadata.lastSignInTimestamp) {
+                    isNew = true
+                }
                 //Already singned-in
                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                 intent.putExtra("user", user)
+                intent.putExtra("isNew", isNew)
                 //val extras: Bundle = Bundle()
                 //extras.putString("user", user.displayName)
                 //intent.putExtras(extras)

@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.internal.zzp
 import com.google.firebase.ktx.Firebase
 
 
@@ -30,14 +31,10 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class Inicio1Fragment : Fragment() {
-    lateinit var textViewUser: TextView
-    lateinit var signoutButton: Button
     lateinit var v: View
-    lateinit var user: FirebaseUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        user = (activity!!.intent.extras!!.get("user") as FirebaseUser?)!!
     }
 
     override fun onCreateView(
@@ -46,19 +43,6 @@ class Inicio1Fragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_inicio, container, false)
-        textViewUser = v.findViewById(R.id.username)
-        signoutButton = v.findViewById(R.id.signout)
-        signoutButton.setOnClickListener {
-            AuthUI.getInstance()
-                .signOut(context!!)
-                .addOnCompleteListener { // user is now signed out
-                    startActivity(Intent(activity, LoginActivity::class.java))
-                }
-            //FirebaseAuth.getInstance().signOut()
-            //val intent = Intent(this.activity, LoginActivity::class.java)
-            //startActivity(intent)
-        }
-        textViewUser.text = user.displayName
         return v
     }
 
