@@ -11,4 +11,39 @@ class MainActivity : AppCompatActivity() {
     companion object CompanionObject {
 
     }
+
+/*    override suspend fun add(instrument: Instrument) {
+
+        val questionRef = db.collection("instruments")
+        val query = questionRef
+
+        try {
+            val data = query
+                .add(instrument.toFirebaseInstrument())
+                .await()
+        } catch (e: Exception) {
+        }
+    }*/
+
+/*    override suspend fun getAll(): List<Instrument> {
+
+        var instrumentList = arrayListOf<Instrument>()
+
+        val questionRef = db.collection("instruments")
+        val query = questionRef
+
+        try {
+            val data = query
+                .get()
+                .await()
+            for (document in data) {
+                Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
+                instrumentList.add(document.toObject<FirebaseInstrument>().toInstrument())
+            }
+        } catch (e: Exception) {
+        }
+        return instrumentList
+    }
+}*/
+
 }
