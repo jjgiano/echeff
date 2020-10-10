@@ -22,17 +22,17 @@ class Reserva(id: Int, fecha: String, hora: String, direccion: String, tipoCocin
 
 
     constructor(parcel: Parcel) : this(
-         parcel.readInt()!!,
+        parcel.readInt(),
          parcel.readString()!!,
          parcel.readString()!!,
          parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
-        parcel.readInt()!!,
+        parcel.readInt(),
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
-        parcel.readInt()!!
+        parcel.readInt()
     )
 
     init {
