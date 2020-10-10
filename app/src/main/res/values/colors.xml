@@ -8,8 +8,10 @@
     <color name="orange80">#D97014</color>
     <color name="orange70">#F2A057</color>
     <color name="orange50">#F2B988</color>
-    <color name="orange20">#F2E7DC</color>
+    <color name="orange20">#F3E0CD</color>
 
     <color name="gray50">#A5A4A4</color>
     <color name="gray10">#E4E4E4</color>
+
+    <color name="black">#303030</color>
 </resources>
