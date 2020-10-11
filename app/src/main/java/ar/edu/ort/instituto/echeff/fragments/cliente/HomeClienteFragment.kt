@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
@@ -129,7 +130,8 @@ class HomeClienteFragment : Fragment() {
         }
 
         buttonIniciarReserva.setOnClickListener {
-            Snackbar.make(it, "Esto debe ir a la pantalla del formulario 1 de la reserva", Snackbar.LENGTH_SHORT).show()
+           var formularioCliente = HomeClienteFragmentDirections.actionHomeClienteFragmentToFormularioReservaFragment()
+            v.findNavController().navigate(formularioCliente)
         }
 
         buttonVerMisReservas.setOnClickListener {

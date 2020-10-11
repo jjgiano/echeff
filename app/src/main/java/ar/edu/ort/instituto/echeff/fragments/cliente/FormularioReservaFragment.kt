@@ -1,6 +1,7 @@
 package ar.edu.ort.instituto.echeff.fragments.cliente
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
+import ar.edu.ort.instituto.echeff.entities.Reserva
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -51,12 +53,20 @@ class FormularioReservaFragment : Fragment() {
         super.onStart()
 
         btnContinuar.setOnClickListener {
-            //var stringFecha = etFecha.toString()
-            //var stringHora = etHora.toString()
-            //var cantComensales = Integer.parseInt(etCantComensales.toString())
-            //var stringTipoCocina = spinnerTipoCocina.selectedItem.toString()
-            //var stringDireccion = etDireccion.toString()
-            //var boolTieneHorno = cbTengoHorno.isChecked
+            var stringFecha = etFecha.text.toString()
+            var stringHora = etHora.text.toString()
+            var cantComensales = etCantComensales.text.toString().toInt()
+            var stringTipoCocina = spinnerTipoCocina.selectedItem.toString()
+            var stringDireccion = etDireccion.text.toString()
+            var boolTieneHorno = cbTengoHorno.isChecked.toString()
+
+            var reserva = Reserva(1, stringFecha,stringHora,stringDireccion,stringTipoCocina,boolTieneHorno.toString(), cantComensales, "","","",1)
+            //todo hacer este insert en la proxima pagina, enviar el objeto
+            db.collection("reservas").add(reserva)
+                //Con estop podes retornar le ultimo id
+               //.addOnSuccessListener { result ->  Log.d(TAG, "DocumentSnapshot written with ID: ${result.id}") }
+               //.addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
+
 
             val action2 = FormularioReservaFragmentDirections.actionFormularioReservaFragmentToFormularioReservaDosFragment3()
             v.findNavController().navigate(action2)
