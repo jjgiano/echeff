@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
@@ -98,7 +99,8 @@ class VistaReservasFragment : Fragment() {
         }
 
         buttonTengoUnProblema.setOnClickListener {
-            Snackbar.make(it, "Esto debe ir a la pantalla de la mesa de ayuda", Snackbar.LENGTH_SHORT).show()
+            val tengoUnProblemaPage = VistaReservasFragmentDirections.actionVistaReservasFragmentToMesaAyudaFragment2()
+            v.findNavController().navigate(tengoUnProblemaPage)
         }
 
     }

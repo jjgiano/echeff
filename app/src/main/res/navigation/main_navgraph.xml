@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navgraph"
-    app:startDestination="@id/inicioFragment">
+    app:startDestination="@id/homeClienteFragment">
 
     <fragment
         android:id="@+id/inicioFragment"
@@ -179,8 +179,8 @@
         android:label="fragment_vista_reservas"
         tools:layout="@layout/fragment_vista_reservas" >
         <action
-            android:id="@+id/action_vistaReservasFragment_to_homeClienteFragment"
-            app:destination="@id/homeClienteFragment" />
+            android:id="@+id/action_vistaReservasFragment_to_mesaAyudaFragment2"
+            app:destination="@id/mesaAyudaFragment2" />
     </fragment>
     <fragment
         android:id="@+id/mesaAyudaFragment2"
