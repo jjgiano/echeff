@@ -61,7 +61,7 @@
                     app:layout_constraintGuide_begin="205dp" />
 
                 <ImageView
-                    android:id="@+id/image_Usuario"
+                    android:id="@+id/imageViewChef"
                     android:layout_width="100sp"
                     android:layout_height="100sp"
                     android:layout_marginStart="8dp"
@@ -82,7 +82,7 @@
                     android:textColor="#D97014"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/image_Usuario"
+                    app:layout_constraintStart_toEndOf="@+id/imageViewChef"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView

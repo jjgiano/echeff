@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navgraph"
-    app:startDestination="@id/homeClienteFragment">
+    app:startDestination="@id/confirmacionReservaFragment2">
 
     <fragment
         android:id="@+id/inicioFragment"
@@ -43,10 +43,6 @@
         <action
             android:id="@+id/action_homeClienteFragment_to_vistaReservasFragment"
             app:destination="@id/vistaReservasFragment" />
-        <argument
-            android:name="user"
-            app:argType="com.google.firebase.auth.FirebaseUser"
-            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/homeChefFragment"
@@ -71,9 +67,6 @@
         android:name="ar.edu.ort.instituto.echeff.fragments.cliente.FormularioReservaFragment"
         android:label="fragment_formulario_reserva"
         tools:layout="@layout/fragment_formulario_reserva" >
-        <action
-            android:id="@+id/action_formularioReservaFragment_to_homeClienteFragment"
-            app:destination="@id/homeClienteFragment" />
         <action
             android:id="@+id/action_formularioReservaFragment_to_formularioReservaDosFragment3"
             app:destination="@id/formularioReservaDosFragment3" />
@@ -146,9 +139,6 @@
         <action
             android:id="@+id/action_perfilChefFragment_to_homeChefFragment"
             app:destination="@id/homeChefFragment" />
-        <action
-            android:id="@+id/action_perfilChefFragment_to_confirmacionReservaFragment2"
-            app:destination="@id/confirmacionReservaFragment2" />
         <action
             android:id="@+id/action_perfilChefFragment_to_perfilChefComentariosFragment"
             app:destination="@id/perfilChefComentariosFragment" />

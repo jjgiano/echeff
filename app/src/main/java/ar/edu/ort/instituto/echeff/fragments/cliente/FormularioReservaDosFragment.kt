@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
+import com.firebase.ui.auth.data.model.User
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_formulario_reserva_dos.*
@@ -63,7 +65,8 @@ class FormularioReservaDosFragment : Fragment() {
         super.onStart()
 
         btnCrearReserva.setOnClickListener {
-
+            var homeClienteScreen = FormularioReservaDosFragmentDirections.actionFormularioReservaDosFragment3ToHomeClienteFragment()
+            v.findNavController().navigate(homeClienteScreen)
         }
     }
 

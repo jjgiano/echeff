@@ -29,7 +29,7 @@
             app:layout_constraintGuide_begin="238dp" />
 
         <ImageView
-            android:id="@+id/image_Usuario"
+            android:id="@+id/imageViewChef"
             android:layout_width="80sp"
             android:layout_height="80sp"
             android:layout_marginStart="8dp"
