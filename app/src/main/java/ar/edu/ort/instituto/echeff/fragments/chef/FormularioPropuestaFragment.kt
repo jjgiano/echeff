@@ -12,10 +12,15 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
+import ar.edu.ort.instituto.echeff.dao.propuestasDao
+import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
-class FormularioPropuestaFragment : Fragment() {
+class FormularioPropuestaFragment : Fragment(), propuestasDao   {
     lateinit var v: View
 
     // datos de la reserva
@@ -77,6 +82,7 @@ class FormularioPropuestaFragment : Fragment() {
     }
     override fun onStart() {
         super.onStart()
+        var modificado : Boolean = false
 
         //Obtengo la reserva que llega por Argumentos de navegacion
         reserva = FormularioPropuestaFragmentArgs.fromBundle(requireArguments()).formularioPropuestaArg
@@ -91,7 +97,7 @@ class FormularioPropuestaFragment : Fragment() {
         btn_Propuesta.setOnClickListener {
             //guardo la propuesta
            guardarPropuesta(editText_Snack.text.toString(),editText_Entrada.text.toString(),editText_PlatoPricipal.text.toString(),
-                            editText_Postre.text.toString(), editText_Adicional.text.toString(),editText_Importe.text.toString().toDouble(),reserva.id)
+                            editText_Postre.text.toString(), editText_Adicional.text.toString(),editText_Importe.text.toString().toDouble(),reserva.id, modificado)
 
             //Cambio los botones y blockeo los textos
             btn_EditarPropuesta.setVisibility(View.VISIBLE);
@@ -113,7 +119,7 @@ class FormularioPropuestaFragment : Fragment() {
         }
 
         btn_EditarPropuesta.setOnClickListener {
-
+            modificado = true
             btn_EnviarPropuesta.setVisibility(View.INVISIBLE);
             btn_EditarPropuesta.setVisibility(View.INVISIBLE);
             btn_Propuesta.setVisibility(View.VISIBLE);
@@ -132,7 +138,16 @@ class FormularioPropuestaFragment : Fragment() {
 
     }
 
-    fun guardarPropuesta(snack:String, entrada:String,platoPrincial:String,postre:String,adicional:String,importe:Double,reservaId: Int){
-        Log.d("Test",snack+ "\n"+entrada+ "\n"+platoPrincial+ "\n"+postre+ "\n"+adicional+ "\n"+importe)
+     fun guardarPropuesta(snack:String, entrada:String,platoPrincial:String,postre:String,adicional:String,importe:Double,reservaId: Int, modificado : Boolean){
+       var propuesta = Propuesta(1,snack,entrada,platoPrincial,postre,adicional,importe,1,reservaId)
+         val scope = CoroutineScope(Dispatchers.Default)
+
+         scope.launch {
+             if (modificado)
+                update(propuesta)
+             else
+                 add(propuesta)
+         }
+
     }
 }

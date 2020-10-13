@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingRight="10sp"
-    android:paddingBottom="90sp"
+    android:paddingBottom="10sp"
     tools:context=".fragments.chef.FormularioPropuestaFragment">
 
 
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="5sp"
-        android:paddingBottom="90sp">
+        android:paddingBottom="10sp">
 
 
         <TextView
