@@ -5,77 +5,57 @@
     android:id="@+id/cvItemPropuesta"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="5dp"
     app:cardCornerRadius="20dp"
     app:cardElevation="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clItemPropuesta"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/ivChef"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/tvDireccionLabel"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvDireccion"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Direccion:"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:text="Nombre del plato"
+            android:textAlignment="center"
             android:textColor="#D97014"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toEndOf="@+id/ivChef"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvDireccion"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvEstiloComida"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Calle falsa 123, CABA"
-            android:textColor="#D97014"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivChef"
-            app:layout_constraintTop_toBottomOf="@+id/tvDireccionLabel" />
-
-        <TextView
-            android:id="@+id/tvNroComensales"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Comensal/es"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
+            android:text="Estilo Comida:"
+            android:textAlignment="center"
             android:textColor="#D97014"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivChef"
             app:layout_constraintTop_toBottomOf="@+id/tvDireccion" />
 
-        <TextView
-            android:id="@+id/tvEstiloComidaLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Estilo Comida:"
-            android:textColor="#D97014"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivChef"
-            app:layout_constraintTop_toBottomOf="@+id/tvNroComensales" />
-
-        <TextView
-            android:id="@+id/tvEstiloComida"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mediterranea"
-            android:textColor="#D97014"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivChef"
-            app:layout_constraintTop_toBottomOf="@+id/tvEstiloComidaLabel" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

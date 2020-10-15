@@ -59,7 +59,7 @@
         android:textColor="#D97014"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName5" />
+        app:layout_constraintTop_toBottomOf="@+id/txtCsvTarjeta" />
 
     <Button
         android:id="@+id/buttonConfirmarPago"
@@ -74,7 +74,7 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_Reserva" />
+        app:layout_constraintTop_toBottomOf="@+id/crdMercadoLibre" />
 
     <TextView
         android:id="@+id/textViewImporteTotal"
@@ -95,7 +95,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewSeleccionMP" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_Reserva"
+        android:id="@+id/crdMercadoLibre"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -158,7 +158,7 @@
     </androidx.cardview.widget.CardView>
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/txtNombreTarjeta"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -175,7 +175,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewTarjetaCredito" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName3"
+        android:id="@+id/txtNumeroTarjeta"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -189,10 +189,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+        app:layout_constraintTop_toBottomOf="@+id/txtNombreTarjeta" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName4"
+        android:id="@+id/txtVencimientoTarjeta"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -206,11 +206,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
+        app:layout_constraintTop_toBottomOf="@+id/txtNumeroTarjeta" />
 
 
     <EditText
-        android:id="@+id/editTextTextPersonName5"
+        android:id="@+id/txtCsvTarjeta"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -224,7 +224,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName4" />
+        app:layout_constraintTop_toBottomOf="@+id/txtVencimientoTarjeta" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

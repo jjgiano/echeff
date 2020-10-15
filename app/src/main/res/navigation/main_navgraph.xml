@@ -85,6 +85,9 @@
         <action
             android:id="@+id/action_confirmacionReservaFragment2_to_perfilChefFragment"
             app:destination="@id/perfilChefFragment" />
+        <action
+            android:id="@+id/action_confirmacionReservaFragment2_to_homeClienteFragment"
+            app:destination="@id/homeClienteFragment" />
     </fragment>
     <fragment
         android:id="@+id/modificacionReservaFragment"
@@ -101,8 +104,8 @@
         android:label="fragment_pago_reserva"
         tools:layout="@layout/fragment_pago_reserva" >
         <action
-            android:id="@+id/action_pagoReservaFragment_to_homeClienteFragment"
-            app:destination="@id/homeClienteFragment" />
+            android:id="@+id/action_pagoReservaFragment_to_confirmacionReservaFragment2"
+            app:destination="@id/confirmacionReservaFragment2" />
     </fragment>
     <fragment
         android:id="@+id/detalleReservaFragment"
