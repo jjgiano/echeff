@@ -138,7 +138,7 @@ class FormularioPropuestaFragment : Fragment(), propuestasDao   {
 
     }
 
-     fun guardarPropuesta(snack:String, entrada:String,platoPrincial:String,postre:String,adicional:String,importe:Double,reservaId: Int, modificado : Boolean){
+     fun guardarPropuesta(snack:String, entrada:String,platoPrincial:String,postre:String,adicional:String,importe:Double,reservaId: String, modificado : Boolean){
        var propuesta = Propuesta(1,snack,entrada,platoPrincial,postre,adicional,importe,1,reservaId)
          val scope = CoroutineScope(Dispatchers.Default)
 

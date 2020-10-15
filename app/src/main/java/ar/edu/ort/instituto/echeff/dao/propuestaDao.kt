@@ -15,11 +15,15 @@ public interface propuestasDao{
     public suspend fun add(propuesta: Propuesta) {
 
         val questionRef = Firebase.firestore.collection("propuestas")
-        val query = questionRef.document(propuesta.idChef.toString()+propuesta.idReserva.toString())
+        val query = questionRef
 
         try {
             val data = query
-                .set(propuesta)
+                .add(propuesta).addOnSuccessListener { result ->
+                    var id = result.id
+                    propuesta.id = id
+                    query.document(id).set(propuesta)
+                }
                 .await()
         } catch (e: Exception) {
         }
@@ -29,7 +33,7 @@ public interface propuestasDao{
         val questionRef = Firebase.firestore.collection("propuestas")
         val query = questionRef
         try{
-            val data = query.document(propuesta.idChef.toString()+propuesta.idReserva.toString()).set(propuesta)
+            val data = query.document(propuesta.id).set(propuesta)
         } catch (e: Exception){
 
         }
@@ -39,7 +43,7 @@ public interface propuestasDao{
         var propuestaList : MutableList<Propuesta> = ArrayList<Propuesta>()
 
         val questionRef = Firebase.firestore.collection("propuestas")
-        val query = questionRef.whereEqualTo("id",1)
+        val query = questionRef
 
         try {
             val data = query
