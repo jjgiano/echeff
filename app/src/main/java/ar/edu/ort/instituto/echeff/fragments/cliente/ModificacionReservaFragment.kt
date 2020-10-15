@@ -52,10 +52,7 @@ class ModificacionReservaFragment : Fragment() {
 
     private fun volverVistaHome() {
         //todo enviar un usuario
-        var homeCliente =
-            ModificacionReservaFragmentDirections.actionModificacionReservaFragmentToHomeClienteFragment(
-                null
-            );
+        var homeCliente = ModificacionReservaFragmentDirections.actionModificacionReservaFragmentToHomeClienteFragment()
         v.findNavController().navigate(homeCliente);
     }
 }

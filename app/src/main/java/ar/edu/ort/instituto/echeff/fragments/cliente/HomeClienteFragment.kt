@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
@@ -47,34 +48,24 @@ class HomeClienteFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         reservasProximas.add(Reserva(1, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-        reservasProximas.add(Reserva(2, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-        reservasProximas.add(Reserva(3, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-        reservasProximas.add(Reserva(4, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
+//        reservasProximas.add(Reserva(2, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
+//        reservasProximas.add(Reserva(3, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
+//        reservasProximas.add(Reserva(4, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
 
         reservasAConfirmar.add(Reserva(5, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-        reservasAConfirmar.add(Reserva(6, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-        reservasAConfirmar.add(Reserva(7, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-        reservasAConfirmar.add(Reserva(8, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
+//        reservasAConfirmar.add(Reserva(6, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
+//        reservasAConfirmar.add(Reserva(7, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
+//        reservasAConfirmar.add(Reserva(8, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
 
         reservasPendientes.add(Reserva(9, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-        reservasPendientes.add(Reserva(10, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-        reservasPendientes.add(Reserva(11, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-        reservasPendientes.add(Reserva(12, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
+//        reservasPendientes.add(Reserva(10, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
+//        reservasPendientes.add(Reserva(11, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
+//        reservasPendientes.add(Reserva(12, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
 
-        propuestasDestacadas.add(Propuesta(1,"snack1", "entrada1", "plato1", "postre1", "adicional1", 100.1, 1, 1))
-        propuestasDestacadas.add(Propuesta(2,"snack2", "entrada2", "plato2", "postre2", "adicional2", 100.2, 1, 2))
-        propuestasDestacadas.add(Propuesta(3,"snack3", "entrada3", "plato3", "postre3", "adicional3", 100.3, 1, 3))
-        propuestasDestacadas.add(Propuesta(4,"snack4", "entrada4", "plato4", "postre4", "adicional4", 100.4, 1, 4))
-
-        propuestasDestacadas.add(Propuesta(5,"snack5", "entrada5", "plato5", "postre5", "adicional5", 100.5, 1, 5))
-        propuestasDestacadas.add(Propuesta(6,"snack6", "entrada6", "plato6", "postre6", "adicional6", 100.6, 1, 6))
-        propuestasDestacadas.add(Propuesta(7,"snack7", "entrada7", "plato7", "postre7", "adicional7", 100.7, 1, 7))
-        propuestasDestacadas.add(Propuesta(8,"snack8", "entrada8", "plato8", "postre8", "adicional8", 100.8, 1, 8))
-
-        propuestasDestacadas.add(Propuesta(9,"snack9", "entrada9", "plato9", "postre9", "adicional9", 100.9, 1, 9))
-        propuestasDestacadas.add(Propuesta(10,"snack10", "entrada10", "plato10", "postre10", "adicional10", 100.10, 1, 10))
-        propuestasDestacadas.add(Propuesta(11,"snack11", "entrada11", "plato11", "postre11", "adicional11", 100.11, 1, 11))
-        propuestasDestacadas.add(Propuesta(12,"snack12", "entrada12", "plato12", "postre12", "adicional12", 100.12, 1, 12))
+        propuestasDestacadas.add(Propuesta(1,"snack1", "entrada1", "Nombre plato 1", "postre1", "adicional1", 100.1, 1, 1, "https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/image%2025.png?alt=media&token=32ea1268-77ad-4b91-af93-c9ce4d28a059"))
+        propuestasDestacadas.add(Propuesta(2,"snack2", "entrada2", "Nombre plato 2", "postre2", "adicional2", 100.2, 1, 2, "https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/image%2025.png?alt=media&token=32ea1268-77ad-4b91-af93-c9ce4d28a059"))
+        propuestasDestacadas.add(Propuesta(3,"snack3", "entrada3", "Nombre plato 3", "postre3", "adicional3", 100.3, 1, 3, "https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/image%2025.png?alt=media&token=32ea1268-77ad-4b91-af93-c9ce4d28a059"))
+        propuestasDestacadas.add(Propuesta(4,"snack4", "entrada4", "Nombre plato 4", "postre4", "adicional4", 100.4, 1, 4,"https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/image%2025.png?alt=media&token=32ea1268-77ad-4b91-af93-c9ce4d28a059"))
     }
 
     override fun onCreateView(
@@ -129,11 +120,13 @@ class HomeClienteFragment : Fragment() {
         }
 
         buttonIniciarReserva.setOnClickListener {
-            Snackbar.make(it, "Esto debe ir a la pantalla del formulario 1 de la reserva", Snackbar.LENGTH_SHORT).show()
+            val iniciarReservaPage = HomeClienteFragmentDirections.actionHomeClienteFragmentToFormularioReservaFragment()
+            v.findNavController().navigate(iniciarReservaPage)
         }
 
         buttonVerMisReservas.setOnClickListener {
-            Snackbar.make(it, "Esto debe ir a la pantalla de mis reservas del cliente", Snackbar.LENGTH_SHORT).show()
+            val verMisReservasPage = HomeClienteFragmentDirections.actionHomeClienteFragmentToVistaReservasFragment()
+            v.findNavController().navigate(verMisReservasPage)
         }
     }
 
@@ -144,17 +137,20 @@ class HomeClienteFragment : Fragment() {
 
     private fun onItemReservaAConfirmarClick(position : Int){
         val aConfirmar = reservasAConfirmar[position]
-        Snackbar.make(v, "ID de la reserva a confirmar (debe ir a la pantalla 'Confirma la reserva)': " + aConfirmar.id, Snackbar.LENGTH_SHORT).show()
+        var confirmacionReservaScreen = HomeClienteFragmentDirections.actionHomeClienteFragmentToConfirmacionReservaFragment2()
+        v.findNavController().navigate(confirmacionReservaScreen)
     }
 
     private fun onItemReservaPendienteClick(position : Int){
         val pendiente = reservasPendientes[position]
         Snackbar.make(v, "ID de la reserva pendiente (debe ir a la pantalla 'Confirma la reserva): " + pendiente.id, Snackbar.LENGTH_SHORT).show()
+
     }
 
     private fun onItemPropuestaDestacadaClick(position : Int){
         val destacada = propuestasDestacadas[position]
         Snackbar.make(v, "ID de la reserva destacada: " + destacada.id, Snackbar.LENGTH_SHORT).show()
     }
+
 
 }
