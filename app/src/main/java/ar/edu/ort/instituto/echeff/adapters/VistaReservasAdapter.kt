@@ -77,7 +77,7 @@ class VistaReservasAdapter(
         }
 
         fun getImageView(): ImageView {
-            return view.findViewById(R.id.imageViewChef)
+            return view.findViewById(R.id.image_Usuario)
         }
 
     }

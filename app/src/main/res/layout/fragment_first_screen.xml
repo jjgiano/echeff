@@ -8,18 +8,6 @@
     tools:context=".fragments.onboarding.screen.FirstScreenFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <ImageView
-        android:id="@+id/imgfirstScreenBackGround"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:src="@tools:sample/backgrounds/scenic" />
-
     <TextView
         android:id="@+id/textView10"
         android:layout_width="0dp"
@@ -28,30 +16,12 @@
         android:layout_marginEnd="40dp"
         android:text="Los mejores platos gourmet  en tu casa."
         android:textAlignment="center"
-        android:textColor="@color/gray10"
         android:textSize="24sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.100" />
-
-    <Button
-        android:id="@+id/btnNextScreen"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="50dp"
-        android:background="@drawable/button_background"
-        android:text="Continuar"
-        android:textColor="@color/browser_actions_bg_grey"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintVertical_bias="0.766" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

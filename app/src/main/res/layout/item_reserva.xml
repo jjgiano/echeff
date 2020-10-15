@@ -5,8 +5,13 @@
     android:id="@+id/card_itemsReserva"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:padding="5dp"
+    android:layout_margin="5dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginEnd="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginBottom="5dp"
     app:cardBackgroundColor="#FFFFFF"
     app:cardCornerRadius="8dp"
     app:cardElevation="8dp">
@@ -29,7 +34,7 @@
             app:layout_constraintGuide_begin="238dp" />
 
         <ImageView
-            android:id="@+id/imageViewChef"
+            android:id="@+id/image_Usuario"
             android:layout_width="80sp"
             android:layout_height="80sp"
             android:layout_marginStart="8dp"
