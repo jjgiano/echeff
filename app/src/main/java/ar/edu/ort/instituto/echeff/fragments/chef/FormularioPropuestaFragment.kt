@@ -104,7 +104,7 @@ class FormularioPropuestaFragment : Fragment() {
                     editText_Adicional.text.toString(),
                     editText_Importe.text.toString().toDouble(),
                     1,
-                    1
+                    "1"
                 )
             )
 

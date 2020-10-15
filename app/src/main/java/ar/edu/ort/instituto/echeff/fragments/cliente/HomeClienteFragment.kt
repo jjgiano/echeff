@@ -47,25 +47,16 @@ class HomeClienteFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        reservasProximas.add(Reserva(1, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-//        reservasProximas.add(Reserva(2, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-//        reservasProximas.add(Reserva(3, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-//        reservasProximas.add(Reserva(4, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
+        reservasProximas.add(Reserva("1", "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,1))
 
-        reservasAConfirmar.add(Reserva(5, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-//        reservasAConfirmar.add(Reserva(6, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-//        reservasAConfirmar.add(Reserva(7, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-//        reservasAConfirmar.add(Reserva(8, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
+        reservasAConfirmar.add(Reserva("5", "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,1))
 
-        reservasPendientes.add(Reserva(9, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-//        reservasPendientes.add(Reserva(10, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-//        reservasPendientes.add(Reserva(11, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-//        reservasPendientes.add(Reserva(12, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
+        reservasPendientes.add(Reserva("9", "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,1))
 
-        propuestasDestacadas.add(Propuesta(1,"snack1", "entrada1", "Nombre plato 1", "postre1", "adicional1", 100.1, 1, 1, "https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/image%2025.png?alt=media&token=32ea1268-77ad-4b91-af93-c9ce4d28a059"))
-        propuestasDestacadas.add(Propuesta(2,"snack2", "entrada2", "Nombre plato 2", "postre2", "adicional2", 100.2, 1, 2, "https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/image%2025.png?alt=media&token=32ea1268-77ad-4b91-af93-c9ce4d28a059"))
-        propuestasDestacadas.add(Propuesta(3,"snack3", "entrada3", "Nombre plato 3", "postre3", "adicional3", 100.3, 1, 3, "https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/image%2025.png?alt=media&token=32ea1268-77ad-4b91-af93-c9ce4d28a059"))
-        propuestasDestacadas.add(Propuesta(4,"snack4", "entrada4", "Nombre plato 4", "postre4", "adicional4", 100.4, 1, 4,"https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/image%2025.png?alt=media&token=32ea1268-77ad-4b91-af93-c9ce4d28a059"))
+        propuestasDestacadas.add(Propuesta(1,"snack1", "entrada1", "Nombre plato 1", "postre1", "adicional1", 100.1, 1, "1", "https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/image%2025.png?alt=media&token=32ea1268-77ad-4b91-af93-c9ce4d28a059"))
+        propuestasDestacadas.add(Propuesta(2,"snack2", "entrada2", "Nombre plato 2", "postre2", "adicional2", 100.2, 1, "2", "https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/image%2025.png?alt=media&token=32ea1268-77ad-4b91-af93-c9ce4d28a059"))
+        propuestasDestacadas.add(Propuesta(3,"snack3", "entrada3", "Nombre plato 3", "postre3", "adicional3", 100.3, 1, "3", "https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/image%2025.png?alt=media&token=32ea1268-77ad-4b91-af93-c9ce4d28a059"))
+        propuestasDestacadas.add(Propuesta(4,"snack4", "entrada4", "Nombre plato 4", "postre4", "adicional4", 100.4, 1, "4","https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/image%2025.png?alt=media&token=32ea1268-77ad-4b91-af93-c9ce4d28a059"))
     }
 
     override fun onCreateView(

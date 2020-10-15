@@ -9,7 +9,7 @@ class Propuesta(
     adicional: String,
     total: Double,
     idChef: Int,
-    idReserva: Int,
+    idReserva: String,
     urlImg: String? = null
 ) {
     var id: Int
@@ -20,7 +20,7 @@ class Propuesta(
     var adicional: String
     var total: Double
     var idChef: Int
-    var idReserva: Int
+    var idReserva: String
     var urlImg: String?
 
     init {
