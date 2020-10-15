@@ -132,7 +132,7 @@ class FormularioPropuestaFragment : Fragment() {
 
     }
 
-    fun guardarPropuesta(snack:String, entrada:String,platoPrincial:String,postre:String,adicional:String,importe:Double,reservaId: Int){
+    fun guardarPropuesta(snack:String, entrada:String,platoPrincial:String,postre:String,adicional:String,importe:Double,reservaId: String){
         Log.d("Test",snack+ "\n"+entrada+ "\n"+platoPrincial+ "\n"+postre+ "\n"+adicional+ "\n"+importe)
     }
 }

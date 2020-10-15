@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navgraph"
-    app:startDestination="@id/inicioFragment">
+    app:startDestination="@id/formularioReservaFragment">
 
     <fragment
         android:id="@+id/inicioFragment"
@@ -218,6 +218,9 @@
         <action
             android:id="@+id/action_formularioReservaDosFragment3_to_homeClienteFragment"
             app:destination="@id/homeClienteFragment" />
+        <argument
+            android:name="reserva"
+            app:argType="ar.edu.ort.instituto.echeff.entities.Reserva" />
     </fragment>
     <fragment
         android:id="@+id/viewPagerFragment"
