@@ -5,17 +5,16 @@
     android:id="@+id/frameLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingRight="10sp"
-    android:paddingBottom="90sp"
+    android:layout_marginEnd="10dp"
     tools:context=".fragments.chef.FormularioPropuestaFragment">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingTop="5sp"
-        android:paddingBottom="90sp">
+        android:paddingBottom="40dp"
+       >
 
 
         <TextView
@@ -247,6 +246,7 @@
             android:background="@drawable/style_border_text"
             android:ems="10"
             android:inputType="numberDecimal"
+            android:text="0"
             app:layout_constraintEnd_toStartOf="@+id/guideline8"
             app:layout_constraintStart_toStartOf="@+id/guideline6"
             app:layout_constraintTop_toBottomOf="@+id/text_TituloImporte" />
@@ -256,10 +256,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/style_botones_principal"
             android:text="Guardar Propuesta"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline8"
             app:layout_constraintStart_toStartOf="@+id/guideline6"
             app:layout_constraintTop_toBottomOf="@+id/editText_Total" />
@@ -282,18 +284,17 @@
         <Button
             android:id="@+id/btn_EnviarPropuesta"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:background="@drawable/style_botones_principal"
             android:text="Enviar Propuesta"
             android:textColor="#FFFFFF"
+
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_GuardarPropuesta"
             app:layout_constraintEnd_toStartOf="@+id/guideline8"
-            app:layout_constraintHorizontal_bias="0.049"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline6"
-            app:layout_constraintTop_toBottomOf="@+id/editText_Total"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/editText_Total" />
 
         <TextView
             android:id="@+id/text_TituloSnack"

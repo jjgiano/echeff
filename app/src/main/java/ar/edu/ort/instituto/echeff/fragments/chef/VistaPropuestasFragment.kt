@@ -7,11 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.adapters.VistaPropuestasAdapter
 import ar.edu.ort.instituto.echeff.entities.Propuesta
+import ar.edu.ort.instituto.echeff.fragments.cliente.VistaReservasFragmentDirections
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -97,7 +99,8 @@ class VistaPropuestasFragment : Fragment() {
         }
 
         buttonTengoUnProblema.setOnClickListener {
-            Snackbar.make(it, "Esto debe ir a la pantalla de la mesa de ayuda", Snackbar.LENGTH_SHORT).show()
+            var mesaAyudaScreen = VistaPropuestasFragmentDirections.actionVistaPropuestasFragmentToMesaAyudaFragment2()
+            v.findNavController().navigate(mesaAyudaScreen)
         }
 
     }
