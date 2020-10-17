@@ -1,239 +1,233 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:layout_constraintBottom_toBottomOf="parent"
-    tools:context=".fragments.chef.DetalleReservaFragment"
-    tools:ignore="MissingConstraints">
+    tools:context=".fragments.chef.DetalleReservaFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="5sp"
-        android:paddingBottom="10sp">
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="MissingConstraints">
 
-        <EditText
-            android:id="@+id/editText_formularioReserva_hora"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/style_border_text"
-            android:ems="10"
-            android:hint="Hora"
-            android:inputType="textPersonName"
-            android:textColor="@color/gray50"
-            app:layout_constraintEnd_toStartOf="@+id/guideline7"
-            app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toBottomOf="@+id/editText_formularioReserva_fecha" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="5sp"
+            android:paddingBottom="90sp">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.0" />
+            <EditText
+                android:id="@+id/editText_formularioReserva_hora"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/style_border_text"
+                android:ems="10"
+                android:hint="Hora"
+                android:inputType="textPersonName"
+                android:textColor="@color/gray50"
+                app:layout_constraintEnd_toStartOf="@+id/guideline7"
+                app:layout_constraintStart_toStartOf="@+id/guideline5"
+                app:layout_constraintTop_toBottomOf="@+id/editText_formularioReserva_fecha" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="16dp" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.0" />
 
-        <TextView
-            android:id="@+id/textView_formularioReserva2_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="Elegi el dia"
-            android:textColor="#D97014"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/guideline4"
-            app:layout_constraintTop_toBottomOf="@+id/textView_formularioReserva2_importe" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="16dp" />
 
-        <TextView
-            android:id="@+id/textView_formularioReserva2_importe"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/style_border_text"
-            android:backgroundTint="@color/orange20"
-            android:fontFamily="sans-serif-medium"
-            android:text="Recorda que esta reserva se envia a distintos chef"
-            android:textAlignment="center"
-            android:textColor="#D97014"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toStartOf="@+id/guideline7"
-            app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toBottomOf="@+id/textView_formularioReserva2_1" />
+            <TextView
+                android:id="@+id/textView_formularioReserva2_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Elegi el dia"
+                android:textColor="#D97014"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@+id/textView_formularioReserva2_importe" />
 
-        <TextView
-            android:id="@+id/textView_formularioReserva_4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="Cantidad de comensales"
-            android:textColor="#D97014"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/guideline4"
-            app:layout_constraintTop_toBottomOf="@+id/editText_formularioReserva_hora" />
+            <TextView
+                android:id="@+id/textView_formularioReserva2_importe"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/style_border_text"
+                android:backgroundTint="@color/orange20"
+                android:fontFamily="sans-serif-medium"
+                android:text="Recorda que esta reserva se envia a distintos chef"
+                android:textAlignment="center"
+                android:textColor="#D97014"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline7"
+                app:layout_constraintStart_toStartOf="@+id/guideline5"
+                app:layout_constraintTop_toBottomOf="@+id/textView_formularioReserva2_1" />
 
-        <EditText
-            android:id="@+id/editText_formularioReserva_direccion"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/style_border_text"
-            android:ems="10"
-            android:hint="Direccion"
-            android:inputType="textPersonName"
-            android:textColor="@color/gray50"
-            app:layout_constraintEnd_toStartOf="@+id/guideline7"
-            app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toBottomOf="@+id/textView_formularioReserva_5" />
+            <TextView
+                android:id="@+id/textView_formularioReserva_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Cantidad de comensales"
+                android:textColor="#D97014"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@+id/editText_formularioReserva_hora" />
 
-        <EditText
-            android:id="@+id/editText_formularioReserva_fecha"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/style_border_text"
-            android:ems="10"
-            android:hint="Fecha"
-            android:inputType="textPersonName"
-            android:textColor="@color/gray50"
-            app:layout_constraintEnd_toStartOf="@+id/guideline7"
-            app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toBottomOf="@+id/textView_formularioReserva2_2" />
+            <EditText
+                android:id="@+id/editText_formularioReserva_direccion"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/style_border_text"
+                android:ems="10"
+                android:hint="Direccion"
+                android:inputType="textPersonName"
+                android:textColor="@color/gray50"
+                app:layout_constraintEnd_toStartOf="@+id/guideline7"
+                app:layout_constraintStart_toStartOf="@+id/guideline5"
+                app:layout_constraintTop_toBottomOf="@+id/textView_formularioReserva_5" />
 
-        <TextView
-            android:id="@+id/textView_formularioReserva2_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="Arma tu reserva"
-            android:textColor="#D97014"
-            android:textSize="28sp"
-            app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toTopOf="@+id/guideline" />
+            <EditText
+                android:id="@+id/editText_formularioReserva_fecha"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/style_border_text"
+                android:ems="10"
+                android:hint="Fecha"
+                android:inputType="textPersonName"
+                android:textColor="@color/gray50"
+                app:layout_constraintEnd_toStartOf="@+id/guideline7"
+                app:layout_constraintStart_toStartOf="@+id/guideline5"
+                app:layout_constraintTop_toBottomOf="@+id/textView_formularioReserva2_2" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="30dp" />
+            <TextView
+                android:id="@+id/textView_formularioReserva2_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Arma tu reserva"
+                android:textColor="#D97014"
+                android:textSize="28sp"
+                app:layout_constraintStart_toStartOf="@+id/guideline5"
+                app:layout_constraintTop_toTopOf="@+id/guideline" />
 
-        <TextView
-            android:id="@+id/textView_formularioReserva_5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="Indicanos tu direccion"
-            android:textColor="#D97014"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/guideline4"
-            app:layout_constraintTop_toBottomOf="@+id/editText_formularioReserva_cantidadComensales" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="30dp" />
 
-        <TextView
-            android:id="@+id/textView_formularioReserva2_5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="Tipo de Cocina"
-            android:textColor="#D97014"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/guideline4"
-            app:layout_constraintTop_toBottomOf="@+id/editText_formularioReserva_direccion" />
+            <TextView
+                android:id="@+id/textView_formularioReserva_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Indicanos tu direccion"
+                android:textColor="#D97014"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@+id/editText_formularioReserva_cantidadComensales" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="379dp" />
+            <TextView
+                android:id="@+id/textView_formularioReserva2_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Tipo de Cocina"
+                android:textColor="#D97014"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@+id/editText_formularioReserva_direccion" />
 
-        <EditText
-            android:id="@+id/editText_formularioReserva_cantidadComensales"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/style_border_text"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            android:textColor="@color/gray50"
-            app:layout_constraintEnd_toStartOf="@+id/guideline7"
-            app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toBottomOf="@+id/textView_formularioReserva_4" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="379dp" />
 
-        <CheckBox
-            android:id="@+id/checkBox_formularioReserva_tengoHorno"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:buttonTint="#F2B988"
-            android:fontFamily="sans-serif-medium"
-            android:text="Tengo un Horno"
-            android:textColor="#D97014"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toBottomOf="@+id/spinner_formularioReserva_tipoCocina" />
+            <EditText
+                android:id="@+id/editText_formularioReserva_cantidadComensales"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/style_border_text"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textColor="@color/gray50"
+                app:layout_constraintEnd_toStartOf="@+id/guideline7"
+                app:layout_constraintStart_toStartOf="@+id/guideline5"
+                app:layout_constraintTop_toBottomOf="@+id/textView_formularioReserva_4" />
 
-        <Button
-            android:id="@+id/btn_formularioReserva_continuar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/button_background"
-            android:text="continuar"
-            android:textColor="#fff"
-            app:layout_constraintEnd_toStartOf="@+id/guideline7"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toBottomOf="@+id/checkBox_formularioReserva_tengoHorno" />
+            <CheckBox
+                android:id="@+id/checkBox_formularioReserva_tengoHorno"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:buttonTint="#F2B988"
+                android:fontFamily="sans-serif-medium"
+                android:text="Tengo un Horno"
+                android:textColor="#D97014"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@+id/guideline5"
+                app:layout_constraintTop_toBottomOf="@+id/spinner_formularioReserva_tipoCocina" />
 
-        <Spinner
-            android:id="@+id/spinner_formularioReserva_tipoCocina"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/style_border_bigger"
-            app:layout_constraintEnd_toStartOf="@+id/guideline7"
-            app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toBottomOf="@+id/textView_formularioReserva2_5" />
+            <Button
+                android:id="@+id/btn_formularioReserva_continuar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/button_background"
+                android:text="continuar"
+                android:textColor="#fff"
+                app:layout_constraintEnd_toStartOf="@+id/guideline7"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/guideline5"
+                app:layout_constraintTop_toBottomOf="@+id/checkBox_formularioReserva_tengoHorno" />
 
-        <ImageButton
-            android:id="@+id/imageButton_calendarPicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="5dp"
-            android:src="@android:drawable/ic_dialog_dialer"
-            app:layout_constraintBottom_toBottomOf="@+id/editText_formularioReserva_fecha"
-            app:layout_constraintEnd_toEndOf="@+id/editText_formularioReserva_fecha"
-            app:layout_constraintTop_toTopOf="@+id/editText_formularioReserva_fecha" />
+            <Spinner
+                android:id="@+id/spinner_formularioReserva_tipoCocina"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/style_border_bigger"
+                app:layout_constraintEnd_toStartOf="@+id/guideline7"
+                app:layout_constraintStart_toStartOf="@+id/guideline5"
+                app:layout_constraintTop_toBottomOf="@+id/textView_formularioReserva2_5" />
 
-        <ImageButton
-            android:id="@+id/imageButton_hourPicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="10dp"
-            android:src="@android:drawable/ic_dialog_dialer"
-            app:layout_constraintBottom_toBottomOf="@+id/editText_formularioReserva_hora"
-            app:layout_constraintEnd_toStartOf="@+id/guideline7"
-            app:layout_constraintTop_toTopOf="@+id/editText_formularioReserva_hora" />
+            <EditText
+                android:id="@+id/editTextTextPersonName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="400dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Name"
+                app:layout_constraintTop_toBottomOf="@+id/btn_formularioReserva_continuar"
+                tools:layout_editor_absoluteX="63dp" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-</ScrollView>
+    </ScrollView>
 
+</androidx.constraintlayout.widget.ConstraintLayout>

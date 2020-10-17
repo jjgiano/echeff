@@ -5,10 +5,10 @@ import android.os.Parcel
 import android.os.Parcelable
 import androidx.annotation.RequiresApi
 
-class Reserva(id: String, fecha: String, hora: String, direccion: String, tipoCocina: String, tieneHorno: String,  comensales: Int, tipoServicio: String, estiloCocina: String, notas : String, idUsuario: Int, idEstadoReserva: Int) :
+class Reserva(id: Int, fecha: String, hora: String, direccion: String, tipoCocina: String, tieneHorno: String,  comensales: Int, tipoServicio: String, estiloCocina: String, notas : String, idUsuario: Int) :
     Parcelable {
 
-    var id: String
+    var id: Int
     var fecha: String
     var hora: String
     var direccion: String
@@ -19,21 +19,19 @@ class Reserva(id: String, fecha: String, hora: String, direccion: String, tipoCo
     var estiloCocina: String
     var notas : String
     var idUsuario: Int
-    var idEstadoReserva: Int
 
 
     constructor(parcel: Parcel) : this(
+        parcel.readInt(),
         parcel.readString()!!,
-         parcel.readString()!!,
-         parcel.readString()!!,
-         parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readInt(),
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
-        parcel.readInt(),
         parcel.readInt()
     )
 
@@ -49,12 +47,11 @@ class Reserva(id: String, fecha: String, hora: String, direccion: String, tipoCo
         this.tipoServicio = tipoServicio
         this.notas = notas
         this.idUsuario = idUsuario
-        this.idEstadoReserva = idEstadoReserva
     }
 
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(id)
+        parcel.writeInt(id)
         parcel.writeString(fecha)
         parcel.writeString(hora)
         parcel.writeString(direccion)
@@ -65,7 +62,6 @@ class Reserva(id: String, fecha: String, hora: String, direccion: String, tipoCo
         parcel.writeString(tipoServicio)
         parcel.writeString(notas)
         parcel.writeInt(idUsuario)
-        parcel.writeInt(idEstadoReserva)
     }
 
     override fun describeContents(): Int {

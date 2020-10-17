@@ -78,7 +78,7 @@ class adapterListReserva (private var reservaList : MutableList<Reserva>, var co
         }
 
         fun getImageView () : ImageView {
-            return view.findViewById(R.id.image_Usuario)
+            return view.findViewById(R.id.imageViewChef)
         }
 
     }

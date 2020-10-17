@@ -6,14 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
-import ar.edu.ort.instituto.echeff.entities.Cliente
-import ar.edu.ort.instituto.echeff.entities.Reserva
-import ar.edu.ort.instituto.echeff.entities.Usuario
-import ar.edu.ort.instituto.echeff.fragments.chef.FormularioPropuestaFragmentArgs
+import com.firebase.ui.auth.data.model.User
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_formulario_reserva_dos.*
+
 
 class FormularioReservaDosFragment : Fragment() {
 
@@ -21,7 +20,12 @@ class FormularioReservaDosFragment : Fragment() {
 
     lateinit var v : View
 
-    lateinit var reserva : Reserva
+    //lateinit var stringFecha : String
+    //lateinit var stringHora : String
+    //var cantComensales : Int = 0
+    //lateinit var stringTipoCocina : String
+    //lateinit var stringDireccion : String
+    //var boolTieneHorno : Boolean = false
 
     lateinit var spinnerEstiloComida : Spinner
     lateinit var etAclaracionesAChef : EditText
@@ -44,12 +48,14 @@ class FormularioReservaDosFragment : Fragment() {
         spinnerTipoServicio.adapter = adapter2
 
         //var posTipoServicio = spinnerTipoServicio.selectedItemPosition
+        ////var stringTipoServicio = spinnerTipoServicio.selectedItem.toString()
+
 
         btnCrearReserva = v.findViewById(R.id.btn_formularioReserva2_crearReserva)
         etAclaracionesAChef = v.findViewById(R.id.editText_formularioReserva2_aclaracionesAChef)
         textViewImporte = v.findViewById(R.id.textView_formularioReserva2_importe)
 
-        reserva = FormularioReservaDosFragmentArgs.fromBundle(requireArguments()).reserva
+
 
 
         return v
@@ -59,14 +65,8 @@ class FormularioReservaDosFragment : Fragment() {
         super.onStart()
 
         btnCrearReserva.setOnClickListener {
-            reserva.estiloCocina = spinnerEstiloComida.selectedItem.toString()
-            reserva.tipoServicio = spinnerTipoServicio.selectedItem.toString()
-            reserva.notas = etAclaracionesAChef.text.toString()
-
-            db.collection("reservas").add(reserva).addOnSuccessListener { result ->
-                reserva.id = result.id
-                db.collection("reservas").document(reserva.id).set(reserva)
-            }
+            var homeClienteScreen = FormularioReservaDosFragmentDirections.actionFormularioReservaDosFragment3ToHomeClienteFragment()
+            v.findNavController().navigate(homeClienteScreen)
         }
     }
 
