@@ -24,28 +24,28 @@ class FormularioPropuestaFragment : Fragment(), propuestasDao   {
     lateinit var v: View
 
     // datos de la reserva
-    lateinit var usuario : TextView
-    lateinit var comensales :TextView
-    lateinit var estilococina :TextView
-    lateinit var reserva : Reserva
-    lateinit var servicio : TextView
+    lateinit var usuario: TextView
+    lateinit var comensales: TextView
+    lateinit var estilococina: TextView
+    lateinit var reserva: Reserva
+    lateinit var servicio: TextView
 
     //los input de la propuesta
-    lateinit var editText_Snack : EditText
-    lateinit var editText_Entrada : EditText
-    lateinit var editText_PlatoPricipal : EditText
-    lateinit var editText_Postre : EditText
-    lateinit var editText_Adicional : EditText
-    lateinit var editText_Importe : EditText
+    lateinit var editText_Snack: EditText
+    lateinit var editText_Entrada: EditText
+    lateinit var editText_PlatoPricipal: EditText
+    lateinit var editText_Postre: EditText
+    lateinit var editText_Adicional: EditText
+    lateinit var editText_Importe: EditText
 
     //botoens de Guardar y Enviar
-    lateinit var btn_Propuesta : Button
-    lateinit var btn_EditarPropuesta : Button
-    lateinit var btn_EnviarPropuesta : Button
+    lateinit var btn_Propuesta: Button
+    lateinit var btn_EditarPropuesta: Button
+    lateinit var btn_EnviarPropuesta: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        }
+    }
 
 
     override fun onCreateView(
@@ -80,12 +80,14 @@ class FormularioPropuestaFragment : Fragment(), propuestasDao   {
 
         return v
     }
+
     override fun onStart() {
         super.onStart()
         var modificado : Boolean = false
 
         //Obtengo la reserva que llega por Argumentos de navegacion
-        reserva = FormularioPropuestaFragmentArgs.fromBundle(requireArguments()).formularioPropuestaArg
+        reserva =
+            FormularioPropuestaFragmentArgs.fromBundle(requireArguments()).formularioPropuestaArg
 
         //lleno los datos de la reserva
         usuario.text = reserva.idUsuario.toString() //Hay que buscar el Usuario
@@ -96,8 +98,20 @@ class FormularioPropuestaFragment : Fragment(), propuestasDao   {
         //Boton de Guardar la Propuesta y cambiar los botones y blockear los EditText
         btn_Propuesta.setOnClickListener {
             //guardo la propuesta
-           guardarPropuesta(editText_Snack.text.toString(),editText_Entrada.text.toString(),editText_PlatoPricipal.text.toString(),
-                            editText_Postre.text.toString(), editText_Adicional.text.toString(),editText_Importe.text.toString().toDouble(),reserva.id, modificado)
+            //Todo: hay que buscar los IDs que tiene 1.
+            guardarPropuesta(
+                Propuesta(
+                    1,
+                    editText_Snack.text.toString(),
+                    editText_Entrada.text.toString(),
+                    editText_PlatoPricipal.text.toString(),
+                    editText_Postre.toString(),
+                    editText_Adicional.text.toString(),
+                    editText_Importe.text.toString().toDouble(),
+                    1,
+                    "1"
+                )
+            )
 
             //Cambio los botones y blockeo los textos
             btn_EditarPropuesta.setVisibility(View.VISIBLE);
@@ -138,9 +152,9 @@ class FormularioPropuestaFragment : Fragment(), propuestasDao   {
 
     }
 
-     fun guardarPropuesta(snack:String, entrada:String,platoPrincial:String,postre:String,adicional:String,importe:Double,reservaId: String, modificado : Boolean){
-       var propuesta = Propuesta(1,snack,entrada,platoPrincial,postre,adicional,importe,1,reservaId)
-         val scope = CoroutineScope(Dispatchers.Default)
+    fun guardarPropuesta(propuesta: Propuesta) {
+        Log.d("Test", propuesta.toString())
+               val scope = CoroutineScope(Dispatchers.Default)
 
          scope.launch {
              if (modificado)
@@ -148,6 +162,5 @@ class FormularioPropuestaFragment : Fragment(), propuestasDao   {
              else
                  add(propuesta)
          }
-
     }
 }

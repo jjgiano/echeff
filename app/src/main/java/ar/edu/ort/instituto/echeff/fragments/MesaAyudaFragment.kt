@@ -21,9 +21,9 @@ class MesaAyudaFragment : Fragment() {
 
     lateinit var v: View
 
-    lateinit var spinner: Spinner
-    lateinit var editText: EditText
-    lateinit var button: Button
+    lateinit var spinnerSugerenciasMesaAyuda: Spinner
+    lateinit var editTextMesaAyuda: EditText
+    lateinit var buttonMesaAyuda: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,12 +36,12 @@ class MesaAyudaFragment : Fragment() {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_mesa_ayuda, container, false)
 
-        spinner = v.findViewById(R.id.spinnerSugerenciasMesaAyuda)
+        spinnerSugerenciasMesaAyuda = v.findViewById(R.id.spinnerSugerenciasMesaAyuda)
         val adapter = ArrayAdapter.createFromResource(v.context,R.array.spinner_values_mesaDeAyudaSugerencias,R.layout.spinner_item)
-        spinner.adapter = adapter
+        spinnerSugerenciasMesaAyuda.adapter = adapter
 
-        editText = v.findViewById(R.id.editTextMesaAyuda)
-        button = v.findViewById(R.id.buttonMesaAyuda)
+        editTextMesaAyuda = v.findViewById(R.id.editTextMesaAyuda)
+        buttonMesaAyuda = v.findViewById(R.id.buttonMesaAyuda)
 
         return v
     }
@@ -49,10 +49,10 @@ class MesaAyudaFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        button.setOnClickListener {
+        buttonMesaAyuda.setOnClickListener {
             //v.findNavController().navigate(MesaAyudaFragmentDirections.actionMesaAyudaFragmentToHomeChefFragment())
             //v.findNavController().navigate(MesaAyudaFragmentDirections.actionMesaAyudaFragmentToHomeClienteFragment())
-            var stringItemSelected = spinner.selectedItem.toString()
+            var stringItemSelected = spinnerSugerenciasMesaAyuda.selectedItem.toString()
             Snackbar.make(it, stringItemSelected, Snackbar.LENGTH_SHORT).show()
         }
 
