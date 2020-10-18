@@ -8,9 +8,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }
-    companion object CompanionObject {
+ /*   companion object CompanionObject {
 
-    }
+    }*/
 
 /*    override suspend fun add(instrument: Instrument) {
 

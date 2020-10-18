@@ -8,15 +8,29 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.adapters.VistaPropuestasAdapter
 import ar.edu.ort.instituto.echeff.adapters.VistaReservasAdapter
+import ar.edu.ort.instituto.echeff.entities.EstadoReserva
 import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
+import ar.edu.ort.instituto.echeff.fragments.chef.HomeChefFragment
+import ar.edu.ort.instituto.echeff.fragments.chef.home.ReservasConfirmadasFragment
+import ar.edu.ort.instituto.echeff.fragments.chef.home.ReservasConfirmarFragment
+import ar.edu.ort.instituto.echeff.fragments.chef.home.ReservasDisponiblesFragment
+import ar.edu.ort.instituto.echeff.fragments.cliente.home.PropuestasDestacadasFragment
+import ar.edu.ort.instituto.echeff.fragments.cliente.home.ReservasAConfirmarFragment
+import ar.edu.ort.instituto.echeff.fragments.cliente.home.ReservasPendientesFragment
+import ar.edu.ort.instituto.echeff.fragments.cliente.home.ReservasSiguientesFragment
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -26,37 +40,31 @@ class HomeClienteFragment : Fragment() {
     lateinit var v: View
 
     lateinit var textViewSaludoCliente: TextView
-    lateinit var textViewProximasReservas: TextView
-    lateinit var textViewReservasAConfirmar: TextView
-    lateinit var textViewReservasPendientes: TextView
-    lateinit var textViewPropuestasDestacadas: TextView
+    lateinit var textViewReservas: TextView
 
     lateinit var buttonIniciarReserva: Button
     lateinit var buttonVerMisReservas: Button
 
-    lateinit var rvProximaReserva: RecyclerView
-    lateinit var rvReservasAConfirmar: RecyclerView
-    lateinit var rvReservasPendientes: RecyclerView
-    lateinit var rvPropuestasDestacadas: RecyclerView
+    lateinit var tabLayoutReservas: TabLayout
 
-    var reservasProximas: MutableList<Reserva> = ArrayList<Reserva>()
-    var reservasAConfirmar: MutableList<Reserva> = ArrayList<Reserva>()
-    var reservasPendientes: MutableList<Reserva> = ArrayList<Reserva>()
-    var propuestasDestacadas: MutableList<Propuesta> = ArrayList<Propuesta>()
+    lateinit var viewPager2Reservas: ViewPager2
+
+    var reservas: MutableList<Reserva> = ArrayList<Reserva>()
+    var propuestas: MutableList<Propuesta> = ArrayList<Propuesta>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        reservasProximas.add(Reserva("1", "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,1))
+        reservas.add(Reserva("1", "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2, EstadoReserva.NUEVO.id))
+        reservas.add(Reserva("5", "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.CONFIRMADA.id))
+        reservas.add(Reserva("9", "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.PENDIENTE.id))
+        reservas.add(Reserva("9", "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.ACONFIRMAR.id))
+        reservas.add(Reserva("9", "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.PAGADA.id))
 
-        reservasAConfirmar.add(Reserva("5", "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,1))
-
-        reservasPendientes.add(Reserva("9", "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,1))
-
-        propuestasDestacadas.add(Propuesta(1,"snack1", "entrada1", "Nombre plato 1", "postre1", "adicional1", 100.1, 1, "1", "https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/image%2025.png?alt=media&token=32ea1268-77ad-4b91-af93-c9ce4d28a059"))
-        propuestasDestacadas.add(Propuesta(2,"snack2", "entrada2", "Nombre plato 2", "postre2", "adicional2", 100.2, 1, "2", "https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/image%2025.png?alt=media&token=32ea1268-77ad-4b91-af93-c9ce4d28a059"))
-        propuestasDestacadas.add(Propuesta(3,"snack3", "entrada3", "Nombre plato 3", "postre3", "adicional3", 100.3, 1, "3", "https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/image%2025.png?alt=media&token=32ea1268-77ad-4b91-af93-c9ce4d28a059"))
-        propuestasDestacadas.add(Propuesta(4,"snack4", "entrada4", "Nombre plato 4", "postre4", "adicional4", 100.4, 1, "4","https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/image%2025.png?alt=media&token=32ea1268-77ad-4b91-af93-c9ce4d28a059"))
+        propuestas.add(Propuesta(1,"snack1", "entrada1", "Nombre plato 1", "postre1", "adicional1", 100.1, 1, "1", "https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/image%2025.png?alt=media&token=32ea1268-77ad-4b91-af93-c9ce4d28a059"))
+        propuestas.add(Propuesta(2,"snack2", "entrada2", "Nombre plato 2", "postre2", "adicional2", 100.2, 1, "2", "https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/image%2025.png?alt=media&token=32ea1268-77ad-4b91-af93-c9ce4d28a059"))
+        propuestas.add(Propuesta(3,"snack3", "entrada3", "Nombre plato 3", "postre3", "adicional3", 100.3, 1, "3", "https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/image%2025.png?alt=media&token=32ea1268-77ad-4b91-af93-c9ce4d28a059"))
+        propuestas.add(Propuesta(4,"snack4", "entrada4", "Nombre plato 4", "postre4", "adicional4", 100.4, 1, "4","https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/image%2025.png?alt=media&token=32ea1268-77ad-4b91-af93-c9ce4d28a059"))
     }
 
     override fun onCreateView(
@@ -67,18 +75,13 @@ class HomeClienteFragment : Fragment() {
         v = inflater.inflate(R.layout.fragment_home_cliente, container, false)
 
         textViewSaludoCliente = v.findViewById(R.id.textViewSaludoCliente)
-        textViewProximasReservas = v.findViewById(R.id.textViewProximasReservas)
-        textViewReservasAConfirmar = v.findViewById(R.id.textViewReservasAConfirmar)
-        textViewReservasPendientes = v.findViewById(R.id.textViewReservasPendientes)
-        textViewPropuestasDestacadas = v.findViewById(R.id.textViewPropuestasDestacadas)
+        textViewReservas = v.findViewById(R.id.textViewReservas)
+
+        tabLayoutReservas = v.findViewById(R.id.tabLayoutReservas)
+        viewPager2Reservas = v.findViewById(R.id.viewPager2Reservas)
 
         buttonIniciarReserva = v.findViewById(R.id.buttonIniciarReserva)
         buttonVerMisReservas = v.findViewById(R.id.buttonVerMisReservas)
-
-        rvProximaReserva = v.findViewById(R.id.rvProximaReserva)
-        rvReservasAConfirmar = v.findViewById(R.id.rvReservasAConfirmar)
-        rvReservasPendientes = v.findViewById(R.id.rvReservasPendientes)
-        rvPropuestasDestacadas = v.findViewById(R.id.rvPropuestasDestacadas)
 
         return v
     }
@@ -86,29 +89,17 @@ class HomeClienteFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        rvProximaReserva.setHasFixedSize(true)
-        rvProximaReserva.layoutManager = LinearLayoutManager(context)
-        rvProximaReserva.adapter = VistaReservasAdapter(reservasProximas, requireContext()){
-                position -> onItemReservaProximaClick(position)
-        }
-
-        rvReservasAConfirmar.setHasFixedSize(true)
-        rvReservasAConfirmar.layoutManager = LinearLayoutManager(context)
-        rvReservasAConfirmar.adapter = VistaReservasAdapter(reservasAConfirmar, requireContext()){
-                position -> onItemReservaAConfirmarClick(position)
-        }
-
-        rvReservasPendientes.setHasFixedSize(true)
-        rvReservasPendientes.layoutManager = LinearLayoutManager(context)
-        rvReservasPendientes.adapter = VistaReservasAdapter(reservasPendientes, requireContext()){
-                position -> onItemReservaPendienteClick(position)
-        }
-
-        rvPropuestasDestacadas.setHasFixedSize(true)
-        rvPropuestasDestacadas.layoutManager = LinearLayoutManager(context)
-        rvPropuestasDestacadas.adapter = VistaPropuestasAdapter(propuestasDestacadas, requireContext()){
-                position -> onItemPropuestaDestacadaClick(position)
-        }
+        viewPager2Reservas.setAdapter(HomeClienteFragment.ViewPagerAdapter(requireActivity(), reservas, propuestas))
+        // viewPager.isUserInputEnabled = false
+        TabLayoutMediator(tabLayoutReservas, viewPager2Reservas, TabLayoutMediator.TabConfigurationStrategy { tab, position ->
+            when (position) {
+                0 -> tab.text = "Siguiente"
+                1 -> tab.text = "Confirmar"
+                2 -> tab.text = "Pendiente"
+                3 -> tab.text = "Destacada"
+                else -> tab.text = "undefined"
+            }
+        }).attach()
 
         buttonIniciarReserva.setOnClickListener {
             val iniciarReservaPage = HomeClienteFragmentDirections.actionHomeClienteFragmentToFormularioReservaFragment()
@@ -121,27 +112,25 @@ class HomeClienteFragment : Fragment() {
         }
     }
 
-    private fun onItemReservaProximaClick(position : Int){
-        val proxima = reservasProximas[position]
-        Snackbar.make(v, "ID de la reserva proxima (son las reservas ya pagadas): " + proxima.id, Snackbar.LENGTH_SHORT).show()
+    class ViewPagerAdapter(fragmentActivity: FragmentActivity, val reservas : MutableList<Reserva>, val propuestas : MutableList<Propuesta>) : FragmentStateAdapter(fragmentActivity) {
+        override fun createFragment(position: Int): Fragment {
+
+            return when(position){
+                0 -> ReservasSiguientesFragment(reservas)
+                1 -> ReservasAConfirmarFragment(reservas)
+                2 -> ReservasPendientesFragment(reservas)
+                3 -> PropuestasDestacadasFragment(propuestas)
+                else -> PropuestasDestacadasFragment(propuestas)
+            }
+        }
+
+        override fun getItemCount(): Int {
+            return TAB_COUNT
+        }
+
+        companion object {
+            private const val TAB_COUNT = 4
+        }
     }
-
-    private fun onItemReservaAConfirmarClick(position : Int){
-        val aConfirmar = reservasAConfirmar[position]
-        var confirmacionReservaScreen = HomeClienteFragmentDirections.actionHomeClienteFragmentToConfirmacionReservaFragment2()
-        v.findNavController().navigate(confirmacionReservaScreen)
-    }
-
-    private fun onItemReservaPendienteClick(position : Int){
-        val pendiente = reservasPendientes[position]
-        Snackbar.make(v, "ID de la reserva pendiente (debe ir a la pantalla 'Confirma la reserva): " + pendiente.id, Snackbar.LENGTH_SHORT).show()
-
-    }
-
-    private fun onItemPropuestaDestacadaClick(position : Int){
-        val destacada = propuestasDestacadas[position]
-        Snackbar.make(v, "ID de la reserva destacada: " + destacada.id, Snackbar.LENGTH_SHORT).show()
-    }
-
 
 }
