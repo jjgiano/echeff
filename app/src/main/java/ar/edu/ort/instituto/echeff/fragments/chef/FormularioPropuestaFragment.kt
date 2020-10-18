@@ -105,11 +105,11 @@ class FormularioPropuestaFragment : Fragment(), PropuestasDao   {
                     editText_Snack.text.toString(),
                     editText_Entrada.text.toString(),
                     editText_PlatoPricipal.text.toString(),
-                    editText_Postre.toString(),
+                    editText_Postre.text.toString(),
                     editText_Adicional.text.toString(),
                     editText_Importe.text.toString().toDouble(),
                     1,
-                    "1"
+                    reserva.id
                 )
             )
 
