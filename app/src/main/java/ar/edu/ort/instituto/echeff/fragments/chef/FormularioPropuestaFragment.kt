@@ -12,7 +12,7 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
-import ar.edu.ort.instituto.echeff.dao.propuestasDao
+import ar.edu.ort.instituto.echeff.dao.PropuestasDao
 import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import kotlinx.coroutines.CoroutineScope
@@ -20,7 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class FormularioPropuestaFragment : Fragment(), propuestasDao   {
+class FormularioPropuestaFragment : Fragment(), PropuestasDao   {
     lateinit var v: View
 
     // datos de la reserva

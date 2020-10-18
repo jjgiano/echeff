@@ -40,7 +40,8 @@ class VistaPropuestasAdapter(
             .circleCrop()
             .into(holder.getImageView());
 
-        holder.setDireccion(StringBuilder().append(propuestas[position].plato).toString())
+        holder.setDireccion(StringBuilder().append(propuestas[position].total).toString())
+        holder.setNroComensales(propuestas[position].idChef)
         holder.setEstiloComida(StringBuilder().append(propuestas[position].snack).toString())
 
         holder.getCardLayout().setOnClickListener {

@@ -8,25 +8,29 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.navigation.findNavController
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.adapters.VistaPropuestasAdapter
-import ar.edu.ort.instituto.echeff.dao.propuestasDao
+import ar.edu.ort.instituto.echeff.dao.PropuestasDao
 import ar.edu.ort.instituto.echeff.entities.Propuesta
-import ar.edu.ort.instituto.echeff.fragments.cliente.VistaReservasFragmentDirections
+import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelVistaPropuestasFragment
+import com.bumptech.glide.manager.LifecycleListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.fragment_home_chef.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 
-class VistaPropuestasFragment : Fragment(), propuestasDao {
+class VistaPropuestasFragment : Fragment(), PropuestasDao {
 
     val db = Firebase.firestore
     lateinit var v: View
+    private lateinit var viewModel: ViewModelVistaPropuestasFragment
 
     lateinit var textViewMisPropuestas: TextView
     lateinit var buttonTengoUnProblema: Button
@@ -43,9 +47,23 @@ class VistaPropuestasFragment : Fragment(), propuestasDao {
     var propuestasConfirmadas: MutableList<Propuesta> = ArrayList<Propuesta>()
     var propuestasFinalizadas: MutableList<Propuesta> = ArrayList<Propuesta>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        viewModel = ViewModelProvider(requireActivity()).get(ViewModelVistaPropuestasFragment::class.java)
+
+
+        viewModel.listaLiveData.observe(viewLifecycleOwner, Observer { result ->
+
+            propuestasAConfirmar = result
+
+            rvPropuestasAConfirmar.setHasFixedSize(true)
+            rvPropuestasAConfirmar.layoutManager = LinearLayoutManager(context)
+            rvPropuestasAConfirmar.adapter = VistaPropuestasAdapter(propuestasAConfirmar, requireContext()){
+                    position -> onItemAConfirmarClick(position)
+            }
+        })
     }
 
     override fun onCreateView(
@@ -66,20 +84,19 @@ class VistaPropuestasFragment : Fragment(), propuestasDao {
         rvPropuestasConfirmadas = v.findViewById(R.id.rvPropuestasConfirmadas)
         rvPropuestasFinalizadas = v.findViewById(R.id.rvPropuestasFinalizadas)
 
+
+
         return v
     }
+
 
     override fun onStart() {
         super.onStart()
 
-
-        val scope = CoroutineScope(Dispatchers.Default )
-
-        scope.launch {
-            propuestasAConfirmar = getAll()
+        buttonTengoUnProblema.setOnClickListener {
+            viewModel.getLista()
 
         }
-
 
         rvPropuestasAConfirmar.setHasFixedSize(true)
         rvPropuestasAConfirmar.layoutManager = LinearLayoutManager(context)
@@ -99,11 +116,11 @@ class VistaPropuestasFragment : Fragment(), propuestasDao {
                 position -> onItemFinalizadasClick(position)
         }
 
-        buttonTengoUnProblema.setOnClickListener {
-            var mesaAyudaScreen = VistaPropuestasFragmentDirections.actionVistaPropuestasFragmentToMesaAyudaFragment2()
+      /*  buttonTengoUnProblema.setOnClickListener {
+             var mesaAyudaScreen = VistaPropuestasFragmentDirections.actionVistaPropuestasFragmentToMesaAyudaFragment2()
             v.findNavController().navigate(mesaAyudaScreen)
         }
-
+*/
     }
 
     private fun onItemAConfirmarClick(position : Int){
