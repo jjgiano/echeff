@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.adapters.ReservaListAdapter
-import ar.edu.ort.instituto.echeff.adapters.adapterListReserva
+import ar.edu.ort.instituto.echeff.adapters.AdapterListReserva
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.fragments.chef.HomeChefFragmentDirections
 import ar.edu.ort.instituto.echeff.fragments.cliente.HomeClienteFragmentDirections
