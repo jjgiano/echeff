@@ -30,9 +30,7 @@ class HomeChefFragment : Fragment() {
     lateinit var v: View
     lateinit var nombreChef: TextView
     private lateinit var viewModel: ViewModelHomeChefFragment
-
-
-
+    var cargado : Boolean = false
 
     //La lista para el recicleView
     var reservas : MutableList<Reserva> = ArrayList<Reserva>()
@@ -46,13 +44,6 @@ class HomeChefFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-     /*   reservas.add(Reserva("a","20/10/2020","21:00","Nazca 3157","Electrica","Si",4,"Premium","Mediterranea","Nada Agridulce",1,1))
-        reservas.add(Reserva("b","10/11/2020","13:00","Yatay 723","a Gas","No",8,"Basico","Italiana","No nos gusta el pesto",3,1))
-        reservas.add(Reserva("c","15/11/2020","12:00","Segurola 2000","A Gas","SI",2,"Especial","Koreana","Algo q no tenga pescado",5,1))
-        reservas.add(Reserva("d","22/10/2020","20:30","Cespedes 2400","Electrica","si",3,"Basico","Peruana","Poco picante",8,1))
-        reservas.add(Reserva("e","05/12/2020","22:00","Aguirre 3250","a Gas","No",10,"Especial","Arabe","Nada con Papicra",10,1))
-        reservas.add(Reserva("f","24/12/2020","21:00","Lozano 3520","Parrilla","No",12,"Premium","Navideña","Solo carne vacuna, no pollo ni cerdo",4,1))
-*/
     }
 
     override fun onCreateView(
@@ -79,6 +70,11 @@ class HomeChefFragment : Fragment() {
 
         viewModel = ViewModelProvider(requireActivity()).get(ViewModelHomeChefFragment::class.java)
 
+        viewModel.cargar.observe(viewLifecycleOwner, Observer { result ->
+
+            cargado = result
+
+        })
 
         viewModel.listaLiveData.observe(viewLifecycleOwner, Observer { result ->
 
@@ -103,10 +99,11 @@ class HomeChefFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-
+        viewModel.setcargar()
 
         //Seteo el nombre del chef
         nombreChef.text = "Hola Chef,"  //Hay que agtregar el nombre del Usuario
+
 
 
         //Boton de Navegacion

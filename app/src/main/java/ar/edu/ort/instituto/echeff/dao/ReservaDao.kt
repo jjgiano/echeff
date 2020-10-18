@@ -1,14 +1,10 @@
 package ar.edu.ort.instituto.echeff.dao
 
-import android.content.ContentValues
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import ar.edu.ort.instituto.echeff.adapters.adapterListReserva
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import com.google.firebase.firestore.ktx.*
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
-import kotlin.math.log
 
 
 public interface ReservaDao{

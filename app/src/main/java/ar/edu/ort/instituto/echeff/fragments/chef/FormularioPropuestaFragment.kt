@@ -30,6 +30,7 @@ class FormularioPropuestaFragment : Fragment(), PropuestasDao   {
     lateinit var reserva: Reserva
     lateinit var servicio: TextView
 
+
     //los input de la propuesta
     lateinit var editText_Snack: EditText
     lateinit var editText_Entrada: EditText
@@ -86,8 +87,7 @@ class FormularioPropuestaFragment : Fragment(), PropuestasDao   {
         var modificado : Boolean = false
 
         //Obtengo la reserva que llega por Argumentos de navegacion
-        reserva =
-            FormularioPropuestaFragmentArgs.fromBundle(requireArguments()).formularioPropuestaArg
+        reserva = FormularioPropuestaFragmentArgs.fromBundle(requireArguments()).formularioPropuestaArg
 
         //lleno los datos de la reserva
         usuario.text = reserva.idUsuario.toString() //Hay que buscar el Usuario
@@ -101,7 +101,7 @@ class FormularioPropuestaFragment : Fragment(), PropuestasDao   {
             //Todo: hay que buscar los IDs que tiene 1.
             guardarPropuesta(
                 Propuesta(
-                    1,
+                    "1",
                     editText_Snack.text.toString(),
                     editText_Entrada.text.toString(),
                     editText_PlatoPricipal.text.toString(),
@@ -157,9 +157,7 @@ class FormularioPropuestaFragment : Fragment(), PropuestasDao   {
                val scope = CoroutineScope(Dispatchers.Default)
 
          scope.launch {
-             if (modificado)
-                update(propuesta)
-             else
+
                  add(propuesta)
          }
     }

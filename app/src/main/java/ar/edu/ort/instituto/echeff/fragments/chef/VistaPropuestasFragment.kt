@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
@@ -31,6 +32,7 @@ class VistaPropuestasFragment : Fragment(), PropuestasDao {
     val db = Firebase.firestore
     lateinit var v: View
     private lateinit var viewModel: ViewModelVistaPropuestasFragment
+    var cargado : Boolean = false
 
     lateinit var textViewMisPropuestas: TextView
     lateinit var buttonTengoUnProblema: Button
@@ -53,6 +55,11 @@ class VistaPropuestasFragment : Fragment(), PropuestasDao {
 
         viewModel = ViewModelProvider(requireActivity()).get(ViewModelVistaPropuestasFragment::class.java)
 
+        viewModel.cargar.observe(viewLifecycleOwner, Observer { result ->
+
+            cargado = result
+
+        })
 
         viewModel.listaLiveData.observe(viewLifecycleOwner, Observer { result ->
 
@@ -84,8 +91,6 @@ class VistaPropuestasFragment : Fragment(), PropuestasDao {
         rvPropuestasConfirmadas = v.findViewById(R.id.rvPropuestasConfirmadas)
         rvPropuestasFinalizadas = v.findViewById(R.id.rvPropuestasFinalizadas)
 
-
-
         return v
     }
 
@@ -93,10 +98,8 @@ class VistaPropuestasFragment : Fragment(), PropuestasDao {
     override fun onStart() {
         super.onStart()
 
-        buttonTengoUnProblema.setOnClickListener {
-            viewModel.getLista()
+        viewModel.setcargar()
 
-        }
 
         rvPropuestasAConfirmar.setHasFixedSize(true)
         rvPropuestasAConfirmar.layoutManager = LinearLayoutManager(context)
@@ -116,11 +119,11 @@ class VistaPropuestasFragment : Fragment(), PropuestasDao {
                 position -> onItemFinalizadasClick(position)
         }
 
-      /*  buttonTengoUnProblema.setOnClickListener {
+        buttonTengoUnProblema.setOnClickListener {
              var mesaAyudaScreen = VistaPropuestasFragmentDirections.actionVistaPropuestasFragmentToMesaAyudaFragment2()
             v.findNavController().navigate(mesaAyudaScreen)
         }
-*/
+
     }
 
     private fun onItemAConfirmarClick(position : Int){

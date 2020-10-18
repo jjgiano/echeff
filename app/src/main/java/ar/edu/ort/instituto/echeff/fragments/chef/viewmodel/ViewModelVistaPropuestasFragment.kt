@@ -13,17 +13,18 @@ class ViewModelVistaPropuestasFragment : ViewModel(), PropuestasDao {
     var cargar = MutableLiveData<Boolean>()
 
     fun getLista(): MutableList<Propuesta>? {
+
         var listaMutableList: MutableList<Propuesta>?
+
         listaMutableList = buscarListaPropuesta().value
+
         return listaMutableList
 
     }
 
     private fun buscarListaPropuesta(): MutableLiveData<MutableList<Propuesta>> {
         val parentJob = Job()
-        val handler = CoroutineExceptionHandler { _, throwable ->
-            Log.d("demo", "handler: $throwable") // Prints "handler: java.io.IOException"
-        }
+
         val scope = CoroutineScope(Dispatchers.Default + parentJob)
 
         scope.launch {
@@ -32,5 +33,10 @@ class ViewModelVistaPropuestasFragment : ViewModel(), PropuestasDao {
 
         return listaLiveData
 
+    }
+
+    fun setcargar() {
+        cargar.value
+        getLista()
     }
 }
