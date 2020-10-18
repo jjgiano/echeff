@@ -24,9 +24,9 @@ class Reserva(id: String, fecha: String, hora: String, direccion: String, tipoCo
 
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
-         parcel.readString()!!,
-         parcel.readString()!!,
-         parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readInt(),
