@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingEnd="10sp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayoutMisReservas"
@@ -25,7 +26,7 @@
             android:id="@+id/buttonTengoUnProblema"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/button_press"
             android:paddingStart="50sp"
             android:paddingEnd="50sp"
@@ -40,7 +41,7 @@
             android:id="@+id/textViewTituloReservasAConfirmar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-medium"
             android:text="Reservas a confirmar"
             android:textColor="#D97014"
@@ -52,8 +53,7 @@
             android:id="@+id/rvReservasAConfirmar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toStartOf="@+id/guidelineDerecha"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toBottomOf="@+id/textViewTituloReservasAConfirmar" />
@@ -62,7 +62,7 @@
             android:id="@+id/textViewTituloReservasConfirmadas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-medium"
             android:text="Reservas confirmadas"
             android:textColor="#D97014"
@@ -74,8 +74,7 @@
             android:id="@+id/rvReservasConfirmadas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toStartOf="@+id/guidelineDerecha"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toBottomOf="@+id/textViewTituloReservasConfirmadas" />
@@ -84,7 +83,7 @@
             android:id="@+id/textViewTituloReservasFinalizadas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-medium"
             android:text="Reservas finalizada"
             android:textColor="#D97014"
@@ -96,8 +95,7 @@
             android:id="@+id/rvReservasFinalizadas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toStartOf="@+id/guidelineDerecha"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toBottomOf="@+id/textViewTituloReservasFinalizadas" />

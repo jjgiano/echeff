@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navgraph"
-    app:startDestination="@id/formularioReservaFragment">
+    app:startDestination="@id/homeChefFragment">
 
     <fragment
         android:id="@+id/inicioFragment"
@@ -43,10 +43,6 @@
         <action
             android:id="@+id/action_homeClienteFragment_to_vistaReservasFragment"
             app:destination="@id/vistaReservasFragment" />
-        <argument
-            android:name="user"
-            app:argType="com.google.firebase.auth.FirebaseUser"
-            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/homeChefFragment"
@@ -72,9 +68,6 @@
         android:label="fragment_formulario_reserva"
         tools:layout="@layout/fragment_formulario_reserva" >
         <action
-            android:id="@+id/action_formularioReservaFragment_to_homeClienteFragment"
-            app:destination="@id/homeClienteFragment" />
-        <action
             android:id="@+id/action_formularioReservaFragment_to_formularioReservaDosFragment3"
             app:destination="@id/formularioReservaDosFragment3" />
     </fragment>
@@ -92,6 +85,9 @@
         <action
             android:id="@+id/action_confirmacionReservaFragment2_to_perfilChefFragment"
             app:destination="@id/perfilChefFragment" />
+        <action
+            android:id="@+id/action_confirmacionReservaFragment2_to_homeClienteFragment"
+            app:destination="@id/homeClienteFragment" />
     </fragment>
     <fragment
         android:id="@+id/modificacionReservaFragment"
@@ -108,8 +104,8 @@
         android:label="fragment_pago_reserva"
         tools:layout="@layout/fragment_pago_reserva" >
         <action
-            android:id="@+id/action_pagoReservaFragment_to_homeClienteFragment"
-            app:destination="@id/homeClienteFragment" />
+            android:id="@+id/action_pagoReservaFragment_to_confirmacionReservaFragment2"
+            app:destination="@id/confirmacionReservaFragment2" />
     </fragment>
     <fragment
         android:id="@+id/detalleReservaFragment"
@@ -147,9 +143,6 @@
             android:id="@+id/action_perfilChefFragment_to_homeChefFragment"
             app:destination="@id/homeChefFragment" />
         <action
-            android:id="@+id/action_perfilChefFragment_to_confirmacionReservaFragment2"
-            app:destination="@id/confirmacionReservaFragment2" />
-        <action
             android:id="@+id/action_perfilChefFragment_to_perfilChefComentariosFragment"
             app:destination="@id/perfilChefComentariosFragment" />
         <action
@@ -172,15 +165,19 @@
         android:id="@+id/vistaPropuestasFragment"
         android:name="ar.edu.ort.instituto.echeff.fragments.chef.VistaPropuestasFragment"
         android:label="fragment_vista_propuestas"
-        tools:layout="@layout/fragment_vista_propuestas" />
+        tools:layout="@layout/fragment_vista_propuestas" >
+        <action
+            android:id="@+id/action_vistaPropuestasFragment_to_mesaAyudaFragment2"
+            app:destination="@id/mesaAyudaFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/vistaReservasFragment"
         android:name="ar.edu.ort.instituto.echeff.fragments.cliente.VistaReservasFragment"
         android:label="fragment_vista_reservas"
         tools:layout="@layout/fragment_vista_reservas" >
         <action
-            android:id="@+id/action_vistaReservasFragment_to_homeClienteFragment"
-            app:destination="@id/homeClienteFragment" />
+            android:id="@+id/action_vistaReservasFragment_to_mesaAyudaFragment2"
+            app:destination="@id/mesaAyudaFragment2" />
     </fragment>
     <fragment
         android:id="@+id/mesaAyudaFragment2"

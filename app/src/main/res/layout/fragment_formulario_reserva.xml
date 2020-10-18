@@ -5,12 +5,9 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:layout_constraintBottom_toBottomOf="parent"
-    tools:context=".fragments.chef.DetalleReservaFragment"
-    tools:ignore="MissingConstraints">
+    tools:context=".fragments.chef.DetalleReservaFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="5sp"
@@ -170,6 +167,7 @@
             android:background="@drawable/style_border_text"
             android:ems="10"
             android:inputType="numberDecimal"
+            android:text="0"
             android:textColor="@color/gray50"
             app:layout_constraintEnd_toStartOf="@+id/guideline7"
             app:layout_constraintStart_toStartOf="@+id/guideline5"

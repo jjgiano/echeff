@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.entities.Cliente
 import ar.edu.ort.instituto.echeff.entities.Reserva
@@ -66,6 +67,9 @@ class FormularioReservaDosFragment : Fragment() {
             db.collection("reservas").add(reserva).addOnSuccessListener { result ->
                 reserva.id = result.id
                 db.collection("reservas").document(reserva.id).set(reserva)
+
+                var homeClienteScreen = FormularioReservaDosFragmentDirections.actionFormularioReservaDosFragment3ToHomeClienteFragment()
+                v.findNavController().navigate(homeClienteScreen)
             }
         }
     }

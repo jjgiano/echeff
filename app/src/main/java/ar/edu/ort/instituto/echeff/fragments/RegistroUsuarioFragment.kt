@@ -44,10 +44,7 @@ class RegistroUsuarioFragment : Fragment() {
     }
 
     fun goToInicio() {
-        val action =
-            RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeClienteFragment(
-                user
-            )
+        val action = RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeClienteFragment()
         v.findNavController().navigate(action)
     }
 
