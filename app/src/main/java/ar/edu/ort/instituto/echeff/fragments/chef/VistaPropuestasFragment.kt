@@ -1,27 +1,38 @@
 package ar.edu.ort.instituto.echeff.fragments.chef
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.adapters.VistaPropuestasAdapter
+import ar.edu.ort.instituto.echeff.dao.PropuestasDao
 import ar.edu.ort.instituto.echeff.entities.Propuesta
-import ar.edu.ort.instituto.echeff.fragments.cliente.VistaReservasFragmentDirections
+import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelVistaPropuestasFragment
+import com.bumptech.glide.manager.LifecycleListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.fragment_home_chef.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.tasks.await
 
-class VistaPropuestasFragment : Fragment() {
+class VistaPropuestasFragment : Fragment(), PropuestasDao {
 
     val db = Firebase.firestore
     lateinit var v: View
+    private lateinit var viewModel: ViewModelVistaPropuestasFragment
+    var cargado : Boolean = false
 
     lateinit var textViewMisPropuestas: TextView
     lateinit var buttonTengoUnProblema: Button
@@ -38,23 +49,28 @@ class VistaPropuestasFragment : Fragment() {
     var propuestasConfirmadas: MutableList<Propuesta> = ArrayList<Propuesta>()
     var propuestasFinalizadas: MutableList<Propuesta> = ArrayList<Propuesta>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        propuestasAConfirmar.add(Propuesta(1,"snack1", "entrada1", "plato1", "postre1", "adicional1", 100.1, 1, "1"))
-        propuestasAConfirmar.add(Propuesta(2,"snack2", "entrada2", "plato2", "postre2", "adicional2", 100.2, 1, "2"))
-        //propuestasAConfirmar.add(Propuesta(3,"snack3", "entrada3", "plato3", "postre3", "adicional3", 100.3, 1, 3))
-        //propuestasAConfirmar.add(Propuesta(4,"snack4", "entrada4", "plato4", "postre4", "adicional4", 100.4, 1, 4))
 
-        propuestasConfirmadas.add(Propuesta(5,"snack5", "entrada5", "plato5", "postre5", "adicional5", 100.5, 1, "5"))
-        propuestasConfirmadas.add(Propuesta(6,"snack6", "entrada6", "plato6", "postre6", "adicional6", 100.6, 1, "6"))
-        //propuestasConfirmadas.add(Propuesta(7,"snack7", "entrada7", "plato7", "postre7", "adicional7", 100.7, 1, 7))
-        //propuestasConfirmadas.add(Propuesta(8,"snack8", "entrada8", "plato8", "postre8", "adicional8", 100.8, 1, 8))
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
-        propuestasFinalizadas.add(Propuesta(9,"snack9", "entrada9", "plato9", "postre9", "adicional9", 100.9, 1, "9"))
-        propuestasFinalizadas.add(Propuesta(10,"snack10", "entrada10", "plato10", "postre10", "adicional10", 100.10, 1, "10"))
-        //propuestasFinalizadas.add(Propuesta(11,"snack11", "entrada11", "plato11", "postre11", "adicional11", 100.11, 1, 11))
-        //propuestasFinalizadas.add(Propuesta(12,"snack12", "entrada12", "plato12", "postre12", "adicional12", 100.12, 1, 12))
+        viewModel = ViewModelProvider(requireActivity()).get(ViewModelVistaPropuestasFragment::class.java)
 
+        viewModel.cargar.observe(viewLifecycleOwner, Observer { result ->
+
+            cargado = result
+
+        })
+
+        viewModel.listaLiveData.observe(viewLifecycleOwner, Observer { result ->
+
+            propuestasAConfirmar = result
+
+            rvPropuestasAConfirmar.setHasFixedSize(true)
+            rvPropuestasAConfirmar.layoutManager = LinearLayoutManager(context)
+            rvPropuestasAConfirmar.adapter = VistaPropuestasAdapter(propuestasAConfirmar, requireContext()){
+                    position -> onItemAConfirmarClick(position)
+            }
+        })
     }
 
     override fun onCreateView(
@@ -78,8 +94,13 @@ class VistaPropuestasFragment : Fragment() {
         return v
     }
 
+
     override fun onStart() {
         super.onStart()
+
+        viewModel.setcargar()
+
+
         rvPropuestasAConfirmar.setHasFixedSize(true)
         rvPropuestasAConfirmar.layoutManager = LinearLayoutManager(context)
         rvPropuestasAConfirmar.adapter = VistaPropuestasAdapter(propuestasAConfirmar, requireContext()){
@@ -99,7 +120,7 @@ class VistaPropuestasFragment : Fragment() {
         }
 
         buttonTengoUnProblema.setOnClickListener {
-            var mesaAyudaScreen = VistaPropuestasFragmentDirections.actionVistaPropuestasFragmentToMesaAyudaFragment2()
+             var mesaAyudaScreen = VistaPropuestasFragmentDirections.actionVistaPropuestasFragmentToMesaAyudaFragment2()
             v.findNavController().navigate(mesaAyudaScreen)
         }
 
@@ -119,5 +140,6 @@ class VistaPropuestasFragment : Fragment() {
         val propuesta = propuestasFinalizadas[position]
         Snackbar.make(v, "ID de la propuesta: " + propuesta.id, Snackbar.LENGTH_SHORT).show()
     }
+
 
 }

@@ -1,7 +1,7 @@
 package ar.edu.ort.instituto.echeff.entities
 
 class Propuesta(
-    id: Int,
+    id: String,
     snack: String,
     entrada: String,
     plato: String,
@@ -12,7 +12,7 @@ class Propuesta(
     idReserva: String,
     urlImg: String? = null
 ) {
-    var id: Int
+    var id: String
     var snack: String
     var entrada: String
     var plato: String
@@ -22,6 +22,8 @@ class Propuesta(
     var idChef: Int
     var idReserva: String
     var urlImg: String?
+
+    constructor() : this("","","","","","",0.0,0,"")
 
     init {
         this.id = id

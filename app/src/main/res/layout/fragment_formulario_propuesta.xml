@@ -5,7 +5,8 @@
     android:id="@+id/frameLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginEnd="10dp"
+    android:paddingRight="10sp"
+    android:paddingBottom="10sp"
     tools:context=".fragments.chef.FormularioPropuestaFragment">
 
 
@@ -13,8 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="5sp"
-        android:paddingBottom="40dp"
-       >
+        android:paddingBottom="10sp">
 
 
         <TextView

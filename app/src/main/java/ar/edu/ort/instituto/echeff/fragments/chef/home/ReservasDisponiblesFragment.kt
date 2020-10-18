@@ -9,7 +9,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
-import ar.edu.ort.instituto.echeff.adapters.adapterListReserva
+import ar.edu.ort.instituto.echeff.adapters.AdapterListReserva
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.fragments.chef.HomeChefFragmentDirections
 
@@ -22,7 +22,7 @@ class ReservasDisponiblesFragment(private var reservaList : MutableList<Reserva>
 
     private lateinit var linearLayoutManager: LinearLayoutManager
 
-    private lateinit var reservaAdapterList: adapterListReserva
+    private lateinit var reservaAdapterList: AdapterListReserva
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +49,7 @@ class ReservasDisponiblesFragment(private var reservaList : MutableList<Reserva>
 
         rvReserva.layoutManager = linearLayoutManager
 
-        reservaAdapterList = adapterListReserva(reservaList,requireContext()){ position -> onItemClick(position)}
+        reservaAdapterList = AdapterListReserva(reservaList,requireContext()){ position -> onItemClick(position)}
 
         rvReserva.adapter = reservaAdapterList
     }

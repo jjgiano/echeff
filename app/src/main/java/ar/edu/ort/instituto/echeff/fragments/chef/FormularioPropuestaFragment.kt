@@ -12,11 +12,15 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
+import ar.edu.ort.instituto.echeff.dao.PropuestasDao
 import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
-class FormularioPropuestaFragment : Fragment() {
+class FormularioPropuestaFragment : Fragment(), PropuestasDao   {
     lateinit var v: View
 
     // datos de la reserva
@@ -25,6 +29,7 @@ class FormularioPropuestaFragment : Fragment() {
     lateinit var estilococina: TextView
     lateinit var reserva: Reserva
     lateinit var servicio: TextView
+
 
     //los input de la propuesta
     lateinit var editText_Snack: EditText
@@ -79,10 +84,10 @@ class FormularioPropuestaFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        var modificado : Boolean = false
 
         //Obtengo la reserva que llega por Argumentos de navegacion
-        reserva =
-            FormularioPropuestaFragmentArgs.fromBundle(requireArguments()).formularioPropuestaArg
+        reserva = FormularioPropuestaFragmentArgs.fromBundle(requireArguments()).formularioPropuestaArg
 
         //lleno los datos de la reserva
         usuario.text = reserva.idUsuario.toString() //Hay que buscar el Usuario
@@ -96,15 +101,15 @@ class FormularioPropuestaFragment : Fragment() {
             //Todo: hay que buscar los IDs que tiene 1.
             guardarPropuesta(
                 Propuesta(
-                    1,
+                    "1",
                     editText_Snack.text.toString(),
                     editText_Entrada.text.toString(),
                     editText_PlatoPricipal.text.toString(),
-                    editText_Postre.toString(),
+                    editText_Postre.text.toString(),
                     editText_Adicional.text.toString(),
                     editText_Importe.text.toString().toDouble(),
                     1,
-                    "1"
+                    reserva.id
                 )
             )
 
@@ -128,7 +133,7 @@ class FormularioPropuestaFragment : Fragment() {
         }
 
         btn_EditarPropuesta.setOnClickListener {
-
+            modificado = true
             btn_EnviarPropuesta.setVisibility(View.INVISIBLE);
             btn_EditarPropuesta.setVisibility(View.INVISIBLE);
             btn_Propuesta.setVisibility(View.VISIBLE);
@@ -149,5 +154,11 @@ class FormularioPropuestaFragment : Fragment() {
 
     fun guardarPropuesta(propuesta: Propuesta) {
         Log.d("Test", propuesta.toString())
+               val scope = CoroutineScope(Dispatchers.Default)
+
+         scope.launch {
+
+                 add(propuesta)
+         }
     }
 }
