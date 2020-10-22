@@ -2,20 +2,23 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayoutMisPropuestas"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context=".fragments.chef.VistaPropuestasFragment">
+        android:layout_height="match_parent"
+        tools:context=".fragments.chef.home.VistaPropuestasFragment">
 
         <TextView
             android:id="@+id/textViewMisPropuestas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mis propuestas"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Mis Servicios"
             android:textColor="@color/orange80"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
@@ -25,7 +28,7 @@
             android:id="@+id/buttonTengoUnProblema"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/button_press"
             android:paddingStart="50sp"
             android:paddingEnd="50sp"
@@ -40,9 +43,9 @@
             android:id="@+id/textViewTituloPropuestasAConfirmar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="sans-serif-medium"
-            android:text="Propuestas a confirmar"
+            android:text="Servicios a Realizar"
             android:textColor="#D97014"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
@@ -50,10 +53,10 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvPropuestasAConfirmar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline9"
             app:layout_constraintEnd_toStartOf="@+id/guidelineDerecha"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toBottomOf="@+id/textViewTituloPropuestasAConfirmar" />
@@ -62,9 +65,9 @@
             android:id="@+id/textViewTituloPropuestasConfirmadas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="40dp"
             android:fontFamily="sans-serif-medium"
-            android:text="Propuestas confirmadas"
+            android:text="Servicios Realizados"
             android:textColor="#D97014"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
@@ -72,49 +75,26 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvPropuestasConfirmadas"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toStartOf="@+id/guidelineDerecha"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toBottomOf="@+id/textViewTituloPropuestasConfirmadas" />
-
-        <TextView
-            android:id="@+id/textViewTituloPropuestasFinalizadas"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="Propuestas finalizada"
-            android:textColor="#D97014"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
-            app:layout_constraintTop_toBottomOf="@+id/rvPropuestasConfirmadas" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvPropuestasFinalizadas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/guidelineDerecha"
-            app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTituloPropuestasFinalizadas" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineArriba"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="5dp" />
+            app:layout_constraintGuide_begin="16dp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineAbajo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_end="5dp" />
+            app:layout_constraintGuide_end="0dp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineIzquierda"
@@ -128,7 +108,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_end="0dp" />
+            app:layout_constraintGuide_end="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="385dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

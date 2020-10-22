@@ -1,4 +1,4 @@
-package ar.edu.ort.instituto.echeff.fragments.chef
+package ar.edu.ort.instituto.echeff.fragments.chef.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,6 +11,8 @@ import android.widget.TextView
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.entities.Reserva
+import ar.edu.ort.instituto.echeff.fragments.chef.home.DetalleReservaFragmentArgs
+import ar.edu.ort.instituto.echeff.fragments.chef.home.DetalleReservaFragmentDirections
 
 
 class DetalleReservaFragment : Fragment() {
@@ -77,7 +79,10 @@ class DetalleReservaFragment : Fragment() {
            */
 
         btn_ArmaPropuesta.setOnClickListener {
-            val action = DetalleReservaFragmentDirections.actionDetalleReservaFragmentToFormularioPropuestaFragment(reserva)
+            val action =
+                DetalleReservaFragmentDirections.actionDetalleReservaFragmentToFormularioPropuestaFragment(
+                    reserva
+                )
             v.findNavController().navigate(action)
         }
     }

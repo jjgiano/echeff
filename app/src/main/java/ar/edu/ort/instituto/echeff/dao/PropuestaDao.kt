@@ -1,17 +1,13 @@
 package ar.edu.ort.instituto.echeff.dao
 
-import android.content.ContentValues
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import ar.edu.ort.instituto.echeff.entities.Propuesta
 import com.google.firebase.firestore.ktx.*
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
-import kotlin.math.log
 
-
-public interface PropuestasDao{
-
+public interface PropuestasDao {
 
 
     public suspend fun add(propuesta: Propuesta) {
@@ -34,15 +30,16 @@ public interface PropuestasDao{
     suspend fun update(propuesta: Propuesta) {
         val questionRef = Firebase.firestore.collection("propuestas")
         val query = questionRef
-        try{
+        try {
             val data = query.document(propuesta.id).set(propuesta)
-        } catch (e: Exception){
+        } catch (e: Exception) {
 
         }
     }
+
     suspend fun getAll(): MutableList<Propuesta> {
 
-        var propuestaList : MutableList<Propuesta> = ArrayList<Propuesta>()
+        var propuestaList: MutableList<Propuesta> = ArrayList<Propuesta>()
 
         val questionRef = Firebase.firestore.collection("propuestas")
         val query = questionRef
@@ -54,6 +51,27 @@ public interface PropuestasDao{
             for (document in data) {
                 propuestaList.add(document.toObject<Propuesta>())
             }
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+        return propuestaList
+    }
+
+    suspend fun getPropuestaByChef(idChef : String) : MutableList<Propuesta> {
+
+        var propuestaList: MutableList<Propuesta> = ArrayList<Propuesta>()
+
+        val questionRef = Firebase.firestore.collection("propuestas")
+        val query = questionRef.whereEqualTo("idChef",idChef.toInt())
+
+        try {
+            val data = query
+                .get()
+                .await()
+            for (document in data) {
+                propuestaList.add(document.toObject<Propuesta>())
+            }
+
         } catch (e: Exception) {
             Log.d("Error", e.toString())
         }
