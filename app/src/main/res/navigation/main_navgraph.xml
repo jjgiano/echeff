@@ -62,6 +62,9 @@
         <action
             android:id="@+id/action_homeChefFragment_to_vistaPropuestasFragment"
             app:destination="@id/vistaPropuestasFragment" />
+        <action
+            android:id="@+id/action_homeChefFragment_to_detallePropuestaFragment"
+            app:destination="@id/detallePropuestaFragment" />
     </fragment>
     <fragment
         android:id="@+id/formularioReservaFragment"
@@ -110,7 +113,7 @@
     </fragment>
     <fragment
         android:id="@+id/detalleReservaFragment"
-        android:name="ar.edu.ort.instituto.echeff.fragments.chef.DetalleReservaFragment"
+        android:name="ar.edu.ort.instituto.echeff.fragments.chef.home.DetalleReservaFragment"
         android:label="fragment_detalle_reserva"
         tools:layout="@layout/fragment_detalle_reserva" >
         <action
@@ -125,7 +128,7 @@
     </fragment>
     <fragment
         android:id="@+id/formularioPropuestaFragment"
-        android:name="ar.edu.ort.instituto.echeff.fragments.chef.FormularioPropuestaFragment"
+        android:name="ar.edu.ort.instituto.echeff.fragments.chef.home.FormularioPropuestaFragment"
         android:label="fragment_formulario_propuesta"
         tools:layout="@layout/fragment_formulario_propuesta" >
         <action
@@ -164,7 +167,7 @@
     </fragment>
     <fragment
         android:id="@+id/vistaPropuestasFragment"
-        android:name="ar.edu.ort.instituto.echeff.fragments.chef.VistaPropuestasFragment"
+        android:name="ar.edu.ort.instituto.echeff.fragments.chef.home.VistaPropuestasFragment"
         android:label="fragment_vista_propuestas"
         tools:layout="@layout/fragment_vista_propuestas" >
         <action
@@ -228,5 +231,17 @@
         <action
             android:id="@+id/action_viewPagerFragment_to_loginActivity"
             app:destination="@id/loginActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/detallePropuestaFragment"
+        android:name="ar.edu.ort.instituto.echeff.fragments.chef.home.DetallePropuestaFragment"
+        android:label="DetallePropuestaFragment"
+        tools:layout="@layout/fragment_detalle_propuesta">
+        <action
+            android:id="@+id/action_detallePropuestaFragment_to_homeChefFragment"
+            app:destination="@id/homeChefFragment" />
+        <argument
+            android:name="argReserva"
+            app:argType="ar.edu.ort.instituto.echeff.entities.Reserva" />
     </fragment>
 </navigation>

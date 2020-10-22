@@ -7,9 +7,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
 
-public interface ReservaDao{
-
-
+public interface ReservaDao {
 
     public suspend fun add(reserva: Reserva) {
 
@@ -32,15 +30,16 @@ public interface ReservaDao{
     suspend fun update(reserva: Reserva) {
         val questionRef = Firebase.firestore.collection("reservas")
         val query = questionRef
-        try{
+        try {
             val data = query.document(reserva.id).set(reserva)
-        } catch (e: Exception){
+        } catch (e: Exception) {
             Log.d("Error", e.toString())
         }
     }
+
     suspend fun getAllReservas(): MutableList<Reserva> {
 
-        var reservaList : MutableList<Reserva> = ArrayList<Reserva>()
+        var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
 
         val questionRef = Firebase.firestore.collection("reservas")
         val query = questionRef
@@ -57,6 +56,46 @@ public interface ReservaDao{
         }
         return reservaList
     }
+
+    suspend fun getReservasDisponibles(): MutableList<Reserva> {
+
+        var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
+
+        val questionRef = Firebase.firestore.collection("reservas")
+        val query = questionRef.whereEqualTo("idEstadoReserva", 1)
+        try {
+            val data = query
+                .get()
+                .await()
+            for (document in data) {
+                reservaList.add(document.toObject<Reserva>())
+            }
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+        return reservaList
+    }
+
+    suspend fun getReservasAConfirmar(): MutableList<Reserva> {
+
+        var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
+
+        val questionRef = Firebase.firestore.collection("reservas")
+        val query = questionRef.whereEqualTo("idEstadoReserva", 4)
+        try {
+            val data = query
+                .get()
+                .await()
+            for (document in data) {
+                reservaList.add(document.toObject<Reserva>())
+            }
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+        return reservaList
+    }
+
+
 }
 
 

@@ -11,7 +11,7 @@ import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.entities.Cliente
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.entities.Usuario
-import ar.edu.ort.instituto.echeff.fragments.chef.FormularioPropuestaFragmentArgs
+import ar.edu.ort.instituto.echeff.fragments.chef.home.FormularioPropuestaFragmentArgs
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_formulario_reserva_dos.*

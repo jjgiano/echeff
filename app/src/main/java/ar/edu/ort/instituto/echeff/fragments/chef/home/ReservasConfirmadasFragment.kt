@@ -13,7 +13,7 @@ import ar.edu.ort.instituto.echeff.adapters.AdapterListReserva
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.fragments.chef.HomeChefFragmentDirections
 
-class ReservasConfirmadasFragment(private var reservaList : MutableList<Reserva>) : Fragment() {
+class ReservasConfirmadasFragment() : Fragment() {
 
     lateinit var v : View
 
@@ -23,11 +23,14 @@ class ReservasConfirmadasFragment(private var reservaList : MutableList<Reserva>
     private lateinit var linearLayoutManager: LinearLayoutManager
 
     private lateinit var reservaAdapterList: AdapterListReserva
+    var reservaList : MutableList<Reserva> = ArrayList<Reserva>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -1,4 +1,4 @@
-package ar.edu.ort.instituto.echeff.fragments.chef
+package ar.edu.ort.instituto.echeff.fragments.chef.home
 
 import android.os.Bundle
 import android.util.Log
@@ -9,12 +9,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.dao.PropuestasDao
 import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
+import ar.edu.ort.instituto.echeff.fragments.chef.home.FormularioPropuestaFragmentArgs
+import ar.edu.ort.instituto.echeff.fragments.chef.home.FormularioPropuestaFragmentDirections
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

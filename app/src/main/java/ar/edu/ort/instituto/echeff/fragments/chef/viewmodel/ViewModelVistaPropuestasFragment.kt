@@ -14,7 +14,7 @@ class ViewModelVistaPropuestasFragment : ViewModel(), PropuestasDao {
 
     fun getLista(): MutableList<Propuesta>? {
 
-        var listaMutableList: MutableList<Propuesta>?
+        var listaMutableList : MutableList<Propuesta>?
 
         listaMutableList = buscarListaPropuesta().value
 
