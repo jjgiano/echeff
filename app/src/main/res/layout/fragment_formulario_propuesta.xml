@@ -372,5 +372,14 @@
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@+id/guideline6"
             app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+        <TextView
+            android:id="@+id/textv_idPropuesta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            app:layout_constraintBottom_toTopOf="@+id/editText_Snack"
+            tools:layout_editor_absoluteX="292dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

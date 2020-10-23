@@ -1,7 +1,6 @@
 package ar.edu.ort.instituto.echeff.dao
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import ar.edu.ort.instituto.echeff.entities.Propuesta
 import com.google.firebase.firestore.ktx.*
 import com.google.firebase.ktx.Firebase
@@ -62,7 +61,7 @@ public interface PropuestasDao {
         var propuestaList: MutableList<Propuesta> = ArrayList<Propuesta>()
 
         val questionRef = Firebase.firestore.collection("propuestas")
-        val query = questionRef.whereEqualTo("idChef",idChef.toInt())
+        val query = questionRef.whereEqualTo("idChef",idChef)
 
         try {
             val data = query
@@ -77,6 +76,8 @@ public interface PropuestasDao {
         }
         return propuestaList
     }
+
+
 }
 
 
