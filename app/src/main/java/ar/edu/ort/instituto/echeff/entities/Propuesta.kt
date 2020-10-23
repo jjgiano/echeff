@@ -8,7 +8,7 @@ class Propuesta(
     postre: String,
     adicional: String,
     total: Double,
-    idChef: Int,
+    idChef: String,
     idReserva: String,
     urlImg: String? = null
 ) {
@@ -19,11 +19,11 @@ class Propuesta(
     var postre: String
     var adicional: String
     var total: Double
-    var idChef: Int
+    var idChef: String
     var idReserva: String
     var urlImg: String?
 
-    constructor() : this("","","","","","",0.0,0,"")
+    constructor() : this("","","","","","",0.0,"","","")
 
     init {
         this.id = id

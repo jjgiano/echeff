@@ -89,15 +89,8 @@ class VistaPropuestasFragment : Fragment(), PropuestasDao {
 
     override fun onStart() {
         super.onStart()
-
-        viewModel.setcargar()
-
-
-        rvPropuestasAConfirmar.setHasFixedSize(true)
-        rvPropuestasAConfirmar.layoutManager = LinearLayoutManager(context)
-        rvPropuestasAConfirmar.adapter = VistaPropuestasAdapter(propuestasAConfirmar, requireContext()){
-                position -> onItemAConfirmarClick(position)
-        }
+        //todo: cambier le 1 por el id del Usuario
+        viewModel.setcargar("1")
 
         rvPropuestasConfirmadas.setHasFixedSize(true)
         rvPropuestasConfirmadas.layoutManager = LinearLayoutManager(context)

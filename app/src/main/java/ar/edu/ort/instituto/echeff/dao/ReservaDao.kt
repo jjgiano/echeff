@@ -95,7 +95,16 @@ public interface ReservaDao {
         return reservaList
     }
 
-
+    //MODIFICAR ESTADO DE RESERVA
+    suspend fun cambiarEstado(reserva: Reserva, estado : Int) {
+        val questionRef = Firebase.firestore.collection("reservas")
+        val query = questionRef
+        try {
+            val data = query.document(reserva.id).update("idEstadoReserva",estado)
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+    }
 }
 
 
