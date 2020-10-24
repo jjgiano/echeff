@@ -5,22 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
-import ar.edu.ort.instituto.echeff.adapters.PropuestaListAdapter
 import ar.edu.ort.instituto.echeff.adapters.ReservaListAdapter
-import ar.edu.ort.instituto.echeff.entities.Propuesta
-import ar.edu.ort.instituto.echeff.fragments.cliente.HomeClienteFragmentDirections
+import ar.edu.ort.instituto.echeff.entities.Reserva
 import com.google.android.material.snackbar.Snackbar
 
-class PropuestasDestacadasFragment(private var propuestas: MutableList<Propuesta>) : Fragment() {
+class ReservasFinalizadasFragment(private var reservas: MutableList<Reserva>) : Fragment() {
 
     lateinit var v: View
-    lateinit var rvPropuesta: RecyclerView
+    lateinit var rvReserva: RecyclerView
     private lateinit var linearLayoutManager: LinearLayoutManager
-    private lateinit var propuestaListAdapter: PropuestaListAdapter
+    private lateinit var reservaListAdapter: ReservaListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,28 +28,29 @@ class PropuestasDestacadasFragment(private var propuestas: MutableList<Propuesta
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        v = inflater.inflate(R.layout.fragment_propuestas_destacadas, container, false)
-        rvPropuesta = v.findViewById(R.id.recyclerViewPropuestasDestacadas)
+        v = inflater.inflate(R.layout.fragment_reservas_finalizadas, container, false)
+        rvReserva = v.findViewById(R.id.recyclerViewReservasFinalizadas)
         return v
     }
 
     override fun onStart() {
         super.onStart()
-        rvPropuesta.setHasFixedSize(true)
+        rvReserva.setHasFixedSize(true)
         linearLayoutManager = LinearLayoutManager(context)
-        rvPropuesta.layoutManager = linearLayoutManager
-        propuestaListAdapter = PropuestaListAdapter(propuestas, requireContext()) { position -> onItemClick(position) }
-        rvPropuesta.adapter = propuestaListAdapter
+        rvReserva.layoutManager = linearLayoutManager
+        reservaListAdapter =
+            ReservaListAdapter(reservas, requireContext()) { position -> onItemClick(position) }
+        rvReserva.adapter = reservaListAdapter
     }
 
     private fun onItemClick(position: Int) {
         Snackbar.make(
             v,
-            "ID de la propuesta destacada: " + propuestas[position].id,
+            "ID de la reserva finalizada: " + reservas[position].id,
             Snackbar.LENGTH_SHORT
         )
             .show()
-        //v.findNavController().navigate(HomeClienteFragmentDirections.actionHomeClienteFragmentToVistaReservasFragment());
+        //v.findNavController().navigate(VistaReservasFragmentDirections.actionVistaReservasFragmentToMesaAyudaFragment2());
     }
 
 }

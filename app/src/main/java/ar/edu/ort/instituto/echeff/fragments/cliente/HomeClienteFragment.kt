@@ -1,36 +1,28 @@
 package ar.edu.ort.instituto.echeff.fragments.cliente
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.adapters.VistaPropuestasAdapter
 import ar.edu.ort.instituto.echeff.adapters.VistaReservasAdapter
 import ar.edu.ort.instituto.echeff.entities.EstadoReserva
 import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
-import ar.edu.ort.instituto.echeff.fragments.chef.HomeChefFragment
-import ar.edu.ort.instituto.echeff.fragments.chef.home.ReservasConfirmadasFragment
-import ar.edu.ort.instituto.echeff.fragments.chef.home.ReservasConfirmarFragment
-import ar.edu.ort.instituto.echeff.fragments.chef.home.ReservasDisponiblesFragment
 import ar.edu.ort.instituto.echeff.fragments.cliente.home.PropuestasDestacadasFragment
 import ar.edu.ort.instituto.echeff.fragments.cliente.home.ReservasAConfirmarFragment
 import ar.edu.ort.instituto.echeff.fragments.cliente.home.ReservasPendientesFragment
 import ar.edu.ort.instituto.echeff.fragments.cliente.home.ReservasSiguientesFragment
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -40,20 +32,51 @@ class HomeClienteFragment : Fragment() {
     lateinit var v: View
 
     lateinit var textViewSaludoCliente: TextView
-    lateinit var textViewReservas: TextView
+    lateinit var textViewProximasReservas: TextView
+    lateinit var textViewReservasAConfirmar: TextView
+    lateinit var textViewReservasPendientes: TextView
+    lateinit var textViewPropuestasDestacadas: TextView
 
     lateinit var buttonIniciarReserva: Button
     lateinit var buttonVerMisReservas: Button
 
-    lateinit var tabLayoutReservas: TabLayout
-
-    lateinit var viewPager2Reservas: ViewPager2
+    lateinit var rvProximaReserva: RecyclerView
+    lateinit var rvReservasAConfirmar: RecyclerView
+    lateinit var rvReservasPendientes: RecyclerView
+    lateinit var rvPropuestasDestacadas: RecyclerView
 
     var reservas: MutableList<Reserva> = ArrayList<Reserva>()
     var propuestas: MutableList<Propuesta> = ArrayList<Propuesta>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        reservas.add(Reserva("1", "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.NUEVO.id))
+        reservas.add(Reserva("2", "01/12/2019", "14:02", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.NUEVO.id))
+
+        reservas.add(Reserva("3", "01/12/2019", "14:02", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.ACONFIRMAR.id))
+        reservas.add(Reserva("4", "01/12/2019", "14:02", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.ACONFIRMAR.id))
+
+        reservas.add(Reserva("5", "01/12/2019", "14:03", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.MODIFICADA.id))
+        reservas.add(Reserva("6", "01/12/2019", "14:04", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.MODIFICADA.id))
+
+        reservas.add(Reserva("7", "01/12/2019", "14:04", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.PAGADA.id))
+        reservas.add(Reserva("8", "01/12/2019", "14:04", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.PAGADA.id))
+
+        reservas.add(Reserva("9", "01/12/2019", "14:05", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.FINALIZADA.id))
+        reservas.add(Reserva("0", "01/12/2019", "14:06", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.FINALIZADA.id))
+        reservas.add(Reserva("11", "01/12/2019", "14:06", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.FINALIZADA.id))
+
+        reservas.add(Reserva("12", "01/12/2019", "14:06", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.CANCELADO.id))
+        reservas.add(Reserva("13", "01/12/2019", "14:06", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.CANCELADO.id))
+
+        propuestas.add(Propuesta("1","mani", "salame", "ceviche", "flan", "alfajores", 5896.25, "1", "1", "", false))
+        propuestas.add(Propuesta("2","mani", "salame", "ceviche", "flan", "alfajores", 5896.25, "1", "2", "", false))
+
+        propuestas.add(Propuesta("3","mani", "salame", "ceviche", "flan", "alfajores", 5896.25, "1", "9", "", false))
+        propuestas.add(Propuesta("4","mani", "salame", "ceviche", "flan", "alfajores", 5896.25, "1", "0", "", true))
+        propuestas.add(Propuesta("5","choclo", "salame", "ceviche", "flan", "alfajores", 1234.56, "1", "11", "", true))
+
     }
 
     override fun onCreateView(
@@ -64,13 +87,18 @@ class HomeClienteFragment : Fragment() {
         v = inflater.inflate(R.layout.fragment_home_cliente, container, false)
 
         textViewSaludoCliente = v.findViewById(R.id.textViewSaludoCliente)
-        textViewReservas = v.findViewById(R.id.textViewReservas)
-
-        tabLayoutReservas = v.findViewById(R.id.tabLayoutReservas)
-        viewPager2Reservas = v.findViewById(R.id.viewPager2Reservas)
+        textViewProximasReservas = v.findViewById(R.id.textViewProximasReservas)
+        textViewReservasAConfirmar = v.findViewById(R.id.textViewReservasAConfirmar)
+        textViewReservasPendientes = v.findViewById(R.id.textViewReservasPendientes)
+        textViewPropuestasDestacadas = v.findViewById(R.id.textViewPropuestasDestacadas)
 
         buttonIniciarReserva = v.findViewById(R.id.buttonIniciarReserva)
         buttonVerMisReservas = v.findViewById(R.id.buttonVerMisReservas)
+
+        rvProximaReserva = v.findViewById(R.id.rvProximaReserva)
+        rvReservasAConfirmar = v.findViewById(R.id.rvReservasAConfirmar)
+        rvReservasPendientes = v.findViewById(R.id.rvReservasPendientes)
+        rvPropuestasDestacadas = v.findViewById(R.id.rvPropuestasDestacadas)
 
         return v
     }
@@ -78,33 +106,91 @@ class HomeClienteFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        viewPager2Reservas.setAdapter(HomeClienteFragment.ViewPagerAdapter(requireActivity(), reservas, propuestas))
-        // viewPager.isUserInputEnabled = false
-        TabLayoutMediator(tabLayoutReservas, viewPager2Reservas, TabLayoutMediator.TabConfigurationStrategy { tab, position ->
-            when (position) {
-                0 -> tab.text = "Siguiente"
-                1 -> tab.text = "Confirmar"
-                2 -> tab.text = "Pendiente"
-                3 -> tab.text = "Destacada"
-                else -> tab.text = "undefined"
+        rvProximaReserva.setHasFixedSize(true)
+        rvProximaReserva.layoutManager = LinearLayoutManager(context)
+        var proximas = reservas.filter { it.idEstadoReserva == EstadoReserva.PAGADA.id }
+        rvProximaReserva.adapter =
+            VistaReservasAdapter(ArrayList(proximas), requireContext()) { position ->
+                onItemReservaProximaClick(position)
             }
-        }).attach()
+
+        rvReservasAConfirmar.setHasFixedSize(true)
+        rvReservasAConfirmar.layoutManager = LinearLayoutManager(context)
+        var aConfirmar = reservas.filter { it.idEstadoReserva == EstadoReserva.ACONFIRMAR.id }
+        rvReservasAConfirmar.adapter =
+            VistaReservasAdapter(ArrayList(aConfirmar), requireContext()) { position ->
+                onItemReservaAConfirmarClick(position)
+            }
+
+        rvReservasPendientes.setHasFixedSize(true)
+        rvReservasPendientes.layoutManager = LinearLayoutManager(context)
+        var pendientes = reservas.filter { it.idEstadoReserva == EstadoReserva.MODIFICADA.id }
+        rvReservasPendientes.adapter =
+            VistaReservasAdapter(ArrayList(pendientes), requireContext()) { position ->
+                onItemReservaPendienteClick(position)
+            }
+
+        rvPropuestasDestacadas.setHasFixedSize(true)
+        rvPropuestasDestacadas.layoutManager = LinearLayoutManager(context)
+        var destacadas = propuestas.filter { it.destacada == true }
+        rvPropuestasDestacadas.adapter =
+            VistaPropuestasAdapter(ArrayList(destacadas), requireContext()) { position ->
+                onItemPropuestaDestacadaClick(position)
+            }
 
         buttonIniciarReserva.setOnClickListener {
-            val iniciarReservaPage = HomeClienteFragmentDirections.actionHomeClienteFragmentToFormularioReservaFragment()
+            val iniciarReservaPage =
+                HomeClienteFragmentDirections.actionHomeClienteFragmentToFormularioReservaFragment()
             v.findNavController().navigate(iniciarReservaPage)
         }
 
         buttonVerMisReservas.setOnClickListener {
-            val verMisReservasPage = HomeClienteFragmentDirections.actionHomeClienteFragmentToVistaReservasFragment()
+            val verMisReservasPage =
+                HomeClienteFragmentDirections.actionHomeClienteFragmentToVistaReservasFragment()
             v.findNavController().navigate(verMisReservasPage)
         }
+
     }
 
-    class ViewPagerAdapter(fragmentActivity: FragmentActivity, val reservas : MutableList<Reserva>, val propuestas : MutableList<Propuesta>) : FragmentStateAdapter(fragmentActivity) {
+    private fun onItemReservaProximaClick(position: Int) {
+        val proxima = reservas[position]
+        Snackbar.make(
+            v,
+            "ID de la reserva proxima (son las reservas ya pagadas): " + proxima.id,
+            Snackbar.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun onItemReservaPendienteClick(position: Int) {
+        val pendiente = reservas[position]
+        Snackbar.make(
+            v,
+            "ID de la reserva pendiente (debe ir a la pantalla 'Confirma la reserva): " + pendiente.id,
+            Snackbar.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun onItemReservaAConfirmarClick(position: Int) {
+        val aConfirmar = reservas[position]
+        var confirmacionReservaScreen =
+            HomeClienteFragmentDirections.actionHomeClienteFragmentToConfirmacionReservaFragment2()
+        v.findNavController().navigate(confirmacionReservaScreen)
+    }
+
+    private fun onItemPropuestaDestacadaClick(position: Int) {
+        val destacada = propuestas[position]
+        Snackbar.make(v, "ID de la reserva destacada: " + destacada.id, Snackbar.LENGTH_SHORT)
+            .show()
+    }
+
+    class ViewPagerAdapter(
+        fragmentActivity: FragmentActivity,
+        val reservas: MutableList<Reserva>,
+        val propuestas: MutableList<Propuesta>
+    ) : FragmentStateAdapter(fragmentActivity) {
         override fun createFragment(position: Int): Fragment {
 
-            return when(position){
+            return when (position) {
                 0 -> ReservasSiguientesFragment(reservas)
                 1 -> ReservasAConfirmarFragment(reservas)
                 2 -> ReservasPendientesFragment(reservas)

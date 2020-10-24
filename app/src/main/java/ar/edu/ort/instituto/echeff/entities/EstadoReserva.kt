@@ -1,9 +1,10 @@
 package ar.edu.ort.instituto.echeff.entities
 
 enum class EstadoReserva(val id: Int){
-    NUEVO(0),
-    PENDIENTE(1),
-    CONFIRMADA(2),
-    PAGADA(3),
-    ACONFIRMAR(4)
+    NUEVO(1),
+    PAGADA(2),
+    ACONFIRMAR(3),
+    FINALIZADA(4),
+    MODIFICADA(5),
+    CANCELADO(6)
 }
