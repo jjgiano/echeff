@@ -10,7 +10,8 @@ class Propuesta(
     total: Double,
     idChef: String,
     idReserva: String,
-    urlImg: String? = null
+    urlImg: String? = null,
+    destacada: Boolean = false
 ) {
     var id: String
     var snack: String
@@ -22,8 +23,9 @@ class Propuesta(
     var idChef: String
     var idReserva: String
     var urlImg: String?
+    var destacada: Boolean?
 
-    constructor() : this("","","","","","",0.0,"","","")
+    constructor() : this("","","","","","",0.0,"","","", false)
 
     init {
         this.id = id
@@ -36,6 +38,7 @@ class Propuesta(
         this.idChef = idChef
         this.idReserva = idReserva
         this.urlImg = urlImg
+        this.destacada = destacada
     }
 
 }

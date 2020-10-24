@@ -12,6 +12,7 @@ import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.adapters.ReservaListAdapter
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.fragments.cliente.HomeClienteFragmentDirections
+import com.google.android.material.snackbar.Snackbar
 
 class ReservasPendientesFragment(private var reservas: MutableList<Reserva>) : Fragment() {
 
@@ -44,7 +45,13 @@ class ReservasPendientesFragment(private var reservas: MutableList<Reserva>) : F
     }
 
     private fun onItemClick(position: Int) {
-        v.findNavController().navigate(HomeClienteFragmentDirections.actionHomeClienteFragmentToConfirmacionReservaFragment2());
+        Snackbar.make(
+            v,
+            "ID de la reserva pendiente: " + reservas[position].id,
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
+        //v.findNavController().navigate(HomeClienteFragmentDirections.actionHomeClienteFragmentToConfirmacionReservaFragment2());
     }
 
 }

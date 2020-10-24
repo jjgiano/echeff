@@ -1,19 +1,19 @@
 package ar.edu.ort.instituto.echeff.fragments.cliente.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.adapters.ReservaListAdapter
-import ar.edu.ort.instituto.echeff.adapters.AdapterListReserva
+import ar.edu.ort.instituto.echeff.entities.EstadoReserva
 import ar.edu.ort.instituto.echeff.entities.Reserva
-import ar.edu.ort.instituto.echeff.fragments.chef.HomeChefFragmentDirections
 import ar.edu.ort.instituto.echeff.fragments.cliente.HomeClienteFragmentDirections
+import com.google.android.material.snackbar.Snackbar
 
 class ReservasSiguientesFragment(private var reservas: MutableList<Reserva>) : Fragment() {
 
@@ -41,12 +41,19 @@ class ReservasSiguientesFragment(private var reservas: MutableList<Reserva>) : F
         rvReserva.setHasFixedSize(true)
         linearLayoutManager = LinearLayoutManager(context)
         rvReserva.layoutManager = linearLayoutManager
-        reservaListAdapter = ReservaListAdapter(reservas, requireContext()) { position -> onItemClick(position) }
+        reservaListAdapter =
+            ReservaListAdapter(reservas, requireContext()) { position -> onItemClick(position) }
         rvReserva.adapter = reservaListAdapter
     }
 
     private fun onItemClick(position: Int) {
-        v.findNavController().navigate(HomeClienteFragmentDirections.actionHomeClienteFragmentToVistaReservasFragment());
+        Snackbar.make(
+            v,
+            "ID de la reserva siguiente: " + reservas[position].id,
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
+        //v.findNavController().navigate(HomeClienteFragmentDirections.actionHomeClienteFragmentToVistaReservasFragment());
     }
 
 }
