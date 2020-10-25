@@ -8,6 +8,7 @@ import ar.edu.ort.instituto.echeff.dao.ReservaDao
 import ar.edu.ort.instituto.echeff.dao.ServicioDao
 import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
+import ar.edu.ort.instituto.echeff.entities.Usuario
 import kotlinx.coroutines.launch
 
     class ViewModelVistaReservasNuevasFragment : ViewModel(), ReservaDao {
@@ -15,20 +16,20 @@ import kotlinx.coroutines.launch
         var liveDataList = MutableLiveData<MutableList<Reserva>>()
         var cargar = MutableLiveData<Boolean>()
 
-        fun getLista(): MutableList<Reserva>? {
+        fun getLista(idUsuario: String): MutableList<Reserva>? {
 
             var lista: MutableList<Reserva>?
 
-            lista = buscarReservasNuevas().value
+            lista = buscarReservasNuevas(idUsuario).value
 
             return lista
 
         }
 
-        private fun buscarReservasNuevas(): MutableLiveData<MutableList<Reserva>> {
+        private fun buscarReservasNuevas(idUsuario: String): MutableLiveData<MutableList<Reserva>> {
 
             viewModelScope.launch {
-                liveDataList.postValue(getReservasNuevas())
+                liveDataList.postValue(getReservasNuevas(idUsuario))
             }
 
             return liveDataList
@@ -36,9 +37,9 @@ import kotlinx.coroutines.launch
         }
 
 
-        fun setcargar() {
+        fun setCargar(idUsuario: String) {
             cargar.value
-            getLista()
+            getLista(idUsuario)
         }
 
     }

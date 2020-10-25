@@ -149,12 +149,12 @@ public interface ReservaDao {
         }
     }
 
-    suspend fun getReservasNuevas(): MutableList<Reserva> {
+    suspend fun getReservasNuevas(idUsuario: String): MutableList<Reserva> {
 
         var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
 
         val questionRef = Firebase.firestore.collection("reservas")
-        val query = questionRef.whereEqualTo("idEstadoReserva", 1)
+        val query = questionRef.whereEqualTo("idEstadoReserva", 1).whereEqualTo("idEstadoReserva",idUsuario)
         try {
             val data = query
                 .get()
