@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navgraph"
 
-    app:startDestination="@id/homeChefFragment">
+    app:startDestination="@id/vistaReservasFragment">
 
     <fragment
         android:id="@+id/inicioFragment"
