@@ -148,6 +148,25 @@ public interface ReservaDao {
             Log.d("Error", e.toString())
         }
     }
+
+    suspend fun getReservasNuevas(): MutableList<Reserva> {
+
+        var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
+
+        val questionRef = Firebase.firestore.collection("reservas")
+        val query = questionRef.whereEqualTo("idEstadoReserva", 1)
+        try {
+            val data = query
+                .get()
+                .await()
+            for (document in data) {
+                reservaList.add(document.toObject<Reserva>())
+            }
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+        return reservaList
+    }
 }
 
 
