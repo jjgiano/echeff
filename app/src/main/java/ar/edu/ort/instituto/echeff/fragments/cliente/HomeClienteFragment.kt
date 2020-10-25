@@ -8,6 +8,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,10 +20,12 @@ import ar.edu.ort.instituto.echeff.adapters.VistaReservasAdapter
 import ar.edu.ort.instituto.echeff.entities.EstadoReserva
 import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
+import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelVistaServiciosFragment
 import ar.edu.ort.instituto.echeff.fragments.cliente.home.PropuestasDestacadasFragment
 import ar.edu.ort.instituto.echeff.fragments.cliente.home.ReservasAConfirmarFragment
 import ar.edu.ort.instituto.echeff.fragments.cliente.home.ReservasPendientesFragment
 import ar.edu.ort.instituto.echeff.fragments.cliente.home.ReservasSiguientesFragment
+import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelHomeClienteFragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -30,6 +34,9 @@ class HomeClienteFragment : Fragment() {
 
     val db = Firebase.firestore
     lateinit var v: View
+
+    private lateinit var viewModel: ViewModelHomeClienteFragment
+    var cargar : Boolean = false
 
     lateinit var textViewSaludoCliente: TextView
     lateinit var textViewProximasReservas: TextView
@@ -46,12 +53,59 @@ class HomeClienteFragment : Fragment() {
     lateinit var rvPropuestasDestacadas: RecyclerView
 
     var reservas: MutableList<Reserva> = ArrayList<Reserva>()
+    var reservasProximas: MutableList<Reserva> = ArrayList<Reserva>()
+    var reservasAConfirmar: MutableList<Reserva> = ArrayList<Reserva>()
+    var reservasPendientes: MutableList<Reserva> = ArrayList<Reserva>()
     var propuestas: MutableList<Propuesta> = ArrayList<Propuesta>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
+        viewModel = ViewModelProvider(super.requireActivity()).get(ViewModelHomeClienteFragment::class.java)
+
+        viewModel.liveDataBooleanCargar.observe(viewLifecycleOwner, Observer { result ->
+            cargar = result
+        })
+
+        viewModel.liveDataReservasProximasList.observe(viewLifecycleOwner, Observer { result ->
+            reservasProximas = result
+            rvProximaReserva.setHasFixedSize(true)
+            rvProximaReserva.layoutManager = LinearLayoutManager(context)
+            rvProximaReserva.adapter = VistaReservasAdapter(reservasProximas, super.requireContext()){
+                    position -> onItemReservaProximaClick(position)
+            }
+        })
+
+        viewModel.liveDataReservasAConfirmarList.observe(viewLifecycleOwner, Observer { result ->
+            reservasAConfirmar = result
+            rvReservasAConfirmar.setHasFixedSize(true)
+            rvReservasAConfirmar.layoutManager = LinearLayoutManager(context)
+            rvReservasAConfirmar.adapter = VistaReservasAdapter(reservasAConfirmar, super.requireContext()){
+                    position -> onItemReservaAConfirmarClick(position)
+            }
+        })
+
+        viewModel.liveDataReservasPendientesList.observe(viewLifecycleOwner, Observer { result ->
+            reservasPendientes = result
+            rvReservasPendientes.setHasFixedSize(true)
+            rvReservasPendientes.layoutManager = LinearLayoutManager(context)
+            rvReservasPendientes.adapter = VistaReservasAdapter(reservasPendientes, super.requireContext()){
+                    position -> onItemReservaPendienteClick(position)
+            }
+        })
+
+        viewModel.liveDataPropuestasDestacadasList.observe(viewLifecycleOwner, Observer { result ->
+            propuestas = result
+            rvPropuestasDestacadas.setHasFixedSize(true)
+            rvPropuestasDestacadas.layoutManager = LinearLayoutManager(context)
+            rvPropuestasDestacadas.adapter = VistaPropuestasAdapter(propuestas, super.requireContext()){
+                    position -> onItemPropuestaDestacadaClick(position)
+            }
+        })
 
     }
 
@@ -82,47 +136,16 @@ class HomeClienteFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        rvProximaReserva.setHasFixedSize(true)
-        rvProximaReserva.layoutManager = LinearLayoutManager(context)
-        var proximas = reservas.filter { it.idEstadoReserva == EstadoReserva.PAGADA.id }
-        rvProximaReserva.adapter =
-            VistaReservasAdapter(ArrayList(proximas), requireContext()) { position ->
-                onItemReservaProximaClick(position)
-            }
-
-        rvReservasAConfirmar.setHasFixedSize(true)
-        rvReservasAConfirmar.layoutManager = LinearLayoutManager(context)
-        var aConfirmar = reservas.filter { it.idEstadoReserva == EstadoReserva.ACONFIRMAR.id }
-        rvReservasAConfirmar.adapter =
-            VistaReservasAdapter(ArrayList(aConfirmar), requireContext()) { position ->
-                onItemReservaAConfirmarClick(position)
-            }
-
-        rvReservasPendientes.setHasFixedSize(true)
-        rvReservasPendientes.layoutManager = LinearLayoutManager(context)
-        var pendientes = reservas.filter { it.idEstadoReserva == EstadoReserva.MODIFICADA.id }
-        rvReservasPendientes.adapter =
-            VistaReservasAdapter(ArrayList(pendientes), requireContext()) { position ->
-                onItemReservaPendienteClick(position)
-            }
-
-        rvPropuestasDestacadas.setHasFixedSize(true)
-        rvPropuestasDestacadas.layoutManager = LinearLayoutManager(context)
-        var destacadas = propuestas.filter { it.destacada == true }
-        rvPropuestasDestacadas.adapter =
-            VistaPropuestasAdapter(ArrayList(destacadas), requireContext()) { position ->
-                onItemPropuestaDestacadaClick(position)
-            }
+        //TODO: cambiar le 1 por el id del Usuario logueado
+        viewModel.setCargar(1)
 
         buttonIniciarReserva.setOnClickListener {
-            val iniciarReservaPage =
-                HomeClienteFragmentDirections.actionHomeClienteFragmentToFormularioReservaFragment()
+            val iniciarReservaPage = HomeClienteFragmentDirections.actionHomeClienteFragmentToFormularioReservaFragment()
             v.findNavController().navigate(iniciarReservaPage)
         }
 
         buttonVerMisReservas.setOnClickListener {
-            val verMisReservasPage =
-                HomeClienteFragmentDirections.actionHomeClienteFragmentToVistaReservasFragment()
+            val verMisReservasPage = HomeClienteFragmentDirections.actionHomeClienteFragmentToVistaReservasFragment()
             v.findNavController().navigate(verMisReservasPage)
         }
 
@@ -130,33 +153,23 @@ class HomeClienteFragment : Fragment() {
 
     private fun onItemReservaProximaClick(position: Int) {
         val proxima = reservas[position]
-        Snackbar.make(
-            v,
-            "ID de la reserva proxima (son las reservas ya pagadas): " + proxima.id,
-            Snackbar.LENGTH_SHORT
-        ).show()
+        Snackbar.make(v, "ID de la reserva proxima (son las reservas ya pagadas): " + proxima.id, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun onItemReservaPendienteClick(position: Int) {
         val pendiente = reservas[position]
-        Snackbar.make(
-            v,
-            "ID de la reserva pendiente (debe ir a la pantalla 'Confirma la reserva): " + pendiente.id,
-            Snackbar.LENGTH_SHORT
-        ).show()
+        Snackbar.make(v,"ID de la reserva pendiente (debe ir a la pantalla 'Confirma la reserva): " + pendiente.id, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun onItemReservaAConfirmarClick(position: Int) {
         val aConfirmar = reservas[position]
-        var confirmacionReservaScreen =
-            HomeClienteFragmentDirections.actionHomeClienteFragmentToConfirmacionReservaFragment2()
+        var confirmacionReservaScreen = HomeClienteFragmentDirections.actionHomeClienteFragmentToConfirmacionReservaFragment2()
         v.findNavController().navigate(confirmacionReservaScreen)
     }
 
     private fun onItemPropuestaDestacadaClick(position: Int) {
         val destacada = propuestas[position]
-        Snackbar.make(v, "ID de la reserva destacada: " + destacada.id, Snackbar.LENGTH_SHORT)
-            .show()
+        Snackbar.make(v, "ID de la reserva destacada: " + destacada.id, Snackbar.LENGTH_SHORT).show()
     }
 
     class ViewPagerAdapter(
