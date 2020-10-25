@@ -1,9 +1,10 @@
 package ar.edu.ort.instituto.echeff.entities
 
 enum class EstadoPropuesta(val id: Int){
-    ACTIVO(1),
-    FINALIZADO(2),
-    CANCELADO(3),
-    CONFIRMADO(4),
-    MODIFICADO(5)
+    NUEVO(1),
+    ACONFIRMAR(2),
+    PAGADO(3),
+    MODIFICADO(4),
+    RECHAZADO(5),
+    FINALIZADO(6)
 }
