@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingRight="10sp"
+    android:paddingBottom="10sp"
+    tools:context=".fragments.chef.home.DetallePropuestaFragment">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5sp"
+        android:paddingBottom="10sp">
+
+
+        <TextView
+            android:id="@+id/text_TituloPropuesta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Servicios a Realizar"
+            android:textColor="#D97014"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_itemsReserva"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginTop="32dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toBottomOf="@+id/text_TituloPropuesta">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/style_border_text"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="205dp" />
+
+                <ImageView
+                    android:id="@+id/imageViewChef"
+                    android:layout_width="100sp"
+                    android:layout_height="100sp"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@tools:sample/avatars" />
+
+                <TextView
+                    android:id="@+id/text_DatoUsuario"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="TextView"
+                    android:textColor="#D97014"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageViewChef"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/text_DatosComensales"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="sans-serif"
+                    android:text="com"
+                    android:textColor="#D97014"
+                    app:layout_constraintStart_toStartOf="@+id/guideline15"
+                    app:layout_constraintTop_toBottomOf="@+id/text_DatoDireccion" />
+
+                <TextView
+                    android:id="@+id/text_EstiloComida"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Estilo Comida:"
+                    android:textColor="#D97014"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline15"
+                    app:layout_constraintTop_toBottomOf="@+id/text_TituloComensales" />
+
+                <TextView
+                    android:id="@+id/text_DatosEstiloComida"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="6dp"
+                    android:text="est"
+                    android:textColor="#D97014"
+                    app:layout_constraintStart_toStartOf="@+id/guideline15"
+                    app:layout_constraintTop_toBottomOf="@+id/text_DatosComensales" />
+
+                <TextView
+                    android:id="@+id/text_TituloTipoServicio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="TipoServicio:"
+                    android:textColor="@color/orange80"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline15"
+                    app:layout_constraintTop_toBottomOf="@+id/text_EstiloComida" />
+
+                <TextView
+                    android:id="@+id/text_TituloComensales"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Comensales:"
+                    android:textColor="@color/orange80"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline15"
+                    app:layout_constraintTop_toBottomOf="@+id/text_TituloDireccion" />
+
+                <TextView
+                    android:id="@+id/text_DatoTipoServicio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="6dp"
+                    android:text="ser"
+                    android:textColor="@color/orange80"
+                    app:layout_constraintStart_toStartOf="@+id/guideline15"
+                    app:layout_constraintTop_toBottomOf="@+id/text_DatosEstiloComida" />
+
+                <TextView
+                    android:id="@+id/text_TituloDireccion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Direccion:"
+                    android:textColor="@color/orange80"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline15"
+                    app:layout_constraintTop_toBottomOf="@+id/text_DatoUsuario" />
+
+                <TextView
+                    android:id="@+id/text_DatoDireccion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="8dp"
+                    android:text="dir"
+                    android:textColor="@color/orange80"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="@+id/guideline15"
+                    app:layout_constraintTop_toBottomOf="@+id/text_DatoUsuario" />
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Tipo Cocina:"
+                    android:textColor="@color/orange80"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline15"
+                    app:layout_constraintTop_toBottomOf="@+id/text_TituloTipoServicio" />
+
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="6dp"
+                    android:text="coc"
+                    android:textColor="@color/orange80"
+                    app:layout_constraintStart_toStartOf="@+id/guideline15"
+                    app:layout_constraintTop_toBottomOf="@+id/text_DatoTipoServicio" />
+
+                <TextView
+                    android:id="@+id/textView18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Horno?"
+                    android:textColor="@color/orange80"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline15"
+                    app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+                <TextView
+                    android:id="@+id/textView19"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="6dp"
+                    android:text="hor"
+                    android:textColor="@color/orange80"
+                    app:layout_constraintStart_toStartOf="@+id/guideline15"
+                    app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+        <TextView
+            android:id="@+id/tv_Snack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/style_border_text"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textColor="#9C9595"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toBottomOf="@+id/card_itemsReserva" />
+
+        <TextView
+            android:id="@+id/tv_Entrada"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/style_border_text"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textColor="#9C9595"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toBottomOf="@+id/text_TituloEntrada" />
+
+        <TextView
+            android:id="@+id/tv_PlatoPrincipal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/style_border_text"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textColor="#9C9595"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toBottomOf="@+id/text_TituloPlatoPrincipal" />
+
+        <TextView
+            android:id="@+id/tv_Postre"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/style_border_text"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textColor="#9C9595"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toBottomOf="@+id/text_TituloPostre" />
+
+        <TextView
+            android:id="@+id/tv_Adicionales"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/style_border_text"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textColor="#9C9595"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toBottomOf="@+id/text_TituloAdicionales" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/style_linea_naranja_fuerte"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toBottomOf="@+id/tv_Adicionales" />
+
+        <TextView
+            android:id="@+id/tv_Total"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/style_border_text"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toBottomOf="@+id/text_TituloImporte" />
+
+        <TextView
+            android:id="@+id/text_TituloSnack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Snack"
+            android:textColor="@color/orange80"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_Snack"
+            app:layout_constraintStart_toStartOf="@+id/guideline6" />
+
+        <TextView
+            android:id="@+id/text_TituloEntrada"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Entrada"
+            android:textColor="@color/orange80"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toBottomOf="@+id/tv_Snack" />
+
+        <TextView
+            android:id="@+id/text_TituloPlatoPrincipal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Plato Principal"
+            android:textColor="@color/orange80"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toBottomOf="@+id/tv_Entrada" />
+
+        <TextView
+            android:id="@+id/text_TituloPostre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Postre"
+            android:textColor="@color/orange80"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toBottomOf="@+id/tv_PlatoPrincipal" />
+
+        <TextView
+            android:id="@+id/text_TituloAdicionales"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Adicionales"
+            android:textColor="@color/orange80"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toBottomOf="@+id/tv_Postre" />
+
+        <TextView
+            android:id="@+id/text_TituloImporte"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Importe Total"
+            android:textColor="@color/orange80"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+        <Button
+            android:id="@+id/btn_VolveAlHome"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/style_botones_principal"
+            android:text="Volver al Home"
+            android:textColor="#FFFFFF"
+
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toBottomOf="@+id/tv_Total" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

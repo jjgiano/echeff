@@ -1,5 +1,7 @@
 package ar.edu.ort.instituto.echeff.entities
 
+
+
 class Propuesta(
     id: String,
     snack: String,
@@ -46,5 +48,6 @@ class Propuesta(
         this.idEstadoPropuesta = idEstadoPropuesta
         this.modifiaciones = modifiaciones
     }
+
 
 }

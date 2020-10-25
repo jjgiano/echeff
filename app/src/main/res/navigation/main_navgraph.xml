@@ -176,6 +176,9 @@
         <action
             android:id="@+id/action_vistaPropuestasFragment_to_mesaAyudaFragment2"
             app:destination="@id/mesaAyudaFragment2" />
+        <action
+            android:id="@+id/action_vistaPropuestasFragment_to_detalleServicioFragment"
+            app:destination="@id/detalleServicioFragment" />
     </fragment>
     <fragment
         android:id="@+id/vistaReservasFragment"
@@ -257,5 +260,13 @@
         <action
             android:id="@+id/action_formularioPropuestaModificacionesFragment_to_homeChefFragment"
             app:destination="@id/homeChefFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detalleServicioFragment"
+        android:name="ar.edu.ort.instituto.echeff.fragments.chef.home.DetalleServicioFragment"
+        android:label="DetalleServicioFragment" >
+        <argument
+            android:name="servicioArg"
+            app:argType="ar.edu.ort.instituto.echeff.entities.Servicio" />
     </fragment>
 </navigation>

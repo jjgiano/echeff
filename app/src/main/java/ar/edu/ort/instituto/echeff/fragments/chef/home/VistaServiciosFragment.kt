@@ -14,8 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.adapters.VistaReservasAdapter
-import ar.edu.ort.instituto.echeff.dao.PropuestasDao
+import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
+import ar.edu.ort.instituto.echeff.entities.Servicio
+import ar.edu.ort.instituto.echeff.fragments.chef.HomeChefFragmentDirections
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelVistaServiciosFragment
 import com.google.android.material.snackbar.Snackbar
 
@@ -27,6 +29,9 @@ class VistaServiciosFragment : Fragment(){
     private lateinit var viewModel: ViewModelVistaServiciosFragment
     var cargado : Boolean = false
 
+    lateinit var propuesta: Propuesta
+    lateinit var reserva: Reserva
+
     lateinit var textViewMisPropuestas: TextView
     lateinit var buttonTengoUnProblema: Button
 
@@ -36,7 +41,7 @@ class VistaServiciosFragment : Fragment(){
     lateinit var rvServiciosARealizar: RecyclerView
     lateinit var rvServiciosRealizados: RecyclerView
 
-
+    var servicios : MutableList<Servicio> = ArrayList<Servicio>()
     var serviciosARealizar: MutableList<Reserva> = ArrayList<Reserva>()
     var serviciosRealizados: MutableList<Reserva> = ArrayList<Reserva>()
 
@@ -54,7 +59,7 @@ class VistaServiciosFragment : Fragment(){
 
         viewModel.listaLiveData.observe(viewLifecycleOwner, Observer { result ->
 
-            serviciosARealizar = result
+            serviciosARealizar= result
 
             rvServiciosARealizar.setHasFixedSize(true)
             rvServiciosARealizar.layoutManager = LinearLayoutManager(context)
@@ -87,8 +92,8 @@ class VistaServiciosFragment : Fragment(){
 
     override fun onStart() {
         super.onStart()
-        //todo: cambier le 1 por el id del Usuario
-        viewModel.setcargar("1")
+
+        viewModel.setcargar()
 
         rvServiciosRealizados.setHasFixedSize(true)
         rvServiciosRealizados.layoutManager = LinearLayoutManager(context)
@@ -106,6 +111,8 @@ class VistaServiciosFragment : Fragment(){
     }
 
     private fun onItemAConfirmarClick(position : Int){
+        val iraservicio = VistaServiciosFragmentDirections.actionVistaPropuestasFragmentToDetalleServicioFragment(servicios[position])
+        v.findNavController().navigate(iraservicio);
         val reserva = serviciosARealizar[position]
         Snackbar.make(v, "ID de la propuesta: " + reserva.id, Snackbar.LENGTH_SHORT).show()
     }

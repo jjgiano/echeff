@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
+import ar.edu.ort.instituto.echeff.entities.EstadoPropuesta
 import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.fragments.chef.home.FormularioPropuestaFragmentArgs
@@ -121,6 +122,7 @@ class FormularioPropuestaFragment : Fragment() {
             nuevaPropuesta.total = editText_Importe.text.toString().toDouble()
             nuevaPropuesta.idReserva = reserva.id
             nuevaPropuesta.idChef = "1"
+            nuevaPropuesta.idEstadoPropuesta = EstadoPropuesta.NUEVO.id
 
             //Guardo o modifico en Firebase
             if (modificado) {
@@ -143,6 +145,8 @@ class FormularioPropuestaFragment : Fragment() {
 
         // Boton de envio de Propuesta
         btn_EnviarPropuesta.setOnClickListener {
+            nuevaPropuesta.idEstadoPropuesta = EstadoPropuesta.ACONFIRMAR.id
+            viewModelPropuesta.modificarPropuesta(nuevaPropuesta)
             viewModelReserva.pasarAConfirmar(reserva)
             val action =
                 FormularioPropuestaFragmentDirections.actionFormularioPropuestaFragmentToHomeChefFragment()

@@ -8,7 +8,7 @@ import com.google.firebase.firestore.ktx.*
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
-public interface PropuestasDao {
+public interface PropuestaDao {
 
 
     public suspend fun add(propuesta: Propuesta) {
