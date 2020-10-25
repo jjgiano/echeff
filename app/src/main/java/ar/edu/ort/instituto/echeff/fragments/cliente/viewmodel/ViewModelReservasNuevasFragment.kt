@@ -11,7 +11,7 @@ import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.entities.Usuario
 import kotlinx.coroutines.launch
 
-    class ViewModelVistaReservasNuevasFragment : ViewModel(), ReservaDao {
+    class ViewModelReservasNuevasFragment : ViewModel(), ReservaDao {
 
         var liveDataList = MutableLiveData<MutableList<Reserva>>()
         var cargar = MutableLiveData<Boolean>()
