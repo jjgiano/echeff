@@ -13,7 +13,7 @@ import androidx.navigation.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import ar.edu.ort.instituto.echeff.R
-import ar.edu.ort.instituto.echeff.fragments.chef.home.ReservasConfirmadasFragment
+import ar.edu.ort.instituto.echeff.fragments.chef.home.ReservasModificarFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.home.ReservasConfirmarFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.home.ReservasDisponiblesFragment
 import com.google.android.material.tabs.TabLayout
@@ -67,7 +67,7 @@ class HomeChefFragment : Fragment() {
                 when (position) {
                     0 -> tab.text = "Dispobibles"
                     1 -> tab.text = "A Confirmar"
-                    2 -> tab.text = "Confirmadas"
+                    2 -> tab.text = "Modificar"
                     else -> tab.text = "undefined"
                 }
             }).attach()
@@ -97,7 +97,7 @@ class HomeChefFragment : Fragment() {
             return when (position) {
                 0 -> ReservasDisponiblesFragment()
                 1 -> ReservasConfirmarFragment()
-                2 -> ReservasConfirmadasFragment()
+                2 -> ReservasModificarFragment()
 
                 else -> ReservasDisponiblesFragment()
             }

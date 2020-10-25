@@ -34,12 +34,12 @@ class VistaPropuestasAdapter(
     }
 
     override fun onBindViewHolder(holder: PropuestaHolder, position: Int) {
-        Glide
+       /* Glide
             .with(context)
             .load(propuestas[position].urlImg)
             .circleCrop()
             .into(holder.getImageView());
-
+        */
         holder.setDireccion(StringBuilder().append(propuestas[position].total).toString())
         holder.setEstiloComida(StringBuilder().append(propuestas[position].snack).toString())
 
@@ -58,22 +58,22 @@ class VistaPropuestasAdapter(
         }
 
         fun setDireccion(direccion: String) {
-            val tv: TextView = view.findViewById(R.id.tvDireccion)
-            tv.text = direccion
+     //       val tv: TextView = view.findViewById(R.id.tvDireccion)
+     //       tv.text = direccion
         }
 
         fun setEstiloComida(estiloComida: String) {
-            val tv: TextView = view.findViewById(R.id.tvEstiloComida)
-            tv.text = view.context.getString(R.string.estilo_comida_home_cliente, estiloComida);
+       //     val tv: TextView = view.findViewById(R.id.tvEstiloComida)
+       //     tv.text = view.context.getString(R.string.estilo_comida_home_cliente, estiloComida);
         }
 
         fun getCardLayout(): CardView {
             return view.findViewById(R.id.cvItemPropuesta)
         }
 
-        fun getImageView(): ImageView {
-            return view.findViewById(R.id.ivChef)
-        }
+   //     fun getImageView(): ImageView {
+//            return view.findViewById(R.id.ivChef)
+     //   }
 
 
 

@@ -74,7 +74,6 @@ class FormularioPropuestaFragment : Fragment() {
         editText_Adicional = v.findViewById(R.id.editText_Adicionales)
         editText_Importe = v.findViewById(R.id.editText_Total)
 
-
         //Boton de Propuesta
         btn_Propuesta = v.findViewById(R.id.btn_GuardarPropuesta)
         btn_EditarPropuesta = v.findViewById(R.id.btn_EditarPropuesta)
@@ -82,6 +81,7 @@ class FormularioPropuestaFragment : Fragment() {
 
         btn_EnviarPropuesta.setVisibility(View.INVISIBLE);
         btn_EditarPropuesta.setVisibility(View.INVISIBLE);
+
 
         return v
     }

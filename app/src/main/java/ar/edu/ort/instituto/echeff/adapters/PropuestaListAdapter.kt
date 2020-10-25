@@ -34,7 +34,7 @@ class PropuestaListAdapter(
     }
 
     override fun onBindViewHolder(holder: PropuestaHolder, position: Int) {
-        Glide
+/*        Glide
             .with(context)
             .load("https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/2_avatar-256.png")
             .centerInside()
@@ -46,7 +46,7 @@ class PropuestaListAdapter(
         holder.getCardLayout().setOnClickListener {
             onItemClick(position)
         }
-
+*/
     }
 
     class PropuestaHolder(v: View) : RecyclerView.ViewHolder(v) {
@@ -57,7 +57,7 @@ class PropuestaListAdapter(
             this.view = v
         }
 
-        fun setDireccion(direccion: String) {
+   /*     fun setDireccion(direccion: String) {
             val tv: TextView = view.findViewById(R.id.tvDireccion)
             tv.text = direccion
         }
@@ -74,7 +74,7 @@ class PropuestaListAdapter(
         fun getImageView(): ImageView {
             return view.findViewById(R.id.ivChef)
         }
-
+*/
     }
 
 }

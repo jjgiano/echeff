@@ -1,7 +1,9 @@
 package ar.edu.ort.instituto.echeff.dao
 
 import android.util.Log
+import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.*
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
@@ -81,7 +83,7 @@ public interface ReservaDao {
         var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
 
         val questionRef = Firebase.firestore.collection("reservas")
-        val query = questionRef.whereEqualTo("idEstadoReserva", 4)
+        val query = questionRef.whereEqualTo("idEstadoReserva", 3)
         try {
             val data = query
                 .get()
@@ -93,6 +95,47 @@ public interface ReservaDao {
             Log.d("Error", e.toString())
         }
         return reservaList
+    }
+
+    suspend fun getReservasAModificar(): MutableList<Reserva> {
+
+        var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
+
+        val questionRef = Firebase.firestore.collection("reservas")
+        val query = questionRef.whereEqualTo("idEstadoReserva", 5)
+        try {
+            val data = query
+                .get()
+                .await()
+            for (document in data) {
+                reservaList.add(document.toObject<Reserva>())
+            }
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+        return reservaList
+    }
+
+    suspend fun getReservaById(id : String) : Reserva {
+
+        var reserva: Reserva = Reserva()
+
+        val questionRef = Firebase.firestore.collection("reservas")
+        val query = questionRef.whereEqualTo("id",id)
+
+        try {
+            val data = query
+                .get()
+                .await()
+            for (document in data) {
+                reserva = document.toObject<Reserva>()
+            }
+
+
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+        return reserva
     }
 
     //MODIFICAR ESTADO DE RESERVA

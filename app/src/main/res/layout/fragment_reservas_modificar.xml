@@ -5,11 +5,11 @@
     android:id="@+id/frameLayout4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.chef.home.ReservasConfirmadasFragment"
+    tools:context=".fragments.chef.home.ReservasModificarFragment"
     tools:ignore="MissingClass">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recicleView_ReservasConfirmadas"
+        android:id="@+id/recicleView_ReservasModificar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="5dp"

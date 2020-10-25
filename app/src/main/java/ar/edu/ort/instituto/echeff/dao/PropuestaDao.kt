@@ -1,7 +1,9 @@
 package ar.edu.ort.instituto.echeff.dao
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import ar.edu.ort.instituto.echeff.entities.Propuesta
+import ar.edu.ort.instituto.echeff.entities.Reserva
 import com.google.firebase.firestore.ktx.*
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
@@ -76,6 +78,28 @@ public interface PropuestasDao {
         }
         return propuestaList
     }
+    suspend fun getPropuestaById(id : String) : Propuesta {
+
+        var propuesta: Propuesta = Propuesta()
+
+        val questionRef = Firebase.firestore.collection("propuestas")
+        val query = questionRef.whereEqualTo("id",id)
+
+        try {
+            val data = query
+                .get()
+                .await()
+            for (document in data) {
+                propuesta = document.toObject<Propuesta>()
+            }
+
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+
+        return propuesta
+    }
+
 
 
 }

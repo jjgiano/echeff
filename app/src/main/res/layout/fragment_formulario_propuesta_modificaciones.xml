@@ -180,7 +180,7 @@
             android:textColor="#9C9595"
             app:layout_constraintEnd_toStartOf="@+id/guideline8"
             app:layout_constraintStart_toStartOf="@+id/guideline6"
-            app:layout_constraintTop_toBottomOf="@+id/card_itemsReserva" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_Modificaciones" />
 
         <EditText
             android:id="@+id/editText_Entrada"
@@ -298,12 +298,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="sans-serif-medium"
             android:text="Snack"
             android:textColor="@color/orange80"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/editText_Snack"
-            app:layout_constraintStart_toStartOf="@+id/guideline6" />
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toBottomOf="@+id/tv_Modificaciones" />
 
         <TextView
             android:id="@+id/text_TituloEntrada"
@@ -369,6 +370,37 @@
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@+id/guideline6"
             app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Modificaciones"
+            android:textColor="@color/orange95"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toBottomOf="@+id/card_itemsReserva" />
+
+        <TextView
+            android:id="@+id/tv_Modificaciones"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/style_border_bigger"
+            android:padding="5sp"
+            android:paddingStart="5sp"
+            android:paddingLeft="5sp"
+            android:paddingTop="5sp"
+            android:paddingEnd="5sp"
+            android:paddingRight="5sp"
+            android:paddingBottom="5sp"
+            android:textColor="@color/orange70"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
