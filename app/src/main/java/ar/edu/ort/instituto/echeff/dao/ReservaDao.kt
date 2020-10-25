@@ -211,6 +211,48 @@ public interface ReservaDao {
         }
         return reservaList
     }
+
+    suspend fun getReservasPagadas(idUsuario: Number): MutableList<Reserva> {
+
+        var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
+
+        val questionRef = Firebase.firestore.collection("reservas")
+        val query = questionRef
+            .whereEqualTo("idUsuario", idUsuario)
+            .whereEqualTo("idEstadoReserva", EstadoReserva.PAGADA.id)
+        try {
+            val data = query
+                .get()
+                .await()
+            for (document in data) {
+                reservaList.add(document.toObject<Reserva>())
+            }
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+        return reservaList
+    }
+
+    suspend fun getReservasPendientes(idUsuario: Number): MutableList<Reserva> {
+
+        var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
+
+        val questionRef = Firebase.firestore.collection("reservas")
+        val query = questionRef
+            .whereEqualTo("idUsuario", idUsuario)
+            .whereEqualTo("idEstadoReserva", EstadoReserva.MODIFICADA.id)
+        try {
+            val data = query
+                .get()
+                .await()
+            for (document in data) {
+                reservaList.add(document.toObject<Reserva>())
+            }
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+        return reservaList
+    }
 }
 
 
