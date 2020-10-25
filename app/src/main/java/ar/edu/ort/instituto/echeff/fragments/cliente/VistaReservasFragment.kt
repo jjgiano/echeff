@@ -32,9 +32,6 @@ class VistaReservasFragment : Fragment() {
 
     val db = Firebase.firestore
     lateinit var v: View
-
-
-
     lateinit var textViewMisReservas: TextView
     lateinit var buttonTengoUnProblema: Button
     lateinit var tabLayoutReservas: TabLayout
@@ -45,26 +42,6 @@ class VistaReservasFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        reservas.add(Reserva("1", "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.NUEVO.id))
-        reservas.add(Reserva("2", "01/12/2019", "14:02", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.NUEVO.id))
-
-        reservas.add(Reserva("3", "01/12/2019", "14:02", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.ACONFIRMAR.id))
-        reservas.add(Reserva("4", "01/12/2019", "14:02", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.ACONFIRMAR.id))
-
-        reservas.add(Reserva("5", "01/12/2019", "14:03", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.MODIFICADA.id))
-        reservas.add(Reserva("6", "01/12/2019", "14:04", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.MODIFICADA.id))
-
-        reservas.add(Reserva("7", "01/12/2019", "14:04", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.PAGADA.id))
-        reservas.add(Reserva("8", "01/12/2019", "14:04", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.PAGADA.id))
-
-        reservas.add(Reserva("9", "01/12/2019", "14:05", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.FINALIZADA.id))
-        reservas.add(Reserva("0", "01/12/2019", "14:06", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.FINALIZADA.id))
-        reservas.add(Reserva("11", "01/12/2019", "14:06", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.FINALIZADA.id))
-
-        reservas.add(Reserva("11", "01/12/2019", "14:06", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.CANCELADO.id))
-        reservas.add(Reserva("11", "01/12/2019", "14:06", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.CANCELADO.id))
-
     }
 
 
