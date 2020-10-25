@@ -18,12 +18,11 @@ import ar.edu.ort.instituto.echeff.dao.PropuestasDao
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelVistaServiciosFragment
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+
 
 class VistaServiciosFragment : Fragment(){
 
-    val db = Firebase.firestore
+
     lateinit var v: View
     private lateinit var viewModel: ViewModelVistaServiciosFragment
     var cargado : Boolean = false

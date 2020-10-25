@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.chef.PerfilChefComentariosFragment"
+    tools:context=".fragments.chef.perfil.PerfilChefComentariosFragment"
     android:layout_marginEnd="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout

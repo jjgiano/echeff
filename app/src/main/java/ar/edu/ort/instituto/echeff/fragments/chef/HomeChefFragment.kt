@@ -30,6 +30,7 @@ class HomeChefFragment : Fragment() {
 
     //Boton para ver Propuestas
     lateinit var btn_VerProuestas: Button
+    lateinit var btn_irPerfil: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +49,8 @@ class HomeChefFragment : Fragment() {
         viewPager = v.findViewById(R.id.viewpage)
 
         btn_VerProuestas = v.findViewById(R.id.btn_VerPropuetasChef)
+
+        btn_irPerfil = v.findViewById(R.id.btn_irPerfilChef)
 
         nombreChef = v.findViewById(R.id.text_NombreChef)
 
@@ -79,6 +82,11 @@ class HomeChefFragment : Fragment() {
         btn_VerProuestas.setOnClickListener {
             val action =
                 HomeChefFragmentDirections.actionHomeChefFragmentToVistaPropuestasFragment()
+            v.findNavController().navigate(action)
+        }
+        btn_irPerfil.setOnClickListener {
+            val action =
+                HomeChefFragmentDirections.actionHomeChefFragmentToPerfilChefFragment()
             v.findNavController().navigate(action)
         }
 

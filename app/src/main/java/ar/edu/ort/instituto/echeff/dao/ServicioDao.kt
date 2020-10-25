@@ -39,7 +39,7 @@ interface ServicioDao {
 
     suspend fun getAllServicios(): MutableList<Servicio> {
 
-        var reservaList: MutableList<Servicio> = ArrayList<Servicio>()
+        var servicioList: MutableList<Servicio> = ArrayList<Servicio>()
 
         val questionRef = Firebase.firestore.collection("servicios")
         val query = questionRef
@@ -49,17 +49,17 @@ interface ServicioDao {
                 .get()
                 .await()
             for (document in data) {
-                reservaList.add(document.toObject<Servicio>())
+                servicioList.add(document.toObject<Servicio>())
             }
         } catch (e: Exception) {
             Log.d("Error", e.toString())
         }
-        return reservaList
+        return servicioList
     }
 
     suspend fun getServiciosPendientes(): MutableList<Servicio> {
 
-        var reservaList: MutableList<Servicio> = ArrayList<Servicio>()
+        var servicioList: MutableList<Servicio> = ArrayList<Servicio>()
 
         val questionRef = Firebase.firestore.collection("servicios")
         val query = questionRef.whereEqualTo("idEstadoServicio", 1)
@@ -68,18 +68,18 @@ interface ServicioDao {
                 .get()
                 .await()
             for (document in data) {
-                reservaList.add(document.toObject<Servicio>())
+                servicioList.add(document.toObject<Servicio>())
             }
         } catch (e: Exception) {
             Log.d("Error", e.toString())
         }
-        return reservaList
+        return servicioList
     }
 
 
     suspend fun getServiciosFinalizados(): MutableList<Servicio> {
 
-        var reservaList: MutableList<Servicio> = ArrayList<Servicio>()
+        var servicioList: MutableList<Servicio> = ArrayList<Servicio>()
 
         val questionRef = Firebase.firestore.collection("servicios")
         val query = questionRef.whereEqualTo("idEstadoServicio", 2)
@@ -88,17 +88,17 @@ interface ServicioDao {
                 .get()
                 .await()
             for (document in data) {
-                reservaList.add(document.toObject<Servicio>())
+                servicioList.add(document.toObject<Servicio>())
             }
         } catch (e: Exception) {
             Log.d("Error", e.toString())
         }
-        return reservaList
+        return servicioList
     }
 
     suspend fun getServiciosCancelados(): MutableList<Servicio> {
 
-        var reservaList: MutableList<Servicio> = ArrayList<Servicio>()
+        var servicioList: MutableList<Servicio> = ArrayList<Servicio>()
 
         val questionRef = Firebase.firestore.collection("servicios")
         val query = questionRef.whereEqualTo("idEstadoServicio", 3)
@@ -107,12 +107,12 @@ interface ServicioDao {
                 .get()
                 .await()
             for (document in data) {
-                reservaList.add(document.toObject<Servicio>())
+                servicioList.add(document.toObject<Servicio>())
             }
         } catch (e: Exception) {
             Log.d("Error", e.toString())
         }
-        return reservaList
+        return servicioList
     }
 
     //MODIFICAR ESTADO DE Servicios

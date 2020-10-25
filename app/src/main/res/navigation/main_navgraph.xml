@@ -143,7 +143,7 @@
     </fragment>
     <fragment
         android:id="@+id/perfilChefFragment"
-        android:name="ar.edu.ort.instituto.echeff.fragments.chef.PerfilChefFragment"
+        android:name="ar.edu.ort.instituto.echeff.fragments.chef.perfil.PerfilChefFragment"
         android:label="fragment_perfil_chef"
         tools:layout="@layout/fragment_perfil_chef" >
         <action
@@ -200,13 +200,13 @@
     </fragment>
     <fragment
         android:id="@+id/perfilChefComentariosFragment"
-        android:name="ar.edu.ort.instituto.echeff.fragments.chef.PerfilChefComentariosFragment"
+        android:name="ar.edu.ort.instituto.echeff.fragments.chef.perfil.PerfilChefComentariosFragment"
         android:label="PerfilChefComentariosFragment"
         tools:layout="@layout/fragment_perfil_chef_comentarios"
         />
     <fragment
         android:id="@+id/perfilChefConfiguracionFragment"
-        android:name="ar.edu.ort.instituto.echeff.fragments.chef.PerfilChefConfiguracionFragment"
+        android:name="ar.edu.ort.instituto.echeff.fragments.chef.perfil.PerfilChefConfiguracionFragment"
         android:label="PerfilChefConfiguracionFragment"
         tools:layout="@layout/fragment_perfil_chef_configuracion"/>
     <activity

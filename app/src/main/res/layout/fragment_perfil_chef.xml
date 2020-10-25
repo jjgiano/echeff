@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".fragments.chef.PerfilChefFragment"
+        tools:context=".fragments.chef.perfil.PerfilChefFragment"
         android:paddingBottom="80dp">
 
         <TextView

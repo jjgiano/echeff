@@ -74,5 +74,17 @@
         app:layout_constraintTop_toBottomOf="@+id/TabLayout"
         app:layout_constraintVertical_bias="1.0" />
 
+    <Button
+        android:id="@+id/btn_irPerfilChef"
+        android:layout_width="131dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/style_botones_secundario"
+        android:text="Mi Perfil"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
