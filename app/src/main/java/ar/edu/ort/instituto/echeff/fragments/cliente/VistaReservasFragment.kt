@@ -8,16 +8,21 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import ar.edu.ort.instituto.echeff.R
+import ar.edu.ort.instituto.echeff.adapters.VistaReservasAdapter
 import ar.edu.ort.instituto.echeff.entities.EstadoReserva
 import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
+import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelVistaServiciosFragment
 import ar.edu.ort.instituto.echeff.fragments.cliente.home.ReservasAConfirmarFragment
 import ar.edu.ort.instituto.echeff.fragments.cliente.home.ReservasFinalizadasFragment
 import ar.edu.ort.instituto.echeff.fragments.cliente.home.ReservasNuevasFragment
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.firestore.ktx.firestore
@@ -27,7 +32,6 @@ class VistaReservasFragment : Fragment() {
 
     val db = Firebase.firestore
     lateinit var v: View
-
     lateinit var textViewMisReservas: TextView
     lateinit var buttonTengoUnProblema: Button
     lateinit var tabLayoutReservas: TabLayout
@@ -38,27 +42,9 @@ class VistaReservasFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        reservas.add(Reserva("1", "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.NUEVO.id))
-        reservas.add(Reserva("2", "01/12/2019", "14:02", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.NUEVO.id))
-
-        reservas.add(Reserva("3", "01/12/2019", "14:02", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.ACONFIRMAR.id))
-        reservas.add(Reserva("4", "01/12/2019", "14:02", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.ACONFIRMAR.id))
-
-        reservas.add(Reserva("5", "01/12/2019", "14:03", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.MODIFICADA.id))
-        reservas.add(Reserva("6", "01/12/2019", "14:04", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.MODIFICADA.id))
-
-        reservas.add(Reserva("7", "01/12/2019", "14:04", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.PAGADA.id))
-        reservas.add(Reserva("8", "01/12/2019", "14:04", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.PAGADA.id))
-
-        reservas.add(Reserva("9", "01/12/2019", "14:05", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.FINALIZADA.id))
-        reservas.add(Reserva("0", "01/12/2019", "14:06", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.FINALIZADA.id))
-        reservas.add(Reserva("11", "01/12/2019", "14:06", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.FINALIZADA.id))
-
-        reservas.add(Reserva("11", "01/12/2019", "14:06", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.CANCELADO.id))
-        reservas.add(Reserva("11", "01/12/2019", "14:06", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2,EstadoReserva.CANCELADO.id))
-
     }
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -96,10 +82,12 @@ class VistaReservasFragment : Fragment() {
 
     }
 
-     class ViewPagerAdapter(
-        fragmentActivity: FragmentActivity,
-        val reservas: MutableList<Reserva>
-    ) : FragmentStateAdapter(fragmentActivity) {
+    private fun onItemReservasClick(position : Int){
+        val reserva = reservas[position]
+        Snackbar.make(v, "ID de la reserva: " + reserva.id, Snackbar.LENGTH_SHORT).show()
+    }
+
+     class ViewPagerAdapter(fragmentActivity: FragmentActivity, val reservas: MutableList<Reserva>) : FragmentStateAdapter(fragmentActivity) {
         override fun createFragment(position: Int): Fragment {
             var nuevas = reservas.filter { it.idEstadoReserva == EstadoReserva.NUEVO.id }
             var aConfirmar = reservas.filter { it.idEstadoReserva == EstadoReserva.ACONFIRMAR.id }

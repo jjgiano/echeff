@@ -1,6 +1,7 @@
 package ar.edu.ort.instituto.echeff.dao
 
 import android.util.Log
+import ar.edu.ort.instituto.echeff.entities.EstadoReserva
 import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import com.google.firebase.firestore.DocumentSnapshot
@@ -147,6 +148,110 @@ public interface ReservaDao {
         } catch (e: Exception) {
             Log.d("Error", e.toString())
         }
+    }
+
+    suspend fun getReservasNuevas(idUsuario: Number): MutableList<Reserva> {
+
+        var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
+
+        val questionRef = Firebase.firestore.collection("reservas")
+        val query = questionRef
+            .whereEqualTo("idUsuario", idUsuario)
+            .whereEqualTo("idEstadoReserva", EstadoReserva.NUEVO.id)
+        try {
+            val data = query
+                .get()
+                .await()
+            for (document in data) {
+                reservaList.add(document.toObject<Reserva>())
+            }
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+        return reservaList
+    }
+
+    suspend fun getReservasAConfirmar(idUsuario: Number): MutableList<Reserva> {
+
+        var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
+
+        val questionRef = Firebase.firestore.collection("reservas")
+        val query = questionRef
+            .whereEqualTo("idUsuario", idUsuario)
+            .whereEqualTo("idEstadoReserva", EstadoReserva.ACONFIRMAR.id)
+        try {
+            val data = query
+                .get()
+                .await()
+            for (document in data) {
+                reservaList.add(document.toObject<Reserva>())
+            }
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+        return reservaList
+    }
+    suspend fun getReservasFinalizadas(idUsuario: Number): MutableList<Reserva> {
+
+        var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
+
+        val questionRef = Firebase.firestore.collection("reservas")
+        val query = questionRef
+            .whereEqualTo("idUsuario", idUsuario)
+            .whereEqualTo("idEstadoReserva", EstadoReserva.FINALIZADA.id)
+        try {
+            val data = query
+                .get()
+                .await()
+            for (document in data) {
+                reservaList.add(document.toObject<Reserva>())
+            }
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+        return reservaList
+    }
+
+    suspend fun getReservasPagadas(idUsuario: Number): MutableList<Reserva> {
+
+        var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
+
+        val questionRef = Firebase.firestore.collection("reservas")
+        val query = questionRef
+            .whereEqualTo("idUsuario", idUsuario)
+            .whereEqualTo("idEstadoReserva", EstadoReserva.PAGADA.id)
+        try {
+            val data = query
+                .get()
+                .await()
+            for (document in data) {
+                reservaList.add(document.toObject<Reserva>())
+            }
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+        return reservaList
+    }
+
+    suspend fun getReservasPendientes(idUsuario: Number): MutableList<Reserva> {
+
+        var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
+
+        val questionRef = Firebase.firestore.collection("reservas")
+        val query = questionRef
+            .whereEqualTo("idUsuario", idUsuario)
+            .whereEqualTo("idEstadoReserva", EstadoReserva.MODIFICADA.id)
+        try {
+            val data = query
+                .get()
+                .await()
+            for (document in data) {
+                reservaList.add(document.toObject<Reserva>())
+            }
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+        return reservaList
     }
 }
 
