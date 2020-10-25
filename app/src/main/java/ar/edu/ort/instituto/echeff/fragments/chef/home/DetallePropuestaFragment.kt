@@ -118,7 +118,7 @@ class DetallePropuestaFragment : Fragment() {
         var dato : Propuesta = Propuesta()
 
         for (item in lista) {
-            if (item.idReserva == idReserva) {
+            if (item.idReserva.equals(idReserva)) {
                 dato = item
             }
         }

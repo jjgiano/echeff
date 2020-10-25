@@ -10,7 +10,7 @@
         android:id="@+id/frameLayoutMisPropuestas"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragments.chef.home.VistaPropuestasFragment">
+        tools:context=".fragments.chef.home.VistaServiciosFragment">
 
         <TextView
             android:id="@+id/textViewMisPropuestas"

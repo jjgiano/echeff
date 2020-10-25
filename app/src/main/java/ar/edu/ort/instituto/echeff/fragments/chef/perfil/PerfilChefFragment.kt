@@ -1,7 +1,6 @@
-package ar.edu.ort.instituto.echeff.fragments.chef
+package ar.edu.ort.instituto.echeff.fragments.chef.perfil
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +16,7 @@ import ar.edu.ort.instituto.echeff.adapters.ComentariosListAdapter
 import ar.edu.ort.instituto.echeff.adapters.HistoriasListAdapter
 import ar.edu.ort.instituto.echeff.entities.Comentario
 import ar.edu.ort.instituto.echeff.entities.Historia
+import ar.edu.ort.instituto.echeff.fragments.chef.perfil.PerfilChefFragmentDirections
 import com.bumptech.glide.Glide
 
 class PerfilChefFragment : Fragment() {

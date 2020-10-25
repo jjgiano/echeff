@@ -13,7 +13,7 @@ import androidx.navigation.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import ar.edu.ort.instituto.echeff.R
-import ar.edu.ort.instituto.echeff.fragments.chef.home.ReservasConfirmadasFragment
+import ar.edu.ort.instituto.echeff.fragments.chef.home.ReservasModificarFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.home.ReservasConfirmarFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.home.ReservasDisponiblesFragment
 import com.google.android.material.tabs.TabLayout
@@ -30,6 +30,7 @@ class HomeChefFragment : Fragment() {
 
     //Boton para ver Propuestas
     lateinit var btn_VerProuestas: Button
+    lateinit var btn_irPerfil: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +50,8 @@ class HomeChefFragment : Fragment() {
 
         btn_VerProuestas = v.findViewById(R.id.btn_VerPropuetasChef)
 
+        btn_irPerfil = v.findViewById(R.id.btn_irPerfilChef)
+
         nombreChef = v.findViewById(R.id.text_NombreChef)
 
         return v
@@ -67,7 +70,7 @@ class HomeChefFragment : Fragment() {
                 when (position) {
                     0 -> tab.text = "Dispobibles"
                     1 -> tab.text = "A Confirmar"
-                    2 -> tab.text = "Confirmadas"
+                    2 -> tab.text = "Modificar"
                     else -> tab.text = "undefined"
                 }
             }).attach()
@@ -79,6 +82,11 @@ class HomeChefFragment : Fragment() {
         btn_VerProuestas.setOnClickListener {
             val action =
                 HomeChefFragmentDirections.actionHomeChefFragmentToVistaPropuestasFragment()
+            v.findNavController().navigate(action)
+        }
+        btn_irPerfil.setOnClickListener {
+            val action =
+                HomeChefFragmentDirections.actionHomeChefFragmentToPerfilChefFragment()
             v.findNavController().navigate(action)
         }
 
@@ -97,7 +105,7 @@ class HomeChefFragment : Fragment() {
             return when (position) {
                 0 -> ReservasDisponiblesFragment()
                 1 -> ReservasConfirmarFragment()
-                2 -> ReservasConfirmadasFragment()
+                2 -> ReservasModificarFragment()
 
                 else -> ReservasDisponiblesFragment()
             }
