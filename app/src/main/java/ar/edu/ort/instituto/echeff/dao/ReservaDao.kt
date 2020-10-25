@@ -1,6 +1,7 @@
 package ar.edu.ort.instituto.echeff.dao
 
 import android.util.Log
+import ar.edu.ort.instituto.echeff.entities.EstadoReserva
 import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import com.google.firebase.firestore.DocumentSnapshot
@@ -149,12 +150,14 @@ public interface ReservaDao {
         }
     }
 
-    suspend fun getReservasNuevas(idUsuario: String): MutableList<Reserva> {
+    suspend fun getReservasNuevas(idUsuario: Number): MutableList<Reserva> {
 
         var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
 
         val questionRef = Firebase.firestore.collection("reservas")
-        val query = questionRef.whereEqualTo("idEstadoReserva", 1).whereEqualTo("idEstadoReserva",idUsuario)
+        val query = questionRef
+            .whereEqualTo("idUsuario", idUsuario)
+            .whereEqualTo("idEstadoReserva", EstadoReserva.NUEVO.id)
         try {
             val data = query
                 .get()
