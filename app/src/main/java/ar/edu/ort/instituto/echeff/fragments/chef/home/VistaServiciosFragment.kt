@@ -96,10 +96,8 @@ class VistaServiciosFragment : Fragment(){
                 position -> onItemConfirmadasClick(position)
         }
 
-
         buttonTengoUnProblema.setOnClickListener {
-             var mesaAyudaScreen =
-                 VistaServiciosFragmentDirections.actionVistaPropuestasFragmentToMesaAyudaFragment2()
+             var mesaAyudaScreen = VistaServiciosFragmentDirections.actionVistaPropuestasFragmentToMesaAyudaFragment2(true)
             v.findNavController().navigate(mesaAyudaScreen)
         }
 
