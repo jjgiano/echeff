@@ -225,12 +225,12 @@
         android:name="ar.edu.ort.instituto.echeff.fragments.cliente.FormularioReservaDosFragment"
         android:label="fragment_formulario_reserva_dos"
         tools:layout="@layout/fragment_formulario_reserva_dos" >
-        <action
-            android:id="@+id/action_formularioReservaDosFragment3_to_homeClienteFragment"
-            app:destination="@id/homeClienteFragment" />
         <argument
             android:name="reserva"
             app:argType="ar.edu.ort.instituto.echeff.entities.Reserva" />
+        <action
+            android:id="@+id/action_formularioReservaDosFragment3_to_resultadoMensajeFragment"
+            app:destination="@id/resultadoMensajeFragment" />
     </fragment>
     <fragment
         android:id="@+id/viewPagerFragment"
@@ -274,5 +274,20 @@
         <action
             android:id="@+id/action_detalleServicioFragment_to_homeChefFragment"
             app:destination="@id/homeChefFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/resultadoMensajeFragment"
+        android:name="ar.edu.ort.instituto.echeff.fragments.ResultadoMensajeFragment"
+        android:label="resultado_mensaje_fragment"
+        tools:layout="@layout/resultado_mensaje_fragment" >
+        <action
+            android:id="@+id/action_resultadoMensajeFragment_to_homeClienteFragment"
+            app:destination="@id/homeClienteFragment" />
+        <action
+            android:id="@+id/action_resultadoMensajeFragment_to_homeChefFragment"
+            app:destination="@id/homeChefFragment" />
+        <argument
+            android:name="tipoMensaje"
+            app:argType="ar.edu.ort.instituto.echeff.entities.TipoResultadoMensaje" />
     </fragment>
 </navigation>

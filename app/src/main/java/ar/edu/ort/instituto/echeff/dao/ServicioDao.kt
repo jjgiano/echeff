@@ -3,6 +3,7 @@ package ar.edu.ort.instituto.echeff.dao
 import android.util.Log
 import ar.edu.ort.instituto.echeff.entities.EstadoServicio
 import ar.edu.ort.instituto.echeff.entities.Servicio
+import ar.edu.ort.instituto.echeff.entities.TipoServicio
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -186,5 +187,24 @@ interface ServicioDao {
             Log.d("Error", e.toString())
         }
         return servicioList
+    }
+
+    suspend fun getTipoServicios(): MutableList<TipoServicio>{
+        var tipoServiciosList: MutableList<TipoServicio> = ArrayList()
+
+        val questionRef = Firebase.firestore.collection("tipoServicio")
+        val query = questionRef.orderBy("idTipoServicio")
+
+        try {
+            val data = query
+                .get()
+                .await()
+            for (document in data) {
+                tipoServiciosList.add(document.toObject<TipoServicio>())
+            }
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+        return tipoServiciosList
     }
 }
