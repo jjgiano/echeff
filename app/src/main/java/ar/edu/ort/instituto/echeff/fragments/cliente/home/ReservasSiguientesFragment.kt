@@ -41,18 +41,11 @@ class ReservasSiguientesFragment(private var reservas: MutableList<Reserva>) : F
         rvReserva.setHasFixedSize(true)
         linearLayoutManager = LinearLayoutManager(context)
         rvReserva.layoutManager = linearLayoutManager
-        reservaListAdapter =
-            ReservaListAdapter(reservas, requireContext()) { position -> onItemClick(position) }
+        reservaListAdapter = ReservaListAdapter(reservas, super.requireContext()) { position -> onItemClick(position) }
         rvReserva.adapter = reservaListAdapter
     }
 
     private fun onItemClick(position: Int) {
-        Snackbar.make(
-            v,
-            "ID de la reserva siguiente: " + reservas[position].id,
-            Snackbar.LENGTH_SHORT
-        )
-            .show()
         //v.findNavController().navigate(HomeClienteFragmentDirections.actionHomeClienteFragmentToVistaReservasFragment());
     }
 

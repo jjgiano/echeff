@@ -200,6 +200,9 @@
         <action
             android:id="@+id/action_mesaAyudaFragment2_to_homeChefFragment"
             app:destination="@id/homeChefFragment" />
+        <argument
+            android:name="soyChef"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/perfilChefComentariosFragment"

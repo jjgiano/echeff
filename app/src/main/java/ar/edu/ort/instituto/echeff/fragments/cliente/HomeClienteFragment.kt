@@ -52,7 +52,7 @@ class HomeClienteFragment : Fragment() {
     lateinit var rvReservasPendientes: RecyclerView
     lateinit var rvPropuestasDestacadas: RecyclerView
 
-    var reservas: MutableList<Reserva> = ArrayList<Reserva>()
+    //var reservas: MutableList<Reserva> = ArrayList<Reserva>()
     var reservasProximas: MutableList<Reserva> = ArrayList<Reserva>()
     var reservasAConfirmar: MutableList<Reserva> = ArrayList<Reserva>()
     var reservasPendientes: MutableList<Reserva> = ArrayList<Reserva>()
@@ -64,7 +64,6 @@ class HomeClienteFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         viewModel = ViewModelProvider(super.requireActivity()).get(ViewModelHomeClienteFragment::class.java)
 
         viewModel.liveDataBooleanCargar.observe(viewLifecycleOwner, Observer { result ->
@@ -109,10 +108,7 @@ class HomeClienteFragment : Fragment() {
 
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_home_cliente, container, false)
 
@@ -152,17 +148,18 @@ class HomeClienteFragment : Fragment() {
     }
 
     private fun onItemReservaProximaClick(position: Int) {
-        val proxima = reservas[position]
-        Snackbar.make(v, "ID de la reserva proxima (son las reservas ya pagadas): " + proxima.id, Snackbar.LENGTH_SHORT).show()
+        val proxima = reservasProximas[position]
+        Snackbar.make(v, "LA RESERVA YA SE PAGO: " + proxima.id, Snackbar.LENGTH_LONG).show()
     }
 
     private fun onItemReservaPendienteClick(position: Int) {
-        val pendiente = reservas[position]
-        Snackbar.make(v,"ID de la reserva pendiente (debe ir a la pantalla 'Confirma la reserva): " + pendiente.id, Snackbar.LENGTH_SHORT).show()
+        val pendiente = reservasPendientes[position]
+        Snackbar.make(v,"LA RESERVA LO TIENE EL CHEF AHORA: " + pendiente.id, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun onItemReservaAConfirmarClick(position: Int) {
-        val aConfirmar = reservas[position]
+        val aConfirmar = reservasAConfirmar[position]
+        Snackbar.make(v,"RESERVA A CONFIRMAR: " + aConfirmar.id, Snackbar.LENGTH_SHORT).show()
         var confirmacionReservaScreen = HomeClienteFragmentDirections.actionHomeClienteFragmentToConfirmacionReservaFragment2()
         v.findNavController().navigate(confirmacionReservaScreen)
     }
@@ -170,31 +167,6 @@ class HomeClienteFragment : Fragment() {
     private fun onItemPropuestaDestacadaClick(position: Int) {
         val destacada = propuestas[position]
         Snackbar.make(v, "ID de la reserva destacada: " + destacada.id, Snackbar.LENGTH_SHORT).show()
-    }
-
-    class ViewPagerAdapter(
-        fragmentActivity: FragmentActivity,
-        val reservas: MutableList<Reserva>,
-        val propuestas: MutableList<Propuesta>
-    ) : FragmentStateAdapter(fragmentActivity) {
-        override fun createFragment(position: Int): Fragment {
-
-            return when (position) {
-                0 -> ReservasSiguientesFragment(reservas)
-                1 -> ReservasAConfirmarFragment(reservas)
-                2 -> ReservasPendientesFragment(reservas)
-                3 -> PropuestasDestacadasFragment(propuestas)
-                else -> PropuestasDestacadasFragment(propuestas)
-            }
-        }
-
-        override fun getItemCount(): Int {
-            return TAB_COUNT
-        }
-
-        companion object {
-            private const val TAB_COUNT = 4
-        }
     }
 
 }

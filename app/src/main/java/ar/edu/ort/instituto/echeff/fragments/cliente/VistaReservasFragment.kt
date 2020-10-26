@@ -76,7 +76,7 @@ class VistaReservasFragment : Fragment() {
         }).attach()
 
         buttonTengoUnProblema.setOnClickListener {
-            val iniciarReservaPage = HomeClienteFragmentDirections.actionHomeClienteFragmentToFormularioReservaFragment()
+            val iniciarReservaPage = VistaReservasFragmentDirections.actionVistaReservasFragmentToMesaAyudaFragment2(false)
             v.findNavController().navigate(iniciarReservaPage)
         }
 
