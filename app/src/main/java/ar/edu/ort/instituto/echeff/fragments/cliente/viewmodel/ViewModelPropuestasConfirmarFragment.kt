@@ -12,13 +12,9 @@ import kotlinx.coroutines.launch
 class ViewModelPropuestasConfirmarFragment : ViewModel(), ReservaDao {
 
 
-
- fun pasarAConfirmar(reserva: Reserva) {
-
+    fun pasarAConfirmar(reserva: Reserva) {
         viewModelScope.launch {
             cambiarEstado(reserva, EstadoReserva.ACONFIRMAR.id)
         }
-
-
     }
 }
