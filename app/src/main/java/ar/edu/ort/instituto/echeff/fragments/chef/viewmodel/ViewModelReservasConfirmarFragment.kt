@@ -50,5 +50,11 @@ class ViewModelReservasConfirmarFragment : ViewModel(), ReservaDao, PropuestaDao
         getLista()
     }
 
+    fun pasarAConfirmar(reserva: Reserva) {
+        viewModelScope.launch {
+            cambiarEstado(reserva, EstadoReserva.ACONFIRMAR.id)
+        }
+    }
+
 }
 

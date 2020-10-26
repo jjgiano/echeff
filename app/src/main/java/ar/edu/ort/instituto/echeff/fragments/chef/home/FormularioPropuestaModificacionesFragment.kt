@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -18,7 +17,7 @@ import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.entities.TipoResultadoMensaje
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelDetallePropuestaFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelFormularioPropuestaFragment
-import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelPropuestasConfirmarFragment
+import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelReservasConfirmarFragment
 
 
 class FormularioPropuestaModificacionesFragment : Fragment() {
@@ -26,7 +25,7 @@ class FormularioPropuestaModificacionesFragment : Fragment() {
     lateinit var v: View
     private lateinit var viewModel: ViewModelDetallePropuestaFragment
     private lateinit var viewModelPropuesta: ViewModelFormularioPropuestaFragment
-    private lateinit var viewModelReserva: ViewModelPropuestasConfirmarFragment
+    private lateinit var viewModelReserva: ViewModelReservasConfirmarFragment
 
 
     var propuestasList: MutableList<Propuesta> = ArrayList<Propuesta>()
@@ -100,7 +99,7 @@ class FormularioPropuestaModificacionesFragment : Fragment() {
         viewModelPropuesta =
             ViewModelProvider(requireActivity()).get(ViewModelFormularioPropuestaFragment::class.java)
         viewModelReserva =
-            ViewModelProvider(requireActivity()).get(ViewModelPropuestasConfirmarFragment::class.java)
+            ViewModelProvider(requireActivity()).get(ViewModelReservasConfirmarFragment::class.java)
 
 
         viewModel.buscar.observe(viewLifecycleOwner, Observer { result ->

@@ -16,12 +16,12 @@ import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.entities.TipoResultadoMensaje
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelFormularioPropuestaFragment
-import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelPropuestasConfirmarFragment
+import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelReservasConfirmarFragment
 
 class FormularioPropuestaFragment : Fragment() {
     lateinit var v: View
     private lateinit var viewModelPropuesta: ViewModelFormularioPropuestaFragment
-    private lateinit var viewModelReserva: ViewModelPropuestasConfirmarFragment
+    private lateinit var viewModelReserva: ViewModelReservasConfirmarFragment
 
     var nuevaPropuesta: Propuesta = Propuesta()
 
@@ -88,7 +88,7 @@ class FormularioPropuestaFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModelPropuesta = ViewModelProvider(requireActivity()).get(ViewModelFormularioPropuestaFragment::class.java)
-        viewModelReserva = ViewModelProvider(requireActivity()).get(ViewModelPropuestasConfirmarFragment::class.java)
+        viewModelReserva = ViewModelProvider(requireActivity()).get(ViewModelReservasConfirmarFragment::class.java)
     }
 
     override fun onStart() {
