@@ -49,7 +49,8 @@
         android:id="@+id/homeChefFragment"
         android:name="ar.edu.ort.instituto.echeff.fragments.chef.HomeChefFragment"
         android:label="fragment_home_chef"
-        tools:layout="@layout/fragment_home_chef" >
+        tools:layout="@layout/fragment_home_chef"
+        app:startDestination="@id/action_homeChefFragment_to_detalleReservaFragment">
         <action
             android:id="@+id/action_homeChefFragment_to_detalleReservaFragment"
             app:destination="@id/detalleReservaFragment" />
@@ -102,8 +103,8 @@
         android:label="fragment_modificacion_reserva"
         tools:layout="@layout/fragment_modificacion_reserva" >
         <action
-            android:id="@+id/action_modificacionReservaFragment_to_homeClienteFragment"
-            app:destination="@id/homeClienteFragment" />
+            android:id="@+id/action_modificacionReservaFragment_to_resultadoMensajeFragment"
+            app:destination="@id/resultadoMensajeFragment" />
     </fragment>
     <fragment
         android:id="@+id/pagoReservaFragment"
@@ -111,8 +112,8 @@
         android:label="fragment_pago_reserva"
         tools:layout="@layout/fragment_pago_reserva" >
         <action
-            android:id="@+id/action_pagoReservaFragment_to_confirmacionReservaFragment2"
-            app:destination="@id/confirmacionReservaFragment2" />
+            android:id="@+id/action_pagoReservaFragment_to_resultadoMensajeFragment"
+            app:destination="@id/resultadoMensajeFragment" />
     </fragment>
     <fragment
         android:id="@+id/detalleReservaFragment"
@@ -134,12 +135,12 @@
         android:name="ar.edu.ort.instituto.echeff.fragments.chef.home.FormularioPropuestaFragment"
         android:label="fragment_formulario_propuesta"
         tools:layout="@layout/fragment_formulario_propuesta" >
-        <action
-            android:id="@+id/action_formularioPropuestaFragment_to_homeChefFragment"
-            app:destination="@id/homeChefFragment" />
         <argument
             android:name="formularioPropuestaArg"
             app:argType="ar.edu.ort.instituto.echeff.entities.Reserva" />
+        <action
+            android:id="@+id/action_formularioPropuestaFragment_to_resultadoMensajeFragment"
+            app:destination="@id/resultadoMensajeFragment" />
     </fragment>
     <fragment
         android:id="@+id/perfilChefFragment"
@@ -194,15 +195,12 @@
         android:name="ar.edu.ort.instituto.echeff.fragments.MesaAyudaFragment"
         android:label="fragment_mesa_ayuda"
         tools:layout="@layout/fragment_mesa_ayuda" >
-        <action
-            android:id="@+id/action_mesaAyudaFragment2_to_homeClienteFragment"
-            app:destination="@id/homeClienteFragment" />
-        <action
-            android:id="@+id/action_mesaAyudaFragment2_to_homeChefFragment"
-            app:destination="@id/homeChefFragment" />
         <argument
             android:name="soyChef"
             app:argType="boolean" />
+        <action
+            android:id="@+id/action_mesaAyudaFragment2_to_resultadoMensajeFragment"
+            app:destination="@id/resultadoMensajeFragment" />
     </fragment>
     <fragment
         android:id="@+id/perfilChefComentariosFragment"
@@ -256,18 +254,20 @@
     <fragment
         android:id="@+id/formularioPropuestaModificacionesFragment"
         android:name="ar.edu.ort.instituto.echeff.fragments.chef.home.FormularioPropuestaModificacionesFragment"
-        android:label="FormularioPropuestaModificacionesFragment" >
+        android:label="FormularioPropuestaModificacionesFragment"
+        tools:layout="@layout/fragment_formulario_propuesta_modificaciones">
         <argument
             android:name="reservaArg"
             app:argType="ar.edu.ort.instituto.echeff.entities.Reserva" />
         <action
-            android:id="@+id/action_formularioPropuestaModificacionesFragment_to_homeChefFragment"
-            app:destination="@id/homeChefFragment" />
+            android:id="@+id/action_formularioPropuestaModificacionesFragment_to_resultadoMensajeFragment"
+            app:destination="@id/resultadoMensajeFragment" />
     </fragment>
     <fragment
         android:id="@+id/detalleServicioFragment"
         android:name="ar.edu.ort.instituto.echeff.fragments.chef.home.DetalleServicioFragment"
-        android:label="DetalleServicioFragment" >
+        android:label="DetalleServicioFragment"
+        tools:layout="@layout/fragment_detalle_servicio">
         <argument
             android:name="servicioArg"
             app:argType="ar.edu.ort.instituto.echeff.entities.Servicio" />
@@ -289,5 +289,9 @@
         <argument
             android:name="tipoMensaje"
             app:argType="ar.edu.ort.instituto.echeff.entities.TipoResultadoMensaje" />
+        <argument
+            android:name="isChef"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
 </navigation>

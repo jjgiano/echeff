@@ -37,10 +37,13 @@ class ResultadoMensajeFragment : Fragment() {
         super.onStart()
         setMensajes()
         btnVolverHome.setOnClickListener {
-            //todo dinamizar si es chef o usuario :)
-            var homeClienteScreen =
-                ResultadoMensajeFragmentDirections.actionResultadoMensajeFragmentToHomeClienteFragment()
-            v.findNavController().navigate(homeClienteScreen)
+            if (ResultadoMensajeFragmentArgs.fromBundle(requireArguments()).isChef) {
+                v.findNavController()
+                    .navigate(ResultadoMensajeFragmentDirections.actionResultadoMensajeFragmentToHomeChefFragment())
+            } else {
+                v.findNavController()
+                    .navigate(ResultadoMensajeFragmentDirections.actionResultadoMensajeFragmentToHomeClienteFragment())
+            }
         }
     }
 

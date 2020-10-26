@@ -7,5 +7,4 @@ enum class TipoResultadoMensaje {
     NUEVA_PROPUESTA,
     MODIFICAR_PROPUESTA,
     NUEVO_MESA_AYUDA
-
 }

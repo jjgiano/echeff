@@ -9,7 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
-import com.google.android.material.snackbar.Snackbar
+import ar.edu.ort.instituto.echeff.entities.TipoResultadoMensaje
 
 
 class ModificacionReservaFragment : Fragment() {
@@ -17,7 +17,6 @@ class ModificacionReservaFragment : Fragment() {
     lateinit var v: View
     private lateinit var btnEnviarModificaion: Button
     private lateinit var txtCambiosReserva: EditText
-    private lateinit var btnVolverHomeCliente: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,7 +27,6 @@ class ModificacionReservaFragment : Fragment() {
 
         btnEnviarModificaion = v.findViewById(R.id.btnEnviarModificaion)
         txtCambiosReserva = v.findViewById(R.id.txtCambiosReserva)
-        btnVolverHomeCliente = v.findViewById(R.id.btnVolverHomeCliente)
 
         return v
     }
@@ -36,23 +34,19 @@ class ModificacionReservaFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
         //Todo enviar realmente la modificacion :D
         btnEnviarModificaion.setOnClickListener() {
-            Snackbar.make(v, "Se envio la modificacion al chef", Snackbar.LENGTH_SHORT).show()
-            txtCambiosReserva.isEnabled = false
-            btnEnviarModificaion.visibility = View.INVISIBLE
-            btnVolverHomeCliente.visibility = View.VISIBLE
-        }
-        btnVolverHomeCliente.setOnClickListener() {
             volverVistaHome();
         }
     }
 
 
     private fun volverVistaHome() {
-        //todo enviar un usuario
-        var homeCliente = ModificacionReservaFragmentDirections.actionModificacionReservaFragmentToHomeClienteFragment()
-        v.findNavController().navigate(homeCliente);
+
+        var resultadoMensajeScreen =
+            ModificacionReservaFragmentDirections.actionModificacionReservaFragmentToResultadoMensajeFragment(
+                TipoResultadoMensaje.MODIFCAR_RESERVA
+            )
+        v.findNavController().navigate(resultadoMensajeScreen);
     }
 }

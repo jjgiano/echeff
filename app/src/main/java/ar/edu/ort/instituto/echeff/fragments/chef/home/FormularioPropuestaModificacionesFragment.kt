@@ -15,6 +15,7 @@ import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.entities.EstadoPropuesta
 import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
+import ar.edu.ort.instituto.echeff.entities.TipoResultadoMensaje
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelDetallePropuestaFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelFormularioPropuestaFragment
 import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelPropuestasConfirmarFragment
@@ -170,7 +171,7 @@ class FormularioPropuestaModificacionesFragment : Fragment() {
             viewModelPropuesta.modificarPropuesta(propuesta)
             viewModelReserva.pasarAConfirmar(reserva)
             val action =
-                FormularioPropuestaModificacionesFragmentDirections.actionFormularioPropuestaModificacionesFragmentToHomeChefFragment()
+                FormularioPropuestaModificacionesFragmentDirections.actionFormularioPropuestaModificacionesFragmentToResultadoMensajeFragment(TipoResultadoMensaje.MODIFICAR_PROPUESTA, true)
             v.findNavController().navigate(action)
         }
 

@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
+import ar.edu.ort.instituto.echeff.entities.TipoResultadoMensaje
 
 class PagoReservaFragment : Fragment() {
     lateinit var v: View
@@ -45,9 +46,9 @@ class PagoReservaFragment : Fragment() {
         //Todo si ocurre un error deberia tirar un mensaje de error
         //todo si no deberia ir a la confimacion del servicio
         buttonConfirmarPago.setOnClickListener() {
-            var verificarServicioPage =
-                PagoReservaFragmentDirections.actionPagoReservaFragmentToConfirmacionReservaFragment2()
-            v.findNavController().navigate(verificarServicioPage)
+            var resultadoMensajeScreen =
+                PagoReservaFragmentDirections.actionPagoReservaFragmentToResultadoMensajeFragment(TipoResultadoMensaje.PAGO_REALIZADO)
+            v.findNavController().navigate(resultadoMensajeScreen)
         }
     }
 }
