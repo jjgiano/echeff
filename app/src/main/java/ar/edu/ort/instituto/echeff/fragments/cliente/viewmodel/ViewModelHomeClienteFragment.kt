@@ -3,13 +3,13 @@ package ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ar.edu.ort.instituto.echeff.dao.PropuestasDao
+import ar.edu.ort.instituto.echeff.dao.PropuestaDao
 import ar.edu.ort.instituto.echeff.dao.ReservaDao
 import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import kotlinx.coroutines.launch
 
-class ViewModelHomeClienteFragment : ViewModel(), ReservaDao, PropuestasDao {
+class ViewModelHomeClienteFragment : ViewModel(), ReservaDao, PropuestaDao {
         var liveDataReservasProximasList = MutableLiveData<MutableList<Reserva>>()
         var liveDataReservasAConfirmarList = MutableLiveData<MutableList<Reserva>>()
         var liveDataReservasPendientesList = MutableLiveData<MutableList<Reserva>>()

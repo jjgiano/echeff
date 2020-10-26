@@ -187,7 +187,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/text_TituloTipoServicio" />
 
                 <TextView
-                    android:id="@+id/textView17"
+                    android:id="@+id/text_DatoTipoCocina"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
@@ -209,7 +209,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
                 <TextView
-                    android:id="@+id/textView19"
+                    android:id="@+id/text_DatoTieneHorno"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
@@ -217,7 +217,7 @@
                     android:text="hor"
                     android:textColor="@color/orange80"
                     app:layout_constraintStart_toStartOf="@+id/guideline15"
-                    app:layout_constraintTop_toBottomOf="@+id/textView17" />
+                    app:layout_constraintTop_toBottomOf="@+id/text_DatoTipoCocina" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -301,6 +301,7 @@
             android:textColor="#9C9595"
             android:textSize="18sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline6"
             app:layout_constraintTop_toBottomOf="@+id/text_TituloAdicionales" />
 
@@ -409,6 +410,20 @@
             android:layout_marginTop="24dp"
             android:background="@drawable/style_botones_principal"
             android:text="Volver al Home"
+            android:textColor="#FFFFFF"
+
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toBottomOf="@+id/tv_Total" />
+        <Button
+            android:id="@+id/btn_FinalizarServicio"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/style_botones_principal"
+            android:text="Finalizar Servicio"
             android:textColor="#FFFFFF"
 
             android:textSize="18sp"

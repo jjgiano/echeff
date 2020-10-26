@@ -15,7 +15,7 @@ class Propuesta(
     urlImg: String? = null,
     destacada: Boolean = false,
     idEstadoPropuesta: Int,
-    modifiaciones: String
+    modificaciones: String
 ) {
     var id: String
     var snack: String
@@ -29,7 +29,7 @@ class Propuesta(
     var urlImg: String?
     var destacada: Boolean?
     var idEstadoPropuesta: Int
-    var modifiaciones: String
+    var modificaciones: String
 
     constructor() : this("","","","","","",0.0,"","","", false,1,"")
 
@@ -46,7 +46,7 @@ class Propuesta(
         this.urlImg = urlImg
         this.destacada = destacada
         this.idEstadoPropuesta = idEstadoPropuesta
-        this.modifiaciones = modifiaciones
+        this.modificaciones = modificaciones
     }
 
 

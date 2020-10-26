@@ -5,9 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.ort.instituto.echeff.dao.PropuestaDao
 import ar.edu.ort.instituto.echeff.dao.ReservaDao
-import ar.edu.ort.instituto.echeff.entities.EstadoPropuesta
-import ar.edu.ort.instituto.echeff.entities.Propuesta
-import ar.edu.ort.instituto.echeff.entities.Reserva
+import ar.edu.ort.instituto.echeff.entities.*
 import kotlinx.coroutines.launch
 
 class ViewModelReservasConfirmarFragment : ViewModel(), ReservaDao, PropuestaDao {

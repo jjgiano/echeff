@@ -65,7 +65,7 @@ public interface ReservaDao {
         var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
 
         val questionRef = Firebase.firestore.collection("reservas")
-        val query = questionRef.whereEqualTo("idEstadoReserva", 1)
+        val query = questionRef.whereEqualTo("idEstadoReserva", EstadoReserva.NUEVO.id)
         try {
             val data = query
                 .get()
@@ -84,7 +84,7 @@ public interface ReservaDao {
         var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
 
         val questionRef = Firebase.firestore.collection("reservas")
-        val query = questionRef.whereEqualTo("idEstadoReserva", 3)
+        val query = questionRef.whereEqualTo("idEstadoReserva", EstadoReserva.ACONFIRMAR.id)
         try {
             val data = query
                 .get()
@@ -103,7 +103,7 @@ public interface ReservaDao {
         var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
 
         val questionRef = Firebase.firestore.collection("reservas")
-        val query = questionRef.whereEqualTo("idEstadoReserva", 5)
+        val query = questionRef.whereEqualTo("idEstadoReserva", EstadoReserva.MODIFICADA.id)
         try {
             val data = query
                 .get()

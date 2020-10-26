@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navgraph"
 
-    app:startDestination="@id/homeClienteFragment">
+    app:startDestination="@id/homeChefFragment">
 
     <fragment
         android:id="@+id/inicioFragment"
@@ -268,5 +268,8 @@
         <argument
             android:name="servicioArg"
             app:argType="ar.edu.ort.instituto.echeff.entities.Servicio" />
+        <action
+            android:id="@+id/action_detalleServicioFragment_to_homeChefFragment"
+            app:destination="@id/homeChefFragment" />
     </fragment>
 </navigation>

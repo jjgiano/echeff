@@ -225,7 +225,7 @@ class FormularioPropuestaModificacionesFragment : Fragment() {
         text_Postre.text = propuesta.postre
         text_Adicional.text = propuesta.adicional
         text_Total.text = propuesta.total.toString()
-        text_Modificaciones.text = propuesta.modifiaciones
+        text_Modificaciones.text = propuesta.modificaciones
 
     }
 }
