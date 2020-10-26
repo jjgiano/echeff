@@ -113,6 +113,8 @@ class VistaServiciosFragment : Fragment(){
     override fun onStart() {
         super.onStart()
 
+        viewModel.setcargar()
+
         buttonTengoUnProblema.setOnClickListener {
              var mesaAyudaScreen = VistaServiciosFragmentDirections.actionVistaPropuestasFragmentToMesaAyudaFragment2(true)
             v.findNavController().navigate(mesaAyudaScreen)
