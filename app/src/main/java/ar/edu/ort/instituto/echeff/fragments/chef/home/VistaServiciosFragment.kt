@@ -13,9 +13,12 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
+import ar.edu.ort.instituto.echeff.adapters.ReservaListAdapter
 import ar.edu.ort.instituto.echeff.adapters.VistaReservasAdapter
-import ar.edu.ort.instituto.echeff.dao.PropuestasDao
+import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
+import ar.edu.ort.instituto.echeff.entities.Servicio
+import ar.edu.ort.instituto.echeff.fragments.chef.HomeChefFragmentDirections
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelVistaServiciosFragment
 import com.google.android.material.snackbar.Snackbar
 
@@ -27,6 +30,9 @@ class VistaServiciosFragment : Fragment(){
     private lateinit var viewModel: ViewModelVistaServiciosFragment
     var cargado : Boolean = false
 
+    lateinit var servicio: Servicio
+    lateinit var reserva: Reserva
+
     lateinit var textViewMisPropuestas: TextView
     lateinit var buttonTengoUnProblema: Button
 
@@ -36,9 +42,10 @@ class VistaServiciosFragment : Fragment(){
     lateinit var rvServiciosARealizar: RecyclerView
     lateinit var rvServiciosRealizados: RecyclerView
 
-
-    var serviciosARealizar: MutableList<Reserva> = ArrayList<Reserva>()
-    var serviciosRealizados: MutableList<Reserva> = ArrayList<Reserva>()
+    var listaServiciosPendientes : MutableList<Servicio> = ArrayList<Servicio>()
+    var listaServiciosFinalizados : MutableList<Servicio> = ArrayList<Servicio>()
+    var reservasARealizar: MutableList<Reserva> = ArrayList<Reserva>()
+    var reservasRealizados: MutableList<Reserva> = ArrayList<Reserva>()
 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -54,14 +61,32 @@ class VistaServiciosFragment : Fragment(){
 
         viewModel.listaLiveData.observe(viewLifecycleOwner, Observer { result ->
 
-            serviciosARealizar = result
-
+            reservasARealizar= result
             rvServiciosARealizar.setHasFixedSize(true)
             rvServiciosARealizar.layoutManager = LinearLayoutManager(context)
-            rvServiciosARealizar.adapter = VistaReservasAdapter(serviciosARealizar, requireContext()){
+            rvServiciosARealizar.adapter = ReservaListAdapter(reservasARealizar, requireContext()){
                     position -> onItemAConfirmarClick(position)
             }
         })
+        viewModel.serviciosPendientes.observe(viewLifecycleOwner, Observer { result ->
+            listaServiciosPendientes = result
+        })
+
+        viewModel.listaLiveDataFinalizados.observe(viewLifecycleOwner, Observer { result ->
+
+            reservasRealizados= result
+            rvServiciosRealizados.setHasFixedSize(true)
+            rvServiciosRealizados.layoutManager = LinearLayoutManager(context)
+            rvServiciosRealizados.adapter = ReservaListAdapter(reservasRealizados, requireContext()){
+                    position -> onItemFinalizadosClick(position)
+            }
+        })
+
+        viewModel.serviciosRealizados.observe(viewLifecycleOwner, Observer { result ->
+            listaServiciosFinalizados = result
+        })
+
+
     }
 
     override fun onCreateView(
@@ -87,14 +112,8 @@ class VistaServiciosFragment : Fragment(){
 
     override fun onStart() {
         super.onStart()
-        //todo: cambier le 1 por el id del Usuario
-        viewModel.setcargar("1")
 
-        rvServiciosRealizados.setHasFixedSize(true)
-        rvServiciosRealizados.layoutManager = LinearLayoutManager(context)
-        rvServiciosRealizados.adapter = VistaReservasAdapter(serviciosRealizados, requireContext()){
-                position -> onItemConfirmadasClick(position)
-        }
+        viewModel.setcargar()
 
         buttonTengoUnProblema.setOnClickListener {
              var mesaAyudaScreen = VistaServiciosFragmentDirections.actionVistaPropuestasFragmentToMesaAyudaFragment2(true)
@@ -104,15 +123,30 @@ class VistaServiciosFragment : Fragment(){
     }
 
     private fun onItemAConfirmarClick(position : Int){
-        val reserva = serviciosARealizar[position]
-        Snackbar.make(v, "ID de la propuesta: " + reserva.id, Snackbar.LENGTH_SHORT).show()
+        var servicio = Servicio()
+        servicio=buscarServicio(listaServiciosPendientes,reservasARealizar[position].id)
+
+        val iraservicio = VistaServiciosFragmentDirections.actionVistaPropuestasFragmentToDetalleServicioFragment(servicio)
+        v.findNavController().navigate(iraservicio);
+
     }
 
-    private fun onItemConfirmadasClick(position : Int){
-        val reserva = serviciosRealizados[position]
-        Snackbar.make(v, "ID de la propuesta: " + reserva.id, Snackbar.LENGTH_SHORT).show()
+    private fun onItemFinalizadosClick(position : Int){
+        servicio=buscarServicio(listaServiciosFinalizados,reservasRealizados[position].id)
+
+        val iraservicio = VistaServiciosFragmentDirections.actionVistaPropuestasFragmentToDetalleServicioFragment(servicio)
+        v.findNavController().navigate(iraservicio);
+
     }
 
-
+    private fun buscarServicio(servicios : MutableList<Servicio>, idReserva: String) : Servicio {
+        var servicio =Servicio()
+        for (item in servicios) {
+            if (item.idReserva.equals(idReserva)) {
+                servicio = item
+            }
+        }
+        return servicio
+    }
 
 }

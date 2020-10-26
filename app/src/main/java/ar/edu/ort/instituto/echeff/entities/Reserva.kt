@@ -1,12 +1,23 @@
 package ar.edu.ort.instituto.echeff.entities
 
-import android.os.Build
+
 import android.os.Parcel
 import android.os.Parcelable
-import androidx.annotation.RequiresApi
 
-class Reserva(id: String, fecha: String, hora: String, direccion: String, tipoCocina: String, tieneHorno: String,  comensales: Int, tipoServicio: String, estiloCocina: String, notas : String, idUsuario: Int, idEstadoReserva: Int) :
-    Parcelable {
+class Reserva(
+    id: String,
+    fecha: String,
+    hora: String,
+    direccion: String,
+    tipoCocina: String,
+    tieneHorno: String,
+    comensales: Int,
+    tipoServicio: String,
+    estiloCocina: String,
+    notas: String,
+    idUsuario: Int,
+    idEstadoReserva: Int
+) : Parcelable {
 
     var id: String
     var fecha: String
@@ -15,13 +26,13 @@ class Reserva(id: String, fecha: String, hora: String, direccion: String, tipoCo
     var tipoCocina: String
     var tieneHorno: String
     var comensales: Int
-    var tipoServicio : String
+    var tipoServicio: String
     var estiloCocina: String
-    var notas : String
+    var notas: String
     var idUsuario: Int
     var idEstadoReserva: Int
 
-    constructor() : this("","","","","","",0,"","","",0,0)
+    constructor() : this("", "", "", "", "", "", 0, "", "", "", 0, 0)
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,

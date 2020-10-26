@@ -4,39 +4,61 @@ package ar.edu.ort.instituto.echeff.fragments.chef.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ar.edu.ort.instituto.echeff.dao.PropuestasDao
+import ar.edu.ort.instituto.echeff.dao.PropuestaDao
 import ar.edu.ort.instituto.echeff.dao.ReservaDao
 import ar.edu.ort.instituto.echeff.dao.ServicioDao
+import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
+import ar.edu.ort.instituto.echeff.entities.Servicio
 import kotlinx.coroutines.*
 
-class ViewModelVistaServiciosFragment : ViewModel(), ServicioDao, ReservaDao, PropuestasDao {
+class ViewModelVistaServiciosFragment : ViewModel(), ServicioDao, ReservaDao{
 
     var listaLiveData = MutableLiveData<MutableList<Reserva>>()
     var cargar = MutableLiveData<Boolean>()
+    var serviciosPendientes = MutableLiveData<MutableList<Servicio>>()
+    var serviciosRealizados = MutableLiveData<MutableList<Servicio>>()
+    var listaLiveDataFinalizados = MutableLiveData<MutableList<Reserva>>()
 
-    fun getdatos(idChef : String): MutableList<Reserva>? {
 
-        var listaMutableList : MutableList<Reserva>?
 
-        listaMutableList = buscarDatos(idChef).value
+    private fun buscarDatos(): Boolean {
 
-        return listaMutableList
-
-    }
-
-    private fun buscarDatos(idChef : String): MutableLiveData<MutableList<Reserva>> {
+        val id = "1" //TODO CAMBIAR EL 1 POR EL VALOR EN SHAREDPREFERENCE
+        var listaReserva : MutableList<Reserva> = ArrayList<Reserva>()
+        var listaReservaRealizados : MutableList<Reserva> = ArrayList<Reserva>()
+        var listaServiciosPendientes : MutableList<Servicio> = ArrayList<Servicio>()
+        var listaServiciosFinalizados : MutableList<Servicio> = ArrayList<Servicio>()
 
         viewModelScope.launch {
-            listaLiveData.postValue(getAllReservas())
+
+            listaServiciosPendientes = getServiciosPendientesByChef(id)
+            serviciosPendientes.value = listaServiciosPendientes
+
+            for(item in listaServiciosPendientes) {
+                listaReserva.add(getReservaById(item.idReserva))
+            }
+            listaLiveData.postValue(listaReserva)
+
+            listaServiciosFinalizados= getServiciosFinalizadosByChef(id)
+            serviciosRealizados.value = listaServiciosFinalizados
+
+            for(item in listaServiciosFinalizados) {
+                listaReservaRealizados.add(getReservaById(item.idReserva))
+            }
+            listaLiveDataFinalizados.postValue(listaReservaRealizados)
+
         }
 
-        return listaLiveData
+        return true
 
     }
 
-    fun setcargar(idChef: String) {
-        cargar.value
-        getdatos(idChef)
+    fun setcargar() {
+        cargar.value =  buscarDatos()
     }
+
+
+
+
 }

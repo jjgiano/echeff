@@ -1,6 +1,7 @@
 package ar.edu.ort.instituto.echeff.dao
 
 import android.util.Log
+import ar.edu.ort.instituto.echeff.entities.EstadoServicio
 import ar.edu.ort.instituto.echeff.entities.Servicio
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -62,7 +63,7 @@ interface ServicioDao {
         var servicioList: MutableList<Servicio> = ArrayList<Servicio>()
 
         val questionRef = Firebase.firestore.collection("servicios")
-        val query = questionRef.whereEqualTo("idEstadoServicio", 1)
+        val query = questionRef.whereEqualTo("idEstadoServicio",EstadoServicio.ACTIVO.id)
         try {
             val data = query
                 .get()
@@ -82,7 +83,7 @@ interface ServicioDao {
         var servicioList: MutableList<Servicio> = ArrayList<Servicio>()
 
         val questionRef = Firebase.firestore.collection("servicios")
-        val query = questionRef.whereEqualTo("idEstadoServicio", 2)
+        val query = questionRef.whereEqualTo("idEstadoServicio", EstadoServicio.FINALIZADO.id)
         try {
             val data = query
                 .get()
@@ -101,7 +102,7 @@ interface ServicioDao {
         var servicioList: MutableList<Servicio> = ArrayList<Servicio>()
 
         val questionRef = Firebase.firestore.collection("servicios")
-        val query = questionRef.whereEqualTo("idEstadoServicio", 3)
+        val query = questionRef.whereEqualTo("idEstadoServicio", EstadoServicio.CANCELADO.id)
         try {
             val data = query
                 .get()
@@ -124,5 +125,66 @@ interface ServicioDao {
         } catch (e: Exception) {
             Log.d("Error", e.toString())
         }
+    }
+
+    suspend fun getServiciosCanceladosByChef(id: String): MutableList<Servicio> {
+
+        var servicioList: MutableList<Servicio> = ArrayList<Servicio>()
+
+        val questionRef = Firebase.firestore.collection("servicios")
+        val query = questionRef
+                    .whereEqualTo("idEstadoServicio", EstadoServicio.CANCELADO.id)
+                    .whereEqualTo("idChef",id)
+        try {
+            val data = query
+                .get()
+                .await()
+            for (document in data) {
+                servicioList.add(document.toObject<Servicio>())
+            }
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+        return servicioList
+    }
+    suspend fun getServiciosFinalizadosByChef(id: String): MutableList<Servicio> {
+
+        var servicioList: MutableList<Servicio> = ArrayList<Servicio>()
+
+        val questionRef = Firebase.firestore.collection("servicios")
+        val query = questionRef
+            .whereEqualTo("idEstadoServicio", EstadoServicio.FINALIZADO.id)
+            .whereEqualTo("idChef",id)
+        try {
+            val data = query
+                .get()
+                .await()
+            for (document in data) {
+                servicioList.add(document.toObject<Servicio>())
+            }
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+        return servicioList
+    }
+    suspend fun getServiciosPendientesByChef(id: String): MutableList<Servicio> {
+
+        var servicioList: MutableList<Servicio> = ArrayList<Servicio>()
+
+        val questionRef = Firebase.firestore.collection("servicios")
+        val query = questionRef
+            .whereEqualTo("idEstadoServicio", EstadoServicio.ACTIVO.id)
+            .whereEqualTo("idChef",id)
+        try {
+            val data = query
+                .get()
+                .await()
+            for (document in data) {
+                servicioList.add(document.toObject<Servicio>())
+            }
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+        return servicioList
     }
 }

@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
+import ar.edu.ort.instituto.echeff.entities.EstadoPropuesta
 import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelDetallePropuestaFragment
@@ -165,6 +166,8 @@ class FormularioPropuestaModificacionesFragment : Fragment() {
         }
         // Boton de envio de Propuesta
         btn_EnviarPropuesta.setOnClickListener {
+            propuesta.idEstadoPropuesta = EstadoPropuesta.ACONFIRMAR.id
+            viewModelPropuesta.modificarPropuesta(propuesta)
             viewModelReserva.pasarAConfirmar(reserva)
             val action =
                 FormularioPropuestaModificacionesFragmentDirections.actionFormularioPropuestaModificacionesFragmentToHomeChefFragment()
@@ -222,7 +225,7 @@ class FormularioPropuestaModificacionesFragment : Fragment() {
         text_Postre.text = propuesta.postre
         text_Adicional.text = propuesta.adicional
         text_Total.text = propuesta.total.toString()
-        text_Modificaciones.text = propuesta.modifiaciones
+        text_Modificaciones.text = propuesta.modificaciones
 
     }
 }
