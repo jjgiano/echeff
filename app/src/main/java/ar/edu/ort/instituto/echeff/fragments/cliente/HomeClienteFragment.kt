@@ -1,6 +1,7 @@
 package ar.edu.ort.instituto.echeff.fragments.cliente
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
@@ -37,6 +39,8 @@ class HomeClienteFragment : Fragment() {
     lateinit var rvReservasAConfirmar: RecyclerView
     lateinit var rvReservasPendientes: RecyclerView
     lateinit var rvPropuestasDestacadas: RecyclerView
+
+    lateinit var sharedPreferences: SharedPreferences
 
     var reservasProximas: MutableList<Reserva> = ArrayList<Reserva>()
     var reservasAConfirmar: MutableList<Reserva> = ArrayList<Reserva>()
@@ -75,6 +79,7 @@ class HomeClienteFragment : Fragment() {
         propuestasDestacadas.add(Propuesta(10,"snack10", "entrada10", "plato10", "postre10", "adicional10", 100.10, 1, 10))
         propuestasDestacadas.add(Propuesta(11,"snack11", "entrada11", "plato11", "postre11", "adicional11", 100.11, 1, 11))
         propuestasDestacadas.add(Propuesta(12,"snack12", "entrada12", "plato12", "postre12", "adicional12", 100.12, 1, 12))
+
     }
 
     override fun onCreateView(
@@ -103,7 +108,8 @@ class HomeClienteFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
+        setSharedPreferences()
+        textViewSaludoCliente.text = "Hola, " + sharedPreferences.getString("userDisplayName", null)
         rvProximaReserva.setHasFixedSize(true)
         rvProximaReserva.layoutManager = LinearLayoutManager(context)
         rvProximaReserva.adapter = VistaReservasAdapter(reservasProximas, requireContext()){
@@ -157,4 +163,10 @@ class HomeClienteFragment : Fragment() {
         Snackbar.make(v, "ID de la reserva destacada: " + destacada.id, Snackbar.LENGTH_SHORT).show()
     }
 
+    private fun setSharedPreferences() {
+        this.sharedPreferences = this.activity!!.getSharedPreferences(
+            "MySharedPref",
+            AppCompatActivity.MODE_PRIVATE
+        )
+    }
 }

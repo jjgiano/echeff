@@ -1,12 +1,11 @@
 package ar.edu.ort.instituto.echeff.entities
 
 class Cliente(
-    id: Number, nombre: String, email: String, clave: String, urlFoto: String,
-    estado: String
+    id: String, nombre: String, email: String, urlFoto: String,
+    estado: String, telefono: String
 ) : Usuario(
     id, nombre, email,
-    clave,
-    urlFoto, estado
+    urlFoto, estado, telefono
 ) {
 
 }
