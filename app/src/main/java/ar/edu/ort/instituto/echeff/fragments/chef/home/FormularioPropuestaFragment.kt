@@ -1,7 +1,6 @@
-package ar.edu.ort.instituto.echeff.fragments.chef
+package ar.edu.ort.instituto.echeff.fragments.chef.home
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,38 +8,47 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
+import ar.edu.ort.instituto.echeff.entities.EstadoPropuesta
+import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
-
+import ar.edu.ort.instituto.echeff.entities.TipoResultadoMensaje
+import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelFormularioPropuestaFragment
+import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelPropuestasConfirmarFragment
 
 class FormularioPropuestaFragment : Fragment() {
     lateinit var v: View
+    private lateinit var viewModelPropuesta: ViewModelFormularioPropuestaFragment
+    private lateinit var viewModelReserva: ViewModelPropuestasConfirmarFragment
+
+    var nuevaPropuesta: Propuesta = Propuesta()
 
     // datos de la reserva
-    lateinit var usuario : TextView
-    lateinit var comensales :TextView
-    lateinit var estilococina :TextView
-    lateinit var reserva : Reserva
-    lateinit var servicio : TextView
+    lateinit var usuario: TextView
+    lateinit var comensales: TextView
+    lateinit var estilococina: TextView
+    lateinit var reserva: Reserva
+    lateinit var servicio: TextView
 
     //los input de la propuesta
-    lateinit var editText_Snack : EditText
-    lateinit var editText_Entrada : EditText
-    lateinit var editText_PlatoPricipal : EditText
-    lateinit var editText_Postre : EditText
-    lateinit var editText_Adicional : EditText
-    lateinit var editText_Importe : EditText
+    lateinit var editText_Snack: EditText
+    lateinit var editText_Entrada: EditText
+    lateinit var editText_PlatoPricipal: EditText
+    lateinit var editText_Postre: EditText
+    lateinit var editText_Adicional: EditText
+    lateinit var editText_Importe: EditText
 
-    //botoens de Guardar y Enviar
-    lateinit var btn_Propuesta : Button
-    lateinit var btn_EditarPropuesta : Button
-    lateinit var btn_EnviarPropuesta : Button
+    //botones de Guardar y Enviar
+    lateinit var btn_Propuesta: Button
+    lateinit var btn_EditarPropuesta: Button
+    lateinit var btn_EnviarPropuesta: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        }
+
+    }
 
 
     override fun onCreateView(
@@ -75,8 +83,17 @@ class FormularioPropuestaFragment : Fragment() {
 
         return v
     }
+
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModelPropuesta = ViewModelProvider(requireActivity()).get(ViewModelFormularioPropuestaFragment::class.java)
+        viewModelReserva = ViewModelProvider(requireActivity()).get(ViewModelPropuestasConfirmarFragment::class.java)
+    }
+
     override fun onStart() {
         super.onStart()
+        var modificado: Boolean = false
 
         //Obtengo la reserva que llega por Argumentos de navegacion
         reserva = FormularioPropuestaFragmentArgs.fromBundle(requireArguments()).formularioPropuestaArg
@@ -89,9 +106,27 @@ class FormularioPropuestaFragment : Fragment() {
 
         //Boton de Guardar la Propuesta y cambiar los botones y blockear los EditText
         btn_Propuesta.setOnClickListener {
+
             //guardo la propuesta
-           guardarPropuesta(editText_Snack.text.toString(),editText_Entrada.text.toString(),editText_PlatoPricipal.text.toString(),
-                            editText_Postre.text.toString(), editText_Adicional.text.toString(),editText_Importe.text.toString().toDouble(),reserva.id)
+            //Todo: hay que buscar los IDs que tiene 1.
+
+            //Si se modifico guardo los dato sen la nueva Propuesta
+            nuevaPropuesta.snack = editText_Snack.text.toString()
+            nuevaPropuesta.entrada = editText_Entrada.text.toString()
+            nuevaPropuesta.plato = editText_PlatoPricipal.text.toString()
+            nuevaPropuesta.postre = editText_Postre.text.toString()
+            nuevaPropuesta.adicional = editText_Adicional.text.toString()
+            nuevaPropuesta.total = editText_Importe.text.toString().toDouble()
+            nuevaPropuesta.idReserva = reserva.id
+            nuevaPropuesta.idChef = "1"
+            nuevaPropuesta.idEstadoPropuesta = EstadoPropuesta.NUEVO.id
+
+            //Guardo o modifico en Firebase
+            if (modificado) {
+                viewModelPropuesta.modificarPropuesta(nuevaPropuesta)
+            } else {
+                viewModelPropuesta.guardarPropuesta(nuevaPropuesta)
+            }
 
             //Cambio los botones y blockeo los textos
             btn_EditarPropuesta.setVisibility(View.VISIBLE);
@@ -103,16 +138,21 @@ class FormularioPropuestaFragment : Fragment() {
             editText_Postre.setFocusable(false)
             editText_Adicional.setFocusable(false)
             editText_Importe.setFocusable(false)
-
         }
 
+        // Boton de envio de Propuesta
         btn_EnviarPropuesta.setOnClickListener {
+            nuevaPropuesta.idEstadoPropuesta = EstadoPropuesta.ACONFIRMAR.id
+            viewModelPropuesta.modificarPropuesta(nuevaPropuesta)
+            viewModelReserva.pasarAConfirmar(reserva)
             val action =
-                FormularioPropuestaFragmentDirections.actionFormularioPropuestaFragmentToHomeChefFragment()
+                FormularioPropuestaFragmentDirections.actionFormularioPropuestaFragmentToResultadoMensajeFragment(TipoResultadoMensaje.NUEVA_PROPUESTA, true)
             v.findNavController().navigate(action)
         }
 
         btn_EditarPropuesta.setOnClickListener {
+            modificado = true
+            //modificar la vista de los botones
 
             btn_EnviarPropuesta.setVisibility(View.INVISIBLE);
             btn_EditarPropuesta.setVisibility(View.INVISIBLE);
@@ -126,13 +166,6 @@ class FormularioPropuestaFragment : Fragment() {
             editText_Postre.setFocusable(true)
             editText_Adicional.setFocusable(true)
             editText_Importe.setFocusable(true)
-
-
         }
-
-    }
-
-    fun guardarPropuesta(snack:String, entrada:String,platoPrincial:String,postre:String,adicional:String,importe:Double,reservaId: Int){
-        Log.d("Test",snack+ "\n"+entrada+ "\n"+platoPrincial+ "\n"+postre+ "\n"+adicional+ "\n"+importe)
     }
 }

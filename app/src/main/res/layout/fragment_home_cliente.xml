@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingEnd="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayoutHomeCliente"
@@ -52,8 +53,7 @@
             android:id="@+id/rvProximaReserva"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toStartOf="@+id/guidelineDerecha"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toBottomOf="@+id/textViewProximasReservas" />
@@ -62,7 +62,7 @@
             android:id="@+id/textViewReservasAConfirmar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-medium"
             android:text="Reservas a confirmar"
             android:textColor="#D97014"
@@ -74,7 +74,6 @@
             android:id="@+id/rvReservasAConfirmar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toStartOf="@+id/guidelineDerecha"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
@@ -84,7 +83,7 @@
             android:id="@+id/textViewReservasPendientes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-medium"
             android:text="Reservas pendientes"
             android:textColor="#D97014"
@@ -96,8 +95,7 @@
             android:id="@+id/rvReservasPendientes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toStartOf="@+id/guidelineDerecha"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toBottomOf="@+id/textViewReservasPendientes" />
@@ -133,8 +131,7 @@
             android:id="@+id/rvPropuestasDestacadas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toStartOf="@+id/guidelineDerecha"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toBottomOf="@+id/textViewPropuestasDestacadas" />
@@ -170,6 +167,3 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>
-
-
-

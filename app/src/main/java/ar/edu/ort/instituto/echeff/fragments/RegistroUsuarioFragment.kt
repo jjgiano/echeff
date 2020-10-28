@@ -41,14 +41,20 @@ class RegistroUsuarioFragment : Fragment() {
     lateinit var imageViewProfilePic: ImageView
     lateinit var imageViewChefDiploma: ImageView
     lateinit var buttonChefDiploma: Button
+    lateinit var textViewDiploma: TextView
     lateinit var sharedPreferences: SharedPreferences
+    lateinit var editor: SharedPreferences.Editor
+    private lateinit var profilePhotoURI: Uri
+    private var diplomaPhotoURI: Uri? = null
+
+
 
     fun goToInicio() {
         val isChef = sharedPreferences.getBoolean("isChef", false)
         val action = if (isChef) {
             RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeClienteFragment()
         } else {
-            RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeClienteFragment()
+            RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeChefFragment2()
         }
         v.findNavController().navigate(action)
     }
@@ -66,6 +72,7 @@ class RegistroUsuarioFragment : Fragment() {
         buttonRegistro = v.findViewById(R.id.buttonRegistroCliente)
         buttonChefDiploma = v.findViewById(R.id.buttonChefDiploma)
         imageViewChefDiploma = v.findViewById(R.id.imageViewChefDiploma)
+        textViewDiploma = v.findViewById(R.id.textViewDiploma)
 
         return v
     }
@@ -75,6 +82,7 @@ class RegistroUsuarioFragment : Fragment() {
             "MySharedPref",
             AppCompatActivity.MODE_PRIVATE
         )
+        this.editor = sharedPreferences.edit()
     }
 
     override fun onStart() {
@@ -87,16 +95,30 @@ class RegistroUsuarioFragment : Fragment() {
 
         nombre.setText(userDisplayName, TextView.BufferType.EDITABLE)
 
+        checkBoxSoyChef.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                imageViewChefDiploma.visibility = View.VISIBLE
+                buttonChefDiploma.visibility = View.VISIBLE
+                textViewDiploma.visibility = View.VISIBLE
+            } else {
+                imageViewChefDiploma.visibility = View.INVISIBLE
+                buttonChefDiploma.visibility = View.INVISIBLE
+                textViewDiploma.visibility = View.INVISIBLE
+            }
+        }
+
         buttonRegistro.setOnClickListener {
-            val photoRef = uploadImage(photoURI)
+            val profilePhotoRef = uploadImage(profilePhotoURI, "profilePics")
+
             val isChef = checkBoxSoyChef.isActivated
             if(isChef) {
+                val diplomaPhotoRef = uploadImage(diplomaPhotoURI!!, "diplomas")
                 db.collection("chefs").add(
                     Cliente(
                         userId,
                         nombre.text.toString(),
                         userEmail,
-                        photoRef,
+                        profilePhotoRef,
                         "",
                         telefono.text.toString()
                     )
@@ -107,39 +129,54 @@ class RegistroUsuarioFragment : Fragment() {
                         userId,
                         userDisplayName,
                         userEmail,
-                        photoRef,
+                        profilePhotoRef,
                         "",
                         telefono.text.toString()
                     )
                 )
             }
+
+            editor.putBoolean("isChef", isChef)
+            editor.commit()
             goToInicio()
         }
 
+        buttonChefDiploma.setOnClickListener {
+            dispatchTakePictureIntent("diplomas", 12345)
+        }
         buttonProfilePic.setOnClickListener {
-            dispatchTakePictureIntent()
+            dispatchTakePictureIntent("profilePics", 1234)
         }
     }
-    private lateinit var photoURI: Uri
-    private fun dispatchTakePictureIntent() {
+    private fun dispatchTakePictureIntent(folder: String, requestCode: Int) {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
             takePictureIntent.resolveActivity(this.activity!!.packageManager)?.also {
                 // Create the File where the photo should go
                 val photoFile: File? = try {
-                    createImageFile()
+                    createImageFile(folder)
                 } catch (ex: IOException) {
                     throw ex
                 }
                 // Continue only if the File was successfully created
                 photoFile?.also {
-                    photoURI = FileProvider.getUriForFile(
-                        v.context,
-                        "ar.edu.ort.instituto.echeff.fileprovider",
-                        it
-                    )
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    startActivityForResult(takePictureIntent, 1234)
+                    if (requestCode == 1234) {
+                        profilePhotoURI = FileProvider.getUriForFile(
+                            v.context,
+                            "ar.edu.ort.instituto.echeff.fileprovider",
+                            it
+                        )
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, profilePhotoURI)
+                        startActivityForResult(takePictureIntent, requestCode)
+                    } else {
+                        diplomaPhotoURI = FileProvider.getUriForFile(
+                            v.context,
+                            "ar.edu.ort.instituto.echeff.fileprovider",
+                            it
+                        )
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, diplomaPhotoURI)
+                        startActivityForResult(takePictureIntent, requestCode)
+                    }
                 }
             }
         }
@@ -147,16 +184,18 @@ class RegistroUsuarioFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 1234 && resultCode == RESULT_OK) {
-            imageViewProfilePic.setImageURI(photoURI)
+            imageViewProfilePic.setImageURI(profilePhotoURI)
+        } else if (requestCode == 12345 && resultCode == RESULT_OK) {
+            imageViewChefDiploma.setImageURI(diplomaPhotoURI)
         }
     }
     private lateinit var currentPhotoPath: String
 
     @Throws(IOException::class)
-    private fun createImageFile(): File {
+    private fun createImageFile(folder: String): File {
         // Create an image file name
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File = this.activity!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
+        val storageDir: File = this.activity!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES + folder)!!
         return File.createTempFile(
             "JPEG_${timeStamp}_",
             ".jpg",
@@ -166,10 +205,10 @@ class RegistroUsuarioFragment : Fragment() {
         }
     }
 
-    private fun uploadImage(uri: Uri): String {
+    private fun uploadImage(uri: Uri, folder: String): String {
         val storageRef = storage.reference
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val referenceName = "$timeStamp.jpg"
+        val referenceName = "$folder/$timeStamp.jpg"
         val imageRef = storageRef.child(referenceName)
         imageRef.putFile(uri)
         return referenceName

@@ -1,18 +1,30 @@
 package ar.edu.ort.instituto.echeff.fragments.cliente
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.adapters.VistaReservasAdapter
+import ar.edu.ort.instituto.echeff.entities.EstadoReserva
+import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
+import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelVistaServiciosFragment
+import ar.edu.ort.instituto.echeff.fragments.cliente.home.ReservasAConfirmarFragment
+import ar.edu.ort.instituto.echeff.fragments.cliente.home.ReservasFinalizadasFragment
+import ar.edu.ort.instituto.echeff.fragments.cliente.home.ReservasNuevasFragment
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -20,41 +32,19 @@ class VistaReservasFragment : Fragment() {
 
     val db = Firebase.firestore
     lateinit var v: View
-
     lateinit var textViewMisReservas: TextView
     lateinit var buttonTengoUnProblema: Button
+    lateinit var tabLayoutReservas: TabLayout
+    lateinit var viewPager2Reservas: ViewPager2
 
-    lateinit var textViewTituloReservasAConfirmar: TextView
-    lateinit var textViewTituloReservasConfirmadas: TextView
-    lateinit var textViewTituloReservasFinalizadas: TextView
-
-    lateinit var rvReservasAConfirmar: RecyclerView
-    lateinit var rvReservasConfirmadas: RecyclerView
-    lateinit var rvReservasFinalizadas: RecyclerView
-
-    var reservasAConfirmar: MutableList<Reserva> = ArrayList()
-    var reservasConfirmadas: MutableList<Reserva> = ArrayList()
-    var reservasFinalizadas: MutableList<Reserva> = ArrayList()
+    var reservas: MutableList<Reserva> = ArrayList<Reserva>()
+    var propuestas: MutableList<Propuesta> = ArrayList<Propuesta>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        reservasAConfirmar.add(Reserva(1, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-        reservasAConfirmar.add(Reserva(2, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-        reservasAConfirmar.add(Reserva(3, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-        reservasAConfirmar.add(Reserva(4, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-
-
-        reservasConfirmadas.add(Reserva(5, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-        reservasConfirmadas.add(Reserva(6, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-        reservasConfirmadas.add(Reserva(7, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-        reservasConfirmadas.add(Reserva(8, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-
-        reservasFinalizadas.add(Reserva(9, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-        reservasFinalizadas.add(Reserva(10, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-        reservasFinalizadas.add(Reserva(11, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
-        reservasFinalizadas.add(Reserva(12, "01/12/2019", "14:01", "Calle falsa 123, CABA", "Tradicional", "Induccion", 1,"Presencial TS", "Mediterranea", "Notas sobre la reserva", 2))
     }
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,57 +55,58 @@ class VistaReservasFragment : Fragment() {
 
         textViewMisReservas = v.findViewById(R.id.textViewMisReservas)
         buttonTengoUnProblema = v.findViewById(R.id.buttonTengoUnProblema)
-
-        textViewTituloReservasAConfirmar = v.findViewById(R.id.textViewTituloReservasAConfirmar)
-        textViewTituloReservasConfirmadas = v.findViewById(R.id.textViewTituloReservasConfirmadas)
-        textViewTituloReservasFinalizadas = v.findViewById(R.id.textViewTituloReservasFinalizadas)
-
-        rvReservasAConfirmar = v.findViewById(R.id.rvReservasAConfirmar)
-        rvReservasConfirmadas = v.findViewById(R.id.rvReservasConfirmadas)
-        rvReservasFinalizadas = v.findViewById(R.id.rvReservasFinalizadas)
+        tabLayoutReservas = v.findViewById(R.id.tabLayoutReservas)
+        viewPager2Reservas = v.findViewById(R.id.viewPager2Reservas)
 
         return v
     }
 
     override fun onStart() {
         super.onStart()
-        rvReservasAConfirmar.setHasFixedSize(true)
-        rvReservasAConfirmar.layoutManager = LinearLayoutManager(context)
-        rvReservasAConfirmar.adapter = VistaReservasAdapter(reservasAConfirmar, requireContext()){
-                position -> onItemAConfirmarClick(position)
-        }
 
-        rvReservasConfirmadas.setHasFixedSize(true)
-        rvReservasConfirmadas.layoutManager = LinearLayoutManager(context)
-        rvReservasConfirmadas.adapter = VistaReservasAdapter(reservasConfirmadas, requireContext()){
-                position -> onItemConfirmadasClick(position)
-        }
-
-        rvReservasFinalizadas.setHasFixedSize(true)
-        rvReservasFinalizadas.layoutManager = LinearLayoutManager(context)
-        rvReservasFinalizadas.adapter = VistaReservasAdapter(reservasFinalizadas, requireContext()){
-                position -> onItemFinalizadasClick(position)
-        }
+        viewPager2Reservas.setAdapter(VistaReservasFragment.ViewPagerAdapter(requireActivity(), reservas))
+        // viewPager.isUserInputEnabled = false
+        TabLayoutMediator(tabLayoutReservas, viewPager2Reservas, TabLayoutMediator.TabConfigurationStrategy { tab, position ->
+            when (position) {
+                0 -> tab.text = "Enviados" // Siguente (en estado = NUEVO)
+                1 -> tab.text = "A Confirmar" // A confirmar
+                2 -> tab.text = "Finalizadas"
+                else -> tab.text = "undefined"
+            }
+        }).attach()
 
         buttonTengoUnProblema.setOnClickListener {
-            Snackbar.make(it, "Esto debe ir a la pantalla de la mesa de ayuda", Snackbar.LENGTH_SHORT).show()
+            val iniciarReservaPage = VistaReservasFragmentDirections.actionVistaReservasFragmentToMesaAyudaFragment2(false)
+            v.findNavController().navigate(iniciarReservaPage)
         }
 
     }
 
-    private fun onItemAConfirmarClick(position : Int){
-        val reserva = reservasAConfirmar[position]
+    private fun onItemReservasClick(position : Int){
+        val reserva = reservas[position]
         Snackbar.make(v, "ID de la reserva: " + reserva.id, Snackbar.LENGTH_SHORT).show()
     }
 
-    private fun onItemConfirmadasClick(position : Int){
-        val reserva = reservasConfirmadas[position]
-        Snackbar.make(v, "ID de la reserva: " + reserva.id, Snackbar.LENGTH_SHORT).show()
-    }
+     class ViewPagerAdapter(fragmentActivity: FragmentActivity, val reservas: MutableList<Reserva>) : FragmentStateAdapter(fragmentActivity) {
+        override fun createFragment(position: Int): Fragment {
+            var nuevas = reservas.filter { it.idEstadoReserva == EstadoReserva.NUEVO.id }
+            var aConfirmar = reservas.filter { it.idEstadoReserva == EstadoReserva.ACONFIRMAR.id }
+            var finalizadas = reservas.filter { it.idEstadoReserva == EstadoReserva.FINALIZADA.id }
+            return when (position) {
+                0 -> ReservasNuevasFragment(ArrayList(nuevas))
+                1 -> ReservasAConfirmarFragment(ArrayList(aConfirmar))
+                2 -> ReservasFinalizadasFragment(ArrayList(finalizadas))
+                else -> ReservasFinalizadasFragment(ArrayList())
+            }
+        }
 
-    private fun onItemFinalizadasClick(position : Int){
-        val reserva = reservasFinalizadas[position]
-        Snackbar.make(v, "ID de la reserva: " + reserva.id, Snackbar.LENGTH_SHORT).show()
+        override fun getItemCount(): Int {
+            return TAB_COUNT
+        }
+
+        companion object {
+            private const val TAB_COUNT = 3
+        }
     }
 
 }

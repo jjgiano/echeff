@@ -1,37 +1,50 @@
 package ar.edu.ort.instituto.echeff.entities
 
-import android.os.Build
+
 import android.os.Parcel
 import android.os.Parcelable
-import androidx.annotation.RequiresApi
 
-class Reserva(id: Int, fecha: String, hora: String, direccion: String, tipoCocina: String, tieneHorno: String,  comensales: Int, tipoServicio: String, estiloCocina: String, notas : String, idUsuario: Int) :
-    Parcelable {
+class Reserva(
+    id: String,
+    fecha: String,
+    hora: String,
+    direccion: String,
+    tipoCocina: String,
+    tieneHorno: String,
+    comensales: Int,
+    tipoServicio: String,
+    estiloCocina: String,
+    notas: String,
+    idUsuario: Int,
+    idEstadoReserva: Int
+) : Parcelable {
 
-    var id: Int
+    var id: String
     var fecha: String
     var hora: String
     var direccion: String
     var tipoCocina: String
     var tieneHorno: String
     var comensales: Int
-    var tipoServicio : String
+    var tipoServicio: String
     var estiloCocina: String
-    var notas : String
+    var notas: String
     var idUsuario: Int
+    var idEstadoReserva: Int
 
-
+    constructor() : this("", "", "", "", "", "", 0, "", "", "", 0, 0)
     constructor(parcel: Parcel) : this(
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
         parcel.readInt(),
-         parcel.readString()!!,
-         parcel.readString()!!,
-         parcel.readString()!!,
+        parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readInt(),
-        parcel.readString()!!,
-        parcel.readString()!!,
-        parcel.readString()!!,
         parcel.readInt()
     )
 
@@ -47,11 +60,12 @@ class Reserva(id: Int, fecha: String, hora: String, direccion: String, tipoCocin
         this.tipoServicio = tipoServicio
         this.notas = notas
         this.idUsuario = idUsuario
+        this.idEstadoReserva = idEstadoReserva
     }
 
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeInt(id)
+        parcel.writeString(id)
         parcel.writeString(fecha)
         parcel.writeString(hora)
         parcel.writeString(direccion)
@@ -62,6 +76,7 @@ class Reserva(id: Int, fecha: String, hora: String, direccion: String, tipoCocin
         parcel.writeString(tipoServicio)
         parcel.writeString(notas)
         parcel.writeInt(idUsuario)
+        parcel.writeInt(idEstadoReserva)
     }
 
     override fun describeContents(): Int {

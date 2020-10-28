@@ -1,4 +1,4 @@
-package ar.edu.ort.instituto.echeff.fragments.chef
+package ar.edu.ort.instituto.echeff.fragments.chef.perfil
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -34,14 +34,13 @@ class VistaPropuestasAdapter(
     }
 
     override fun onBindViewHolder(holder: PropuestaHolder, position: Int) {
-        Glide
+       /* Glide
             .with(context)
-            .load("https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/2_avatar-256.png")
-            .centerInside()
+            .load(propuestas[position].urlImg)
+            .circleCrop()
             .into(holder.getImageView());
-
+        */
         holder.setDireccion(StringBuilder().append(propuestas[position].total).toString())
-        holder.setNroComensales(propuestas[position].id)
         holder.setEstiloComida(StringBuilder().append(propuestas[position].snack).toString())
 
         holder.getCardLayout().setOnClickListener {
@@ -59,27 +58,24 @@ class VistaPropuestasAdapter(
         }
 
         fun setDireccion(direccion: String) {
-            val tv: TextView = view.findViewById(R.id.tvDireccion)
-            tv.text = direccion
-        }
-
-        fun setNroComensales(nroComensales: Int) {
-            val tv: TextView = view.findViewById(R.id.tvNroComensales)
-            tv.text = StringBuilder().append(nroComensales).append(" Comensal/es").toString()
+     //       val tv: TextView = view.findViewById(R.id.tvDireccion)
+     //       tv.text = direccion
         }
 
         fun setEstiloComida(estiloComida: String) {
-            val tv: TextView = view.findViewById(R.id.tvEstiloComida)
-            tv.text = estiloComida
+       //     val tv: TextView = view.findViewById(R.id.tvEstiloComida)
+       //     tv.text = view.context.getString(R.string.estilo_comida_home_cliente, estiloComida);
         }
 
         fun getCardLayout(): CardView {
             return view.findViewById(R.id.cvItemPropuesta)
         }
 
-        fun getImageView(): ImageView {
-            return view.findViewById(R.id.ivChef)
-        }
+   //     fun getImageView(): ImageView {
+//            return view.findViewById(R.id.ivChef)
+     //   }
+
+
 
     }
 

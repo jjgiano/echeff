@@ -19,9 +19,10 @@
         android:id="@+id/TabLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/btn_VerPropuetasChef"
         app:tabIndicatorColor="@color/orange95"
         app:tabRippleColor="@color/orange80"
         app:tabSelectedTextColor="@color/orange80"
@@ -31,13 +32,14 @@
         android:id="@+id/text_NombreChef"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:fontFamily="sans-serif-medium"
         android:text="TextView"
         android:textColor="@color/orange80"
         android:textSize="28sp"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="21dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_VerPropuetasChef"
@@ -47,7 +49,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/style_botones_principal"
-        android:text="Ver mis Propuestas"
+        android:text="Ver mis Servicios"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,18 +74,17 @@
         app:layout_constraintTop_toBottomOf="@+id/TabLayout"
         app:layout_constraintVertical_bias="1.0" />
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="Reservas"
-        android:textColor="@color/orange80"
-        android:textSize="18sp"
+    <Button
+        android:id="@+id/btn_irPerfilChef"
+        android:layout_width="131dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/style_botones_secundario"
+        android:text="Mi Perfil"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_VerPropuetasChef" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

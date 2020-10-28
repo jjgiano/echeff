@@ -6,16 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingRight="10sp"
-    android:paddingBottom="90sp"
-    tools:context=".fragments.chef.FormularioPropuestaFragment">
+    android:paddingBottom="10sp"
+    tools:context=".fragments.chef.home.FormularioPropuestaFragment">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingTop="5sp"
-        android:paddingBottom="90sp">
+        android:paddingBottom="10sp">
 
 
         <TextView
@@ -61,7 +60,7 @@
                     app:layout_constraintGuide_begin="205dp" />
 
                 <ImageView
-                    android:id="@+id/image_Usuario"
+                    android:id="@+id/imageViewChef"
                     android:layout_width="100sp"
                     android:layout_height="100sp"
                     android:layout_marginStart="8dp"
@@ -82,7 +81,7 @@
                     android:textColor="#D97014"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/image_Usuario"
+                    app:layout_constraintStart_toEndOf="@+id/imageViewChef"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -282,18 +281,17 @@
         <Button
             android:id="@+id/btn_EnviarPropuesta"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:background="@drawable/style_botones_principal"
             android:text="Enviar Propuesta"
             android:textColor="#FFFFFF"
+
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_GuardarPropuesta"
             app:layout_constraintEnd_toStartOf="@+id/guideline8"
-            app:layout_constraintHorizontal_bias="0.049"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline6"
-            app:layout_constraintTop_toBottomOf="@+id/editText_Total"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/editText_Total" />
 
         <TextView
             android:id="@+id/text_TituloSnack"
@@ -371,5 +369,6 @@
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@+id/guideline6"
             app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
