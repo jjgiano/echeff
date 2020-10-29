@@ -1,11 +1,14 @@
 package ar.edu.ort.instituto.echeff.fragments.cliente
 
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
@@ -53,6 +56,8 @@ class HomeClienteFragment : Fragment() {
     lateinit var rvPropuestasDestacadas: RecyclerView
 
     //var reservas: MutableList<Reserva> = ArrayList<Reserva>()
+    lateinit var sharedPreferences: SharedPreferences
+
     var reservasProximas: MutableList<Reserva> = ArrayList<Reserva>()
     var reservasAConfirmar: MutableList<Reserva> = ArrayList<Reserva>()
     var reservasPendientes: MutableList<Reserva> = ArrayList<Reserva>()
@@ -131,6 +136,7 @@ class HomeClienteFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        setSharedPreferences()
 
         //TODO: cambiar le 1 por el id del Usuario logueado
         viewModel.setCargar(1)
@@ -169,4 +175,10 @@ class HomeClienteFragment : Fragment() {
         Snackbar.make(v, "ID de la reserva destacada: " + destacada.id, Snackbar.LENGTH_SHORT).show()
     }
 
+    private fun setSharedPreferences() {
+        this.sharedPreferences = this.activity!!.getSharedPreferences(
+            "MySharedPref",
+            AppCompatActivity.MODE_PRIVATE
+        )
+    }
 }

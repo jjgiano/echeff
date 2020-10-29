@@ -1,6 +1,7 @@
 package ar.edu.ort.instituto.echeff
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
@@ -13,6 +14,7 @@ class LoginActivity : AppCompatActivity() {
     lateinit var firebaseAuth: FirebaseAuth
     lateinit var listener: FirebaseAuth.AuthStateListener
     lateinit var providers: List<AuthUI.IdpConfig>
+    lateinit var editor: SharedPreferences.Editor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +23,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun init(){
+        setSharedPreferences()
         providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build(),
             AuthUI.IdpConfig.GoogleBuilder().build(),
@@ -35,10 +38,13 @@ class LoginActivity : AppCompatActivity() {
                 if (metadata.creationTimestamp == metadata.lastSignInTimestamp) {
                     isNew = true
                 }
+                editor.putString("userId", user.uid)
+                editor.putString("userDisplayName", user.displayName)
+                editor.putString("userEmail", user.email)
+                editor.putBoolean("isNew", isNew)
+                editor.commit()
                 //Already singned-in
                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                intent.putExtra("user", user)
-                intent.putExtra("isNew", isNew)
                 //val extras: Bundle = Bundle()
                 //extras.putString("user", user.displayName)
                 //intent.putExtras(extras)
@@ -54,6 +60,15 @@ class LoginActivity : AppCompatActivity() {
                 )
             }
         }
+    }
+
+    private fun setSharedPreferences() {
+        var sharedPreferences: SharedPreferences = getSharedPreferences(
+            "MySharedPref",
+            MODE_PRIVATE
+        )
+        editor = sharedPreferences.edit()
+        editor.clear()
     }
 
     override fun onStart() {
