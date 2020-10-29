@@ -64,38 +64,6 @@
         app:layout_constraintVertical_bias="0.174" />
 
     <EditText
-        android:id="@+id/editTextPasswordRegistroCliente"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/style_border_text"
-        android:ems="10"
-        android:hint="Contraseña"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNombreRegistroCliente" />
-
-    <EditText
-        android:id="@+id/editTextEmailRegistroCliente"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/style_border_text"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPasswordRegistroCliente" />
-
-    <EditText
         android:id="@+id/editTextNombreRegistroCliente"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -116,15 +84,98 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="64dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/style_border_text"
         android:ems="10"
         android:hint="Telefono"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmailRegistroCliente" />
+        app:layout_constraintTop_toTopOf="@+id/editTextNombreRegistroCliente" />
+
+    <ImageView
+        android:id="@+id/imageViewProfilePic"
+        android:layout_width="wrap_content"
+        android:layout_height="110dp"
+        android:layout_marginTop="112dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editTextTelefonoRegistroCliente"
+        app:srcCompat="@drawable/com_facebook_profile_picture_blank_square"
+        tools:src="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/buttonProfilePic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="144dp"
+        android:text="Seleccionar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imageViewProfilePic"
+        app:layout_constraintTop_toTopOf="@+id/editTextTelefonoRegistroCliente" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="Imagen de perfil"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.048"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTelefonoRegistroCliente" />
+
+    <TextView
+        android:id="@+id/textViewDiploma"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="136dp"
+        android:text="Titulo de chef"
+        app:layout_constraintBottom_toTopOf="@+id/buttonRegistroCliente"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewProfilePic"
+        app:layout_constraintVertical_bias="0.0"
+        tools:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/imageViewChefDiploma"
+        android:layout_width="wrap_content"
+        android:layout_height="110dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginBottom="83dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:src="@android:drawable/ic_menu_gallery"
+        app:layout_constraintBottom_toTopOf="@+id/buttonRegistroCliente"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDiploma"
+        app:layout_constraintVertical_bias="0.269"
+        tools:visibility="invisible" />
+
+    <Button
+        android:id="@+id/buttonChefDiploma"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:text="Seleccionar"
+        app:layout_constraintBottom_toTopOf="@+id/buttonRegistroCliente"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.423"
+        app:layout_constraintStart_toEndOf="@+id/imageViewChefDiploma"
+        app:layout_constraintTop_toBottomOf="@+id/buttonProfilePic"
+        app:layout_constraintVertical_bias="1.0"
+        tools:visibility="invisible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

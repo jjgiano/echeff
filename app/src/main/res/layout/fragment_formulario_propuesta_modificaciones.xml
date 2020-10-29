@@ -372,7 +372,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/textViewDiploma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -400,7 +400,7 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline8"
             app:layout_constraintStart_toStartOf="@+id/guideline6"
-            app:layout_constraintTop_toBottomOf="@+id/textView13" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewDiploma" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
