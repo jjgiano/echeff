@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import ar.edu.ort.instituto.echeff.dao.PropuestaDao
 import ar.edu.ort.instituto.echeff.dao.ReservaDao
 import ar.edu.ort.instituto.echeff.entities.EstadoPropuesta
+import ar.edu.ort.instituto.echeff.entities.EstadoReserva
 import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import kotlinx.coroutines.launch
@@ -49,6 +50,7 @@ class ViewModelReservasModificarFragment : ViewModel(), ReservaDao,PropuestaDao 
         cargar.value
         getLista()
     }
+
 
 }
 
