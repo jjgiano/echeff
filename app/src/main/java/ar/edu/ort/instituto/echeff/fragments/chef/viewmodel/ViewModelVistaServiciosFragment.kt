@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import ar.edu.ort.instituto.echeff.dao.PropuestaDao
 import ar.edu.ort.instituto.echeff.dao.ReservaDao
 import ar.edu.ort.instituto.echeff.dao.ServicioDao
+import ar.edu.ort.instituto.echeff.entities.EstadoReserva
 import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.entities.Servicio
@@ -57,6 +58,7 @@ class ViewModelVistaServiciosFragment : ViewModel(), ServicioDao, ReservaDao{
     fun setcargar() {
         cargar.value =  buscarDatos()
     }
+
 
 
 

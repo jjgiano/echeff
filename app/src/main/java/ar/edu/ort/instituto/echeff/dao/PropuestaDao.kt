@@ -121,6 +121,16 @@ public interface PropuestaDao {
         return propuestaList
     }
 
+    //MODIFICAR ESTADO DE Propuesta
+    suspend fun cambiarEstado(propuesta: Propuesta, estado : Int) {
+        val questionRef = Firebase.firestore.collection("propuestas")
+        val query = questionRef
+        try {
+            val data = query.document(propuesta.id).update("idEstadoPropuesta",estado)
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+    }
 }
 
 
