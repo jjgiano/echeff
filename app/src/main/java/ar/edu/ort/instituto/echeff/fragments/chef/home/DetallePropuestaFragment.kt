@@ -1,5 +1,7 @@
 package ar.edu.ort.instituto.echeff.fragments.chef.home
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -22,6 +24,9 @@ class DetallePropuestaFragment : Fragment() {
     private lateinit var viewModel: ViewModelDetallePropuestaFragment
 
     var propuestasList : MutableList<Propuesta> = ArrayList<Propuesta>()
+
+    val sharedPref: SharedPreferences = requireContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+    val idUsuario : String  = sharedPref.getString("userId","Vacio")!!
 
     lateinit var id: TextView
     lateinit var usuario: TextView
@@ -96,7 +101,7 @@ class DetallePropuestaFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        viewModel.setBuscar("1")
+        viewModel.setBuscar(idUsuario)
 
         reserva = DetallePropuestaFragmentArgs.fromBundle(requireArguments()).argReserva
         //lleno los datos de la reserva

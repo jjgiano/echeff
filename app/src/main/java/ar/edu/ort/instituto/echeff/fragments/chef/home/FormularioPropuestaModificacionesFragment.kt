@@ -1,5 +1,7 @@
 package ar.edu.ort.instituto.echeff.fragments.chef.home
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -26,6 +28,8 @@ class FormularioPropuestaModificacionesFragment : Fragment() {
     private lateinit var viewModel: ViewModelDetallePropuestaFragment
     private lateinit var viewModelPropuesta: ViewModelFormularioPropuestaFragment
     private lateinit var viewModelReserva: ViewModelReservasConfirmarFragment
+    var sharedPref: SharedPreferences = requireContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+    var idUsuario : String  = sharedPref.getString("userId","Vacio")!!
 
 
     var propuestasList: MutableList<Propuesta> = ArrayList<Propuesta>()
@@ -123,7 +127,7 @@ class FormularioPropuestaModificacionesFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        viewModel.setBuscar("1")
+        viewModel.setBuscar(idUsuario)
 
         reserva =
             FormularioPropuestaModificacionesFragmentArgs.fromBundle(requireArguments()).reservaArg
@@ -138,8 +142,6 @@ class FormularioPropuestaModificacionesFragment : Fragment() {
         btn_Propuesta.setOnClickListener {
 
             //guardo la propuesta
-            //Todo: hay que buscar los IDs que tiene 1.
-
             //Si se modifico guardo los dato sen la nueva Propuesta
             propuesta.snack = text_Snack.text.toString()
             propuesta.entrada = text_Entrada.text.toString()
@@ -148,7 +150,7 @@ class FormularioPropuestaModificacionesFragment : Fragment() {
             propuesta.adicional = text_Adicional.text.toString()
             propuesta.total = text_Total.text.toString().toDouble()
             propuesta.idReserva = reserva.id
-            propuesta.idChef = "1"
+            propuesta.idChef = idUsuario
 
             //modifico en Firebase
             viewModelPropuesta.modificarPropuesta(propuesta)

@@ -1,5 +1,7 @@
 package ar.edu.ort.instituto.echeff.fragments.chef.home
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -21,6 +23,10 @@ class ReservasConfirmarFragment() : Fragment() {
 
     lateinit var v : View
     private lateinit var viewModel: ViewModelReservasConfirmarFragment
+
+    val sharedPref: SharedPreferences = requireContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+    val idUsuario : String  = sharedPref.getString("userId","Vacio")!!
+
     var cargado : Boolean = false
 
     //los RecicleViews
@@ -77,7 +83,7 @@ class ReservasConfirmarFragment() : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        viewModel.setcargar()
+        viewModel.setcargar(idUsuario)
 
         rvReserva.setHasFixedSize(true)
 
