@@ -1,5 +1,7 @@
 package ar.edu.ort.instituto.echeff.fragments.chef.home
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -31,6 +33,8 @@ class FormularioPropuestaFragment : Fragment() {
     lateinit var estilococina: TextView
     lateinit var reserva: Reserva
     lateinit var servicio: TextView
+    var sharedPref: SharedPreferences = requireContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+    var idUsuario : String  = sharedPref.getString("userId","Vacio")!!
 
     //los input de la propuesta
     lateinit var editText_Snack: EditText
@@ -108,7 +112,7 @@ class FormularioPropuestaFragment : Fragment() {
         btn_Propuesta.setOnClickListener {
 
             //guardo la propuesta
-            //Todo: hay que buscar los IDs que tiene 1.
+
 
             //Si se modifico guardo los dato sen la nueva Propuesta
             nuevaPropuesta.snack = editText_Snack.text.toString()
@@ -118,7 +122,7 @@ class FormularioPropuestaFragment : Fragment() {
             nuevaPropuesta.adicional = editText_Adicional.text.toString()
             nuevaPropuesta.total = editText_Importe.text.toString().toDouble()
             nuevaPropuesta.idReserva = reserva.id
-            nuevaPropuesta.idChef = "1"
+            nuevaPropuesta.idChef = idUsuario
             nuevaPropuesta.idEstadoPropuesta = EstadoPropuesta.NUEVO.id
 
             //Guardo o modifico en Firebase

@@ -1,5 +1,8 @@
 package ar.edu.ort.instituto.echeff.fragments.chef.viewmodel
 
+import android.content.Context
+import android.content.SharedPreferences
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,19 +16,20 @@ class ViewModelReservasConfirmarFragment : ViewModel(), ReservaDao, PropuestaDao
     var liveDataList = MutableLiveData<MutableList<Reserva>>()
     var cargar = MutableLiveData<Boolean>()
 
-    fun getLista(): MutableList<Reserva>? {
+
+    fun getLista(idUsuario: String): MutableList<Reserva>? {
 
         var lista: MutableList<Reserva>?
 
-        lista = buscarReservasAConfirmar().value
+        lista = buscarReservasAConfirmar(idUsuario).value
 
         return lista
 
     }
 
-    private fun buscarReservasAConfirmar(): MutableLiveData<MutableList<Reserva>> {
+    private fun buscarReservasAConfirmar(idUsuario:String): MutableLiveData<MutableList<Reserva>> {
         var listaPropuestas : MutableList<Propuesta> = ArrayList<Propuesta>()
-        val id = "1" //TODO CAMBIAR EL 1 POR EL VALOR EN SHAREDPREFERENCE
+        val id = idUsuario
         var listaReserva : MutableList<Reserva> = ArrayList<Reserva>()
 
         viewModelScope.launch {
@@ -45,9 +49,9 @@ class ViewModelReservasConfirmarFragment : ViewModel(), ReservaDao, PropuestaDao
     }
 
 
-    fun setcargar() {
+    fun setcargar(idUsuario:String) {
         cargar.value
-        getLista()
+        getLista(idUsuario)
     }
 
     fun pasarAConfirmar(reserva: Reserva) {

@@ -2,9 +2,7 @@ package ar.edu.ort.instituto.echeff.dao
 
 import android.util.Log
 import ar.edu.ort.instituto.echeff.entities.EstadoReserva
-import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.*
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await

@@ -5,14 +5,14 @@ abstract class Usuario(
     nombre: String,
     email: String,
     urlFoto: String,
-    estado: String,
+    estado: Int,
     telefono: String
 ) {
     var id: String
     var nombre: String
     var email: String
     var urlFoto: String
-    var estado: String
+    var estado: Int
     var telefono: String
 
     init {

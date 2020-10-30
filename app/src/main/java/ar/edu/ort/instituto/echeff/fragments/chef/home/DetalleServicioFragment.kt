@@ -84,6 +84,7 @@ class DetalleServicioFragment : Fragment() {
 
         viewModel = ViewModelProvider(requireActivity()).get(ViewModelDetalleServicioFragment::class.java)
 
+
         viewModel.buscar.observe(viewLifecycleOwner, Observer { result ->
             cargar = result
         })
@@ -120,6 +121,8 @@ class DetalleServicioFragment : Fragment() {
         btn_FinalizarServicio.setOnClickListener {
 
             viewModel.pasarAFinalizado(servicio)
+            viewModel.pasarAFinalizadoReserva(reserva)
+            viewModel.pasarAFinalizadoPropuesta(propuesta)
 
             val action =
                 DetalleServicioFragmentDirections.actionDetalleServicioFragmentToHomeChefFragment()
