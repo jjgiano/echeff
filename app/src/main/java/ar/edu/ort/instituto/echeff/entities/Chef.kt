@@ -7,5 +7,5 @@ class Chef(
     id, nombre, email,
     urlFoto, estado, telefono
 ) {
-
+constructor():this("","","","",1,"")
 }
