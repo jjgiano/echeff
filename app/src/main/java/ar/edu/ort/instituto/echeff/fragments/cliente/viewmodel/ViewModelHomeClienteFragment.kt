@@ -16,7 +16,7 @@ class ViewModelHomeClienteFragment : ViewModel(), ReservaDao, PropuestaDao {
         var liveDataPropuestasDestacadasList = MutableLiveData<MutableList<Propuesta>>()
         var liveDataBooleanCargar = MutableLiveData<Boolean>()
 
-        fun setCargar(idUsuario: Number) {
+        fun setCargar(idUsuario: String) {
             liveDataBooleanCargar.value = true
             viewModelScope.launch {
                 liveDataReservasProximasList.postValue(super.getReservasPagadas(idUsuario))

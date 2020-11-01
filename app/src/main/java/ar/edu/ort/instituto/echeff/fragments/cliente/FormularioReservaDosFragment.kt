@@ -116,6 +116,7 @@ class FormularioReservaDosFragment : Fragment() {
             reserva.estiloCocina = spinnerEstiloComida.selectedItem.toString()
             reserva.tipoServicio = spinnerTipoServicio.selectedItem.toString()
             reserva.notas = etAclaracionesAChef.text.toString()
+            reserva.idEstadoReserva = EstadoReserva.ACONFIRMAR.id
 
             db.collection("reservas").add(reserva).addOnSuccessListener { result ->
                 reserva.id = result.id

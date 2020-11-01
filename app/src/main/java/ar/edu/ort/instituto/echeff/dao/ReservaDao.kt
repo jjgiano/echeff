@@ -148,7 +148,7 @@ public interface ReservaDao {
         }
     }
 
-    suspend fun getReservasNuevas(idUsuario: Number): MutableList<Reserva> {
+    suspend fun getReservasNuevas(idUsuario: String): MutableList<Reserva> {
 
         var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
 
@@ -169,7 +169,7 @@ public interface ReservaDao {
         return reservaList
     }
 
-    suspend fun getReservasAConfirmar(idUsuario: Number): MutableList<Reserva> {
+    suspend fun getReservasAConfirmar(idUsuario: String): MutableList<Reserva> {
 
         var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
 
@@ -189,7 +189,7 @@ public interface ReservaDao {
         }
         return reservaList
     }
-    suspend fun getReservasFinalizadas(idUsuario: Number): MutableList<Reserva> {
+    suspend fun getReservasFinalizadas(idUsuario: String): MutableList<Reserva> {
 
         var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
 
@@ -210,7 +210,7 @@ public interface ReservaDao {
         return reservaList
     }
 
-    suspend fun getReservasPagadas(idUsuario: Number): MutableList<Reserva> {
+    suspend fun getReservasPagadas(idUsuario: String): MutableList<Reserva> {
 
         var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
 
@@ -231,7 +231,7 @@ public interface ReservaDao {
         return reservaList
     }
 
-    suspend fun getReservasPendientes(idUsuario: Number): MutableList<Reserva> {
+    suspend fun getReservasPendientes(idUsuario: String): MutableList<Reserva> {
 
         var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
 

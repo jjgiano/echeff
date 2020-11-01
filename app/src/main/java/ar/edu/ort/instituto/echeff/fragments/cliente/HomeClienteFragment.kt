@@ -139,7 +139,7 @@ class HomeClienteFragment : Fragment() {
         setSharedPreferences()
 
         //TODO: cambiar le 1 por el id del Usuario logueado
-        viewModel.setCargar(1)
+        viewModel.setCargar("1")
 
         buttonIniciarReserva.setOnClickListener {
             val iniciarReservaPage = HomeClienteFragmentDirections.actionHomeClienteFragmentToFormularioReservaFragment()
