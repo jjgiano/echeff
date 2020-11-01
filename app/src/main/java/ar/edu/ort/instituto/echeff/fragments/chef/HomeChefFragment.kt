@@ -1,9 +1,10 @@
 package ar.edu.ort.instituto.echeff.fragments.chef
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -27,6 +28,7 @@ class HomeChefFragment : Fragment() {
 
     lateinit var viewPager: ViewPager2
     lateinit var tabLayout: TabLayout
+
 
     //Boton para ver Propuestas
     lateinit var btn_VerProuestas: Button
@@ -60,6 +62,10 @@ class HomeChefFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        var sharedPref: SharedPreferences = requireContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+        var idUsuario : String  = sharedPref.getString("userId","Vacio")!!
+        var NombreUsuario : String = sharedPref.getString("userDisplayName","Nombre No encontrado")!!
+        var chefNombre = "Hola Chef, " + NombreUsuario
 
         viewPager.setAdapter(createCardAdapter())
         // viewPager.isUserInputEnabled = false
@@ -76,7 +82,7 @@ class HomeChefFragment : Fragment() {
             }).attach()
 
         //Seteo el nombre del chef
-        nombreChef.text = "Hola Chef,"  //Hay que agtregar el nombre del Usuario
+        nombreChef.text =  chefNombre
 
         //Boton de Navegacion
         btn_VerProuestas.setOnClickListener {

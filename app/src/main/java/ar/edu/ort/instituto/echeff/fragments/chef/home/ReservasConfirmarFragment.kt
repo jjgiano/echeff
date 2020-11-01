@@ -24,9 +24,6 @@ class ReservasConfirmarFragment() : Fragment() {
     lateinit var v : View
     private lateinit var viewModel: ViewModelReservasConfirmarFragment
 
-    val sharedPref: SharedPreferences = requireContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
-    val idUsuario : String  = sharedPref.getString("userId","Vacio")!!
-
     var cargado : Boolean = false
 
     //los RecicleViews
@@ -82,6 +79,9 @@ class ReservasConfirmarFragment() : Fragment() {
 
     override fun onStart() {
         super.onStart()
+
+        val sharedPref: SharedPreferences = requireContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+        val idUsuario : String  = sharedPref.getString("userId","Vacio")!!
 
         viewModel.setcargar(idUsuario)
 

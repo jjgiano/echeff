@@ -25,8 +25,7 @@ class DetallePropuestaFragment : Fragment() {
 
     var propuestasList : MutableList<Propuesta> = ArrayList<Propuesta>()
 
-    val sharedPref: SharedPreferences = requireContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
-    val idUsuario : String  = sharedPref.getString("userId","Vacio")!!
+
 
     lateinit var id: TextView
     lateinit var usuario: TextView
@@ -100,6 +99,8 @@ class DetallePropuestaFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        val sharedPref: SharedPreferences = requireContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+        val idUsuario : String  = sharedPref.getString("userId","Vacio")!!
 
         viewModel.setBuscar(idUsuario)
 

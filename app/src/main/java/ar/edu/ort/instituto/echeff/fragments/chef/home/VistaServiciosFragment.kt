@@ -30,8 +30,7 @@ class VistaServiciosFragment : Fragment(){
 
     lateinit var v: View
     private lateinit var viewModel: ViewModelVistaServiciosFragment
-    val sharedPref: SharedPreferences = requireContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
-    val idUsuario : String  = sharedPref.getString("userId","Vacio")!!
+
 
     var cargado : Boolean = false
 
@@ -117,6 +116,8 @@ class VistaServiciosFragment : Fragment(){
 
     override fun onStart() {
         super.onStart()
+        val sharedPref: SharedPreferences = requireContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+        val idUsuario : String  = sharedPref.getString("userId","Vacio")!!
 
         viewModel.setcargar(idUsuario)
 
