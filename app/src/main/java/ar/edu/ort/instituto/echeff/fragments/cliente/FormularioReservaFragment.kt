@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
+import ar.edu.ort.instituto.echeff.entities.EstadoReserva
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -68,7 +69,8 @@ class FormularioReservaFragment : Fragment() {
             var stringDireccion = etDireccion.text.toString()
             var boolTieneHorno = cbTengoHorno.isChecked.toString()
 
-            var reserva = Reserva("", stringFecha,stringHora,stringDireccion,stringTipoCocina,boolTieneHorno.toString(), cantComensales, "","","","1",1)
+            //todo cambiar el id usuario por el actual
+            var reserva = Reserva("", stringFecha,stringHora,stringDireccion,stringTipoCocina,boolTieneHorno.toString(), cantComensales, "","","","1",EstadoReserva.NUEVO.id)
 
             val action2 = FormularioReservaFragmentDirections.actionFormularioReservaFragmentToFormularioReservaDosFragment3(reserva)
             v.findNavController().navigate(action2)

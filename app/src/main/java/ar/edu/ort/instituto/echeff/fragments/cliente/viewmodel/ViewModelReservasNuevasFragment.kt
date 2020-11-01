@@ -11,7 +11,7 @@ class ViewModelReservasNuevasFragment : ViewModel(), ReservaDao {
         var liveDataList = MutableLiveData<MutableList<Reserva>>()
         var cargar = MutableLiveData<Boolean>()
 
-        fun setCargar(idUsuario: Number) {
+        fun setCargar(idUsuario: String) {
             cargar.value = true
             viewModelScope.launch {
                 liveDataList.postValue(super.getReservasNuevas(idUsuario))
