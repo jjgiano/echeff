@@ -34,12 +34,12 @@ class VistaPropuestasAdapter(
     }
 
     override fun onBindViewHolder(holder: PropuestaHolder, position: Int) {
-       /* Glide
+        Glide
             .with(context)
-            .load(propuestas[position].urlImg)
-            .circleCrop()
+            .load("https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/2_avatar-256.png")
+            .centerInside()
             .into(holder.getImageView());
-        */
+
         holder.setDireccion(StringBuilder().append(propuestas[position].total).toString())
         holder.setEstiloComida(StringBuilder().append(propuestas[position].snack).toString())
 
@@ -71,9 +71,9 @@ class VistaPropuestasAdapter(
             return view.findViewById(R.id.cvItemPropuesta)
         }
 
-   //     fun getImageView(): ImageView {
-//            return view.findViewById(R.id.ivChef)
-     //   }
+        fun getImageView(): ImageView {
+            return view.findViewById(R.id.imageViewChef)
+        }
 
 
 
