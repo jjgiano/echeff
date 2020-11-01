@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-medium"
-            android:text="Reservas a confirmar"
+            android:text="Propuestas a confirmar"
             android:textColor="#D97014"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"

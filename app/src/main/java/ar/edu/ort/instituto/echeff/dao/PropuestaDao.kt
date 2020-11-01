@@ -2,6 +2,7 @@ package ar.edu.ort.instituto.echeff.dao
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import ar.edu.ort.instituto.echeff.entities.EstadoPropuesta
 import ar.edu.ort.instituto.echeff.entities.EstadoReserva
 import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
@@ -130,6 +131,31 @@ public interface PropuestaDao {
         } catch (e: Exception) {
             Log.d("Error", e.toString())
         }
+    }
+
+    /**
+     * A partir del ID del cliente obtiene todas las propuestas en estado ACONFIRMAR (2)
+     * A partir de cada una de las propuestas obtenidas busca todas las reservas asociadas
+     * que esten en estado ACONFIRMAR
+     */
+    suspend fun getPropuestasAConfirmar(idUsuario: String): MutableList<Propuesta>{
+        var propuestaList: MutableList<Propuesta> = ArrayList<Propuesta>()
+
+        val questionRef = Firebase.firestore.collection("propuestas")
+        val query = questionRef
+            .whereEqualTo("idEstadoPropuesta", EstadoPropuesta.ACONFIRMAR.id)
+
+        try {
+            val data = query
+                .get()
+                .await()
+            for (document in data) {
+                propuestaList.add(document.toObject<Propuesta>())
+            }
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+        return propuestaList
     }
 }
 
