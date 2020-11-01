@@ -20,10 +20,6 @@ import ar.edu.ort.instituto.echeff.dao.ReservaDao
 import ar.edu.ort.instituto.echeff.entities.*
 import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelPagoReservaFragment
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import java.util.*
 
 class PagoReservaFragment : Fragment(), PropuestaDao, ReservaDao {
@@ -33,6 +29,7 @@ class PagoReservaFragment : Fragment(), PropuestaDao, ReservaDao {
 
     lateinit var v: View
     lateinit var textViewImporteTotal: TextView
+    lateinit var textViewImportePorComensal: TextView
     lateinit var txtNombreTarjeta: EditText
     lateinit var txtNumeroTarjeta: EditText
     lateinit var txtVencimientoTarjeta: EditText
@@ -49,6 +46,7 @@ class PagoReservaFragment : Fragment(), PropuestaDao, ReservaDao {
     ): View? {
         v = inflater.inflate(R.layout.fragment_pago_reserva, container, false)
         textViewImporteTotal = v.findViewById(R.id.textViewImporteTotal)
+        textViewImportePorComensal = v.findViewById(R.id.textViewImportePorComensal)
         txtNombreTarjeta = v.findViewById(R.id.txtNombreTarjeta)
         txtNumeroTarjeta = v.findViewById(R.id.txtNumeroTarjeta)
         txtVencimientoTarjeta = v.findViewById(R.id.txtVencimientoTarjeta)
@@ -71,6 +69,18 @@ class PagoReservaFragment : Fragment(), PropuestaDao, ReservaDao {
             txtVencimientoTarjeta.setText(decode(tarjeta.vencimiento))
         })
 
+        viewModelPagoReserva.reserva.observe(viewLifecycleOwner, Observer { reserva ->
+            this.reserva = reserva
+            var cantTotal = propuesta.total * reserva.comensales
+            textViewImportePorComensal.text = getString(R.string.importeTotal, cantTotal)
+        })
+
+        viewModelPagoReserva.propuesta.observe(viewLifecycleOwner, Observer { propuesta ->
+            this.propuesta = propuesta
+                textViewImporteTotal.text = getString(R.string.importePorComensal, propuesta.total)
+                viewModelPagoReserva.getReserva(propuesta.idReserva)
+        })
+
     }
 
     override fun onStart() {
@@ -78,30 +88,27 @@ class PagoReservaFragment : Fragment(), PropuestaDao, ReservaDao {
         this.setSharedPreferences()
 
         var idPropuesta = this.sharedPreferences.getString("idPropuesta", "0")!!
+        //todo obtener el idi del usuario
+        var idUsuario = "1"
 
-        viewModelPagoReserva.getTarjeta("1")
+        viewModelPagoReserva.getTarjeta(idUsuario)
+        viewModelPagoReserva.getPropuesta(idPropuesta)
+
         //Todo si ocurre un error deberia tirar un mensaje de error
-        //todo si no deberia ir a la confimacion del servicio
+
         buttonConfirmarPago.setOnClickListener() {
             // TODO: las demas propuestas de la reserva pasan a DESCARTADO
-            // TODO: crear el servicio en estado ACTIVO
-            // TODO: GRABAR LOS DATOS DE LA TARJETA ENCRIPTADO EN LA BASE
-            val parentJob = Job()
-            val scope = CoroutineScope(Dispatchers.Default + parentJob)
-            scope.launch {
-                propuesta = super.getPropuestaById(idPropuesta)
-                propuesta.idEstadoPropuesta = EstadoPropuesta.PAGADO.id
-                super<PropuestaDao>.update(propuesta)
 
-                reserva = super<ReservaDao>.getReservaById(propuesta.idReserva)
-                reserva.idEstadoReserva = EstadoPropuesta.PAGADO.id
-                super<ReservaDao>.update(reserva)
+            propuesta.idEstadoPropuesta = EstadoPropuesta.PAGADO.id
+            viewModelPagoReserva.actualizarPropuesta(propuesta)
 
-            }
+            reserva.idEstadoReserva = EstadoReserva.PAGADO.id
+            viewModelPagoReserva.actualizarReserva(reserva)
 
-            //todo obtener el numero de id del usuario
+
+
             val tarjetaParaPagar = Tarjeta(
-                "1",
+                idUsuario,
                 txtNombreTarjeta.text.toString(),
                 txtNumeroTarjeta.text.toString(),
                 txtVencimientoTarjeta.text.toString(),
@@ -148,10 +155,6 @@ class PagoReservaFragment : Fragment(), PropuestaDao, ReservaDao {
         return String(decodedBytes)
     }
 
-    private fun buscarTarjetaCliente() {
-        // TODO: 11/1/2020 obtener usuario
-        viewModelPagoReserva.getTarjeta("1")
-    }
 }
 
 

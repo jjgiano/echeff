@@ -158,7 +158,6 @@ class HomeClienteFragment : Fragment() {
 
     private fun onItemReservaAConfirmarClick(position: Int) {
         val aConfirmar: Propuesta = propuestasAConfirmar[position]
-        Snackbar.make(v,"PROPUESTA A CONFIRMAR: " + aConfirmar.id, Snackbar.LENGTH_SHORT).show()
         sharedPreferences.edit().putString("idPropuesta", aConfirmar.id).apply()
         var confirmacionReservaScreen = HomeClienteFragmentDirections.actionHomeClienteFragmentToConfirmacionReservaFragment2()
         v.findNavController().navigate(confirmacionReservaScreen)

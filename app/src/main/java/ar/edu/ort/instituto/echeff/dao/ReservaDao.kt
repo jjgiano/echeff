@@ -218,7 +218,7 @@ interface ReservaDao {
         val questionRef = Firebase.firestore.collection("reservas")
         val query = questionRef
             .whereEqualTo("idUsuario", idUsuario)
-            .whereEqualTo("idEstadoReserva", EstadoReserva.PAGADA.id)
+            .whereEqualTo("idEstadoReserva", EstadoReserva.PAGADO.id)
         try {
             val data = query
                 .get()
@@ -257,8 +257,10 @@ interface ReservaDao {
         val questionRef = Firebase.firestore.collection("tarjetas")
         val query = questionRef
         try {
-            val data = query
-                .add(tarjeta)
+            query
+                .document(tarjeta.idUsuario)
+                .set(tarjeta)
+                //.add(tarjeta)
                 .await()
         } catch (e: Exception) {
             Log.d("Error", e.toString())

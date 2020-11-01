@@ -3,13 +3,19 @@ package ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ar.edu.ort.instituto.echeff.dao.PropuestaDao
 import ar.edu.ort.instituto.echeff.dao.ReservaDao
+import ar.edu.ort.instituto.echeff.entities.Propuesta
+import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.entities.Tarjeta
 import kotlinx.coroutines.launch
 
 
-class ViewModelPagoReservaFragment : ViewModel(), ReservaDao {
+class ViewModelPagoReservaFragment : ViewModel(), ReservaDao, PropuestaDao {
     var tarjetaUsuario = MutableLiveData<Tarjeta>()
+    var propuesta = MutableLiveData<Propuesta>()
+    var reserva = MutableLiveData<Reserva>()
+
 
 
     fun setTarjeta(tarjeta: Tarjeta) {
@@ -23,4 +29,29 @@ class ViewModelPagoReservaFragment : ViewModel(), ReservaDao {
             tarjetaUsuario.value = getTarjetaUsuario(idUsuario)
         }
     }
+
+    fun getPropuesta(idPropuesta: String){
+        viewModelScope.launch {
+            propuesta.value = getPropuestaById(idPropuesta)
+        }
+    }
+
+    fun getReserva(idReserva: String){
+        viewModelScope.launch {
+            reserva.value = getReservaById(idReserva)
+        }
+    }
+
+     fun actualizarPropuesta(newPropuesta: Propuesta){
+        viewModelScope.launch {
+          update(newPropuesta)
+        }
+    }
+
+    fun actualizarReserva(newReserva: Reserva){
+        viewModelScope.launch {
+            update(newReserva)
+        }
+    }
+
 }
