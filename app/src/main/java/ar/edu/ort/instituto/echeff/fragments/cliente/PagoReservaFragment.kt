@@ -2,6 +2,8 @@ package ar.edu.ort.instituto.echeff.fragments.cliente
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +13,7 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -39,6 +42,7 @@ class PagoReservaFragment : Fragment(), PropuestaDao, ReservaDao {
 
     private lateinit var viewModelPagoReserva: ViewModelPagoReservaFragment
 
+    var formTarjetaIsValid: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,25 +81,25 @@ class PagoReservaFragment : Fragment(), PropuestaDao, ReservaDao {
 
         viewModelPagoReserva.propuesta.observe(viewLifecycleOwner, Observer { propuesta ->
             this.propuesta = propuesta
-                textViewImporteTotal.text = getString(R.string.importePorComensal, propuesta.total)
-                viewModelPagoReserva.getReserva(propuesta.idReserva)
+            textViewImporteTotal.text = getString(R.string.importePorComensal, propuesta.total)
+            viewModelPagoReserva.getReserva(propuesta.idReserva)
         })
 
     }
 
     override fun onStart() {
         super.onStart()
-        this.setSharedPreferences()
 
+        this.setSharedPreferences()
         var idPropuesta = this.sharedPreferences.getString("idPropuesta", "0")!!
         //todo obtener el idi del usuario
         var idUsuario = "1"
-
+        changStatebutton(buttonConfirmarPago, formTarjetaIsValid)
         viewModelPagoReserva.getTarjeta(idUsuario)
         viewModelPagoReserva.getPropuesta(idPropuesta)
 
         //Todo si ocurre un error deberia tirar un mensaje de error
-
+        validate();
         buttonConfirmarPago.setOnClickListener() {
             // TODO: las demas propuestas de la reserva pasan a DESCARTADO
 
@@ -104,7 +108,6 @@ class PagoReservaFragment : Fragment(), PropuestaDao, ReservaDao {
 
             reserva.idEstadoReserva = EstadoReserva.PAGADO.id
             viewModelPagoReserva.actualizarReserva(reserva)
-
 
 
             val tarjetaParaPagar = Tarjeta(
@@ -153,6 +156,27 @@ class PagoReservaFragment : Fragment(), PropuestaDao, ReservaDao {
     private fun decode(fieldEncoded: String): String {
         val decodedBytes = Base64.getDecoder().decode(fieldEncoded);
         return String(decodedBytes)
+    }
+
+
+    fun validate() {
+        txtCsvTarjeta.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(newInput: Editable?) {
+                val content = newInput.toString()
+                formTarjetaIsValid = content.isNotEmpty() && content.length == 3
+                changStatebutton(buttonConfirmarPago, formTarjetaIsValid)
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+        })
+
+    }
+
+
+    fun changStatebutton(button: Button, enable: Boolean) {
+        button.isEnabled = enable
+        val backgroundColor = if(enable) R.color.orange80 else R.color.gray50
+        button.setBackgroundColor(ContextCompat.getColor(requireContext(), backgroundColor))
     }
 
 }
