@@ -134,27 +134,41 @@ public interface PropuestaDao {
     }
 
     /**
-     * A partir del ID del cliente obtiene todas las propuestas en estado ACONFIRMAR (2)
-     * A partir de cada una de las propuestas obtenidas busca todas las reservas asociadas
-     * que esten en estado ACONFIRMAR
+     * A partir del ID del cliente obtiene todas las reservas en estado ACONFIRMAR (3)
+     * A partir de cada reserva obtenidas acumula las propuestas asociadas en estado ACONFIRMAR (2)
      */
     suspend fun getPropuestasAConfirmar(idUsuario: String): MutableList<Propuesta>{
         var propuestaList: MutableList<Propuesta> = ArrayList<Propuesta>()
+        var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
 
-        val questionRef = Firebase.firestore.collection("propuestas")
-        val query = questionRef
-            .whereEqualTo("idEstadoPropuesta", EstadoPropuesta.ACONFIRMAR.id)
-
+        val reservaRef = Firebase.firestore.collection("reservas")
+        val reservaQuery = reservaRef
+            .whereEqualTo("idUsuario", idUsuario)
+            .whereEqualTo("idEstadoReserva", EstadoReserva.ACONFIRMAR.id)
         try {
-            val data = query
-                .get()
-                .await()
+            val data = reservaQuery.get().await()
             for (document in data) {
-                propuestaList.add(document.toObject<Propuesta>())
+                reservaList.add(document.toObject<Reserva>())
             }
         } catch (e: Exception) {
             Log.d("Error", e.toString())
         }
+
+        for(reserva in reservaList) {
+            val questionRef = Firebase.firestore.collection("propuestas")
+            val query = questionRef
+                .whereEqualTo("idEstadoPropuesta", EstadoPropuesta.ACONFIRMAR.id)
+                .whereEqualTo("idReserva", reserva.id)
+            try {
+                val data = query.get().await()
+                for (document in data) {
+                    propuestaList.add(document.toObject<Propuesta>())
+                }
+            } catch (e: Exception) {
+                Log.d("Error", e.toString())
+            }
+        }
+
         return propuestaList
     }
 }
