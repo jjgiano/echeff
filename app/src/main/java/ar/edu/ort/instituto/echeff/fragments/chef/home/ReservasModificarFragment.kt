@@ -25,8 +25,7 @@ class ReservasModificarFragment() : Fragment() {
     private lateinit var viewModel: ViewModelReservasModificarFragment
     var cargado : Boolean = false
 
-    val sharedPref: SharedPreferences = requireContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
-    val idUsuario : String  = sharedPref.getString("userId","Vacio")!!
+
 
     //los RecicleViews
     lateinit var rvReserva : RecyclerView
@@ -81,6 +80,9 @@ class ReservasModificarFragment() : Fragment() {
 
     override fun onStart() {
         super.onStart()
+
+        val sharedPref: SharedPreferences = requireContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+        val idUsuario : String  = sharedPref.getString("userId","Vacio")!!
 
         viewModel.setcargar(idUsuario)
 

@@ -8,13 +8,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.ort.instituto.echeff.dao.PropuestaDao
 import ar.edu.ort.instituto.echeff.dao.ReservaDao
+import ar.edu.ort.instituto.echeff.dao.UsuarioDao
 import ar.edu.ort.instituto.echeff.entities.*
 import kotlinx.coroutines.launch
 
-class ViewModelReservasConfirmarFragment : ViewModel(), ReservaDao, PropuestaDao {
+class ViewModelReservasConfirmarFragment : ViewModel(), ReservaDao, PropuestaDao, UsuarioDao {
 
     var liveDataList = MutableLiveData<MutableList<Reserva>>()
     var cargar = MutableLiveData<Boolean>()
+    var cliente : Cliente  = Cliente()
 
 
     fun getLista(idUsuario: String): MutableList<Reserva>? {
@@ -50,7 +52,7 @@ class ViewModelReservasConfirmarFragment : ViewModel(), ReservaDao, PropuestaDao
 
 
     fun setcargar(idUsuario:String) {
-        cargar.value
+        cargar.value = false
         getLista(idUsuario)
     }
 
@@ -58,6 +60,13 @@ class ViewModelReservasConfirmarFragment : ViewModel(), ReservaDao, PropuestaDao
         viewModelScope.launch {
             cambiarEstado(reserva, EstadoReserva.ACONFIRMAR.id)
         }
+    }
+
+    fun buscarCliente(reserva:Reserva):Cliente {
+        viewModelScope.launch {
+          cliente =  getClienteById(reserva.idUsuario)
+        }
+      return cliente
     }
 
 }

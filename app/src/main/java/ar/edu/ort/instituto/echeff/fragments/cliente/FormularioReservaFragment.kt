@@ -68,7 +68,7 @@ class FormularioReservaFragment : Fragment() {
             var stringDireccion = etDireccion.text.toString()
             var boolTieneHorno = cbTengoHorno.isChecked.toString()
 
-            var reserva = Reserva("", stringFecha,stringHora,stringDireccion,stringTipoCocina,boolTieneHorno.toString(), cantComensales, "","","",1,1)
+            var reserva = Reserva("", stringFecha,stringHora,stringDireccion,stringTipoCocina,boolTieneHorno.toString(), cantComensales, "","","","1",1)
 
             val action2 = FormularioReservaFragmentDirections.actionFormularioReservaFragmentToFormularioReservaDosFragment3(reserva)
             v.findNavController().navigate(action2)
