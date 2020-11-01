@@ -17,5 +17,4 @@
     -->
     <string name="facebook_application_id" translatable="false">387536605974075</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb387536605974075</string>
-    <string name="hello_world">Hello Square World!</string>
 </resources>

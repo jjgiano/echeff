@@ -3,14 +3,15 @@ package ar.edu.ort.instituto.echeff.dao
 import android.util.Log
 import ar.edu.ort.instituto.echeff.entities.EstadoReserva
 import ar.edu.ort.instituto.echeff.entities.Reserva
+import ar.edu.ort.instituto.echeff.entities.Tarjeta
 import com.google.firebase.firestore.ktx.*
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
 
-public interface ReservaDao {
+interface ReservaDao {
 
-    public suspend fun add(reserva: Reserva) {
+     suspend fun add(reserva: Reserva) {
 
         val questionRef = Firebase.firestore.collection("reservas")
         val query = questionRef
@@ -250,6 +251,38 @@ public interface ReservaDao {
             Log.d("Error", e.toString())
         }
         return reservaList
+    }
+
+    suspend fun setTarjetaDeCredito(tarjeta: Tarjeta){
+        val questionRef = Firebase.firestore.collection("tarjetas")
+        val query = questionRef
+        try {
+            val data = query
+                .add(tarjeta)
+                .await()
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+    }
+
+    suspend fun getTarjetaUsuario(idUsuario: String):Tarjeta{
+        var tarjetaABuscar = Tarjeta()
+
+        val questionRef = Firebase.firestore.collection("tarjetas")
+        val query = questionRef
+            .whereEqualTo("idUsuario", idUsuario)
+            .limit(1)
+        try {
+            val data = query
+                .get()
+                .await()
+            for (document in data) {
+                tarjetaABuscar = document.toObject<Tarjeta>()
+            }
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+        return tarjetaABuscar
     }
 }
 

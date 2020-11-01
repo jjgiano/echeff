@@ -10,10 +10,10 @@ import com.google.firebase.firestore.ktx.*
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
-public interface PropuestaDao {
+interface PropuestaDao {
 
 
-    public suspend fun add(propuesta: Propuesta) {
+    suspend fun add(propuesta: Propuesta) {
 
         val questionRef = Firebase.firestore.collection("propuestas")
         val query = questionRef
@@ -60,12 +60,12 @@ public interface PropuestaDao {
         return propuestaList
     }
 
-    suspend fun getPropuestaByChef(idChef : String) : MutableList<Propuesta> {
+    suspend fun getPropuestaByChef(idChef: String): MutableList<Propuesta> {
 
         var propuestaList: MutableList<Propuesta> = ArrayList<Propuesta>()
 
         val questionRef = Firebase.firestore.collection("propuestas")
-        val query = questionRef.whereEqualTo("idChef",idChef)
+        val query = questionRef.whereEqualTo("idChef", idChef)
 
         try {
             val data = query
@@ -80,12 +80,13 @@ public interface PropuestaDao {
         }
         return propuestaList
     }
-    suspend fun getPropuestaById(id : String) : Propuesta {
+
+    suspend fun getPropuestaById(id: String): Propuesta {
 
         var propuesta: Propuesta = Propuesta()
 
         val questionRef = Firebase.firestore.collection("propuestas")
-        val query = questionRef.whereEqualTo("id",id)
+        val query = questionRef.whereEqualTo("id", id)
 
         try {
             val data = query
@@ -123,11 +124,11 @@ public interface PropuestaDao {
     }
 
     //MODIFICAR ESTADO DE Propuesta
-    suspend fun cambiarEstado(propuesta: Propuesta, estado : Int) {
+    suspend fun cambiarEstado(propuesta: Propuesta, estado: Int) {
         val questionRef = Firebase.firestore.collection("propuestas")
         val query = questionRef
         try {
-            val data = query.document(propuesta.id).update("idEstadoPropuesta",estado)
+            val data = query.document(propuesta.id).update("idEstadoPropuesta", estado)
         } catch (e: Exception) {
             Log.d("Error", e.toString())
         }
