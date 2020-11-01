@@ -1,7 +1,19 @@
 package ar.edu.ort.instituto.echeff.entities
 
 class Tarjeta(
-    numero: Number, nombre: String, dni: String, vencimiento: String
+    idUsuario: String,
+    numero: String,
+    nombre: String,
+    vencimiento: String,
+    csv: String
 ) {
 
+    var idUsuario: String = idUsuario
+    var numero: String = numero
+    var nombre: String = nombre
+    var vencimiento: String = vencimiento
+    var csv: String = csv
+
+
+    constructor() : this("", "", "", "", "")
 }
