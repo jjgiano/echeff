@@ -2,6 +2,7 @@ package ar.edu.ort.instituto.echeff.dao
 
 import android.util.Log
 import ar.edu.ort.instituto.echeff.entities.EstadoServicio
+import ar.edu.ort.instituto.echeff.entities.Problema
 import ar.edu.ort.instituto.echeff.entities.Servicio
 import ar.edu.ort.instituto.echeff.entities.TipoServicio
 import com.google.firebase.firestore.ktx.firestore
@@ -22,6 +23,24 @@ interface ServicioDao {
                     var id = result.id
                     servicio.id = id
                     query.document(id).set(servicio)
+                }
+                .await()
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+    }
+
+    public suspend fun addProblema(problema: Problema) {
+
+        val questionRef = Firebase.firestore.collection("problemas")
+        val query = questionRef
+
+        try {
+            val data = query
+                .add(problema).addOnSuccessListener { result ->
+                    var id = result.id
+                    problema.id = id
+                    query.document(id).set(problema)
                 }
                 .await()
         } catch (e: Exception) {
