@@ -175,8 +175,6 @@ class PagoReservaFragment : Fragment(), PropuestaDao, ReservaDao {
 
     fun changStatebutton(button: Button, enable: Boolean) {
         button.isEnabled = enable
-        val backgroundColor = if(enable) R.color.orange80 else R.color.gray50
-        button.setBackgroundColor(ContextCompat.getColor(requireContext(), backgroundColor))
     }
 
 }

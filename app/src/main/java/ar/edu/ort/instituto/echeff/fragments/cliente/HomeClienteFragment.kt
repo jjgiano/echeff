@@ -15,7 +15,6 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
-import ar.edu.ort.instituto.echeff.adapters.PropuestaListAdapter
 import ar.edu.ort.instituto.echeff.adapters.VistaPropuestasAdapter
 import ar.edu.ort.instituto.echeff.adapters.VistaReservasAdapter
 import ar.edu.ort.instituto.echeff.entities.Propuesta
@@ -48,7 +47,6 @@ class HomeClienteFragment : Fragment() {
     lateinit var rvReservasPendientes: RecyclerView
     lateinit var rvPropuestasDestacadas: RecyclerView
 
-    //var reservas: MutableList<Reserva> = ArrayList<Reserva>()
     lateinit var sharedPreferences: SharedPreferences
 
     var reservasProximas: MutableList<Reserva> = ArrayList<Reserva>()
@@ -82,7 +80,7 @@ class HomeClienteFragment : Fragment() {
             rvReservasAConfirmar.setHasFixedSize(true)
             rvReservasAConfirmar.layoutManager = LinearLayoutManager(context)
             rvReservasAConfirmar.adapter = VistaPropuestasAdapter(propuestasAConfirmar, super.requireContext()){
-                    position -> onItemReservaAConfirmarClick(position)
+                    position -> onItemPropuestaAConfirmarClick(position)
             }
         })
 
@@ -156,7 +154,7 @@ class HomeClienteFragment : Fragment() {
         Snackbar.make(v,"LA RESERVA LO TIENE EL CHEF AHORA: " + pendiente.id, Snackbar.LENGTH_SHORT).show()
     }
 
-    private fun onItemReservaAConfirmarClick(position: Int) {
+    private fun onItemPropuestaAConfirmarClick(position: Int) {
         val aConfirmar: Propuesta = propuestasAConfirmar[position]
         sharedPreferences.edit().putString("idPropuesta", aConfirmar.id).apply()
         var confirmacionReservaScreen = HomeClienteFragmentDirections.actionHomeClienteFragmentToConfirmacionReservaFragment2()
