@@ -1,6 +1,5 @@
 package ar.edu.ort.instituto.echeff.fragments.cliente
 
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,25 +9,16 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.adapter.FragmentStateAdapter
 import ar.edu.ort.instituto.echeff.R
-import ar.edu.ort.instituto.echeff.adapters.PropuestaListAdapter
 import ar.edu.ort.instituto.echeff.adapters.VistaPropuestasAdapter
 import ar.edu.ort.instituto.echeff.adapters.VistaReservasAdapter
-import ar.edu.ort.instituto.echeff.entities.EstadoReserva
 import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
-import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelVistaServiciosFragment
-import ar.edu.ort.instituto.echeff.fragments.cliente.home.PropuestasDestacadasFragment
-import ar.edu.ort.instituto.echeff.fragments.cliente.home.ReservasAConfirmarFragment
-import ar.edu.ort.instituto.echeff.fragments.cliente.home.ReservasPendientesFragment
-import ar.edu.ort.instituto.echeff.fragments.cliente.home.ReservasSiguientesFragment
 import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelHomeClienteFragment
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import com.google.android.material.snackbar.Snackbar
@@ -57,7 +47,6 @@ class HomeClienteFragment : Fragment() {
     lateinit var rvReservasPendientes: RecyclerView
     lateinit var rvPropuestasDestacadas: RecyclerView
 
-    //var reservas: MutableList<Reserva> = ArrayList<Reserva>()
     lateinit var sharedPreferences: SharedPreferences
 
     var reservasProximas: MutableList<Reserva> = ArrayList<Reserva>()
@@ -91,7 +80,7 @@ class HomeClienteFragment : Fragment() {
             rvReservasAConfirmar.setHasFixedSize(true)
             rvReservasAConfirmar.layoutManager = LinearLayoutManager(context)
             rvReservasAConfirmar.adapter = VistaPropuestasAdapter(propuestasAConfirmar, super.requireContext()){
-                    position -> onItemReservaAConfirmarClick(position)
+                    position -> onItemPropuestaAConfirmarClick(position)
             }
         })
 
@@ -165,9 +154,8 @@ class HomeClienteFragment : Fragment() {
         Snackbar.make(v,"LA RESERVA LO TIENE EL CHEF AHORA: " + pendiente.id, Snackbar.LENGTH_SHORT).show()
     }
 
-    private fun onItemReservaAConfirmarClick(position: Int) {
+    private fun onItemPropuestaAConfirmarClick(position: Int) {
         val aConfirmar: Propuesta = propuestasAConfirmar[position]
-        Snackbar.make(v,"PROPUESTA A CONFIRMAR: " + aConfirmar.id, Snackbar.LENGTH_SHORT).show()
         sharedPreferences.edit().putString("idPropuesta", aConfirmar.id).apply()
         var confirmacionReservaScreen = HomeClienteFragmentDirections.actionHomeClienteFragmentToConfirmacionReservaFragment2()
         v.findNavController().navigate(confirmacionReservaScreen)

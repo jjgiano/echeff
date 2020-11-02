@@ -1,31 +1,37 @@
 package ar.edu.ort.instituto.echeff.fragments
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Spinner
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
+import ar.edu.ort.instituto.echeff.entities.Problema
 import ar.edu.ort.instituto.echeff.entities.TipoResultadoMensaje
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import ar.edu.ort.instituto.echeff.fragments.viewmodel.ViewModelMesaAyudaFragment
+import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 
 class MesaAyudaFragment : Fragment() {
-
-    val db = Firebase.firestore
-    var soyChef: Boolean = true
+    lateinit var sharedPreferences: SharedPreferences
+    lateinit var viewModel: ViewModelMesaAyudaFragment
     lateinit var v: View
     lateinit var spinnerSugerenciasMesaAyuda: Spinner
     lateinit var editTextMesaAyuda: EditText
     lateinit var buttonMesaAyuda: Button
+    var problema: Problema = Problema()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProvider(requireActivity()).get(ViewModelMesaAyudaFragment::class.java)
     }
 
     override fun onCreateView(
@@ -48,7 +54,31 @@ class MesaAyudaFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        this.setSharedPreferences()
+        var userId = this.sharedPreferences.getString("userId","0")!!
+
+        spinnerSugerenciasMesaAyuda.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                problema.opcion = parent.getItemAtPosition(position).toString()
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                //TODO(Not Implemented yet)
+            }
+
+        }
+
         buttonMesaAyuda.setOnClickListener {
+            problema.comentarios = editTextMesaAyuda.text.toString()
+            problema.idUsuario = userId
+            viewModel.crearProblema(problema)
             v.findNavController().navigate(
                 MesaAyudaFragmentDirections.actionMesaAyudaFragment2ToResultadoMensajeFragment(
                     TipoResultadoMensaje.NUEVO_MESA_AYUDA,
@@ -57,4 +87,9 @@ class MesaAyudaFragment : Fragment() {
             )
         }
     }
+
+    private fun setSharedPreferences() {
+        this.sharedPreferences = this.activity!!.getSharedPreferences(EcheffUtilities.PREF_NAME.valor, AppCompatActivity.MODE_PRIVATE)
+    }
+
 }

@@ -76,6 +76,7 @@ class ConfirmacionReservaFragment : Fragment(), PropuestaDao, UsuarioDao {
 
         this.setSharedPreferences()
 
+        // TODO: levantar la foto del chef del firebase
         Glide
             .with(super.requireContext())
             .load("https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/2_avatar-256.png")

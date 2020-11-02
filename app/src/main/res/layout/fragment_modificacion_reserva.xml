@@ -8,6 +8,7 @@
     tools:context=".fragments.cliente.ModificacionReservaFragment"
     android:layout_marginEnd="10dp">
 
+
     <!-- TODO: Update blank fragment layout -->
 
     <TextView
@@ -16,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:text="Modificar reserva"
+        android:text="Modificar propuesta"
         android:textColor="@color/orange80"
         android:textSize="28sp"
         app:layout_constraintBottom_toBottomOf="parent"

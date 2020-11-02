@@ -23,12 +23,9 @@ class ViewModelDetallePropuestaFragment : ViewModel(), PropuestaDao {
     }
 
     private fun buscarPropuesta(idChef: String): MutableLiveData<MutableList<Propuesta>> {
-
-
         viewModelScope.launch {
             ListDataPropuesta.postValue(getPropuestaByChef(idChef))
         }
-
         return ListDataPropuesta
 
     }

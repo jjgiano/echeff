@@ -96,7 +96,6 @@ class FormularioReservaDosFragment : Fragment() {
                 id: Long
             ) {
                 if (tipoServiciosList.size != 0) {
-
                     tipoServicio = parent.getItemAtPosition(position) as TipoServicio
                     textViewImporte.text = view.context.getString(
                         R.string.rango_precio,

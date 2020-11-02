@@ -48,7 +48,6 @@ class HomeChefFragment : Fragment() {
         v = inflater.inflate(R.layout.fragment_home_chef, container, false)
 
         tabLayout = v.findViewById(R.id.TabLayout)
-
         viewPager = v.findViewById(R.id.viewpage)
 
         btn_VerServicios = v.findViewById(R.id.btn_VerServicosChef)
@@ -77,7 +76,7 @@ class HomeChefFragment : Fragment() {
             viewPager,
             TabLayoutMediator.TabConfigurationStrategy { tab, position ->
                 when (position) {
-                    0 -> tab.text = "Dispobibles"
+                    0 -> tab.text = "Disponibles"
                     1 -> tab.text = "A Confirmar"
                     2 -> tab.text = "Modificar"
                     else -> tab.text = "undefined"

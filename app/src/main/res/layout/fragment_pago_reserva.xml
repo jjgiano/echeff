@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:textAlignment="center"
     android:paddingEnd="10sp"
+    android:textAlignment="center"
     tools:context=".fragments.cliente.PagoReservaFragment">
 
     <TextView
@@ -46,35 +46,22 @@
         android:textColor="#D97014"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewImporteTotal" />
-
-    <TextView
-        android:id="@+id/textViewMP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="Metodo 2: Mercado Pago"
-        android:textColor="#D97014"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtCsvTarjeta" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewImportePorComensal" />
 
     <Button
         android:id="@+id/buttonConfirmarPago"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginBottom="50dp"
         android:background="@drawable/button_background"
         android:text="Confirmar Pago"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/crdMercadoLibre" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textViewImporteTotal"
@@ -88,74 +75,29 @@
         android:text="Importe total:"
         android:textAlignment="textStart"
         android:textColor="@color/orange95"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewSeleccionMP" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/crdMercadoLibre"
+    <TextView
+        android:id="@+id/textViewImportePorComensal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:clickable="true"
-        app:cardCornerRadius="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/style_importetotal"
+        android:fontFamily="sans-serif-black"
+        android:text="Importe por comensal:"
+        android:textAlignment="textStart"
+        android:textColor="@color/orange95"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewMP">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="378dp"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/imageViewChef"
-                android:layout_width="100sp"
-                android:layout_height="100sp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                tools:src="@tools:sample/avatars" />
-
-            <TextView
-                android:id="@+id/textViewNombreChef"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="sans-serif-medium"
-                android:text="Ir a Mercado Pago"
-                android:textColor="#D97014"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageViewChef"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textviewCuotas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                android:fontFamily="sans-serif-medium"
-                android:text="Hasta 6 cuotas sin interes"
-                android:textColor="#D97014"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.486"
-                app:layout_constraintStart_toEndOf="@+id/imageViewChef"
-                app:layout_constraintTop_toBottomOf="@+id/textViewNombreChef" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toBottomOf="@+id/textViewImporteTotal" />
 
     <EditText
         android:id="@+id/txtNombreTarjeta"
@@ -167,7 +109,7 @@
         android:background="@drawable/style_border_text"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Nombre en la tarjeta"
+        android:hint="Nombre en la tarjeta"
         android:textColor="@color/gray50"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -184,7 +126,7 @@
         android:background="@drawable/style_border_text"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Numero de la tarjeta"
+        android:hint="Numero de la tarjeta"
         android:textColor="@color/gray50"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -201,7 +143,7 @@
         android:background="@drawable/style_border_text"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Vencimiento de la tarjeta"
+        android:hint="Vencimiento de la tarjeta"
         android:textColor="@color/gray50"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -219,12 +161,26 @@
         android:background="@drawable/style_border_text"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="CSV"
+        android:hint="CSV"
         android:textColor="@color/gray50"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtVencimientoTarjeta" />
+
+    <CheckBox
+        android:id="@+id/cbxGuardarTarjeta"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:buttonTint="@color/orange80"
+        android:fontFamily="sans-serif-medium"
+        android:text="Guardar tarjeta para futuras compras"
+        android:textColor="@color/orange80"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtCsvTarjeta" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
