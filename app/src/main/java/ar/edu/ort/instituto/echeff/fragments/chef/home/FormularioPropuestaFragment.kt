@@ -144,6 +144,7 @@ class FormularioPropuestaFragment : Fragment() {
             nuevaPropuesta.idReserva = reserva.id
             nuevaPropuesta.idChef = idUsuario
             nuevaPropuesta.idEstadoPropuesta = EstadoPropuesta.NUEVO.id
+            nuevaPropuesta.importeTotal = editText_Importe.text.toString().toDouble() * reserva.comensales
 
             //Guardo o modifico en Firebase
             if (modificado) {

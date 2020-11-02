@@ -53,5 +53,4 @@ interface UsuarioDao {
         return chef
     }
 
-
 }
