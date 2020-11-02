@@ -42,12 +42,10 @@ class LoginActivity : AppCompatActivity() {
                 editor.putString("userDisplayName", user.displayName)
                 editor.putString("userEmail", user.email)
                 editor.putBoolean("isNew", isNew)
+                editor.putBoolean("onBoardingFinished", true)
                 editor.commit()
                 //Already singned-in
-                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                //val extras: Bundle = Bundle()
-                //extras.putString("user", user.displayName)
-                //intent.putExtras(extras)
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
             } else {
                 startActivityForResult(

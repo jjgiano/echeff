@@ -20,6 +20,8 @@ import ar.edu.ort.instituto.echeff.entities.Cliente
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.android.awaitFrame
+import kotlinx.coroutines.awaitAll
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -44,6 +46,7 @@ class RegistroUsuarioFragment : Fragment() {
     lateinit var textViewDiploma: TextView
     lateinit var sharedPreferences: SharedPreferences
     lateinit var editor: SharedPreferences.Editor
+    lateinit var registroId: String
     private lateinit var profilePhotoURI: Uri
     private var diplomaPhotoURI: Uri? = null
 
@@ -52,9 +55,9 @@ class RegistroUsuarioFragment : Fragment() {
     fun goToInicio() {
         val isChef = sharedPreferences.getBoolean("isChef", false)
         val action = if (isChef) {
-            RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeClienteFragment()
-        } else {
             RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeChefFragment2()
+        } else {
+            RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeClienteFragment()
         }
         v.findNavController().navigate(action)
     }
@@ -78,7 +81,7 @@ class RegistroUsuarioFragment : Fragment() {
     }
 
     private fun setSharedPreferences() {
-        this.sharedPreferences = this.activity!!.getSharedPreferences(
+        this.sharedPreferences = requireActivity().getSharedPreferences(
             "MySharedPref",
             AppCompatActivity.MODE_PRIVATE
         )
@@ -110,7 +113,7 @@ class RegistroUsuarioFragment : Fragment() {
         buttonRegistro.setOnClickListener {
             val profilePhotoRef = uploadImage(profilePhotoURI, "profilePics")
 
-            val isChef = checkBoxSoyChef.isActivated
+            val isChef = checkBoxSoyChef.isChecked
             if(isChef) {
                 val diplomaPhotoRef = uploadImage(diplomaPhotoURI!!, "diplomas")
                 db.collection("chefs").add(
@@ -122,7 +125,12 @@ class RegistroUsuarioFragment : Fragment() {
                         "",
                         telefono.text.toString()
                     )
-                )
+                ).addOnSuccessListener { documentReference ->
+                    registroId = documentReference.id
+                    editor.putBoolean("isChef", isChef)
+                    editor.putString("idRegistro", registroId)
+                    editor.commit()
+                }
             } else {
                 db.collection("usuarios").add(
                     Cliente(
@@ -133,11 +141,14 @@ class RegistroUsuarioFragment : Fragment() {
                         "",
                         telefono.text.toString()
                     )
-                )
+                ).addOnSuccessListener { documentReference ->
+                    registroId = documentReference.id
+                    editor.putBoolean("isChef", isChef)
+                    editor.putString("idRegistro", registroId)
+                    editor.commit()
+                }
             }
 
-            editor.putBoolean("isChef", isChef)
-            editor.commit()
             goToInicio()
         }
 
@@ -151,7 +162,7 @@ class RegistroUsuarioFragment : Fragment() {
     private fun dispatchTakePictureIntent(folder: String, requestCode: Int) {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
-            takePictureIntent.resolveActivity(this.activity!!.packageManager)?.also {
+            takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
                 // Create the File where the photo should go
                 val photoFile: File? = try {
                     createImageFile(folder)
@@ -195,7 +206,7 @@ class RegistroUsuarioFragment : Fragment() {
     private fun createImageFile(folder: String): File {
         // Create an image file name
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File = this.activity!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES + folder)!!
+        val storageDir: File = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES + folder)!!
         return File.createTempFile(
             "JPEG_${timeStamp}_",
             ".jpg",
