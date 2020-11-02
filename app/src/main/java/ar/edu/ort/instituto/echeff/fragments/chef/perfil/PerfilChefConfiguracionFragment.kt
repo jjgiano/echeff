@@ -66,6 +66,8 @@ class PerfilChefConfiguracionFragment : Fragment() {
         btn_EditarPerfil = v.findViewById(R.id.fab_editar)
 
         btnGuardarBiografia.setVisibility(View.INVISIBLE);
+        txaBiografia.setFocusable(false)
+        txaBiografia.setEnabled(false)
 
         return v
     }
@@ -117,6 +119,9 @@ class PerfilChefConfiguracionFragment : Fragment() {
             } else {
                 viewModel.actualizarPerfil(perfil)
             }
+            btnGuardarBiografia.setVisibility(View.INVISIBLE)
+            txaBiografia.setFocusable(false)
+            txaBiografia.setEnabled(false)
 
         }
 
