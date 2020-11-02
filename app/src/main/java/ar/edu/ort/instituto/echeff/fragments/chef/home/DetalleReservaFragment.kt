@@ -1,7 +1,7 @@
 package ar.edu.ort.instituto.echeff.fragments.chef.home
 
+
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -17,10 +18,15 @@ import ar.edu.ort.instituto.echeff.entities.Cliente
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelDetalleReservaFragment
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Registry
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.module.AppGlideModule
+import com.firebase.ui.storage.images.FirebaseImageLoader
+import com.google.api.Context
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import java.io.InputStream
 
 
 class DetalleReservaFragment : Fragment() {
@@ -103,8 +109,9 @@ class DetalleReservaFragment : Fragment() {
         }
     }
 
+
+
     fun llenarDatos() {
-        val storageReference = Firebase.storage.getReference(cliente.urlFoto)
 
         nombre.text = cliente.nombre
         fecha.text = reserva.fecha
@@ -112,7 +119,7 @@ class DetalleReservaFragment : Fragment() {
         direccion.text = reserva.direccion
         tipoCocina.text = reserva.tipoCocina
         Glide.with(this)
-            .load(storageReference)
+            .load(cliente.urlFoto)
             .into(imagenCliente)
 
         if (reserva.tieneHorno.equals("Si"))

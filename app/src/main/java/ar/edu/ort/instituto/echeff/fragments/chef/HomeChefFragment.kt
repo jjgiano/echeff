@@ -19,7 +19,7 @@ import ar.edu.ort.instituto.echeff.fragments.chef.home.ReservasConfirmarFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.home.ReservasDisponiblesFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-
+import com.getbase.floatingactionbutton.FloatingActionButton
 
 class HomeChefFragment : Fragment() {
 
@@ -30,9 +30,10 @@ class HomeChefFragment : Fragment() {
     lateinit var tabLayout: TabLayout
 
 
-    //Boton para ver Propuestas
-    lateinit var btn_VerProuestas: Button
-    lateinit var btn_irPerfil: Button
+    //Boton menu
+    lateinit var btn_VerServicios: FloatingActionButton
+    lateinit var btn_irPerfil: FloatingActionButton
+    lateinit var btn_irReportes: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,8 +49,13 @@ class HomeChefFragment : Fragment() {
 
         tabLayout = v.findViewById(R.id.TabLayout)
         viewPager = v.findViewById(R.id.viewpage)
-        btn_VerProuestas = v.findViewById(R.id.btn_VerPropuetasChef)
-        btn_irPerfil = v.findViewById(R.id.btn_irPerfilChef)
+
+        btn_VerServicios = v.findViewById(R.id.btn_VerServicosChef)
+
+        btn_irPerfil = v.findViewById(R.id.fabPerfil)
+
+        btn_irReportes = v.findViewById(R.id.fabReportes)
+
         nombreChef = v.findViewById(R.id.text_NombreChef)
 
         return v
@@ -60,8 +66,8 @@ class HomeChefFragment : Fragment() {
         super.onStart()
         var sharedPref: SharedPreferences = requireContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
         var idUsuario : String  = sharedPref.getString("userId","Vacio")!!
-        var NombreUsuario : String = sharedPref.getString("userDisplayName","Nombre No encontrado")!!
-        var chefNombre = "Hola Chef, " + NombreUsuario
+        var nombreUsuario : String = sharedPref.getString("userDisplayName","Nombre No encontrado")!!
+        var chefNombre = "Hola Chef, " + nombreUsuario
 
         viewPager.setAdapter(createCardAdapter())
         // viewPager.isUserInputEnabled = false
@@ -81,7 +87,7 @@ class HomeChefFragment : Fragment() {
         nombreChef.text =  chefNombre
 
         //Boton de Navegacion
-        btn_VerProuestas.setOnClickListener {
+        btn_VerServicios.setOnClickListener {
             val action =
                 HomeChefFragmentDirections.actionHomeChefFragmentToVistaPropuestasFragment()
             v.findNavController().navigate(action)
@@ -91,7 +97,11 @@ class HomeChefFragment : Fragment() {
                 HomeChefFragmentDirections.actionHomeChefFragmentToPerfilChefFragment()
             v.findNavController().navigate(action)
         }
-
+        btn_irReportes.setOnClickListener {
+            val action =
+                HomeChefFragmentDirections.actionHomeChefFragmentToReportesChefFragment()
+            v.findNavController().navigate(action)
+        }
 
     }
 

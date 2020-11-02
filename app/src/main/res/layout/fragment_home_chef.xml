@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:id="@+id/frameLayout_HomeChef"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,10 +20,9 @@
         android:id="@+id/TabLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_VerPropuetasChef"
+        app:layout_constraintTop_toBottomOf="@+id/floatmenu"
         app:tabIndicatorColor="@color/orange95"
         app:tabRippleColor="@color/orange80"
         app:tabSelectedTextColor="@color/orange80"
@@ -41,20 +41,58 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btn_VerPropuetasChef"
-        android:layout_width="0dp"
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/floatmenu"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/style_botones_principal"
-        android:text="Ver mis Servicios"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
+        android:layout_gravity="bottom|left"
+        android:layout_margin="6dp"
+        android:scrollbarAlwaysDrawHorizontalTrack="true"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:verticalScrollbarPosition="right"
+        app:fab_addButtonColorNormal="@color/orange70"
+        app:fab_addButtonColorPressed="@color/orange95"
+        app:fab_addButtonPlusIconColor="@color/black"
+        app:fab_addButtonSize="normal"
+        app:fab_expandDirection="left"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_NombreChef" />
+        app:layout_constraintTop_toBottomOf="@+id/text_NombreChef">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabPerfil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/fui_ic_anonymous_white_24dp"
+            app:fabSize="mini"
+            app:fab_colorNormal="@color/orange80"
+            app:fab_colorPressed="@android:color/holo_blue_bright"
+            app:fab_size="mini" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabReportes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:padding="15dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_chart_line_solid"
+            app:fab_colorNormal="@color/orange80"
+            app:fab_colorPressed="@color/orange20"
+            app:fab_size="mini" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_VerServicosChef"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:padding="15dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_chef_hat"
+            app:fab_colorNormal="@color/orange80"
+            app:fab_colorPressed="@color/orange20"
+            app:fab_size="mini" />
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpage"
@@ -72,19 +110,9 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TabLayout"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0" >
 
-    <Button
-        android:id="@+id/btn_irPerfilChef"
-        android:layout_width="131dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/style_botones_secundario"
-        android:text="Mi Perfil"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    </androidx.viewpager2.widget.ViewPager2>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

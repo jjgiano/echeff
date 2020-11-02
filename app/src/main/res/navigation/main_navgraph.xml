@@ -71,6 +71,9 @@
         <action
             android:id="@+id/action_homeChefFragment_to_formularioPropuestaModificacionesFragment"
             app:destination="@id/formularioPropuestaModificacionesFragment" />
+        <action
+            android:id="@+id/action_homeChefFragment_to_reportesChefFragment"
+            app:destination="@id/reportesChefFragment" />
     </fragment>
     <fragment
         android:id="@+id/formularioReservaFragment"
@@ -296,4 +299,8 @@
             app:argType="boolean"
             android:defaultValue="false" />
     </fragment>
+    <fragment
+        android:id="@+id/reportesChefFragment"
+        android:name="ar.edu.ort.instituto.echeff.fragments.chef.ReportesChefFragment"
+        android:label="ReportesChefFragment" />
 </navigation>

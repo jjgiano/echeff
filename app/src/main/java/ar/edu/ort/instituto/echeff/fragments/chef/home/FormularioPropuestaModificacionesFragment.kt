@@ -153,6 +153,7 @@ class FormularioPropuestaModificacionesFragment : Fragment() {
             propuesta.total = text_Total.text.toString().toDouble()
             propuesta.idReserva = reserva.id
             propuesta.idChef = idUsuario
+            propuesta.importeTotal = text_Total.text.toString().toDouble() * reserva.comensales
 
             //modifico en Firebase
             viewModelPropuesta.modificarPropuesta(propuesta)
