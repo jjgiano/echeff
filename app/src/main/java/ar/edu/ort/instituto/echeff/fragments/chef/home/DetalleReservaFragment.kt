@@ -1,24 +1,38 @@
 package ar.edu.ort.instituto.echeff.fragments.chef.home
 
+
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
+import ar.edu.ort.instituto.echeff.entities.Cliente
 import ar.edu.ort.instituto.echeff.entities.Reserva
-import ar.edu.ort.instituto.echeff.fragments.chef.home.DetalleReservaFragmentArgs
-import ar.edu.ort.instituto.echeff.fragments.chef.home.DetalleReservaFragmentDirections
+import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelDetalleReservaFragment
+import com.bumptech.glide.Glide
+import com.bumptech.glide.Registry
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.module.AppGlideModule
+import com.firebase.ui.storage.images.FirebaseImageLoader
+import com.google.api.Context
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
+import java.io.InputStream
 
 
 class DetalleReservaFragment : Fragment() {
 
     lateinit var v :View
-    lateinit var id: TextView
+    lateinit var nombre: TextView
     lateinit var fecha: TextView
     lateinit var hora: TextView
     lateinit var direccion: TextView
@@ -30,7 +44,15 @@ class DetalleReservaFragment : Fragment() {
     lateinit var notas: TextView
     lateinit var idUsuario: TextView
     lateinit var reserva : Reserva
+    lateinit var imagenCliente: ImageView
+
     private lateinit var btn_ArmaPropuesta : Button
+    var cargar = false
+    var cliente : Cliente = Cliente()
+    var urlImagenCLiente : String = ""
+
+    private lateinit var viewModel: ViewModelDetalleReservaFragment
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +64,8 @@ class DetalleReservaFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_detalle_reserva, container, false)
+
+        nombre = v.findViewById(R.id.textView_NombreCliente)
         fecha = v.findViewById(R.id.text_DatoFecha)
         hora = v.findViewById(R.id.text_DatoHora)
         direccion = v.findViewById(R.id.text_DatoUsuario)
@@ -51,17 +75,52 @@ class DetalleReservaFragment : Fragment() {
         estiloCocina = v.findViewById(R.id.text_DatoEstiloCocina)
         tipoServicio = v.findViewById(R.id.text_DatoTipoServicio)
         notas = v.findViewById(R.id.text_DatoNotas)
+        imagenCliente = v.findViewById(R.id.imageView_Cliente)
         btn_ArmaPropuesta = v.findViewById(R.id.btn_ArmaPropuesta)
         return v
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProvider(requireActivity()).get(ViewModelDetalleReservaFragment::class.java)
+
+        viewModel.cliente.observe(viewLifecycleOwner, Observer { result ->
+
+            cliente = result
+            llenarDatos()
+        })
+    }
+
     override fun onStart() {
         super.onStart()
+
         reserva = DetalleReservaFragmentArgs.fromBundle(requireArguments()).argReserva
+
+        viewModel.setBuscar(reserva.idUsuario)
+
+
+
+        btn_ArmaPropuesta.setOnClickListener {
+            val action =
+                DetalleReservaFragmentDirections.actionDetalleReservaFragmentToFormularioPropuestaFragment(
+                    reserva
+                )
+            v.findNavController().navigate(action)
+        }
+    }
+
+
+
+    fun llenarDatos() {
+
+        nombre.text = cliente.nombre
         fecha.text = reserva.fecha
         hora.text = reserva.hora
         direccion.text = reserva.direccion
         tipoCocina.text = reserva.tipoCocina
+        Glide.with(this)
+            .load(cliente.urlFoto)
+            .into(imagenCliente)
 
         if (reserva.tieneHorno.equals("Si"))
             tieneHorno.setChecked(true)
@@ -73,19 +132,7 @@ class DetalleReservaFragment : Fragment() {
         tipoServicio.text = reserva.tipoServicio
         notas.text = reserva.notas
 
-        /*Glide.with(this)
-            .load(pelota.imagen)
-            .into(imagen);
-           */
 
-        btn_ArmaPropuesta.setOnClickListener {
-            val action =
-                DetalleReservaFragmentDirections.actionDetalleReservaFragmentToFormularioPropuestaFragment(
-                    reserva
-                )
-            v.findNavController().navigate(action)
-        }
     }
-
 
 }

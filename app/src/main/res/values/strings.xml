@@ -10,6 +10,11 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="estilo_comida_home_cliente">Estilo comida: %s</string>
     <string name="rango_precio">El valor del precio puede ser de:\n $%.2f a $%.2f</string>
+    <string name="importeTotal">Importe total: $%.2f</string>
+    <string name="importePorComensal">Importe por comensal: $%.2f</string>
+    <string name="nombre_postre">Postre: %s</string>
+    <string name="nombre_entrada">Entrada: %s</string>
+    <string name="nombre_snack">Snack: %s</string>
 
     <!--
     This string is used for square devices and overridden by hello_world in
@@ -17,5 +22,4 @@
     -->
     <string name="facebook_application_id" translatable="false">387536605974075</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb387536605974075</string>
-    <string name="hello_world">Hello Square World!</string>
 </resources>

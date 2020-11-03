@@ -1,10 +1,13 @@
 package ar.edu.ort.instituto.echeff.fragments.chef.home
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContentProviderCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -21,6 +24,8 @@ class ReservasModificarFragment() : Fragment() {
     lateinit var v : View
     private lateinit var viewModel: ViewModelReservasModificarFragment
     var cargado : Boolean = false
+
+
 
     //los RecicleViews
     lateinit var rvReserva : RecyclerView
@@ -76,7 +81,10 @@ class ReservasModificarFragment() : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        viewModel.setcargar()
+        val sharedPref: SharedPreferences = requireContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+        val idUsuario : String  = sharedPref.getString("userId","Vacio")!!
+
+        viewModel.setcargar(idUsuario)
 
         rvReserva.setHasFixedSize(true)
 

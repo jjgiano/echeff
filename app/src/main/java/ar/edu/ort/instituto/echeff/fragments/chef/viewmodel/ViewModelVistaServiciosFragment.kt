@@ -7,12 +7,13 @@ import androidx.lifecycle.viewModelScope
 import ar.edu.ort.instituto.echeff.dao.PropuestaDao
 import ar.edu.ort.instituto.echeff.dao.ReservaDao
 import ar.edu.ort.instituto.echeff.dao.ServicioDao
+import ar.edu.ort.instituto.echeff.entities.EstadoReserva
 import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.entities.Servicio
 import kotlinx.coroutines.*
 
-class ViewModelVistaServiciosFragment : ViewModel(), ServicioDao, ReservaDao{
+class ViewModelVistaServiciosFragment : ViewModel(), ServicioDao, ReservaDao {
 
     var listaLiveData = MutableLiveData<MutableList<Reserva>>()
     var cargar = MutableLiveData<Boolean>()
@@ -21,29 +22,28 @@ class ViewModelVistaServiciosFragment : ViewModel(), ServicioDao, ReservaDao{
     var listaLiveDataFinalizados = MutableLiveData<MutableList<Reserva>>()
 
 
+    private fun buscarDatos(idUsuario: String): Boolean {
 
-    private fun buscarDatos(): Boolean {
-
-        val id = "1" //TODO CAMBIAR EL 1 POR EL VALOR EN SHAREDPREFERENCE
-        var listaReserva : MutableList<Reserva> = ArrayList<Reserva>()
-        var listaReservaRealizados : MutableList<Reserva> = ArrayList<Reserva>()
-        var listaServiciosPendientes : MutableList<Servicio> = ArrayList<Servicio>()
-        var listaServiciosFinalizados : MutableList<Servicio> = ArrayList<Servicio>()
+        val id: String = idUsuario
+        var listaReserva: MutableList<Reserva> = ArrayList<Reserva>()
+        var listaReservaRealizados: MutableList<Reserva> = ArrayList<Reserva>()
+        var listaServiciosPendientes: MutableList<Servicio> = ArrayList<Servicio>()
+        var listaServiciosFinalizados: MutableList<Servicio> = ArrayList<Servicio>()
 
         viewModelScope.launch {
 
             listaServiciosPendientes = getServiciosPendientesByChef(id)
             serviciosPendientes.value = listaServiciosPendientes
 
-            for(item in listaServiciosPendientes) {
+            for (item in listaServiciosPendientes) {
                 listaReserva.add(getReservaById(item.idReserva))
             }
             listaLiveData.postValue(listaReserva)
 
-            listaServiciosFinalizados= getServiciosFinalizadosByChef(id)
+            listaServiciosFinalizados = getServiciosFinalizadosByChef(id)
             serviciosRealizados.value = listaServiciosFinalizados
 
-            for(item in listaServiciosFinalizados) {
+            for (item in listaServiciosFinalizados) {
                 listaReservaRealizados.add(getReservaById(item.idReserva))
             }
             listaLiveDataFinalizados.postValue(listaReservaRealizados)
@@ -54,11 +54,9 @@ class ViewModelVistaServiciosFragment : ViewModel(), ServicioDao, ReservaDao{
 
     }
 
-    fun setcargar() {
-        cargar.value =  buscarDatos()
+    fun setcargar(idUsuario: String) {
+        cargar.value = buscarDatos(idUsuario)
     }
-
-
 
 
 }

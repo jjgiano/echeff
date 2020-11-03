@@ -12,19 +12,11 @@
            <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/style_border_text"
             android:paddingLeft="5dp"
             android:paddingTop="5dp"
             android:paddingEnd="5dp"
             android:paddingRight="5dp"
             android:paddingBottom="5dp">
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_begin="205dp" />
 
             <ImageView
                 android:id="@+id/imageViewChef"
@@ -39,85 +31,78 @@
                 tools:src="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/text_DatoUsuario"
-                android:layout_width="wrap_content"
+                android:id="@+id/txtNombrePlatoPrincipal"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="sans-serif-medium"
-                android:text="TextView"
-                android:textColor="#D97014"
-                android:textSize="18sp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="Nombre Plato"
+                android:textAlignment="center"
+                android:textColor="@color/orange80"
+                android:textStyle="bold"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageViewChef"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/text_DatosComensales"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="6dp"
-                android:fontFamily="sans-serif"
-                android:text="TextView"
-                android:textColor="#D97014"
-                app:layout_constraintStart_toStartOf="@+id/guideline15"
-                app:layout_constraintTop_toBottomOf="@+id/text_DatoUsuario" />
+               <TextView
+                   android:id="@+id/txtNombreEntrada"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="10dp"
+                   android:layout_marginTop="4dp"
+                   android:text="Entrada:"
+                   android:textColor="@color/orange80"
 
-            <TextView
-                android:id="@+id/text_EstiloComida"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:fontFamily="sans-serif-medium"
-                android:text="Estilo Comida:"
-                android:textColor="#D97014"
-                app:layout_constraintEnd_toStartOf="@+id/guideline15"
-                app:layout_constraintTop_toBottomOf="@+id/text_TituloComensales" />
+                   android:textSize="16sp"
+                   android:textStyle="bold"
+                   app:layout_constraintStart_toEndOf="@+id/imageViewChef"
+                   app:layout_constraintTop_toBottomOf="@+id/txtNombrePlatoPrincipal" />
 
-            <TextView
-                android:id="@+id/text_DatosEstiloComida"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="6dp"
-                android:text="TextView"
-                android:textColor="#D97014"
-                app:layout_constraintStart_toStartOf="@+id/guideline15"
-                app:layout_constraintTop_toBottomOf="@+id/text_DatosComensales" />
+               <TextView
+                   android:id="@+id/txtNombrePostre"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="10dp"
+                   android:layout_marginTop="5dp"
+                   android:text="Postre:"
+                   android:textColor="@color/orange80"
+                   android:textSize="16sp"
+                   android:textStyle="bold"
+                   app:layout_constraintStart_toEndOf="@+id/imageViewChef"
+                   app:layout_constraintTop_toBottomOf="@+id/txtNombreEntrada" />
 
-            <TextView
-                android:id="@+id/text_TituloTipoServicio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:fontFamily="sans-serif-medium"
-                android:text="TipoServicio:"
-                android:textColor="@color/orange80"
-                app:layout_constraintEnd_toStartOf="@+id/guideline15"
-                app:layout_constraintTop_toBottomOf="@+id/text_EstiloComida" />
+               <TextView
+                   android:id="@+id/textView20"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="10dp"
+                   android:text="¡Reserva tu propuesta!"
+                   android:textAlignment="center"
+                   android:textColor="@color/orange80"
+                   android:textSize="14sp"
+                   android:textStyle="bold"
+                   app:layout_constraintEnd_toEndOf="parent"
+                   app:layout_constraintStart_toEndOf="@+id/imageViewChef"
+                   app:layout_constraintTop_toBottomOf="@+id/txtNombreSnack" />
 
-            <TextView
-                android:id="@+id/text_TituloComensales"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:fontFamily="sans-serif-medium"
-                android:text="Comensales:"
-                android:textColor="@color/orange80"
-                app:layout_constraintEnd_toStartOf="@+id/guideline15"
-                app:layout_constraintTop_toBottomOf="@+id/text_DatoUsuario" />
+               <TextView
+                   android:id="@+id/txtNombreSnack"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="10dp"
+                   android:layout_marginTop="5dp"
+                   android:layout_marginEnd="10dp"
+                   android:text="Snack:"
+                   android:textColor="@color/orange80"
+                   android:textSize="16sp"
+                   android:textStyle="bold"
+                   app:layout_constraintEnd_toEndOf="parent"
+                   app:layout_constraintStart_toEndOf="@+id/imageViewChef"
+                   app:layout_constraintTop_toBottomOf="@+id/txtNombrePostre" />
 
-            <TextView
-                android:id="@+id/text_DatoTipoServicio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="6dp"
-                android:text="TextView"
-                android:textColor="@color/orange80"
-                app:layout_constraintStart_toStartOf="@+id/guideline15"
-                app:layout_constraintTop_toBottomOf="@+id/text_DatosEstiloComida" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+           </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 

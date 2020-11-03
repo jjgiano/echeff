@@ -10,12 +10,14 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
+import ar.edu.ort.instituto.echeff.entities.EstadoReserva
 import ar.edu.ort.instituto.echeff.entities.Reserva
+import ar.edu.ort.instituto.echeff.validator.Validator
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.*
 
-class FormularioReservaFragment : Fragment() {
+class FormularioReservaFragment : Fragment(), Validator {
 
     val db = Firebase.firestore
 
@@ -68,10 +70,20 @@ class FormularioReservaFragment : Fragment() {
             var stringDireccion = etDireccion.text.toString()
             var boolTieneHorno = cbTengoHorno.isChecked.toString()
 
-            var reserva = Reserva("", stringFecha,stringHora,stringDireccion,stringTipoCocina,boolTieneHorno.toString(), cantComensales, "","","",1,1)
+            if(validar()){
 
-            val action2 = FormularioReservaFragmentDirections.actionFormularioReservaFragmentToFormularioReservaDosFragment3(reserva)
-            v.findNavController().navigate(action2)
+                var stringFecha = etFecha.text.toString()
+                var stringHora = etHora.text.toString()
+                var cantComensales = etCantComensales.text.toString().toInt()
+                var stringTipoCocina = spinnerTipoCocina.selectedItem.toString()
+                var stringDireccion = etDireccion.text.toString()
+                var boolTieneHorno = cbTengoHorno.isChecked.toString()
+
+                var reserva = Reserva("", stringFecha,stringHora,stringDireccion,stringTipoCocina,boolTieneHorno.toString(), cantComensales, "","","","",1)
+
+                val action2 = FormularioReservaFragmentDirections.actionFormularioReservaFragmentToFormularioReservaDosFragment3(reserva)
+                v.findNavController().navigate(action2)
+            }
         }
 
         imgBtnCalendar.setOnClickListener(){
@@ -81,17 +93,24 @@ class FormularioReservaFragment : Fragment() {
             var mYear: Int = Calendar.YEAR
 
             var datePicker = DatePickerDialog(v.context,android.R.style.Theme_DeviceDefault_Dialog, DatePickerDialog.OnDateSetListener(){
-                datePicker, year, month, date ->
+                    datePicker, year, month, date ->
                 lateinit var strDate : String
+                lateinit var strMonth : String
+                var realMonth = month+1
                 if(date<10){
                     strDate = "0${date}"
                 }else{
                     strDate = date.toString()
                 }
-                etFecha.setText("${strDate}/${month+1}/${year}")
+                if(month<10){
+                    strMonth = "0${realMonth}"
+                }else{
+                    strMonth = realMonth.toString()
+                }
+                etFecha.setText("${strDate}/${strMonth}/${year}")
+                datePicker.updateDate(2020,mMonth,mDate)
 
             },cal.get(mDate),cal.get(mMonth),cal.get(mYear))
-            datePicker.updateDate(2020,mMonth,mDate)
             datePicker.show()
         }
 
@@ -115,5 +134,40 @@ class FormularioReservaFragment : Fragment() {
             },cal.get(mHour),cal.get(mMinute),true)
             datePicker.show()
         }
+    }
+    private fun validar(): Boolean {
+        var valido = true
+
+        try {
+            validarFormatoFecha(etFecha.text.toString())
+            validarFecha(etFecha.text.toString())
+        } catch (e: Error) {
+            etFecha.setError(e.message)
+            valido = false
+        }
+
+        try {
+            validarFormatoHora(etHora.text.toString())
+        } catch (e: Error) {
+            etHora.setError(e.message)
+            valido = false
+        }
+
+        try {
+            validarFormatoNumero(etCantComensales.text.toString())
+            cantidadComensalesValida(etCantComensales.text.toString().toInt())
+        } catch (e: Error) {
+            etCantComensales.setError(e.message)
+            valido = false
+        }
+
+        try {
+            validarString(etDireccion.text.toString())
+        } catch (e: Error) {
+            etDireccion.setError(e.message)
+            valido = false
+        }
+
+        return valido
     }
 }

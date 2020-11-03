@@ -1,5 +1,7 @@
 package ar.edu.ort.instituto.echeff.fragments.chef.home
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -28,6 +30,8 @@ class VistaServiciosFragment : Fragment(){
 
     lateinit var v: View
     private lateinit var viewModel: ViewModelVistaServiciosFragment
+
+
     var cargado : Boolean = false
 
     lateinit var servicio: Servicio
@@ -112,8 +116,10 @@ class VistaServiciosFragment : Fragment(){
 
     override fun onStart() {
         super.onStart()
+        val sharedPref: SharedPreferences = requireContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+        val idUsuario : String  = sharedPref.getString("userId","Vacio")!!
 
-        viewModel.setcargar()
+        viewModel.setcargar(idUsuario)
 
         buttonTengoUnProblema.setOnClickListener {
              var mesaAyudaScreen = VistaServiciosFragmentDirections.actionVistaPropuestasFragmentToMesaAyudaFragment2(true)

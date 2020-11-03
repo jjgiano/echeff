@@ -1,31 +1,37 @@
 package ar.edu.ort.instituto.echeff.fragments.chef.viewmodel
 
+import android.content.Context
+import android.content.SharedPreferences
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.ort.instituto.echeff.dao.PropuestaDao
 import ar.edu.ort.instituto.echeff.dao.ReservaDao
+import ar.edu.ort.instituto.echeff.dao.UsuarioDao
 import ar.edu.ort.instituto.echeff.entities.*
 import kotlinx.coroutines.launch
 
-class ViewModelReservasConfirmarFragment : ViewModel(), ReservaDao, PropuestaDao {
+class ViewModelReservasConfirmarFragment : ViewModel(), ReservaDao, PropuestaDao, UsuarioDao {
 
     var liveDataList = MutableLiveData<MutableList<Reserva>>()
     var cargar = MutableLiveData<Boolean>()
+    var cliente : Cliente  = Cliente()
 
-    fun getLista(): MutableList<Reserva>? {
+
+    fun getLista(idUsuario: String): MutableList<Reserva>? {
 
         var lista: MutableList<Reserva>?
 
-        lista = buscarReservasAConfirmar().value
+        lista = buscarReservasAConfirmar(idUsuario).value
 
         return lista
 
     }
 
-    private fun buscarReservasAConfirmar(): MutableLiveData<MutableList<Reserva>> {
+    private fun buscarReservasAConfirmar(idUsuario:String): MutableLiveData<MutableList<Reserva>> {
         var listaPropuestas : MutableList<Propuesta> = ArrayList<Propuesta>()
-        val id = "1" //TODO CAMBIAR EL 1 POR EL VALOR EN SHAREDPREFERENCE
+        val id = idUsuario
         var listaReserva : MutableList<Reserva> = ArrayList<Reserva>()
 
         viewModelScope.launch {
@@ -45,9 +51,22 @@ class ViewModelReservasConfirmarFragment : ViewModel(), ReservaDao, PropuestaDao
     }
 
 
-    fun setcargar() {
-        cargar.value
-        getLista()
+    fun setcargar(idUsuario:String) {
+        cargar.value = false
+        getLista(idUsuario)
+    }
+
+    fun pasarAConfirmar(reserva: Reserva) {
+        viewModelScope.launch {
+            cambiarEstado(reserva, EstadoReserva.ACONFIRMAR.id)
+        }
+    }
+
+    fun buscarCliente(reserva:Reserva):Cliente {
+        viewModelScope.launch {
+          cliente =  getClienteById(reserva.idUsuario)
+        }
+      return cliente
     }
 
 }

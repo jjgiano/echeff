@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.entities.Cliente
+import ar.edu.ort.instituto.echeff.entities.EstadoUsuario
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -122,7 +123,7 @@ class RegistroUsuarioFragment : Fragment() {
                         nombre.text.toString(),
                         userEmail,
                         profilePhotoRef,
-                        "",
+                        EstadoUsuario.ACTIVO.id,
                         telefono.text.toString()
                     )
                 ).addOnSuccessListener { documentReference ->
@@ -138,7 +139,7 @@ class RegistroUsuarioFragment : Fragment() {
                         userDisplayName,
                         userEmail,
                         profilePhotoRef,
-                        "",
+                        EstadoUsuario.ACTIVO.id,
                         telefono.text.toString()
                     )
                 ).addOnSuccessListener { documentReference ->

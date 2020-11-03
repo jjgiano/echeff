@@ -2,17 +2,16 @@ package ar.edu.ort.instituto.echeff.dao
 
 import android.util.Log
 import ar.edu.ort.instituto.echeff.entities.EstadoReserva
-import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
-import com.google.firebase.firestore.DocumentSnapshot
+import ar.edu.ort.instituto.echeff.entities.Tarjeta
 import com.google.firebase.firestore.ktx.*
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
 
-public interface ReservaDao {
+interface ReservaDao {
 
-    public suspend fun add(reserva: Reserva) {
+     suspend fun add(reserva: Reserva) {
 
         val questionRef = Firebase.firestore.collection("reservas")
         val query = questionRef
@@ -150,7 +149,7 @@ public interface ReservaDao {
         }
     }
 
-    suspend fun getReservasNuevas(idUsuario: Number): MutableList<Reserva> {
+    suspend fun getReservasNuevas(idUsuario: String): MutableList<Reserva> {
 
         var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
 
@@ -171,7 +170,7 @@ public interface ReservaDao {
         return reservaList
     }
 
-    suspend fun getReservasAConfirmar(idUsuario: Number): MutableList<Reserva> {
+    suspend fun getReservasAConfirmar(idUsuario: String): MutableList<Reserva> {
 
         var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
 
@@ -191,7 +190,7 @@ public interface ReservaDao {
         }
         return reservaList
     }
-    suspend fun getReservasFinalizadas(idUsuario: Number): MutableList<Reserva> {
+    suspend fun getReservasFinalizadas(idUsuario: String): MutableList<Reserva> {
 
         var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
 
@@ -212,14 +211,14 @@ public interface ReservaDao {
         return reservaList
     }
 
-    suspend fun getReservasPagadas(idUsuario: Number): MutableList<Reserva> {
+    suspend fun getReservasPagadas(idUsuario: String): MutableList<Reserva> {
 
         var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
 
         val questionRef = Firebase.firestore.collection("reservas")
         val query = questionRef
             .whereEqualTo("idUsuario", idUsuario)
-            .whereEqualTo("idEstadoReserva", EstadoReserva.PAGADA.id)
+            .whereEqualTo("idEstadoReserva", EstadoReserva.PAGADO.id)
         try {
             val data = query
                 .get()
@@ -233,7 +232,7 @@ public interface ReservaDao {
         return reservaList
     }
 
-    suspend fun getReservasPendientes(idUsuario: Number): MutableList<Reserva> {
+    suspend fun getReservasPendientes(idUsuario: String): MutableList<Reserva> {
 
         var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
 
@@ -252,6 +251,40 @@ public interface ReservaDao {
             Log.d("Error", e.toString())
         }
         return reservaList
+    }
+
+    suspend fun setTarjetaDeCredito(tarjeta: Tarjeta){
+        val questionRef = Firebase.firestore.collection("tarjetas")
+        val query = questionRef
+        try {
+            query
+                .document(tarjeta.idUsuario)
+                .set(tarjeta)
+                //.add(tarjeta)
+                .await()
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+    }
+
+    suspend fun getTarjetaUsuario(idUsuario: String):Tarjeta{
+        var tarjetaABuscar = Tarjeta()
+
+        val questionRef = Firebase.firestore.collection("tarjetas")
+        val query = questionRef
+            .whereEqualTo("idUsuario", idUsuario)
+            .limit(1)
+        try {
+            val data = query
+                .get()
+                .await()
+            for (document in data) {
+                tarjetaABuscar = document.toObject<Tarjeta>()
+            }
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+        return tarjetaABuscar
     }
 }
 

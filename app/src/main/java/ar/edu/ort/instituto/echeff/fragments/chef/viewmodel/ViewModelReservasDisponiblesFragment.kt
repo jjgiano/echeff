@@ -12,14 +12,8 @@ class ViewModelReservasDisponiblesFragment : ViewModel(), ReservaDao {
     var liveDataList = MutableLiveData<MutableList<Reserva>>()
     var cargar = MutableLiveData<Boolean>()
 
-    fun getLista(): MutableList<Reserva>? {
 
-        var lista: MutableList<Reserva>?
 
-        lista = buscarReservasDisponibles().value
-
-        return lista
-    }
 
     private fun buscarReservasDisponibles(): MutableLiveData<MutableList<Reserva>> {
 
@@ -32,7 +26,7 @@ class ViewModelReservasDisponiblesFragment : ViewModel(), ReservaDao {
 
     fun setcargar() {
         cargar.value
-        getLista()
+         buscarReservasDisponibles().value
     }
 
 }

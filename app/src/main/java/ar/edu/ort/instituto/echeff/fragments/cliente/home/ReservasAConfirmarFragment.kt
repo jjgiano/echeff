@@ -63,7 +63,7 @@ class ReservasAConfirmarFragment(private var reservas: MutableList<Reserva>) : F
     override fun onStart() {
         super.onStart()
         // TODO tomar luego el id de usuario logueado, idUsuario = 1
-        viewModel.setCargar(1)
+        viewModel.setCargar("1")
         rvReserva.setHasFixedSize(true)
         linearLayoutManager = LinearLayoutManager(context)
         rvReserva.layoutManager = linearLayoutManager

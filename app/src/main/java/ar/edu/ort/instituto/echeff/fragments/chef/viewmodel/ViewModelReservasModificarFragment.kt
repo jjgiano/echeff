@@ -5,9 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.ort.instituto.echeff.dao.PropuestaDao
 import ar.edu.ort.instituto.echeff.dao.ReservaDao
-import ar.edu.ort.instituto.echeff.entities.EstadoPropuesta
-import ar.edu.ort.instituto.echeff.entities.Propuesta
-import ar.edu.ort.instituto.echeff.entities.Reserva
+import ar.edu.ort.instituto.echeff.dao.UsuarioDao
+import ar.edu.ort.instituto.echeff.entities.*
 import kotlinx.coroutines.launch
 
 class ViewModelReservasModificarFragment : ViewModel(), ReservaDao,PropuestaDao {
@@ -15,19 +14,19 @@ class ViewModelReservasModificarFragment : ViewModel(), ReservaDao,PropuestaDao 
     var liveDataList = MutableLiveData<MutableList<Reserva>>()
     var cargar = MutableLiveData<Boolean>()
 
-    fun getLista(): MutableList<Reserva>? {
+    fun getLista(idUsuario: String): MutableList<Reserva>? {
 
         var lista: MutableList<Reserva>?
 
-        lista = buscarReservasAConfirmar().value
+        lista = buscarReservasAConfirmar(idUsuario).value
 
         return lista
 
     }
 
-    private fun buscarReservasAConfirmar(): MutableLiveData<MutableList<Reserva>> {
+    private fun buscarReservasAConfirmar(idUsuario: String): MutableLiveData<MutableList<Reserva>> {
         var listaPropuestas : MutableList<Propuesta> = ArrayList<Propuesta>()
-        val id = "1"  //TODO: remplazar el 1 por el dato en SharedPreference
+        val id: String = idUsuario
         var listaReserva : MutableList<Reserva> = ArrayList<Reserva>()
 
         viewModelScope.launch {
@@ -45,10 +44,11 @@ class ViewModelReservasModificarFragment : ViewModel(), ReservaDao,PropuestaDao 
     }
 
 
-    fun setcargar() {
+    fun setcargar(idUsuario: String) {
         cargar.value
-        getLista()
+        getLista(idUsuario)
     }
+
 
 }
 

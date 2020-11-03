@@ -15,7 +15,7 @@ class Reserva(
     tipoServicio: String,
     estiloCocina: String,
     notas: String,
-    idUsuario: Int,
+    idUsuario: String,
     idEstadoReserva: Int
 ) : Parcelable {
 
@@ -29,10 +29,10 @@ class Reserva(
     var tipoServicio: String
     var estiloCocina: String
     var notas: String
-    var idUsuario: Int
+    var idUsuario: String
     var idEstadoReserva: Int
 
-    constructor() : this("", "", "", "", "", "", 0, "", "", "", 0, 0)
+    constructor() : this("", "", "", "", "", "", 0, "", "", "", "", 0)
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
@@ -44,7 +44,7 @@ class Reserva(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
-        parcel.readInt(),
+        parcel.readString()!!,
         parcel.readInt()
     )
 
@@ -75,7 +75,7 @@ class Reserva(
         parcel.writeString(estiloCocina)
         parcel.writeString(tipoServicio)
         parcel.writeString(notas)
-        parcel.writeInt(idUsuario)
+        parcel.writeString(idUsuario)
         parcel.writeInt(idEstadoReserva)
     }
 

@@ -1,5 +1,7 @@
 package ar.edu.ort.instituto.echeff.fragments.chef.home
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,21 +9,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
-import ar.edu.ort.instituto.echeff.entities.EstadoPropuesta
-import ar.edu.ort.instituto.echeff.entities.Propuesta
-import ar.edu.ort.instituto.echeff.entities.Reserva
-import ar.edu.ort.instituto.echeff.entities.TipoResultadoMensaje
+import ar.edu.ort.instituto.echeff.entities.*
+import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelDetalleReservaFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelFormularioPropuestaFragment
-import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelPropuestasConfirmarFragment
+import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelReservasConfirmarFragment
+import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.fragment_inicio.view.*
 
 class FormularioPropuestaFragment : Fragment() {
     lateinit var v: View
     private lateinit var viewModelPropuesta: ViewModelFormularioPropuestaFragment
-    private lateinit var viewModelReserva: ViewModelPropuestasConfirmarFragment
+    private lateinit var viewModelReserva: ViewModelReservasConfirmarFragment
+    private lateinit var viewModelDetalleReserva: ViewModelDetalleReservaFragment
+
 
     var nuevaPropuesta: Propuesta = Propuesta()
 
@@ -31,6 +37,10 @@ class FormularioPropuestaFragment : Fragment() {
     lateinit var estilococina: TextView
     lateinit var reserva: Reserva
     lateinit var servicio: TextView
+    lateinit var imagenCliente : ImageView
+
+    var modificado: Boolean = false
+    var cliente: Cliente = Cliente()
 
     //los input de la propuesta
     lateinit var editText_Snack: EditText
@@ -58,6 +68,7 @@ class FormularioPropuestaFragment : Fragment() {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_formulario_propuesta, container, false)
         //datos de la Tarjeta de reserva
+        imagenCliente = v.findViewById(R.id.imageViewChef)
         usuario = v.findViewById(R.id.text_DatoUsuario)
         comensales = v.findViewById(R.id.text_DatosComensales)
         estilococina = v.findViewById(R.id.text_DatosEstiloComida)
@@ -87,28 +98,41 @@ class FormularioPropuestaFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModelPropuesta = ViewModelProvider(requireActivity()).get(ViewModelFormularioPropuestaFragment::class.java)
-        viewModelReserva = ViewModelProvider(requireActivity()).get(ViewModelPropuestasConfirmarFragment::class.java)
+        viewModelPropuesta =
+            ViewModelProvider(requireActivity()).get(ViewModelFormularioPropuestaFragment::class.java)
+        viewModelReserva =
+            ViewModelProvider(requireActivity()).get(ViewModelReservasConfirmarFragment::class.java)
+        viewModelDetalleReserva =
+            ViewModelProvider(requireActivity()).get(ViewModelDetalleReservaFragment::class.java)
+
+        viewModelDetalleReserva.cliente.observe(viewLifecycleOwner, Observer { result ->
+
+            cliente = result
+
+
+            llenarFichaReserva()
+        })
     }
 
     override fun onStart() {
         super.onStart()
-        var modificado: Boolean = false
+
+        var sharedPref: SharedPreferences =
+            requireContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+        var idUsuario: String = sharedPref.getString("userId", "Vacio")!!
+
 
         //Obtengo la reserva que llega por Argumentos de navegacion
-        reserva = FormularioPropuestaFragmentArgs.fromBundle(requireArguments()).formularioPropuestaArg
+        reserva =
+            FormularioPropuestaFragmentArgs.fromBundle(requireArguments()).formularioPropuestaArg
+        viewModelReserva.setcargar(reserva.idUsuario)
 
-        //lleno los datos de la reserva
-        usuario.text = reserva.idUsuario.toString() //Hay que buscar el Usuario
-        comensales.text = reserva.comensales.toString()
-        estilococina.text = reserva.estiloCocina
-        servicio.text = reserva.tipoServicio
 
         //Boton de Guardar la Propuesta y cambiar los botones y blockear los EditText
         btn_Propuesta.setOnClickListener {
 
             //guardo la propuesta
-            //Todo: hay que buscar los IDs que tiene 1.
+
 
             //Si se modifico guardo los dato sen la nueva Propuesta
             nuevaPropuesta.snack = editText_Snack.text.toString()
@@ -118,8 +142,9 @@ class FormularioPropuestaFragment : Fragment() {
             nuevaPropuesta.adicional = editText_Adicional.text.toString()
             nuevaPropuesta.total = editText_Importe.text.toString().toDouble()
             nuevaPropuesta.idReserva = reserva.id
-            nuevaPropuesta.idChef = "1"
+            nuevaPropuesta.idChef = idUsuario
             nuevaPropuesta.idEstadoPropuesta = EstadoPropuesta.NUEVO.id
+            nuevaPropuesta.importeTotal = editText_Importe.text.toString().toDouble() * reserva.comensales
 
             //Guardo o modifico en Firebase
             if (modificado) {
@@ -146,7 +171,10 @@ class FormularioPropuestaFragment : Fragment() {
             viewModelPropuesta.modificarPropuesta(nuevaPropuesta)
             viewModelReserva.pasarAConfirmar(reserva)
             val action =
-                FormularioPropuestaFragmentDirections.actionFormularioPropuestaFragmentToResultadoMensajeFragment(TipoResultadoMensaje.NUEVA_PROPUESTA, true)
+                FormularioPropuestaFragmentDirections.actionFormularioPropuestaFragmentToResultadoMensajeFragment(
+                    TipoResultadoMensaje.NUEVA_PROPUESTA,
+                    true
+                )
             v.findNavController().navigate(action)
         }
 
@@ -167,5 +195,16 @@ class FormularioPropuestaFragment : Fragment() {
             editText_Adicional.setFocusable(true)
             editText_Importe.setFocusable(true)
         }
+    }
+
+    fun llenarFichaReserva() {
+        //lleno los datos de la reserva
+        Glide.with(this)
+            .load(cliente.urlFoto)
+            .into(imagenCliente)
+        usuario.text = cliente.nombre
+        comensales.text = reserva.comensales.toString()
+        estilococina.text = reserva.estiloCocina
+        servicio.text = reserva.tipoServicio
     }
 }

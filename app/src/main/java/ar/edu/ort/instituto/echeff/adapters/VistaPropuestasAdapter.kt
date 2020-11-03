@@ -34,14 +34,17 @@ class VistaPropuestasAdapter(
     }
 
     override fun onBindViewHolder(holder: PropuestaHolder, position: Int) {
-       /* Glide
+        Glide
             .with(context)
-            .load(propuestas[position].urlImg)
-            .circleCrop()
+            .load("https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/2_avatar-256.png")
+            .centerInside()
             .into(holder.getImageView());
-        */
-        holder.setDireccion(StringBuilder().append(propuestas[position].total).toString())
-        holder.setEstiloComida(StringBuilder().append(propuestas[position].snack).toString())
+
+        holder.setPlatoPrincipal(StringBuilder().append(propuestas[position].plato).toString())
+        holder.setEntrada(StringBuilder().append(propuestas[position].entrada).toString())
+        holder.setPostre(StringBuilder().append(propuestas[position].postre).toString())
+        holder.setSnack(StringBuilder().append(propuestas[position].snack).toString())
+
 
         holder.getCardLayout().setOnClickListener {
             onItemClick(position)
@@ -57,23 +60,33 @@ class VistaPropuestasAdapter(
             this.view = v
         }
 
-        fun setDireccion(direccion: String) {
-     //       val tv: TextView = view.findViewById(R.id.tvDireccion)
-     //       tv.text = direccion
+        fun setPlatoPrincipal(plato: String) {
+            val tv: TextView = view.findViewById(R.id.txtNombrePlatoPrincipal)
+            tv.text = plato
         }
 
-        fun setEstiloComida(estiloComida: String) {
-       //     val tv: TextView = view.findViewById(R.id.tvEstiloComida)
-       //     tv.text = view.context.getString(R.string.estilo_comida_home_cliente, estiloComida);
+        fun setEntrada(entrada: String) {
+            val tv: TextView = view.findViewById(R.id.txtNombreEntrada)
+            tv.text = view.context.getString(R.string.nombre_entrada, entrada);
+        }
+
+        fun setPostre(postre: String) {
+                 val tv: TextView = view.findViewById(R.id.txtNombrePostre)
+                 tv.text = view.context.getString(R.string.nombre_postre, postre);
+        }
+
+        fun setSnack(snack: String) {
+            val tv: TextView = view.findViewById(R.id.txtNombreSnack)
+            tv.text = view.context.getString(R.string.nombre_snack, snack);
         }
 
         fun getCardLayout(): CardView {
             return view.findViewById(R.id.cvItemPropuesta)
         }
 
-   //     fun getImageView(): ImageView {
-//            return view.findViewById(R.id.ivChef)
-     //   }
+        fun getImageView(): ImageView {
+            return view.findViewById(R.id.imageViewChef)
+        }
 
 
 

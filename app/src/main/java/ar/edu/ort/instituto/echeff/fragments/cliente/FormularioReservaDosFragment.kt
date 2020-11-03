@@ -96,7 +96,6 @@ class FormularioReservaDosFragment : Fragment() {
                 id: Long
             ) {
                 if (tipoServiciosList.size != 0) {
-
                     tipoServicio = parent.getItemAtPosition(position) as TipoServicio
                     textViewImporte.text = view.context.getString(
                         R.string.rango_precio,
@@ -116,6 +115,7 @@ class FormularioReservaDosFragment : Fragment() {
             reserva.estiloCocina = spinnerEstiloComida.selectedItem.toString()
             reserva.tipoServicio = spinnerTipoServicio.selectedItem.toString()
             reserva.notas = etAclaracionesAChef.text.toString()
+            reserva.idEstadoReserva = EstadoReserva.NUEVO.id
 
             db.collection("reservas").add(reserva).addOnSuccessListener { result ->
                 reserva.id = result.id

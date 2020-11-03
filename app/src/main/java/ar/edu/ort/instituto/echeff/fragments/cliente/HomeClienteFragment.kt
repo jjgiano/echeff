@@ -1,6 +1,5 @@
 package ar.edu.ort.instituto.echeff.fragments.cliente
 
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,25 +9,18 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.adapter.FragmentStateAdapter
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.adapters.VistaPropuestasAdapter
 import ar.edu.ort.instituto.echeff.adapters.VistaReservasAdapter
-import ar.edu.ort.instituto.echeff.entities.EstadoReserva
 import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
-import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelVistaServiciosFragment
-import ar.edu.ort.instituto.echeff.fragments.cliente.home.PropuestasDestacadasFragment
-import ar.edu.ort.instituto.echeff.fragments.cliente.home.ReservasAConfirmarFragment
-import ar.edu.ort.instituto.echeff.fragments.cliente.home.ReservasPendientesFragment
-import ar.edu.ort.instituto.echeff.fragments.cliente.home.ReservasSiguientesFragment
 import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelHomeClienteFragment
+import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -55,11 +47,10 @@ class HomeClienteFragment : Fragment() {
     lateinit var rvReservasPendientes: RecyclerView
     lateinit var rvPropuestasDestacadas: RecyclerView
 
-    //var reservas: MutableList<Reserva> = ArrayList<Reserva>()
     lateinit var sharedPreferences: SharedPreferences
 
     var reservasProximas: MutableList<Reserva> = ArrayList<Reserva>()
-    var reservasAConfirmar: MutableList<Reserva> = ArrayList<Reserva>()
+    var propuestasAConfirmar: MutableList<Propuesta> = ArrayList<Propuesta>()
     var reservasPendientes: MutableList<Reserva> = ArrayList<Reserva>()
     var propuestas: MutableList<Propuesta> = ArrayList<Propuesta>()
 
@@ -84,12 +75,12 @@ class HomeClienteFragment : Fragment() {
             }
         })
 
-        viewModel.liveDataReservasAConfirmarList.observe(viewLifecycleOwner, Observer { result ->
-            reservasAConfirmar = result
+        viewModel.liveDataPropuestasAConfirmarList.observe(viewLifecycleOwner, Observer { result ->
+            propuestasAConfirmar = result
             rvReservasAConfirmar.setHasFixedSize(true)
             rvReservasAConfirmar.layoutManager = LinearLayoutManager(context)
-            rvReservasAConfirmar.adapter = VistaReservasAdapter(reservasAConfirmar, super.requireContext()){
-                    position -> onItemReservaAConfirmarClick(position)
+            rvReservasAConfirmar.adapter = VistaPropuestasAdapter(propuestasAConfirmar, super.requireContext()){
+                    position -> onItemPropuestaAConfirmarClick(position)
             }
         })
 
@@ -139,7 +130,7 @@ class HomeClienteFragment : Fragment() {
         setSharedPreferences()
         textViewSaludoCliente.text = "Hola, " + sharedPreferences.getString("userDisplayName", "")
         //TODO: cambiar le 1 por el id del Usuario logueado
-        viewModel.setCargar(1)
+        viewModel.setCargar("1")
 
         buttonIniciarReserva.setOnClickListener {
             val iniciarReservaPage = HomeClienteFragmentDirections.actionHomeClienteFragmentToFormularioReservaFragment()
@@ -163,9 +154,9 @@ class HomeClienteFragment : Fragment() {
         Snackbar.make(v,"LA RESERVA LO TIENE EL CHEF AHORA: " + pendiente.id, Snackbar.LENGTH_SHORT).show()
     }
 
-    private fun onItemReservaAConfirmarClick(position: Int) {
-        val aConfirmar = reservasAConfirmar[position]
-        Snackbar.make(v,"RESERVA A CONFIRMAR: " + aConfirmar.id, Snackbar.LENGTH_SHORT).show()
+    private fun onItemPropuestaAConfirmarClick(position: Int) {
+        val aConfirmar: Propuesta = propuestasAConfirmar[position]
+        sharedPreferences.edit().putString("idPropuesta", aConfirmar.id).apply()
         var confirmacionReservaScreen = HomeClienteFragmentDirections.actionHomeClienteFragmentToConfirmacionReservaFragment2()
         v.findNavController().navigate(confirmacionReservaScreen)
     }
@@ -176,9 +167,6 @@ class HomeClienteFragment : Fragment() {
     }
 
     private fun setSharedPreferences() {
-        this.sharedPreferences = this.activity!!.getSharedPreferences(
-            "MySharedPref",
-            AppCompatActivity.MODE_PRIVATE
-        )
+        this.sharedPreferences = this.activity!!.getSharedPreferences(EcheffUtilities.PREF_NAME.valor, AppCompatActivity.MODE_PRIVATE)
     }
 }

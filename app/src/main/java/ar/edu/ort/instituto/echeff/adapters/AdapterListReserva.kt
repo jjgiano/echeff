@@ -10,9 +10,10 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.entities.Reserva
+import com.bumptech.glide.Glide
 
-class AdapterListReserva (private var reservaList : MutableList<Reserva>, var context: Context, val onItemClick : (Int) -> Unit) : RecyclerView.Adapter<AdapterListReserva.ReservaHolder>()  {
 
+class AdapterListReserva (private var reservaList : MutableList<Reserva>, var context: Context, val onItemClick : (Int) -> Unit) : RecyclerView.Adapter<AdapterListReserva.ReservaHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReservaHolder {
@@ -38,12 +39,11 @@ class AdapterListReserva (private var reservaList : MutableList<Reserva>, var co
         holder.getCardLayout().setOnClickListener {
             onItemClick(position)
         }
-       /* Glide
+        Glide
             .with(context)
-            .load(reservaList[position].imagen)
+            .load(reservaList[position].idUsuario)
             .into(holder.getImageView());
-            .centerInside()
-        */
+
         holder.getCardLayout().setOnClickListener {
             onItemClick(position)
 
@@ -51,6 +51,8 @@ class AdapterListReserva (private var reservaList : MutableList<Reserva>, var co
         }
 
     }
+
+
 
     class ReservaHolder (v: View) : RecyclerView.ViewHolder(v){
 

@@ -6,10 +6,7 @@ import androidx.lifecycle.viewModelScope
 import ar.edu.ort.instituto.echeff.dao.PropuestaDao
 import ar.edu.ort.instituto.echeff.dao.ReservaDao
 import ar.edu.ort.instituto.echeff.dao.ServicioDao
-import ar.edu.ort.instituto.echeff.entities.EstadoServicio
-import ar.edu.ort.instituto.echeff.entities.Propuesta
-import ar.edu.ort.instituto.echeff.entities.Reserva
-import ar.edu.ort.instituto.echeff.entities.Servicio
+import ar.edu.ort.instituto.echeff.entities.*
 import kotlinx.coroutines.launch
 
 class ViewModelDetalleServicioFragment : ViewModel(), ReservaDao, PropuestaDao, ServicioDao {
@@ -38,6 +35,16 @@ class ViewModelDetalleServicioFragment : ViewModel(), ReservaDao, PropuestaDao, 
     fun pasarAFinalizado (servicio: Servicio) {
         viewModelScope.launch {
             cambiarEstado(servicio, EstadoServicio.FINALIZADO.id)
+        }
+    }
+    fun pasarAFinalizadoReserva (reserva: Reserva) {
+        viewModelScope.launch {
+            cambiarEstado(reserva, EstadoReserva.FINALIZADA.id)
+        }
+    }
+    fun pasarAFinalizadoPropuesta (propuesta: Propuesta) {
+        viewModelScope.launch {
+            cambiarEstado(propuesta, EstadoPropuesta.FINALIZADO.id)
         }
     }
 

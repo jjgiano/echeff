@@ -1,12 +1,13 @@
 package ar.edu.ort.instituto.echeff.fragments.chef.home
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -18,7 +19,7 @@ import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.entities.TipoResultadoMensaje
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelDetallePropuestaFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelFormularioPropuestaFragment
-import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelPropuestasConfirmarFragment
+import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelReservasConfirmarFragment
 
 
 class FormularioPropuestaModificacionesFragment : Fragment() {
@@ -26,7 +27,8 @@ class FormularioPropuestaModificacionesFragment : Fragment() {
     lateinit var v: View
     private lateinit var viewModel: ViewModelDetallePropuestaFragment
     private lateinit var viewModelPropuesta: ViewModelFormularioPropuestaFragment
-    private lateinit var viewModelReserva: ViewModelPropuestasConfirmarFragment
+    private lateinit var viewModelReserva: ViewModelReservasConfirmarFragment
+
 
 
     var propuestasList: MutableList<Propuesta> = ArrayList<Propuesta>()
@@ -100,7 +102,7 @@ class FormularioPropuestaModificacionesFragment : Fragment() {
         viewModelPropuesta =
             ViewModelProvider(requireActivity()).get(ViewModelFormularioPropuestaFragment::class.java)
         viewModelReserva =
-            ViewModelProvider(requireActivity()).get(ViewModelPropuestasConfirmarFragment::class.java)
+            ViewModelProvider(requireActivity()).get(ViewModelReservasConfirmarFragment::class.java)
 
 
         viewModel.buscar.observe(viewLifecycleOwner, Observer { result ->
@@ -124,7 +126,10 @@ class FormularioPropuestaModificacionesFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        viewModel.setBuscar("1")
+        val sharedPref: SharedPreferences = requireContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+        val idUsuario : String  = sharedPref.getString("userId","Vacio")!!
+
+        viewModel.setBuscar(idUsuario)
 
         reserva =
             FormularioPropuestaModificacionesFragmentArgs.fromBundle(requireArguments()).reservaArg
@@ -139,8 +144,6 @@ class FormularioPropuestaModificacionesFragment : Fragment() {
         btn_Propuesta.setOnClickListener {
 
             //guardo la propuesta
-            //Todo: hay que buscar los IDs que tiene 1.
-
             //Si se modifico guardo los dato sen la nueva Propuesta
             propuesta.snack = text_Snack.text.toString()
             propuesta.entrada = text_Entrada.text.toString()
@@ -149,7 +152,8 @@ class FormularioPropuestaModificacionesFragment : Fragment() {
             propuesta.adicional = text_Adicional.text.toString()
             propuesta.total = text_Total.text.toString().toDouble()
             propuesta.idReserva = reserva.id
-            propuesta.idChef = "1"
+            propuesta.idChef = idUsuario
+            propuesta.importeTotal = text_Total.text.toString().toDouble() * reserva.comensales
 
             //modifico en Firebase
             viewModelPropuesta.modificarPropuesta(propuesta)

@@ -11,18 +11,18 @@ import kotlinx.coroutines.launch
 
 class ViewModelHomeClienteFragment : ViewModel(), ReservaDao, PropuestaDao {
         var liveDataReservasProximasList = MutableLiveData<MutableList<Reserva>>()
-        var liveDataReservasAConfirmarList = MutableLiveData<MutableList<Reserva>>()
+        var liveDataPropuestasAConfirmarList = MutableLiveData<MutableList<Propuesta>>()
         var liveDataReservasPendientesList = MutableLiveData<MutableList<Reserva>>()
         var liveDataPropuestasDestacadasList = MutableLiveData<MutableList<Propuesta>>()
         var liveDataBooleanCargar = MutableLiveData<Boolean>()
 
-        fun setCargar(idUsuario: Number) {
+        fun setCargar(idUsuario: String) {
             liveDataBooleanCargar.value = true
             viewModelScope.launch {
                 liveDataReservasProximasList.postValue(super.getReservasPagadas(idUsuario))
             }
             viewModelScope.launch {
-                liveDataReservasAConfirmarList.postValue(super.getReservasAConfirmar(idUsuario))
+                liveDataPropuestasAConfirmarList.postValue(super.getPropuestasAConfirmar(idUsuario))
             }
             viewModelScope.launch {
                 liveDataReservasPendientesList.postValue(super.getReservasPendientes(idUsuario))

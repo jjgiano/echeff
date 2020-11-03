@@ -2,6 +2,7 @@ package ar.edu.ort.instituto.echeff.dao
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import ar.edu.ort.instituto.echeff.entities.EstadoPropuesta
 import ar.edu.ort.instituto.echeff.entities.EstadoReserva
 import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
@@ -9,10 +10,10 @@ import com.google.firebase.firestore.ktx.*
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
-public interface PropuestaDao {
+interface PropuestaDao {
 
 
-    public suspend fun add(propuesta: Propuesta) {
+    suspend fun add(propuesta: Propuesta) {
 
         val questionRef = Firebase.firestore.collection("propuestas")
         val query = questionRef
@@ -59,12 +60,12 @@ public interface PropuestaDao {
         return propuestaList
     }
 
-    suspend fun getPropuestaByChef(idChef : String) : MutableList<Propuesta> {
+    suspend fun getPropuestaByChef(idChef: String): MutableList<Propuesta> {
 
         var propuestaList: MutableList<Propuesta> = ArrayList<Propuesta>()
 
         val questionRef = Firebase.firestore.collection("propuestas")
-        val query = questionRef.whereEqualTo("idChef",idChef)
+        val query = questionRef.whereEqualTo("idChef", idChef)
 
         try {
             val data = query
@@ -79,12 +80,13 @@ public interface PropuestaDao {
         }
         return propuestaList
     }
-    suspend fun getPropuestaById(id : String) : Propuesta {
+
+    suspend fun getPropuestaById(id: String): Propuesta {
 
         var propuesta: Propuesta = Propuesta()
 
         val questionRef = Firebase.firestore.collection("propuestas")
-        val query = questionRef.whereEqualTo("id",id)
+        val query = questionRef.whereEqualTo("id", id)
 
         try {
             val data = query
@@ -121,6 +123,55 @@ public interface PropuestaDao {
         return propuestaList
     }
 
+    //MODIFICAR ESTADO DE Propuesta
+    suspend fun cambiarEstado(propuesta: Propuesta, estado: Int) {
+        val questionRef = Firebase.firestore.collection("propuestas")
+        val query = questionRef
+        try {
+            val data = query.document(propuesta.id).update("idEstadoPropuesta", estado)
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+    }
+
+    /**
+     * A partir del ID del cliente obtiene todas las reservas en estado ACONFIRMAR (3)
+     * A partir de cada reserva obtenidas acumula las propuestas asociadas en estado ACONFIRMAR (2)
+     */
+    suspend fun getPropuestasAConfirmar(idUsuario: String): MutableList<Propuesta>{
+        var propuestaList: MutableList<Propuesta> = ArrayList<Propuesta>()
+        var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
+
+        val reservaRef = Firebase.firestore.collection("reservas")
+        val reservaQuery = reservaRef
+            .whereEqualTo("idUsuario", idUsuario)
+            .whereEqualTo("idEstadoReserva", EstadoReserva.ACONFIRMAR.id)
+        try {
+            val data = reservaQuery.get().await()
+            for (document in data) {
+                reservaList.add(document.toObject<Reserva>())
+            }
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+
+        for(reserva in reservaList) {
+            val questionRef = Firebase.firestore.collection("propuestas")
+            val query = questionRef
+                .whereEqualTo("idEstadoPropuesta", EstadoPropuesta.ACONFIRMAR.id)
+                .whereEqualTo("idReserva", reserva.id)
+            try {
+                val data = query.get().await()
+                for (document in data) {
+                    propuestaList.add(document.toObject<Propuesta>())
+                }
+            } catch (e: Exception) {
+                Log.d("Error", e.toString())
+            }
+        }
+
+        return propuestaList
+    }
 }
 
 
