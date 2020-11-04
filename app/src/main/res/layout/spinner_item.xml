@@ -2,6 +2,6 @@
 <TextView android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:textSize="20sp"
-    android:padding="5sp"
+    android:padding="10sp"
     android:textColor="@color/gray50"
     xmlns:android="http://schemas.android.com/apk/res/android" />
