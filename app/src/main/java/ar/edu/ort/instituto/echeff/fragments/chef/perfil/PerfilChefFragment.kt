@@ -1,5 +1,7 @@
 package ar.edu.ort.instituto.echeff.fragments.chef.perfil
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,11 +20,16 @@ import ar.edu.ort.instituto.echeff.adapters.ComentariosListAdapter
 import ar.edu.ort.instituto.echeff.adapters.HistoriasListAdapter
 import ar.edu.ort.instituto.echeff.entities.Comentario
 import ar.edu.ort.instituto.echeff.entities.Historia
+import ar.edu.ort.instituto.echeff.entities.PerfilChef
 import ar.edu.ort.instituto.echeff.fragments.chef.perfil.PerfilChefFragmentDirections
+import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelPerfilChefConfiguracionFragment
+import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelPerfilChefFragment
 import com.bumptech.glide.Glide
 
 class PerfilChefFragment : Fragment() {
     lateinit var v: View
+    private lateinit var viewModel: ViewModelPerfilChefFragment
+
     lateinit var imgChefPerfil: ImageView
     lateinit var lblNombreChef: TextView
     lateinit var lblCantidadMeGusta: TextView
@@ -41,43 +50,12 @@ class PerfilChefFragment : Fragment() {
     private lateinit var historiasListAdapter: HistoriasListAdapter
     private lateinit var linearLayoutManagerHistoria: LinearLayoutManager
 
+    lateinit var perfil: PerfilChef
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //Todo conectar con firebase
-        comentariosFakeList.add(
-            Comentario(
-                1,
-                "Espectacular la comida!! super recomendado.",
-                3,
-                "https://www.inmosenna.com/wp-content/uploads/2018/07/avatar-user-teacher-312a499a08079a12-512x512-300x300.png"
-            )
-        )
 
-        historiasFakeList.add(
-            Historia(
-                1,
-                "https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/Mask%20Group.png?alt=media&token=c3346e09-eb96-4b12-8686-136b39c9f542",
-                "Historia numero 1",
-                34
-            )
-        )
-        historiasFakeList.add(
-            Historia(
-                2,
-                "https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/Mask%20Group.png?alt=media&token=c3346e09-eb96-4b12-8686-136b39c9f542",
-                "Historia numero 2",
-                15
-            )
-        )
-        historiasFakeList.add(
-            Historia(
-                3,
-                "https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/Mask%20Group.png?alt=media&token=c3346e09-eb96-4b12-8686-136b39c9f542",
-                "Historia numero 3",
-                500
-            )
-        )
     }
 
     override fun onCreateView(
@@ -100,8 +78,31 @@ class PerfilChefFragment : Fragment() {
         return v
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel =
+            ViewModelProvider(requireActivity()).get(ViewModelPerfilChefFragment::class.java)
+
+        viewModel.dataPerfil.observe(viewLifecycleOwner, Observer { result ->
+
+            perfil = result
+
+
+            llenarFichaPerfil()
+        })
+    }
+
     override fun onStart() {
         super.onStart()
+
+
+        var sharedPref: SharedPreferences = requireContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+        var idUsuario : String  = sharedPref.getString("userId","Vacio")!!
+        var nombreUsuario : String = sharedPref.getString("userDisplayName","Nombre No encontrado")!!
+
+
+        lblNombreChef.text =nombreUsuario
+        viewModel.setBuscar(idUsuario)
 
         //Configuracion
         linearLayoutManagerComentario = LinearLayoutManager(context)
@@ -112,17 +113,6 @@ class PerfilChefFragment : Fragment() {
         revHistoriasChef.isNestedScrollingEnabled = false
         revHistoriasChef.layoutManager = linearLayoutManagerHistoria
 
-        var cantidadDeMegusta = 7
-        val bio =
-            "Desde muy niño, Santiago Moras Mom ha incursionado en la confeccion de Carnes Rojas. \"Asar carne a la parrilla requiere conocer los tiempos de asado de cada carne y por ende su orden de cocción.\" Estudio para ser Cheff para poder dedicarle su vida a lo que mas le gusta hacer, y lo comparte con todos los comensales."
-        txtBiografiaChef.text = getString(R.string.biografia_chef, bio)
-        lblNombreChef.text = getString(R.string.nombre_chef, "Santiago Moras Mom ")
-        lblCantidadComentarios.text = getString(R.string.cantidad_comentarios_chef, 5)
-        lblCantidadMeGusta.text = getString(R.string.cantidad_megusta_chef, cantidadDeMegusta)
-        Glide.with(this)
-            .load("https://sumicorp.com/wp-content/uploads/2018/10/user.png")
-            .centerInside()
-            .into(imgChefPerfil);
 
 
         comentariosListAdapter = ComentariosListAdapter(comentariosFakeList, requireContext())
@@ -139,8 +129,9 @@ class PerfilChefFragment : Fragment() {
         }
 
         btnAgregarMeGusta.setOnClickListener() {
-            cantidadDeMegusta += 1;
-            lblCantidadMeGusta.text = getString(R.string.cantidad_megusta_chef, cantidadDeMegusta)
+            perfil.meGusta += 1;
+            lblCantidadMeGusta.text = perfil.meGusta.toString()
+            viewModel.actualizarPerfil(perfil)
         }
 
         btnConfiguracionPerfilChef.setOnClickListener() {
@@ -148,5 +139,20 @@ class PerfilChefFragment : Fragment() {
                 PerfilChefFragmentDirections.actionPerfilChefFragmentToPerfilChefConfiguracionFragment();
             v.findNavController().navigate(perfilConfiguracionChef)
         }
+    }
+
+    fun llenarFichaPerfil(){
+
+        txtBiografiaChef.text = perfil.bio
+
+        lblCantidadComentarios.text = 5.toString()
+        lblCantidadMeGusta.text = perfil.meGusta.toString()
+        Glide.with(this)
+            .load("https://sumicorp.com/wp-content/uploads/2018/10/user.png")
+            .centerInside()
+            .into(imgChefPerfil);
+
+
+
     }
 }

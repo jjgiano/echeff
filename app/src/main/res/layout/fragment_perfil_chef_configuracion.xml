@@ -6,14 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginEnd="10dp"
-    android:paddingBottom="50dp"
-  >
+    android:paddingBottom="50dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".fragments.chef.perfil.PerfilChefConfiguracionFragment"
-        android:paddingBottom="50dp">
+        android:paddingBottom="50dp"
+        tools:context=".fragments.chef.perfil.PerfilChefConfiguracionFragment">
 
         <TextView
             android:id="@+id/textView4"
@@ -152,6 +151,7 @@
             android:layout_marginTop="40dp"
             android:layout_marginEnd="50dp"
             android:background="@drawable/button_background"
+            android:clickable="false"
             android:text="Guardar Biografia"
             android:textColor="@color/gray10"
             android:textSize="18sp"
@@ -173,6 +173,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txaAgregarComentarioHistoria" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_editar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:clickable="true"
+            app:backgroundTint="@color/orange80"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_edit" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.core.widget.NestedScrollView>

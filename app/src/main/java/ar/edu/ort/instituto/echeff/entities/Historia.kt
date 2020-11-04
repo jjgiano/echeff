@@ -1,8 +1,8 @@
 package ar.edu.ort.instituto.echeff.entities
 
-class Historia(id: Int, urlImagen: String, comentario: String, cantidadMegusta: Int) {
+class Historia(id: String, urlImagen: String, comentario: String, cantidadMegusta: Int) {
 
-    var id: Int = id
+    var id: String = id
     var urlImagen: String = urlImagen
     var comentario: String = comentario
     var cantidadMegusta: Int = cantidadMegusta
