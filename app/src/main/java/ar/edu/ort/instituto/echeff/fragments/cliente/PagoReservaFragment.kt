@@ -23,7 +23,6 @@ import ar.edu.ort.instituto.echeff.dao.ReservaDao
 import ar.edu.ort.instituto.echeff.entities.*
 import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelPagoReservaFragment
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
-import java.util.*
 
 class PagoReservaFragment : Fragment(), PropuestaDao, ReservaDao {
     lateinit var sharedPreferences: SharedPreferences
@@ -93,7 +92,7 @@ class PagoReservaFragment : Fragment(), PropuestaDao, ReservaDao {
         this.setSharedPreferences()
         var idPropuesta = this.sharedPreferences.getString("idPropuesta", "0")!!
         //todo obtener el idi del usuario
-        var idUsuario = "1"
+        var idUsuario = sharedPreferences.getString("userId", "1")!!
         changStatebutton(buttonConfirmarPago, formTarjetaIsValid)
         viewModelPagoReserva.getTarjeta(idUsuario)
         viewModelPagoReserva.getPropuesta(idPropuesta)
@@ -150,11 +149,11 @@ class PagoReservaFragment : Fragment(), PropuestaDao, ReservaDao {
     }
 
     private fun encode(field: String): String {
-        return Base64.getEncoder().encodeToString(field.toByteArray());
+        return android.util.Base64.encodeToString(field.toByteArray(),android.util.Base64.DEFAULT);
     }
 
     private fun decode(fieldEncoded: String): String {
-        val decodedBytes = Base64.getDecoder().decode(fieldEncoded);
+        val decodedBytes = android.util.Base64.decode(fieldEncoded,android.util.Base64.DEFAULT)
         return String(decodedBytes)
     }
 

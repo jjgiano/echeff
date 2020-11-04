@@ -1,31 +1,36 @@
 package ar.edu.ort.instituto.echeff.fragments
 
+import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.Switch
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import ar.edu.ort.instituto.echeff.R
+import ar.edu.ort.instituto.echeff.entities.Configuracion
+import ar.edu.ort.instituto.echeff.fragments.viewmodel.ViewModelConfiguracionUsuarioFragment
+import ar.edu.ort.instituto.echeff.fragments.viewmodel.ViewModelMesaAyudaFragment
+import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 
 class ConfiguracionUsuarioFragment : Fragment() {
-    val db = Firebase.firestore
+    lateinit var viewModel: ViewModelConfiguracionUsuarioFragment
+    lateinit var sharedPreferences: SharedPreferences
     lateinit var v: View
     lateinit var textViewConfiguracion: TextView
     lateinit var textViewNombreUsuario: TextView
     lateinit var textViewNumberLikes: TextView
     lateinit var imageViewUsuario: ImageView
     lateinit var imageViewLikes: ImageView
-    lateinit var switchNotificaciones: Switch
-    lateinit var switchNewsletter: Switch
-    lateinit var switchPromociones: Switch
-    lateinit var switchEmail: Switch
+    lateinit var switchNotificaciones: androidx.appcompat.widget.SwitchCompat
+    lateinit var switchNewsletter: androidx.appcompat.widget.SwitchCompat
+    lateinit var switchPromociones: androidx.appcompat.widget.SwitchCompat
+    lateinit var switchEmail: androidx.appcompat.widget.SwitchCompat
     lateinit var buttonModificarContrasenia: Button
     lateinit var buttonModificarCBU: Button
     lateinit var buttonCerrarSesion: Button
@@ -63,38 +68,58 @@ class ConfiguracionUsuarioFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        this.setSharedPreferences()
+        var userId = this.sharedPreferences.getString("userId","0")!!
+        var nombre : String = sharedPreferences.getString("userDisplayName","Nombre No encontrado")!!
+        textViewNombreUsuario.text = nombre
+
+        // TODO: levantar la foto del chef del firebase
+        Glide
+            .with(super.requireContext())
+            .load("https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/2_avatar-256.png")
+            .centerInside()
+            .into(imageViewUsuario)
 
         switchNotificaciones.setOnClickListener {
-            Snackbar.make(it, "switchNotificaciones.setOnClickListener", Snackbar.LENGTH_SHORT).show()
+            //switchNotificaciones.showText = !switchNotificaciones.showText
+            Snackbar.make(it, "Valor Notificaciones: " + switchNotificaciones.showText, Snackbar.LENGTH_LONG).show()
         }
 
         switchNewsletter.setOnClickListener {
-            Snackbar.make(it, "switchNewsletter.setOnClickListener", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(it, "switchNewsletter.setOnClickListener", Snackbar.LENGTH_LONG).show()
         }
 
         switchPromociones.setOnClickListener {
-            Snackbar.make(it, "switchPromociones.setOnClickListener", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(it, "switchPromociones.setOnClickListener", Snackbar.LENGTH_LONG).show()
         }
 
         switchEmail.setOnClickListener {
-            Snackbar.make(it, "switchEmail.setOnClickListener", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(it, "switchEmail.setOnClickListener", Snackbar.LENGTH_LONG).show()
         }
 
         buttonModificarContrasenia.setOnClickListener {
-            Snackbar.make(it, "buttonModificarContrasenia.setOnClickListener", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(it, "buttonModificarContrasenia.setOnClickListener", Snackbar.LENGTH_LONG).show()
         }
 
         buttonModificarCBU.setOnClickListener {
-            Snackbar.make(it, "buttonModificarCBU.setOnClickListener", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(it, "buttonModificarCBU.setOnClickListener", Snackbar.LENGTH_LONG).show()
         }
 
         buttonCerrarSesion.setOnClickListener {
-            Snackbar.make(it, "buttonCerrarSesion.setOnClickListener", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(it, "buttonCerrarSesion.setOnClickListener", Snackbar.LENGTH_LONG).show()
         }
 
         buttonBorrarCuenta.setOnClickListener {
-            Snackbar.make(it, "buttonBorrarCuenta.setOnClickListener", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(it, "buttonBorrarCuenta.setOnClickListener", Snackbar.LENGTH_LONG).show()
         }
+    }
+
+    private fun setSharedPreferences() {
+        this.sharedPreferences = this.activity!!.getSharedPreferences(EcheffUtilities.PREF_NAME.valor, AppCompatActivity.MODE_PRIVATE)
+    }
+
+    private fun actializarPreferencias(config: Configuracion){
+        //viewModel.addConfiguracion(config)
     }
 
 }
