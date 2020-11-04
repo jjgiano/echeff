@@ -20,6 +20,7 @@ import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelDetalleRese
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelFormularioPropuestaFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelPerfilChefConfiguracionFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelReservasConfirmarFragment
+import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
@@ -90,7 +91,7 @@ class PerfilChefConfiguracionFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        var sharedPref: SharedPreferences = requireContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+        var sharedPref: SharedPreferences = requireContext().getSharedPreferences(EcheffUtilities.PREF_NAME.valor, Context.MODE_PRIVATE)
         var idUsuario : String  = sharedPref.getString("userId","Vacio")!!
         var nombreUsuario : String = sharedPref.getString("userDisplayName","Nombre No encontrado")!!
 

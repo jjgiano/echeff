@@ -17,6 +17,7 @@ import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.fragments.chef.home.ReservasModificarFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.home.ReservasConfirmarFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.home.ReservasDisponiblesFragment
+import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.getbase.floatingactionbutton.FloatingActionButton
@@ -65,7 +66,7 @@ class HomeChefFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        var sharedPref: SharedPreferences = requireContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+        var sharedPref: SharedPreferences = requireContext().getSharedPreferences(EcheffUtilities.PREF_NAME.valor, Context.MODE_PRIVATE)
         var idUsuario : String  = sharedPref.getString("userId","Vacio")!!
         var nombreUsuario : String = sharedPref.getString("userDisplayName","Nombre No encontrado")!!
         var chefNombre = "Hola Chef, " + nombreUsuario
@@ -138,7 +139,7 @@ class HomeChefFragment : Fragment() {
 
     private fun setSharedPreferences() {
         this.sharedPreferences = this.activity!!.getSharedPreferences(
-            "MySharedPref",
+            EcheffUtilities.PREF_NAME.valor,
             AppCompatActivity.MODE_PRIVATE
         )
     }

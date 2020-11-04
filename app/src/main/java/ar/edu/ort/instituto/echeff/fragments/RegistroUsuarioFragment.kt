@@ -20,6 +20,7 @@ import ar.edu.ort.instituto.echeff.dao.UsuarioDao
 import ar.edu.ort.instituto.echeff.entities.Chef
 import ar.edu.ort.instituto.echeff.entities.Cliente
 import ar.edu.ort.instituto.echeff.entities.EstadoUsuario
+import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -91,7 +92,7 @@ class RegistroUsuarioFragment : Fragment(), UsuarioDao {
 
     private fun setSharedPreferences() {
         this.sharedPreferences = requireActivity().getSharedPreferences(
-            "MySharedPref",
+            EcheffUtilities.PREF_NAME.valor,
             AppCompatActivity.MODE_PRIVATE
         )
         this.editor = sharedPreferences.edit()

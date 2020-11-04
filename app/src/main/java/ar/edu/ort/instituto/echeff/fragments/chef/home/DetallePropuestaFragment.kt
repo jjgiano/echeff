@@ -16,6 +16,7 @@ import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelDetallePropuestaFragment
+import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 
 
 class DetallePropuestaFragment : Fragment() {
@@ -99,7 +100,7 @@ class DetallePropuestaFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        val sharedPref: SharedPreferences = requireContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+        val sharedPref: SharedPreferences = requireContext().getSharedPreferences(EcheffUtilities.PREF_NAME.valor, Context.MODE_PRIVATE)
         val idUsuario : String  = sharedPref.getString("userId","Vacio")!!
 
         viewModel.setBuscar(idUsuario)

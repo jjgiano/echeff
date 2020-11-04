@@ -19,6 +19,7 @@ import ar.edu.ort.instituto.echeff.entities.*
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelDetalleReservaFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelFormularioPropuestaFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelReservasConfirmarFragment
+import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_inicio.view.*
 
@@ -118,7 +119,7 @@ class FormularioPropuestaFragment : Fragment() {
         super.onStart()
 
         var sharedPref: SharedPreferences =
-            requireContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+            requireContext().getSharedPreferences(EcheffUtilities.PREF_NAME.valor, Context.MODE_PRIVATE)
         var idUsuario: String = sharedPref.getString("userId", "Vacio")!!
 
 
