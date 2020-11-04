@@ -89,9 +89,9 @@ class ConfirmacionReservaFragment : Fragment(), PropuestaDao, UsuarioDao {
         val scope = CoroutineScope(Dispatchers.Default + parentJob)
         scope.launch {
             propuesta = super.getPropuestaById(idPropuesta)
-            chef = super.getChefByUserId("W3ueDpWO46fo7u08mk9iwXKjQ902")
+            //chef = super.getChefByUserId("W3ueDpWO46fo7u08mk9iwXKjQ902")
             // TODO: CAMBIAR LUEGO AL ID DE CHEF QUE ESTA EN LA PROPUESTA
-            //chef = super.getChefById(propuesta.idChef)
+            chef = super.getChefById(propuesta.idChef)
             textViewSnack.text = propuesta.snack
             textViewEntrada.text = propuesta.entrada
             textViewPlatoPrincipal.text = propuesta.plato

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUserMetadata
@@ -63,8 +64,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setSharedPreferences() {
         sharedPreferences = getSharedPreferences(
-            "MySharedPref",
-            MODE_PRIVATE
+            EcheffUtilities.PREF_NAME.valor,MODE_PRIVATE
         )
         editor = sharedPreferences.edit()
         if(!sharedPreferences.contains("userId")) {

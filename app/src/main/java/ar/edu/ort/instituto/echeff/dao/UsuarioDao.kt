@@ -3,8 +3,9 @@ package ar.edu.ort.instituto.echeff.dao
 import android.util.Log
 import ar.edu.ort.instituto.echeff.entities.Chef
 import ar.edu.ort.instituto.echeff.entities.Cliente
-import ar.edu.ort.instituto.echeff.entities.Propuesta
-import com.google.firebase.firestore.ktx.*
+import ar.edu.ort.instituto.echeff.entities.Configuracion
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
@@ -136,6 +137,51 @@ interface UsuarioDao {
         } catch (e: Exception) {
             throw e
         }
+    }
+    
+    public suspend fun addConfiguracion(config: Configuracion): Configuracion {
+        val questionRef = Firebase.firestore.collection("configuraciones")
+
+        try {
+            questionRef
+                .document(config.idUsuario)
+                .set(config)
+                .await()
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+        return config
+    }
+
+    suspend fun getConfiguracionById(idUsuario : String) : Configuracion {
+
+        var config: Configuracion = Configuracion()
+
+        val questionRef = Firebase.firestore.collection("configuraciones")
+        val query = questionRef.whereEqualTo("idUsuario",idUsuario)
+
+        try {
+            val data = query
+                .get()
+                .await()
+            for (document in data) {
+                config = document.toObject<Configuracion>()
+            }
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+        return config
+    }
+
+    suspend fun updateConfiguracion(config: Configuracion): Configuracion {
+        val questionRef = Firebase.firestore.collection("configuraciones")
+        val query = questionRef
+        try {
+            query.document(config.idUsuario).set(config)
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
+        return config
     }
 
 }

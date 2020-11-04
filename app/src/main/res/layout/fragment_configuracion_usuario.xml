@@ -129,7 +129,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_end="15dp" />
 
-    <Switch
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switchNotificaciones"
         android:layout_width="0dp"
         android:layout_height="50sp"
@@ -143,7 +143,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
-    <Switch
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switchNewsletter"
         android:layout_width="0dp"
         android:layout_height="50sp"
@@ -158,7 +158,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toBottomOf="@id/switchNotificaciones" />
 
-    <Switch
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switchPromociones"
         android:layout_width="0dp"
         android:layout_height="50sp"
@@ -173,7 +173,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toBottomOf="@id/switchNewsletter" />
 
-    <Switch
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switchEmail"
         android:layout_width="0dp"
         android:layout_height="50sp"
