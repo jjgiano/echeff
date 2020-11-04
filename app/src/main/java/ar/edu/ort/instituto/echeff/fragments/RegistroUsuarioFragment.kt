@@ -16,20 +16,22 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
+import ar.edu.ort.instituto.echeff.dao.UsuarioDao
+import ar.edu.ort.instituto.echeff.entities.Chef
 import ar.edu.ort.instituto.echeff.entities.Cliente
 import ar.edu.ort.instituto.echeff.entities.EstadoUsuario
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.*
 import kotlinx.coroutines.android.awaitFrame
-import kotlinx.coroutines.awaitAll
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class RegistroUsuarioFragment : Fragment() {
+class RegistroUsuarioFragment : Fragment(), UsuarioDao {
 
     val db = Firebase.firestore
     var storage = FirebaseStorage.getInstance()
@@ -47,21 +49,27 @@ class RegistroUsuarioFragment : Fragment() {
     lateinit var textViewDiploma: TextView
     lateinit var sharedPreferences: SharedPreferences
     lateinit var editor: SharedPreferences.Editor
-    lateinit var registroId: String
+    //lateinit var registroId: String
     private lateinit var profilePhotoURI: Uri
     private var diplomaPhotoURI: Uri? = null
 
 
 
     fun goToInicio() {
-        val isChef = sharedPreferences.getBoolean("isChef", false)
-        val action = if (isChef) {
-            RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeChefFragment2()
-        } else {
-            RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeClienteFragment()
-        }
-        v.findNavController().navigate(action)
+        val isChef =
+            if (sharedPreferences.contains("isChef")) {
+                sharedPreferences.getBoolean("isChef", false)
+            } else {
+                true // ver si podemos implementar fallback
+            }
+            val action = if (isChef) {
+                RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeChefFragment2()
+            } else {
+                RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeClienteFragment()
+            }
+            v.findNavController().navigate(action)
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -115,32 +123,63 @@ class RegistroUsuarioFragment : Fragment() {
             val profilePhotoRef = uploadImage(profilePhotoURI, "profilePics")
 
             val isChef = checkBoxSoyChef.isChecked
+            editor.putBoolean("isChef", isChef)
+            editor.commit()
             if(isChef) {
                 val diplomaPhotoRef = uploadImage(diplomaPhotoURI!!, "diplomas")
-                db.collection("chefs").add(
-                    Cliente(
-                        userId,
+                GlobalScope.launch { addChef(Chef(
+                    "",
+                    nombre.text.toString(),
+                    userEmail,
+                    profilePhotoRef,
+                    diplomaPhotoRef,
+                    EstadoUsuario.ACTIVO.id,
+                    telefono.text.toString(),
+                    userId
+                )).also { chef ->
+                    editor.putString("idRegistro", chef.id)
+                    editor.commit()
+                } }
+                /**db.collection("chefs").add(
+                    Chef(
+                        "",
                         nombre.text.toString(),
                         userEmail,
                         profilePhotoRef,
+                        diplomaPhotoRef,
                         EstadoUsuario.ACTIVO.id,
-                        telefono.text.toString()
+                        telefono.text.toString(),
+                        userId
                     )
                 ).addOnSuccessListener { documentReference ->
                     registroId = documentReference.id
                     editor.putBoolean("isChef", isChef)
                     editor.putString("idRegistro", registroId)
                     editor.commit()
-                }
+                }**/
             } else {
-                db.collection("usuarios").add(
+                GlobalScope.launch { addCliente(Cliente(
+                    "",
+                    nombre.text.toString(),
+                    userEmail,
+                    profilePhotoRef,
+                    EstadoUsuario.ACTIVO.id,
+                    telefono.text.toString(),
+                    userId
+                )).also { cliente ->
+                    editor.putString("idRegistro", cliente.id)
+                    editor.commit()
+                } }
+            }
+                /**db.collection("clientes").add(
                     Cliente(
-                        userId,
+                        "",
                         userDisplayName,
                         userEmail,
                         profilePhotoRef,
                         EstadoUsuario.ACTIVO.id,
-                        telefono.text.toString()
+                        telefono.text.toString(),
+                        userId
                     )
                 ).addOnSuccessListener { documentReference ->
                     registroId = documentReference.id
@@ -148,7 +187,7 @@ class RegistroUsuarioFragment : Fragment() {
                     editor.putString("idRegistro", registroId)
                     editor.commit()
                 }
-            }
+            }**/
 
             goToInicio()
         }
