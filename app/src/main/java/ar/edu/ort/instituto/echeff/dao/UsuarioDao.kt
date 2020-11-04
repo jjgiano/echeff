@@ -14,7 +14,7 @@ interface UsuarioDao {
 
         var cliente: Cliente = Cliente()
 
-        val questionRef = Firebase.firestore.collection("usuarios")
+        val questionRef = Firebase.firestore.collection("clientes")
         val query = questionRef.whereEqualTo("id",id)
 
         try {
@@ -36,7 +36,7 @@ interface UsuarioDao {
 
         var cliente: Cliente = Cliente()
 
-        val questionRef = Firebase.firestore.collection("usuarios")
+        val questionRef = Firebase.firestore.collection("clientes")
         val query = questionRef.whereEqualTo("idUsuario", userId)
 
         try {
