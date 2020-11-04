@@ -7,8 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -28,6 +28,7 @@ class HomeChefFragment : Fragment() {
 
     lateinit var viewPager: ViewPager2
     lateinit var tabLayout: TabLayout
+    lateinit var sharedPreferences: SharedPreferences
 
 
     //Boton menu
@@ -68,6 +69,9 @@ class HomeChefFragment : Fragment() {
         var idUsuario : String  = sharedPref.getString("userId","Vacio")!!
         var nombreUsuario : String = sharedPref.getString("userDisplayName","Nombre No encontrado")!!
         var chefNombre = "Hola Chef, " + nombreUsuario
+
+        setSharedPreferences()
+        nombreChef.text = "Hola Chef " + sharedPreferences.getString("userDisplayName", "")
 
         viewPager.setAdapter(createCardAdapter())
         // viewPager.isUserInputEnabled = false
@@ -130,6 +134,13 @@ class HomeChefFragment : Fragment() {
         companion object {
             private const val TAB_COUNT = 3
         }
+    }
+
+    private fun setSharedPreferences() {
+        this.sharedPreferences = this.activity!!.getSharedPreferences(
+            "MySharedPref",
+            AppCompatActivity.MODE_PRIVATE
+        )
     }
 
 }

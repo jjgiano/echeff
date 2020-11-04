@@ -5,15 +5,18 @@ class Chef(
     nombre: String,
     email: String,
     urlFoto: String,
+    urlDiploma: String,
     estado: Int,
-    telefono: String
+    telefono: String,
+    idUsuario: String
 ) : Usuario(
     id,
     nombre,
     email,
     urlFoto,
     estado,
-    telefono
+    telefono,
+    idUsuario
 ) {
-    constructor() : this("", "", "", "", -1, "")
+    constructor() : this("", "", "", "", "", -1, "", "")
 }

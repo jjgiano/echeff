@@ -15,6 +15,7 @@ class LoginActivity : AppCompatActivity() {
     lateinit var listener: FirebaseAuth.AuthStateListener
     lateinit var providers: List<AuthUI.IdpConfig>
     lateinit var editor: SharedPreferences.Editor
+    lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,19 +36,17 @@ class LoginActivity : AppCompatActivity() {
             if (user != null) {
                 var isNew = false
                 val metadata: FirebaseUserMetadata = user.metadata!!
-                if (metadata.creationTimestamp == metadata.lastSignInTimestamp) {
+                if (metadata.creationTimestamp == metadata.lastSignInTimestamp && !sharedPreferences.contains("isNew")) {
                     isNew = true
                 }
                 editor.putString("userId", user.uid)
                 editor.putString("userDisplayName", user.displayName)
                 editor.putString("userEmail", user.email)
                 editor.putBoolean("isNew", isNew)
+                editor.putBoolean("onBoardingFinished", true)
                 editor.commit()
                 //Already singned-in
-                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                //val extras: Bundle = Bundle()
-                //extras.putString("user", user.displayName)
-                //intent.putExtras(extras)
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
             } else {
                 startActivityForResult(
@@ -63,12 +62,14 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setSharedPreferences() {
-        var sharedPreferences: SharedPreferences = getSharedPreferences(
+        sharedPreferences = getSharedPreferences(
             "MySharedPref",
             MODE_PRIVATE
         )
         editor = sharedPreferences.edit()
-        editor.clear()
+        if(!sharedPreferences.contains("userId")) {
+            editor.clear()
+        }
     }
 
     override fun onStart() {

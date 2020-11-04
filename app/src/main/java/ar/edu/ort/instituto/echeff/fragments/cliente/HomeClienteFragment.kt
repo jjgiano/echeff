@@ -128,7 +128,7 @@ class HomeClienteFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         setSharedPreferences()
-
+        textViewSaludoCliente.text = "Hola, " + sharedPreferences.getString("userDisplayName", "")
         //TODO: cambiar le 1 por el id del Usuario logueado
         viewModel.setCargar("1")
 

@@ -19,7 +19,7 @@ class ViewModelDetalleReservaFragment : ViewModel(), UsuarioDao {
 
     fun buscarCliente(id: String): Boolean {
         viewModelScope.launch {
-            cliente.value =  getClienteById(id)
+            cliente.value =  getClienteByUserId(id)
         }
         return false
     }

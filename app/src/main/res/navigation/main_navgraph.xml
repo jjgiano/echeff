@@ -3,20 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navgraph"
-    app:startDestination="@id/homeChefFragment">
+    app:startDestination="@id/registroUsuarioFragment">
 
-    <fragment
-        android:id="@+id/inicioFragment"
-        android:name="ar.edu.ort.instituto.echeff.fragments.InicioFragment"
-        android:label="fragment_inicio"
-        tools:layout="@layout/fragment_inicio" >
-        <action
-            android:id="@+id/action_inicioFragment_to_viewPagerFragment"
-            app:destination="@id/viewPagerFragment" />
-        <action
-            android:id="@+id/action_inicioFragment_to_loginActivity"
-            app:destination="@id/loginActivity" />
-    </fragment>
     <fragment
         android:id="@+id/registroUsuarioFragment"
         android:name="ar.edu.ort.instituto.echeff.fragments.RegistroUsuarioFragment"
@@ -218,11 +206,6 @@
         android:name="ar.edu.ort.instituto.echeff.fragments.chef.perfil.PerfilChefConfiguracionFragment"
         android:label="PerfilChefConfiguracionFragment"
         tools:layout="@layout/fragment_perfil_chef_configuracion"/>
-    <activity
-        android:id="@+id/loginActivity"
-        android:name="ar.edu.ort.instituto.echeff.LoginActivity"
-        android:label="activity_login"
-        tools:layout="@layout/activity_login" />
     <fragment
         android:id="@+id/formularioReservaDosFragment3"
         android:name="ar.edu.ort.instituto.echeff.fragments.cliente.FormularioReservaDosFragment"
@@ -234,15 +217,6 @@
         <action
             android:id="@+id/action_formularioReservaDosFragment3_to_resultadoMensajeFragment"
             app:destination="@id/resultadoMensajeFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/viewPagerFragment"
-        android:name="ar.edu.ort.instituto.echeff.fragments.onboarding.ViewPagerFragment"
-        android:label="fragment_view_pager"
-        tools:layout="@layout/fragment_view_pager" >
-        <action
-            android:id="@+id/action_viewPagerFragment_to_loginActivity"
-            app:destination="@id/loginActivity" />
     </fragment>
     <fragment
         android:id="@+id/detallePropuestaFragment"

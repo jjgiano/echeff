@@ -7,6 +7,7 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -40,7 +41,10 @@ class InicioFragment : Fragment() {
     }
 
     private fun onBoardingFinished(): Boolean {
-        val sharedPref = requireActivity().getSharedPreferences("onBoarding", Context.MODE_PRIVATE)
-        return sharedPref.getBoolean("Finished", false)
+        val sharedPref = requireActivity().getSharedPreferences(
+            "MySharedPref",
+            AppCompatActivity.MODE_PRIVATE
+        )
+        return sharedPref.getBoolean("onBoardingFinished", false)
     }
 }

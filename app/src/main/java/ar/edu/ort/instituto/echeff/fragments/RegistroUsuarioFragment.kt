@@ -16,18 +16,22 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
+import ar.edu.ort.instituto.echeff.dao.UsuarioDao
+import ar.edu.ort.instituto.echeff.entities.Chef
 import ar.edu.ort.instituto.echeff.entities.Cliente
 import ar.edu.ort.instituto.echeff.entities.EstadoUsuario
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.*
+import kotlinx.coroutines.android.awaitFrame
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class RegistroUsuarioFragment : Fragment() {
+class RegistroUsuarioFragment : Fragment(), UsuarioDao {
 
     val db = Firebase.firestore
     var storage = FirebaseStorage.getInstance()
@@ -45,20 +49,27 @@ class RegistroUsuarioFragment : Fragment() {
     lateinit var textViewDiploma: TextView
     lateinit var sharedPreferences: SharedPreferences
     lateinit var editor: SharedPreferences.Editor
+    //lateinit var registroId: String
     private lateinit var profilePhotoURI: Uri
     private var diplomaPhotoURI: Uri? = null
 
 
 
     fun goToInicio() {
-        val isChef = sharedPreferences.getBoolean("isChef", false)
-        val action = if (isChef) {
-            RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeClienteFragment()
-        } else {
-            RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeChefFragment2()
-        }
-        v.findNavController().navigate(action)
+        val isChef =
+            if (sharedPreferences.contains("isChef")) {
+                sharedPreferences.getBoolean("isChef", false)
+            } else {
+                true // ver si podemos implementar fallback
+            }
+            val action = if (isChef) {
+                RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeChefFragment2()
+            } else {
+                RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeClienteFragment()
+            }
+            v.findNavController().navigate(action)
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,7 +90,7 @@ class RegistroUsuarioFragment : Fragment() {
     }
 
     private fun setSharedPreferences() {
-        this.sharedPreferences = this.activity!!.getSharedPreferences(
+        this.sharedPreferences = requireActivity().getSharedPreferences(
             "MySharedPref",
             AppCompatActivity.MODE_PRIVATE
         )
@@ -111,34 +122,73 @@ class RegistroUsuarioFragment : Fragment() {
         buttonRegistro.setOnClickListener {
             val profilePhotoRef = uploadImage(profilePhotoURI, "profilePics")
 
-            val isChef = checkBoxSoyChef.isActivated
+            val isChef = checkBoxSoyChef.isChecked
+            editor.putBoolean("isChef", isChef)
+            editor.commit()
             if(isChef) {
                 val diplomaPhotoRef = uploadImage(diplomaPhotoURI!!, "diplomas")
-                db.collection("chefs").add(
-                    Cliente(
-                        userId,
+                GlobalScope.launch { addChef(Chef(
+                    "",
+                    nombre.text.toString(),
+                    userEmail,
+                    profilePhotoRef,
+                    diplomaPhotoRef,
+                    EstadoUsuario.ACTIVO.id,
+                    telefono.text.toString(),
+                    userId
+                )).also { chef ->
+                    editor.putString("idRegistro", chef.id)
+                    editor.commit()
+                } }
+                /**db.collection("chefs").add(
+                    Chef(
+                        "",
                         nombre.text.toString(),
                         userEmail,
                         profilePhotoRef,
+                        diplomaPhotoRef,
                         EstadoUsuario.ACTIVO.id,
-                        telefono.text.toString()
+                        telefono.text.toString(),
+                        userId
                     )
-                )
+                ).addOnSuccessListener { documentReference ->
+                    registroId = documentReference.id
+                    editor.putBoolean("isChef", isChef)
+                    editor.putString("idRegistro", registroId)
+                    editor.commit()
+                }**/
             } else {
-                db.collection("usuarios").add(
+                GlobalScope.launch { addCliente(Cliente(
+                    "",
+                    nombre.text.toString(),
+                    userEmail,
+                    profilePhotoRef,
+                    EstadoUsuario.ACTIVO.id,
+                    telefono.text.toString(),
+                    userId
+                )).also { cliente ->
+                    editor.putString("idRegistro", cliente.id)
+                    editor.commit()
+                } }
+            }
+                /**db.collection("clientes").add(
                     Cliente(
-                        userId,
+                        "",
                         userDisplayName,
                         userEmail,
                         profilePhotoRef,
                         EstadoUsuario.ACTIVO.id,
-                        telefono.text.toString()
+                        telefono.text.toString(),
+                        userId
                     )
-                )
-            }
+                ).addOnSuccessListener { documentReference ->
+                    registroId = documentReference.id
+                    editor.putBoolean("isChef", isChef)
+                    editor.putString("idRegistro", registroId)
+                    editor.commit()
+                }
+            }**/
 
-            editor.putBoolean("isChef", isChef)
-            editor.commit()
             goToInicio()
         }
 
@@ -152,7 +202,7 @@ class RegistroUsuarioFragment : Fragment() {
     private fun dispatchTakePictureIntent(folder: String, requestCode: Int) {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
-            takePictureIntent.resolveActivity(this.activity!!.packageManager)?.also {
+            takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
                 // Create the File where the photo should go
                 val photoFile: File? = try {
                     createImageFile(folder)
@@ -196,7 +246,7 @@ class RegistroUsuarioFragment : Fragment() {
     private fun createImageFile(folder: String): File {
         // Create an image file name
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File = this.activity!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES + folder)!!
+        val storageDir: File = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES + folder)!!
         return File.createTempFile(
             "JPEG_${timeStamp}_",
             ".jpg",

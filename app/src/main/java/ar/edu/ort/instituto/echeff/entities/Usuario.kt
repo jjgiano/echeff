@@ -6,7 +6,8 @@ abstract class Usuario(
     email: String,
     urlFoto: String,
     estado: Int,
-    telefono: String
+    telefono: String,
+    idUsuario: String
 ) {
     var id: String
     var nombre: String
@@ -14,6 +15,7 @@ abstract class Usuario(
     var urlFoto: String
     var estado: Int
     var telefono: String
+    var idUsuario: String
 
     init {
         this.id = id
@@ -22,6 +24,7 @@ abstract class Usuario(
         this.urlFoto = urlFoto
         this.estado = estado
         this.telefono = telefono
+        this.idUsuario = idUsuario
     }
 
 }
