@@ -8,9 +8,9 @@ import kotlinx.coroutines.launch
 
 class ViewModelConfiguracionUsuarioFragment : ViewModel(), UsuarioDao {
 
-    fun crearConfiguracion(configuracion: Configuracion) {
+    fun getConfiguracion(userId: String) {
         viewModelScope.launch {
-            super.addConfiguracion(configuracion)
+            super.getConfiguracionById(userId)
         }
     }
 }

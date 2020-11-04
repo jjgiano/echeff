@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.entities.Configuracion
 import ar.edu.ort.instituto.echeff.fragments.viewmodel.ViewModelConfiguracionUsuarioFragment
-import ar.edu.ort.instituto.echeff.fragments.viewmodel.ViewModelMesaAyudaFragment
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
@@ -82,7 +81,7 @@ class ConfiguracionUsuarioFragment : Fragment() {
 
         switchNotificaciones.setOnClickListener {
             //switchNotificaciones.showText = !switchNotificaciones.showText
-            Snackbar.make(it, "Valor Notificaciones: " + switchNotificaciones.showText, Snackbar.LENGTH_LONG).show()
+            Snackbar.make(it, "Valor Notificaciones: " + switchNotificaciones.getTextOn(), Snackbar.LENGTH_LONG).show()
         }
 
         switchNewsletter.setOnClickListener {
@@ -98,7 +97,9 @@ class ConfiguracionUsuarioFragment : Fragment() {
         }
 
         buttonModificarContrasenia.setOnClickListener {
-            Snackbar.make(it, "buttonModificarContrasenia.setOnClickListener", Snackbar.LENGTH_LONG).show()
+            //Snackbar.make(it, switchNotificaciones.text, Snackbar.LENGTH_LONG).show()
+            Snackbar.make(it, switchNotificaciones.stateDescription.toString(), Snackbar.LENGTH_LONG).show()
+            //Snackbar.make(it, switchNotificaciones.splitTrack.toString(), Snackbar.LENGTH_LONG).show()
         }
 
         buttonModificarCBU.setOnClickListener {
@@ -123,3 +124,4 @@ class ConfiguracionUsuarioFragment : Fragment() {
     }
 
 }
+

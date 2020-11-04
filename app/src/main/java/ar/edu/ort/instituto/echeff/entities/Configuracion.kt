@@ -14,7 +14,7 @@ class Configuracion(
     var promociones: String
     var emails: String
 
-    constructor() : this("0", "", "", "", "")
+    constructor() : this("", "", "", "", "")
 
     init {
         this.idUsuario = idUsuario
