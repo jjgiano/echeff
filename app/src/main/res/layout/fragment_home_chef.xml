@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout_HomeChef"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,32 +15,6 @@
     android:paddingRight="12dp"
     android:paddingBottom="12dp"
     tools:context=".fragments.chef.HomeChefFragment">
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/TabLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/floatmenu"
-        app:tabIndicatorColor="@color/orange95"
-        app:tabRippleColor="@color/orange80"
-        app:tabSelectedTextColor="@color/orange80"
-        app:tabTextColor="@color/orange50" />
-
-    <TextView
-        android:id="@+id/text_NombreChef"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="TextView"
-        android:textColor="@color/orange80"
-        android:textSize="28sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/floatmenu"
@@ -94,6 +68,33 @@
             app:fab_size="mini" />
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/TabLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/floatmenu"
+        app:tabIndicatorColor="@color/orange95"
+        app:tabRippleColor="@color/orange80"
+        app:tabSelectedTextColor="@color/orange80"
+        app:tabTextColor="@color/orange50" />
+
+    <TextView
+        android:id="@+id/text_NombreChef"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="TextView"
+        android:textColor="@color/orange80"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpage"
         android:layout_width="0dp"
@@ -110,7 +111,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TabLayout"
-        app:layout_constraintVertical_bias="1.0" >
+        app:layout_constraintVertical_bias="1.0">
 
     </androidx.viewpager2.widget.ViewPager2>
 

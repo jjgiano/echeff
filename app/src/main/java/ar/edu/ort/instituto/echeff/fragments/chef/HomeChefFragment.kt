@@ -71,8 +71,8 @@ class HomeChefFragment : Fragment() {
         var nombreUsuario : String = sharedPref.getString("userDisplayName","Nombre No encontrado")!!
         var chefNombre = "Hola Chef, " + nombreUsuario
 
-        setSharedPreferences()
-        nombreChef.text = "Hola Chef " + sharedPreferences.getString("userDisplayName", "")
+
+        nombreChef.text = chefNombre
 
         viewPager.setAdapter(createCardAdapter())
         // viewPager.isUserInputEnabled = false

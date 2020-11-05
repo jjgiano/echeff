@@ -43,7 +43,7 @@ class PerfilChefFragment : Fragment() {
     lateinit var btnAgregarMeGusta: Button
 
     private var comentariosFakeList: MutableList<Comentario> = ArrayList()
-    private var historiasFakeList: MutableList<Historia> = ArrayList()
+    private var historiasList: MutableList<Historia> = ArrayList()
 
     private lateinit var comentariosListAdapter: ComentariosListAdapter
     private lateinit var linearLayoutManagerComentario: LinearLayoutManager
@@ -91,6 +91,12 @@ class PerfilChefFragment : Fragment() {
 
             llenarFichaPerfil()
         })
+
+        viewModel.listDataHistoria.observe(viewLifecycleOwner, Observer{ historias ->
+            historiasList = historias
+            historiasListAdapter = HistoriasListAdapter(historiasList, requireContext())
+            revHistoriasChef.adapter = historiasListAdapter
+        })
     }
 
     override fun onStart() {
@@ -119,8 +125,7 @@ class PerfilChefFragment : Fragment() {
         comentariosListAdapter = ComentariosListAdapter(comentariosFakeList, requireContext())
         revComentarioCliente.adapter = comentariosListAdapter
 
-        historiasListAdapter = HistoriasListAdapter(historiasFakeList, requireContext())
-        revHistoriasChef.adapter = historiasListAdapter
+
 
         //Listeners
         btnVerMasComentarios.setOnClickListener() {

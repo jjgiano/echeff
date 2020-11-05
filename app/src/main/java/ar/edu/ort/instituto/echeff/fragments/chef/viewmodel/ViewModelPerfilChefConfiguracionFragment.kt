@@ -41,4 +41,12 @@ class ViewModelPerfilChefConfiguracionFragment : ViewModel(), PerfilChefDao, His
         }
     }
 
+    fun agregarHistoria(historia: Historia) {
+        viewModelScope.launch {
+            add(historia)
+        }
+    }
+
+
+
 }
