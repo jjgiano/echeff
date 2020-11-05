@@ -50,7 +50,7 @@ class LoginFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        buttonIngresar.setOnClickListener {
+      /*  buttonIngresar.setOnClickListener {
             Snackbar.make(it, "buttonIngresar.setOnClickListener", Snackbar.LENGTH_SHORT).show()
             val city = hashMapOf(
                 "platoPrincipal" to "Los Angeles",
@@ -60,7 +60,7 @@ class LoginFragment : Fragment() {
 
 
             db.collection("reservas").add(city)
-        }
+        }*/
 
         buttonRegistrate.setOnClickListener {
             Snackbar.make(it, "buttonRegistrate.setOnClickListener", Snackbar.LENGTH_SHORT).show()

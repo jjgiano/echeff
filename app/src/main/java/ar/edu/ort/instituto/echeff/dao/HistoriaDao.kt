@@ -39,7 +39,7 @@ interface HistoriaDao {
     suspend fun getHistorasByChef(idChef:String) : MutableList<Historia> {
         var listaHistorias: MutableList<Historia> = ArrayList<Historia>()
 
-        val questionRef = Firebase.firestore.collection("perfilesChef")
+        val questionRef = Firebase.firestore.collection("historiasChef")
         val query = questionRef.whereEqualTo("idChef", idChef)
 
         try {

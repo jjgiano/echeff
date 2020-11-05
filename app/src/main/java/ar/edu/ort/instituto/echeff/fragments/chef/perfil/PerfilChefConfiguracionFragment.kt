@@ -40,7 +40,7 @@ class PerfilChefConfiguracionFragment : Fragment() {
 
 
     lateinit var perfil : PerfilChef
-    lateinit var historia : Historia
+    var historia : Historia = Historia()
 
     var buscar = false
     var nuevo = false
@@ -66,9 +66,14 @@ class PerfilChefConfiguracionFragment : Fragment() {
         btnAgregarHistoria = v.findViewById(R.id.btnAgregarHistoria)
         btn_EditarPerfil = v.findViewById(R.id.fab_editar)
 
-        btnGuardarBiografia.setVisibility(View.INVISIBLE);
-        txaBiografia.setFocusable(false)
-        txaBiografia.setEnabled(false)
+        btnGuardarBiografia.visibility = View.INVISIBLE;
+        txaBiografia.isFocusable = false
+        txaBiografia.isEnabled = false
+        txaAgregarComentarioHistoria.isFocusable = false
+        txaAgregarComentarioHistoria.isEnabled = false
+        lblContadorComentarioHistoria.isFocusable = false
+        btnAgregarFotoHistoria.visibility = View.INVISIBLE
+        btnAgregarHistoria.visibility = View.INVISIBLE
 
         return v
     }
@@ -98,9 +103,15 @@ class PerfilChefConfiguracionFragment : Fragment() {
         viewModel.setBuscar(idUsuario)
 
         btn_EditarPerfil.setOnClickListener(){
+            //HBAILITO LOS BOTONES Y CUADROS DE TEXTO
             txaBiografia.setFocusable(true)
             txaBiografia.setEnabled(true)
             btnGuardarBiografia.setVisibility(View.VISIBLE);
+            txaAgregarComentarioHistoria.setFocusable(true)
+            txaAgregarComentarioHistoria.setEnabled(true)
+            btnAgregarFotoHistoria.setVisibility(View.VISIBLE)
+            btnAgregarHistoria.setVisibility(View.VISIBLE)
+
         }
 
         btnAgregarFotoHistoria.setOnClickListener(){
@@ -127,15 +138,26 @@ class PerfilChefConfiguracionFragment : Fragment() {
         }
 
         btnAgregarHistoria.setOnClickListener(){
-            //todo agregar funcionalidad
+            armarHistoria(idUsuario)
+             viewModel.agregarHistoria(historia)
+
+            txaAgregarComentarioHistoria.setFocusable(false)
+            txaAgregarComentarioHistoria.setEnabled(false)
+            btnAgregarFotoHistoria.setVisibility(View.INVISIBLE)
+            btnAgregarHistoria.setVisibility(View.INVISIBLE)
         }
     }
 
     fun llenarFichaPerfil(){
-
         txaBiografia.text = perfil.bio
         lblContadorBio.text = perfil.bio.length.toString()
+    }
 
+    fun armarHistoria(idUsuario: String){
+        this.historia.idChef= idUsuario
+        this.historia.cantidadMegusta = 0
+        this.historia.comentario = txaAgregarComentarioHistoria.text.toString()
+        this.historia.urlImagen = ""
 
     }
 }
