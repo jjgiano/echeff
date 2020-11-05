@@ -1,18 +1,23 @@
 package ar.edu.ort.instituto.echeff.fragments.cliente
 
+import android.content.SharedPreferences
 import android.os.Bundle
-
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
-import ar.edu.ort.instituto.echeff.entities.*
+import ar.edu.ort.instituto.echeff.entities.EstadoReserva
+import ar.edu.ort.instituto.echeff.entities.Reserva
+import ar.edu.ort.instituto.echeff.entities.TipoResultadoMensaje
+import ar.edu.ort.instituto.echeff.entities.TipoServicio
 import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelReservaDosFragment
+import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -22,7 +27,7 @@ class FormularioReservaDosFragment : Fragment() {
     val db = Firebase.firestore
 
     lateinit var v: View
-
+    lateinit var sharedPreferences: SharedPreferences
     lateinit var reserva: Reserva
 
     lateinit var spinnerEstiloComida: Spinner
@@ -83,7 +88,7 @@ class FormularioReservaDosFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
+        this.setSharedPreferences()
         viewModel.obtenerTipoServicios()
 
         spinnerTipoServicio.onItemSelectedListener = object :
@@ -116,6 +121,8 @@ class FormularioReservaDosFragment : Fragment() {
             reserva.tipoServicio = spinnerTipoServicio.selectedItem.toString()
             reserva.notas = etAclaracionesAChef.text.toString()
             reserva.idEstadoReserva = EstadoReserva.NUEVO.id
+            var userId = this.sharedPreferences.getString("userId","0")!!
+            reserva.idUsuario = userId
 
             db.collection("reservas").add(reserva).addOnSuccessListener { result ->
                 reserva.id = result.id
@@ -130,5 +137,8 @@ class FormularioReservaDosFragment : Fragment() {
         }
     }
 
+    private fun setSharedPreferences() {
+        this.sharedPreferences = this.activity!!.getSharedPreferences(EcheffUtilities.PREF_NAME.valor, AppCompatActivity.MODE_PRIVATE)
+    }
 
 }

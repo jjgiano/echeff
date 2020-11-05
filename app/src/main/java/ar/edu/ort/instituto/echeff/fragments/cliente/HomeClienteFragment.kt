@@ -22,14 +22,9 @@ import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelHomeClienteFragment
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 
 class HomeClienteFragment : Fragment() {
-
-    val db = Firebase.firestore
     lateinit var v: View
-
     private lateinit var viewModel: ViewModelHomeClienteFragment
     var cargar : Boolean = false
 
@@ -129,8 +124,8 @@ class HomeClienteFragment : Fragment() {
         super.onStart()
         setSharedPreferences()
         textViewSaludoCliente.text = "Hola, " + sharedPreferences.getString("userDisplayName", "")
-        //TODO: cambiar le 1 por el id del Usuario logueado
-        viewModel.setCargar(sharedPreferences.getString("userId", "1")!!)
+        var userId = sharedPreferences.getString("userId", "0")!!
+        viewModel.setCargar(userId)
 
         buttonIniciarReserva.setOnClickListener {
             val iniciarReservaPage = HomeClienteFragmentDirections.actionHomeClienteFragmentToFormularioReservaFragment()
