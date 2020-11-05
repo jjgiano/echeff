@@ -36,6 +36,7 @@ class HomeClienteFragment : Fragment() {
 
     lateinit var buttonIniciarReserva: Button
     lateinit var buttonVerMisReservas: Button
+    lateinit var buttonConfiguracionPerfilCliente: Button
 
     lateinit var rvProximaReserva: RecyclerView
     lateinit var rvReservasAConfirmar: RecyclerView
@@ -111,6 +112,7 @@ class HomeClienteFragment : Fragment() {
 
         buttonIniciarReserva = v.findViewById(R.id.buttonIniciarReserva)
         buttonVerMisReservas = v.findViewById(R.id.buttonVerMisReservas)
+        buttonConfiguracionPerfilCliente = v.findViewById(R.id.buttonConfiguracionPerfilCliente)
 
         rvProximaReserva = v.findViewById(R.id.rvProximaReserva)
         rvReservasAConfirmar = v.findViewById(R.id.rvReservasAConfirmar)
@@ -135,6 +137,11 @@ class HomeClienteFragment : Fragment() {
         buttonVerMisReservas.setOnClickListener {
             val verMisReservasPage = HomeClienteFragmentDirections.actionHomeClienteFragmentToVistaReservasFragment()
             v.findNavController().navigate(verMisReservasPage)
+        }
+
+        buttonConfiguracionPerfilCliente.setOnClickListener {
+            val misConfiguraciones = HomeClienteFragmentDirections.actionHomeClienteFragmentToConfiguracionUsuarioFragment2()
+            v.findNavController().navigate(misConfiguraciones)
         }
 
     }

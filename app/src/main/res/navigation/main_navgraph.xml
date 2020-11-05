@@ -154,14 +154,7 @@
         android:id="@+id/configuracionUsuarioFragment2"
         android:name="ar.edu.ort.instituto.echeff.fragments.ConfiguracionUsuarioFragment"
         android:label="fragment_configuracion_usuario"
-        tools:layout="@layout/fragment_configuracion_usuario" >
-        <action
-            android:id="@+id/action_configuracionUsuarioFragment2_to_homeClienteFragment"
-            app:destination="@id/homeClienteFragment" />
-        <action
-            android:id="@+id/action_configuracionUsuarioFragment2_to_homeChefFragment"
-            app:destination="@id/homeChefFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_configuracion_usuario" />
     <fragment
         android:id="@+id/vistaPropuestasFragment"
         android:name="ar.edu.ort.instituto.echeff.fragments.chef.home.VistaServiciosFragment"
