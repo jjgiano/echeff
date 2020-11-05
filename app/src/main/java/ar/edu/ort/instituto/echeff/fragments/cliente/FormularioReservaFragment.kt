@@ -15,6 +15,7 @@ import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.validator.Validator
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
 import java.util.*
 
 class FormularioReservaFragment : Fragment(), Validator {
@@ -58,10 +59,7 @@ class FormularioReservaFragment : Fragment(), Validator {
 
     override fun onStart() {
         super.onStart()
-        val cal = Calendar.getInstance()
-        val mDate = Calendar.DATE
-        val mMonth = Calendar.MONTH
-        val mYear: Int = Calendar.YEAR
+
         
         btnContinuar.setOnClickListener {
 
@@ -81,24 +79,33 @@ class FormularioReservaFragment : Fragment(), Validator {
             }
         }
 
+        val cal = Calendar.getInstance()
+
         imgBtnCalendar.setOnClickListener() {
             etFecha.error = null
+
+            val mDate = Calendar.DATE
+            val mMonth = Calendar.MONTH
+            val mYear: Int = Calendar.YEAR
+
             var datePicker = DatePickerDialog(
                 v.context,
                 android.R.style.Theme_DeviceDefault_Dialog,
                 DatePickerDialog.OnDateSetListener() { datePicker, year, month, date ->
+
                     lateinit var strDate: String
                     lateinit var strMonth: String
-//                    var realMonth = month + 1
+                    var realMonth = month + 1
                     if (date < 10) {
                         strDate = "0${date}"
                     } else {
                         strDate = date.toString()
                     }
-                    if (month < 10) {
-                        strMonth = "0${mMonth}"
+
+                    if (realMonth < 10) {
+                        strMonth = "0${realMonth}"
                     } else {
-                        strMonth = mMonth.toString()
+                        strMonth = realMonth.toString()
                     }
                     etFecha.setText("${strDate}/${strMonth}/${year}")
                 },
