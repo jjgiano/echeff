@@ -1,23 +1,22 @@
 package ar.edu.ort.instituto.echeff.entities
 
 class Configuracion(
-    idUsuario: String,
-    notificaciones: String,
-    newsletter: String,
-    promociones: String,
-    emails: String
+    uid: String,
+    notificaciones: Boolean,
+    newsletter: Boolean,
+    promociones: Boolean,
+    emails: Boolean
 ) {
+    var uid: String
+    var notificaciones: Boolean
+    var newsletter: Boolean
+    var promociones: Boolean
+    var emails: Boolean
 
-    var idUsuario: String
-    var notificaciones: String
-    var newsletter: String
-    var promociones: String
-    var emails: String
-
-    constructor() : this("", "", "", "", "")
+    constructor() : this("", false, false, false, false)
 
     init {
-        this.idUsuario = idUsuario
+        this.uid = uid
         this.notificaciones = notificaciones
         this.newsletter = newsletter
         this.promociones = promociones

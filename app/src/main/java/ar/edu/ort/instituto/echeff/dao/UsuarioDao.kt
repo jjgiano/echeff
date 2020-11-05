@@ -11,12 +11,12 @@ import kotlinx.coroutines.tasks.await
 
 interface UsuarioDao {
 
-    suspend fun getClienteById(id : String) : Cliente {
+    suspend fun getClienteById(id: String): Cliente {
 
         var cliente: Cliente = Cliente()
 
         val questionRef = Firebase.firestore.collection("clientes")
-        val query = questionRef.whereEqualTo("id",id)
+        val query = questionRef.whereEqualTo("id", id)
 
         try {
             val data = query
@@ -33,7 +33,7 @@ interface UsuarioDao {
         return cliente
     }
 
-    suspend fun getClienteByUserId(userId : String) : Cliente {
+    suspend fun getClienteByUserId(userId: String): Cliente {
 
         var cliente: Cliente = Cliente()
 
@@ -55,12 +55,12 @@ interface UsuarioDao {
         return cliente
     }
 
-    suspend fun getChefById(id : String) : Chef {
+    suspend fun getChefById(id: String): Chef {
 
         var chef: Chef = Chef()
 
         val questionRef = Firebase.firestore.collection("chefs")
-        val query = questionRef.whereEqualTo("id",id)
+        val query = questionRef.whereEqualTo("id", id)
 
         try {
             val data = query
@@ -77,7 +77,7 @@ interface UsuarioDao {
         return chef
     }
 
-    suspend fun getChefByUserId(userId : String) : Chef {
+    suspend fun getChefByUserId(userId: String): Chef {
 
         var chef: Chef = Chef()
 
@@ -98,7 +98,6 @@ interface UsuarioDao {
         }
         return chef
     }
-
 
 
     suspend fun addChef(chef: Chef): Chef {
@@ -138,28 +137,27 @@ interface UsuarioDao {
             throw e
         }
     }
-    
-    public suspend fun addConfiguracion(config: Configuracion): Configuracion {
-        val questionRef = Firebase.firestore.collection("configuraciones")
 
+    suspend fun createConfiguracion(uid: String): Configuracion {
+        var config = Configuracion()
+        config.uid = uid
+        val questionRef = Firebase.firestore.collection("configuraciones")
+        val query = questionRef
         try {
-            questionRef
-                .document(config.idUsuario)
+            query
+                .document(config.uid)
                 .set(config)
                 .await()
         } catch (e: Exception) {
-            Log.d("Error", e.toString())
+            throw e
         }
         return config
     }
 
-    suspend fun getConfiguracionById(idUsuario : String) : Configuracion {
-
-        var config: Configuracion = Configuracion()
-
+    suspend fun getConfiguracionByUID(uid: String): Configuracion {
+        var config = Configuracion()
         val questionRef = Firebase.firestore.collection("configuraciones")
-        val query = questionRef.whereEqualTo("idUsuario",idUsuario)
-
+        val query = questionRef.whereEqualTo("uid", uid)
         try {
             val data = query
                 .get()
@@ -170,11 +168,6 @@ interface UsuarioDao {
         } catch (e: Exception) {
             Log.d("Error", e.toString())
         }
-
-        if (config.idUsuario.isEmpty()){
-            
-        }
-
         return config
     }
 
@@ -182,7 +175,7 @@ interface UsuarioDao {
         val questionRef = Firebase.firestore.collection("configuraciones")
         val query = questionRef
         try {
-            query.document(config.idUsuario).set(config)
+            query.document(config.uid).set(config)
         } catch (e: Exception) {
             Log.d("Error", e.toString())
         }

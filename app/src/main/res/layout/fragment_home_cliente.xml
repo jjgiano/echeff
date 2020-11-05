@@ -35,8 +35,17 @@
             android:text="Iniciar Reserva"
             android:textColor="@color/gray10"
             android:textSize="20sp"
-            app:layout_constraintEnd_toStartOf="@+id/guidelineDerecha"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
+            app:layout_constraintTop_toBottomOf="@+id/textViewSaludoCliente" />
+
+        <Button
+            android:id="@+id/buttonConfiguracionPerfilCliente"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_gear"
+            app:layout_constraintBottom_toBottomOf="@+id/buttonIniciarReserva"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineDerecha"
+            app:layout_constraintStart_toEndOf="@+id/buttonIniciarReserva"
             app:layout_constraintTop_toBottomOf="@+id/textViewSaludoCliente" />
 
         <TextView

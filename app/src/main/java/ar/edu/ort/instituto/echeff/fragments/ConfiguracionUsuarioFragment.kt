@@ -5,13 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.entities.Configuracion
+import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelHomeClienteFragment
 import ar.edu.ort.instituto.echeff.fragments.viewmodel.ViewModelConfiguracionUsuarioFragment
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import com.bumptech.glide.Glide
@@ -34,6 +38,7 @@ class ConfiguracionUsuarioFragment : Fragment() {
     lateinit var buttonModificarCBU: Button
     lateinit var buttonCerrarSesion: Button
     lateinit var buttonBorrarCuenta: Button
+    lateinit var config: Configuracion
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +74,16 @@ class ConfiguracionUsuarioFragment : Fragment() {
         super.onStart()
         this.setSharedPreferences()
         var userId = this.sharedPreferences.getString("userId","0")!!
+        viewModel = ViewModelProvider(super.requireActivity()).get(ViewModelConfiguracionUsuarioFragment::class.java)
+        viewModel.getConfiguracion(userId)
+        viewModel.liveDataConfig.observe(viewLifecycleOwner, Observer { cnf ->
+            this.config = cnf
+            switchNotificaciones.isChecked = cnf.notificaciones
+            switchNewsletter.isChecked = cnf.newsletter
+            switchPromociones.isChecked = cnf.promociones
+            switchEmail.isChecked = cnf.emails
+        })
+
         var nombre : String = sharedPreferences.getString("userDisplayName","Nombre No encontrado")!!
         textViewNombreUsuario.text = nombre
 
@@ -80,26 +95,31 @@ class ConfiguracionUsuarioFragment : Fragment() {
             .into(imageViewUsuario)
 
         switchNotificaciones.setOnClickListener {
-            //switchNotificaciones.showText = !switchNotificaciones.showText
-            Snackbar.make(it, "Valor Notificaciones: " + switchNotificaciones.getTextOn(), Snackbar.LENGTH_LONG).show()
+            this.config.notificaciones = !this.config.notificaciones
+            viewModel.changeConfiguracion(this.config)
+            Snackbar.make(it, "Valor Notificaciones: " + this.config.notificaciones, Snackbar.LENGTH_LONG).show()
         }
 
         switchNewsletter.setOnClickListener {
+            this.config.newsletter = !this.config.newsletter
+            viewModel.changeConfiguracion(this.config)
             Snackbar.make(it, "switchNewsletter.setOnClickListener", Snackbar.LENGTH_LONG).show()
         }
 
         switchPromociones.setOnClickListener {
+            this.config.promociones = !this.config.promociones
+            viewModel.changeConfiguracion(this.config)
             Snackbar.make(it, "switchPromociones.setOnClickListener", Snackbar.LENGTH_LONG).show()
         }
 
         switchEmail.setOnClickListener {
+            this.config.emails = !this.config.emails
+            viewModel.changeConfiguracion(this.config)
             Snackbar.make(it, "switchEmail.setOnClickListener", Snackbar.LENGTH_LONG).show()
         }
 
         buttonModificarContrasenia.setOnClickListener {
-            //Snackbar.make(it, switchNotificaciones.text, Snackbar.LENGTH_LONG).show()
-            Snackbar.make(it, switchNotificaciones.stateDescription.toString(), Snackbar.LENGTH_LONG).show()
-            //Snackbar.make(it, switchNotificaciones.splitTrack.toString(), Snackbar.LENGTH_LONG).show()
+            Snackbar.make(it, "buttonModificarContrasenia.setOnClickListener", Snackbar.LENGTH_LONG).show()
         }
 
         buttonModificarCBU.setOnClickListener {
@@ -117,10 +137,6 @@ class ConfiguracionUsuarioFragment : Fragment() {
 
     private fun setSharedPreferences() {
         this.sharedPreferences = this.activity!!.getSharedPreferences(EcheffUtilities.PREF_NAME.valor, AppCompatActivity.MODE_PRIVATE)
-    }
-
-    private fun actializarPreferencias(config: Configuracion){
-        //viewModel.addConfiguracion(config)
     }
 
 }

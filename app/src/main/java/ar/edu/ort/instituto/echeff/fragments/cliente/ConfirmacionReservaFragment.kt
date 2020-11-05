@@ -24,7 +24,6 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class ConfirmacionReservaFragment : Fragment() {
-    val db = Firebase.firestore
     lateinit var v: View
     lateinit var viewModel: ViewModelConfirmacionReservaFragment
     lateinit var sharedPreferences: SharedPreferences
@@ -67,8 +66,6 @@ class ConfirmacionReservaFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
-
         // TODO: levantar la foto del chef del firebase
         Glide
             .with(super.requireContext())
@@ -119,9 +116,7 @@ class ConfirmacionReservaFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         this.setSharedPreferences()
         viewModel = ViewModelProvider(requireActivity()).get(ViewModelConfirmacionReservaFragment::class.java)
-
         var idPropuesta = this.sharedPreferences.getString("idPropuesta","0")!!
-
         viewModel.loadPropuesta(idPropuesta)
 
     }
