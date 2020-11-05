@@ -33,9 +33,6 @@ class FormularioReservaFragment : Fragment(), Validator {
     lateinit var imgBtnCalendar : ImageButton
     lateinit var imgBtnHour : ImageButton
 
-    val cal : Calendar = Calendar.getInstance()
-
-
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -61,7 +58,11 @@ class FormularioReservaFragment : Fragment(), Validator {
 
     override fun onStart() {
         super.onStart()
-
+        val cal = Calendar.getInstance()
+        val mDate = Calendar.DATE
+        val mMonth = Calendar.MONTH
+        val mYear: Int = Calendar.YEAR
+        
         btnContinuar.setOnClickListener {
 
             if(validar()){
@@ -80,33 +81,34 @@ class FormularioReservaFragment : Fragment(), Validator {
             }
         }
 
-        imgBtnCalendar.setOnClickListener(){
+        imgBtnCalendar.setOnClickListener() {
             etFecha.error = null
-            var mDate = Calendar.DATE
-            var mMonth = Calendar.MONTH
-            var mYear: Int = Calendar.YEAR
-
-            var datePicker = DatePickerDialog(v.context,android.R.style.Theme_DeviceDefault_Dialog, DatePickerDialog.OnDateSetListener(){
-                    datePicker, year, month, date ->
-                lateinit var strDate : String
-                lateinit var strMonth : String
-                var realMonth = month+1
-                if(date<10){
-                    strDate = "0${date}"
-                }else{
-                    strDate = date.toString()
-                }
-                if(month<10){
-                    strMonth = "0${realMonth}"
-                }else{
-                    strMonth = realMonth.toString()
-                }
-                etFecha.setText("${strDate}/${strMonth}/${year}")
-                datePicker.updateDate(2020,mMonth,mDate)
-
-            },cal.get(mDate),cal.get(mMonth),cal.get(mYear))
+            var datePicker = DatePickerDialog(
+                v.context,
+                android.R.style.Theme_DeviceDefault_Dialog,
+                DatePickerDialog.OnDateSetListener() { datePicker, year, month, date ->
+                    lateinit var strDate: String
+                    lateinit var strMonth: String
+//                    var realMonth = month + 1
+                    if (date < 10) {
+                        strDate = "0${date}"
+                    } else {
+                        strDate = date.toString()
+                    }
+                    if (month < 10) {
+                        strMonth = "0${mMonth}"
+                    } else {
+                        strMonth = mMonth.toString()
+                    }
+                    etFecha.setText("${strDate}/${strMonth}/${year}")
+                },
+                cal.get(mYear),
+                cal.get(mMonth),
+                cal.get(mDate)
+            )
             datePicker.show()
         }
+
 
         imgBtnHour.setOnClickListener(){
             etHora.error = null
