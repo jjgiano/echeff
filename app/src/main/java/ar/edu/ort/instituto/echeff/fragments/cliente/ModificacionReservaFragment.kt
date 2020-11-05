@@ -13,10 +13,7 @@ import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.dao.PropuestaDao
 import ar.edu.ort.instituto.echeff.dao.ReservaDao
-import ar.edu.ort.instituto.echeff.entities.EstadoPropuesta
-import ar.edu.ort.instituto.echeff.entities.Propuesta
-import ar.edu.ort.instituto.echeff.entities.Reserva
-import ar.edu.ort.instituto.echeff.entities.TipoResultadoMensaje
+import ar.edu.ort.instituto.echeff.entities.*
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -69,7 +66,7 @@ class ModificacionReservaFragment : Fragment(), PropuestaDao, ReservaDao {
                 super<PropuestaDao>.update(propuesta)
 
                 reserva = super<ReservaDao>.getReservaById(propuesta.idReserva)
-                reserva.idEstadoReserva = EstadoPropuesta.MODIFICADO.id
+                reserva.idEstadoReserva = EstadoReserva.MODIFICADA.id
                 super<ReservaDao>.update(reserva)
 
             }

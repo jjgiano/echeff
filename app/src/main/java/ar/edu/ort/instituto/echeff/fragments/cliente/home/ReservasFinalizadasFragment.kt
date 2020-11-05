@@ -1,9 +1,11 @@
 package ar.edu.ort.instituto.echeff.fragments.cliente.home
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,10 +17,11 @@ import ar.edu.ort.instituto.echeff.adapters.VistaReservasAdapter
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelReservasFinalizadasFragment
 import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelReservasNuevasFragment
+import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import com.google.android.material.snackbar.Snackbar
 
 class ReservasFinalizadasFragment(private var reservas: MutableList<Reserva>) : Fragment() {
-
+    lateinit var sharedPreferences: SharedPreferences
     lateinit var v: View
     private lateinit var viewModel: ViewModelReservasFinalizadasFragment
     var cargado : Boolean = false
@@ -60,8 +63,9 @@ class ReservasFinalizadasFragment(private var reservas: MutableList<Reserva>) : 
 
     override fun onStart() {
         super.onStart()
-        // TODO tomar luego el id de usuario logueado, idUsuario = 1
-        viewModel.setCargar("1")
+        this.setSharedPreferences()
+        val userId = sharedPreferences.getString("userId","0")!!
+        viewModel.setCargar(userId)
         rvReserva.setHasFixedSize(true)
         linearLayoutManager = LinearLayoutManager(context)
         rvReserva.layoutManager = linearLayoutManager
@@ -78,6 +82,10 @@ class ReservasFinalizadasFragment(private var reservas: MutableList<Reserva>) : 
         )
             .show()
         //v.findNavController().navigate(VistaReservasFragmentDirections.actionVistaReservasFragmentToMesaAyudaFragment2());
+    }
+
+    private fun setSharedPreferences() {
+        this.sharedPreferences = this.activity!!.getSharedPreferences(EcheffUtilities.PREF_NAME.valor, AppCompatActivity.MODE_PRIVATE)
     }
 
 }

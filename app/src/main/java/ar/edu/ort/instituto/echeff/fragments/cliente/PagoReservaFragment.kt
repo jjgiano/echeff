@@ -4,7 +4,6 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,7 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -91,8 +90,7 @@ class PagoReservaFragment : Fragment(), PropuestaDao, ReservaDao {
 
         this.setSharedPreferences()
         var idPropuesta = this.sharedPreferences.getString("idPropuesta", "0")!!
-        //todo obtener el idi del usuario
-        var idUsuario = sharedPreferences.getString("userId", "1")!!
+        var idUsuario = sharedPreferences.getString("userId", "0")!!
         changStatebutton(buttonConfirmarPago, formTarjetaIsValid)
         viewModelPagoReserva.getTarjeta(idUsuario)
         viewModelPagoReserva.getPropuesta(idPropuesta)
@@ -170,7 +168,6 @@ class PagoReservaFragment : Fragment(), PropuestaDao, ReservaDao {
         })
 
     }
-
 
     fun changStatebutton(button: Button, enable: Boolean) {
         button.isEnabled = enable
