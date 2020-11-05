@@ -167,7 +167,7 @@
             android:background="@drawable/style_border_text"
             android:ems="10"
             android:inputType="numberDecimal"
-            android:text="0"
+            android:hint="0"
             android:textColor="@color/gray50"
             app:layout_constraintEnd_toStartOf="@+id/guideline7"
             app:layout_constraintStart_toStartOf="@+id/guideline5"

@@ -75,4 +75,10 @@ interface Validator{
         }
     }
 
+    fun valirdarNoEsNulo(s: String){
+        if(s.isNullOrEmpty()){
+            throw Error("No puede estar vacio. Ingrese entre 1 y ${CANT_MAX_COMENSALES}")
+        }
+    }
+
 }

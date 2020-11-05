@@ -63,12 +63,6 @@ class FormularioReservaFragment : Fragment(), Validator {
         super.onStart()
 
         btnContinuar.setOnClickListener {
-            var stringFecha = etFecha.text.toString()
-            var stringHora = etHora.text.toString()
-            var cantComensales = etCantComensales.text.toString().toInt()
-            var stringTipoCocina = spinnerTipoCocina.selectedItem.toString()
-            var stringDireccion = etDireccion.text.toString()
-            var boolTieneHorno = cbTengoHorno.isChecked.toString()
 
             if(validar()){
 
@@ -87,7 +81,7 @@ class FormularioReservaFragment : Fragment(), Validator {
         }
 
         imgBtnCalendar.setOnClickListener(){
-
+            etFecha.error = null
             var mDate = Calendar.DATE
             var mMonth = Calendar.MONTH
             var mYear: Int = Calendar.YEAR
@@ -115,7 +109,7 @@ class FormularioReservaFragment : Fragment(), Validator {
         }
 
         imgBtnHour.setOnClickListener(){
-
+            etHora.error = null
             var mHour = Calendar.HOUR
             var mMinute = Calendar.MINUTE
 
@@ -137,7 +131,7 @@ class FormularioReservaFragment : Fragment(), Validator {
     }
     private fun validar(): Boolean {
         var valido = true
-
+        clearErrors()
         try {
             validarFormatoFecha(etFecha.text.toString())
             validarFecha(etFecha.text.toString())
@@ -154,6 +148,7 @@ class FormularioReservaFragment : Fragment(), Validator {
         }
 
         try {
+            valirdarNoEsNulo(etCantComensales.text.toString())
             validarFormatoNumero(etCantComensales.text.toString())
             cantidadComensalesValida(etCantComensales.text.toString().toInt())
         } catch (e: Error) {
@@ -169,5 +164,12 @@ class FormularioReservaFragment : Fragment(), Validator {
         }
 
         return valido
+    }
+
+    private fun clearErrors(){
+        etFecha.error = null
+        etHora.error = null
+        etCantComensales.error = null
+        etDireccion.error = null
     }
 }
