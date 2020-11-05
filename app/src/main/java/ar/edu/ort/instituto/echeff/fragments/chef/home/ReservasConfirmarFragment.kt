@@ -18,6 +18,7 @@ import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.fragments.chef.HomeChefFragmentDirections
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelReservasConfirmarFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelReservasDisponiblesFragment
+import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 
 class ReservasConfirmarFragment() : Fragment() {
 
@@ -80,7 +81,7 @@ class ReservasConfirmarFragment() : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        val sharedPref: SharedPreferences = requireContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+        val sharedPref: SharedPreferences = requireContext().getSharedPreferences(EcheffUtilities.PREF_NAME.valor, Context.MODE_PRIVATE)
         val idUsuario : String  = sharedPref.getString("userId","Vacio")!!
 
         viewModel.setcargar(idUsuario)

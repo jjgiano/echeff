@@ -24,6 +24,7 @@ import ar.edu.ort.instituto.echeff.entities.PerfilChef
 import ar.edu.ort.instituto.echeff.fragments.chef.perfil.PerfilChefFragmentDirections
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelPerfilChefConfiguracionFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelPerfilChefFragment
+import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import com.bumptech.glide.Glide
 
 class PerfilChefFragment : Fragment() {
@@ -96,7 +97,7 @@ class PerfilChefFragment : Fragment() {
         super.onStart()
 
 
-        var sharedPref: SharedPreferences = requireContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+        var sharedPref: SharedPreferences = requireContext().getSharedPreferences(EcheffUtilities.PREF_NAME.valor, Context.MODE_PRIVATE)
         var idUsuario : String  = sharedPref.getString("userId","Vacio")!!
         var nombreUsuario : String = sharedPref.getString("userDisplayName","Nombre No encontrado")!!
 

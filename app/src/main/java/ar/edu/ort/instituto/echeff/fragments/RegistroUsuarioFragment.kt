@@ -14,12 +14,18 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.dao.UsuarioDao
 import ar.edu.ort.instituto.echeff.entities.Chef
 import ar.edu.ort.instituto.echeff.entities.Cliente
 import ar.edu.ort.instituto.echeff.entities.EstadoUsuario
+import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelReservaDosFragment
+import ar.edu.ort.instituto.echeff.fragments.viewmodel.ViewModelConfiguracionUsuarioFragment
+import ar.edu.ort.instituto.echeff.fragments.viewmodel.ViewModelRegistroUsuarioFragment
+import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -33,9 +39,9 @@ import java.util.*
 
 class RegistroUsuarioFragment : Fragment(), UsuarioDao {
 
-    val db = Firebase.firestore
     var storage = FirebaseStorage.getInstance()
 
+    lateinit var viewModel: ViewModelRegistroUsuarioFragment
 
     lateinit var v: View
     lateinit var checkBoxSoyChef: CheckBox
@@ -56,12 +62,14 @@ class RegistroUsuarioFragment : Fragment(), UsuarioDao {
 
 
     fun goToInicio() {
-        val isChef =
-            if (sharedPreferences.contains("isChef")) {
-                sharedPreferences.getBoolean("isChef", false)
-            } else {
-                true // ver si podemos implementar fallback
-            }
+//        val isChef =
+//            if (sharedPreferences.contains("isChef")) {
+//                sharedPreferences.getBoolean("isChef", false)
+//            } else {
+//                viewModel.isChef.value!!
+//            }
+
+        val isChef = sharedPreferences.getBoolean("isChef", false)
             val action = if (isChef) {
                 RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeChefFragment2()
             } else {
@@ -86,12 +94,15 @@ class RegistroUsuarioFragment : Fragment(), UsuarioDao {
         imageViewChefDiploma = v.findViewById(R.id.imageViewChefDiploma)
         textViewDiploma = v.findViewById(R.id.textViewDiploma)
 
+        buttonChefDiploma.setVisibility(View.INVISIBLE)
+        imageViewChefDiploma.setVisibility(View.INVISIBLE)
+
         return v
     }
 
     private fun setSharedPreferences() {
         this.sharedPreferences = requireActivity().getSharedPreferences(
-            "MySharedPref",
+            EcheffUtilities.PREF_NAME.valor,
             AppCompatActivity.MODE_PRIVATE
         )
         this.editor = sharedPreferences.edit()
@@ -126,8 +137,10 @@ class RegistroUsuarioFragment : Fragment(), UsuarioDao {
             editor.putBoolean("isChef", isChef)
             editor.commit()
             if(isChef) {
+
                 val diplomaPhotoRef = uploadImage(diplomaPhotoURI!!, "diplomas")
-                GlobalScope.launch { addChef(Chef(
+
+                var ch = Chef(
                     "",
                     nombre.text.toString(),
                     userEmail,
@@ -136,29 +149,12 @@ class RegistroUsuarioFragment : Fragment(), UsuarioDao {
                     EstadoUsuario.ACTIVO.id,
                     telefono.text.toString(),
                     userId
-                )).also { chef ->
-                    editor.putString("idRegistro", chef.id)
-                    editor.commit()
-                } }
-                /**db.collection("chefs").add(
-                    Chef(
-                        "",
-                        nombre.text.toString(),
-                        userEmail,
-                        profilePhotoRef,
-                        diplomaPhotoRef,
-                        EstadoUsuario.ACTIVO.id,
-                        telefono.text.toString(),
-                        userId
-                    )
-                ).addOnSuccessListener { documentReference ->
-                    registroId = documentReference.id
-                    editor.putBoolean("isChef", isChef)
-                    editor.putString("idRegistro", registroId)
-                    editor.commit()
-                }**/
+                )
+
+                viewModel.addChefLogueado(ch)
+
             } else {
-                GlobalScope.launch { addCliente(Cliente(
+                var cl = Cliente(
                     "",
                     nombre.text.toString(),
                     userEmail,
@@ -166,29 +162,9 @@ class RegistroUsuarioFragment : Fragment(), UsuarioDao {
                     EstadoUsuario.ACTIVO.id,
                     telefono.text.toString(),
                     userId
-                )).also { cliente ->
-                    editor.putString("idRegistro", cliente.id)
-                    editor.commit()
-                } }
+                )
+                viewModel.addClienteLogueado(cl)
             }
-                /**db.collection("clientes").add(
-                    Cliente(
-                        "",
-                        userDisplayName,
-                        userEmail,
-                        profilePhotoRef,
-                        EstadoUsuario.ACTIVO.id,
-                        telefono.text.toString(),
-                        userId
-                    )
-                ).addOnSuccessListener { documentReference ->
-                    registroId = documentReference.id
-                    editor.putBoolean("isChef", isChef)
-                    editor.putString("idRegistro", registroId)
-                    editor.commit()
-                }
-            }**/
-
             goToInicio()
         }
 
@@ -263,6 +239,33 @@ class RegistroUsuarioFragment : Fragment(), UsuarioDao {
         val imageRef = storageRef.child(referenceName)
         imageRef.putFile(uri)
         return referenceName
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        setSharedPreferences()
+        viewModel = ViewModelProvider(requireActivity()).get(ViewModelRegistroUsuarioFragment::class.java)
+
+        val userId = sharedPreferences.getString("userId", null).orEmpty()
+
+        viewModel.getUsuarioLogueado(userId)
+
+        viewModel.isChef.observe(viewLifecycleOwner, Observer { res ->
+            editor.putBoolean("isChef", res)
+            editor.apply()
+        })
+
+        viewModel.chefa.observe(viewLifecycleOwner, Observer { res ->
+            editor.putString("idRegistro", res.id)
+            editor.apply()
+        })
+
+        viewModel.cliente.observe(viewLifecycleOwner, Observer { res ->
+            editor.putString("idRegistro", res.id)
+            editor.apply()
+        })
+
+
     }
 
 

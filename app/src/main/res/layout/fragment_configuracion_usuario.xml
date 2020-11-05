@@ -27,11 +27,9 @@
         android:layout_height="wrap_content"
         android:clickable="false"
         android:contextClickable="false"
-        android:cursorVisible="false"
         android:ems="10"
         android:focusable="auto"
         android:foregroundTint="#FFFFFF"
-        android:inputType="number"
         android:text="0"
         android:textAlignment="textStart"
         android:textColor="#D97014"
@@ -235,6 +233,5 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toBottomOf="@+id/buttonBorrarCuenta" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

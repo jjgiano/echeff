@@ -170,6 +170,11 @@ interface UsuarioDao {
         } catch (e: Exception) {
             Log.d("Error", e.toString())
         }
+
+        if (config.idUsuario.isEmpty()){
+            
+        }
+
         return config
     }
 
@@ -183,5 +188,6 @@ interface UsuarioDao {
         }
         return config
     }
+
 
 }

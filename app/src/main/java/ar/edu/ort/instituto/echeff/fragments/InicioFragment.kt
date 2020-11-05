@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import ar.edu.ort.instituto.echeff.R
+import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 
@@ -42,7 +43,7 @@ class InicioFragment : Fragment() {
 
     private fun onBoardingFinished(): Boolean {
         val sharedPref = requireActivity().getSharedPreferences(
-            "MySharedPref",
+            EcheffUtilities.PREF_NAME.valor,
             AppCompatActivity.MODE_PRIVATE
         )
         return sharedPref.getBoolean("onBoardingFinished", false)

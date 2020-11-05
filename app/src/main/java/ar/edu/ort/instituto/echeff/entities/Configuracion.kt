@@ -14,7 +14,6 @@ class Configuracion(
     var promociones: String
     var emails: String
 
-
     constructor() : this("", "", "", "", "")
 
     init {
