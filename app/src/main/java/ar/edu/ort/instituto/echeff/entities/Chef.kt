@@ -1,22 +1,15 @@
 package ar.edu.ort.instituto.echeff.entities
 
 class Chef(
-    id: String,
-    nombre: String,
-    email: String,
-    urlFoto: String,
-    urlDiploma: String,
-    estado: Int,
-    telefono: String,
-    idUsuario: String
-) : Usuario(
-    id,
-    nombre,
-    email,
-    urlFoto,
-    estado,
-    telefono,
-    idUsuario
-) {
+    var id: String,
+    var nombre: String,
+    var email: String,
+    var urlFoto: String,
+    var urlDiploma: String,
+    var estado: Int,
+    var telefono: String,
+    var idUsuario: String
+) : Usuario()
+{
     constructor() : this("", "", "", "", "", -1, "", "")
 }
