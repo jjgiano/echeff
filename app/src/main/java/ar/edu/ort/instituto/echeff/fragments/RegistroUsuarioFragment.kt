@@ -22,15 +22,9 @@ import ar.edu.ort.instituto.echeff.dao.UsuarioDao
 import ar.edu.ort.instituto.echeff.entities.Chef
 import ar.edu.ort.instituto.echeff.entities.Cliente
 import ar.edu.ort.instituto.echeff.entities.EstadoUsuario
-import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelReservaDosFragment
-import ar.edu.ort.instituto.echeff.fragments.viewmodel.ViewModelConfiguracionUsuarioFragment
 import ar.edu.ort.instituto.echeff.fragments.viewmodel.ViewModelRegistroUsuarioFragment
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.coroutines.*
-import kotlinx.coroutines.android.awaitFrame
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -238,7 +232,7 @@ class RegistroUsuarioFragment : Fragment(), UsuarioDao {
         val referenceName = "$folder/$timeStamp.jpg"
         val imageRef = storageRef.child(referenceName)
         imageRef.putFile(uri)
-        return referenceName
+        return imageRef.path
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
