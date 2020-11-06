@@ -104,13 +104,13 @@ class PerfilChefConfiguracionFragment : Fragment() {
 
         btn_EditarPerfil.setOnClickListener(){
             //HBAILITO LOS BOTONES Y CUADROS DE TEXTO
-            txaBiografia.setFocusable(true)
-            txaBiografia.setEnabled(true)
-            btnGuardarBiografia.setVisibility(View.VISIBLE);
-            txaAgregarComentarioHistoria.setFocusable(true)
-            txaAgregarComentarioHistoria.setEnabled(true)
-            btnAgregarFotoHistoria.setVisibility(View.VISIBLE)
-            btnAgregarHistoria.setVisibility(View.VISIBLE)
+            txaBiografia.isFocusable = true
+            txaBiografia.isEnabled = true
+            btnGuardarBiografia.visibility = View.VISIBLE;
+            txaAgregarComentarioHistoria.isFocusable = true
+            txaAgregarComentarioHistoria.isEnabled = true
+            btnAgregarFotoHistoria.visibility = View.VISIBLE
+            btnAgregarHistoria.visibility = View.VISIBLE
 
         }
 
@@ -131,9 +131,9 @@ class PerfilChefConfiguracionFragment : Fragment() {
             } else {
                 viewModel.actualizarPerfil(perfil)
             }
-            btnGuardarBiografia.setVisibility(View.INVISIBLE)
-            txaBiografia.setFocusable(false)
-            txaBiografia.setEnabled(false)
+            btnGuardarBiografia.visibility = View.INVISIBLE
+            txaBiografia.isFocusable = false
+            txaBiografia.isEnabled = false
 
         }
 
@@ -141,10 +141,10 @@ class PerfilChefConfiguracionFragment : Fragment() {
             armarHistoria(idUsuario)
              viewModel.agregarHistoria(historia)
 
-            txaAgregarComentarioHistoria.setFocusable(false)
-            txaAgregarComentarioHistoria.setEnabled(false)
-            btnAgregarFotoHistoria.setVisibility(View.INVISIBLE)
-            btnAgregarHistoria.setVisibility(View.INVISIBLE)
+            txaAgregarComentarioHistoria.isFocusable = false
+            txaAgregarComentarioHistoria.isEnabled = false
+            btnAgregarFotoHistoria.visibility = View.INVISIBLE
+            btnAgregarHistoria.visibility = View.INVISIBLE
         }
     }
 

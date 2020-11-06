@@ -1,12 +1,14 @@
 package ar.edu.ort.instituto.echeff.fragments
 
 import android.app.Activity.RESULT_OK
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +36,7 @@ import java.util.*
 class RegistroUsuarioFragment : Fragment(), UsuarioDao {
 
     var storage = FirebaseStorage.getInstance()
+    val fb = Firebase.firestore
 
     lateinit var viewModel: ViewModelRegistroUsuarioFragment
 
@@ -53,23 +56,19 @@ class RegistroUsuarioFragment : Fragment(), UsuarioDao {
     private lateinit var profilePhotoURI: Uri
     private var diplomaPhotoURI: Uri? = null
 
+    var esChef : Boolean = false
 
 
     fun goToInicio() {
-//        val isChef =
-//            if (sharedPreferences.contains("isChef")) {
-//                sharedPreferences.getBoolean("isChef", false)
-//            } else {
-//                viewModel.isChef.value!!
-//            }
-
-        val isChef = sharedPreferences.getBoolean("isChef", false)
+        val id = sharedPreferences.getString("userId", null).orEmpty()
+     viewModel.getUsuarioLogueado(id)
+    /*    val isChef = sharedPreferences.getBoolean("isChef", false)
             val action = if (isChef) {
                 RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeChefFragment2()
             } else {
                 RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeClienteFragment()
             }
-            v.findNavController().navigate(action)
+            v.findNavController().navigate(action)*/
     }
 
 
@@ -77,19 +76,19 @@ class RegistroUsuarioFragment : Fragment(), UsuarioDao {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        v = inflater.inflate(R.layout.fragment_registro_usuario, container, false)
-        checkBoxSoyChef = v.findViewById(R.id.checkBoxRegistroClienteSoyChef)
-        nombre = v.findViewById(R.id.editTextNombreRegistroCliente)
-        buttonProfilePic = v.findViewById(R.id.buttonProfilePic)
-        imageViewProfilePic = v.findViewById(R.id.imageViewProfilePic)
-        telefono = v.findViewById(R.id.editTextTelefonoRegistroCliente)
-        buttonRegistro = v.findViewById(R.id.buttonRegistroCliente)
-        buttonChefDiploma = v.findViewById(R.id.buttonChefDiploma)
-        imageViewChefDiploma = v.findViewById(R.id.imageViewChefDiploma)
-        textViewDiploma = v.findViewById(R.id.textViewDiploma)
+            v = inflater.inflate(R.layout.fragment_registro_usuario, container, false)
+            checkBoxSoyChef = v.findViewById(R.id.checkBoxRegistroClienteSoyChef)
+            nombre = v.findViewById(R.id.editTextNombreRegistroCliente)
+            buttonProfilePic = v.findViewById(R.id.buttonProfilePic)
+            imageViewProfilePic = v.findViewById(R.id.imageViewProfilePic)
+            telefono = v.findViewById(R.id.editTextTelefonoRegistroCliente)
+            buttonRegistro = v.findViewById(R.id.buttonRegistroCliente)
+            buttonChefDiploma = v.findViewById(R.id.buttonChefDiploma)
+            imageViewChefDiploma = v.findViewById(R.id.imageViewChefDiploma)
+            textViewDiploma = v.findViewById(R.id.textViewDiploma)
 
-        buttonChefDiploma.setVisibility(View.INVISIBLE)
-        imageViewChefDiploma.setVisibility(View.INVISIBLE)
+            buttonChefDiploma.visibility = View.INVISIBLE
+            imageViewChefDiploma.visibility = View.INVISIBLE
 
         return v
     }
@@ -104,8 +103,18 @@ class RegistroUsuarioFragment : Fragment(), UsuarioDao {
 
     override fun onStart() {
         super.onStart()
-        setSharedPreferences()
-        if (!sharedPreferences.getBoolean("isNew", true)) goToInicio()
+
+        val id = sharedPreferences.getString("userId", null).orEmpty()
+        var esNuevo =sharedPreferences.getBoolean("isNew", true)
+        if (!esNuevo) {
+            goToInicio()
+        }else {
+            registroUsuario()
+        }
+
+    }
+
+    fun registroUsuario(){
         val userId = sharedPreferences.getString("userId", null).orEmpty()
         val userDisplayName = sharedPreferences.getString("userDisplayName", null).orEmpty()
         val userEmail  = sharedPreferences.getString("userEmail", null).orEmpty()
@@ -240,13 +249,20 @@ class RegistroUsuarioFragment : Fragment(), UsuarioDao {
         setSharedPreferences()
         viewModel = ViewModelProvider(requireActivity()).get(ViewModelRegistroUsuarioFragment::class.java)
 
-        val userId = sharedPreferences.getString("userId", null).orEmpty()
 
-        viewModel.getUsuarioLogueado(userId)
 
         viewModel.isChef.observe(viewLifecycleOwner, Observer { res ->
             editor.putBoolean("isChef", res)
             editor.apply()
+
+            val isChef = sharedPreferences.getBoolean("isChef", false)
+            val action = if (isChef) {
+                RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeChefFragment2()
+            } else {
+                RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeClienteFragment()
+            }
+            v.findNavController().navigate(action)
+
         })
 
         viewModel.chefa.observe(viewLifecycleOwner, Observer { res ->
@@ -258,7 +274,6 @@ class RegistroUsuarioFragment : Fragment(), UsuarioDao {
             editor.putString("idRegistro", res.id)
             editor.apply()
         })
-
 
     }
 

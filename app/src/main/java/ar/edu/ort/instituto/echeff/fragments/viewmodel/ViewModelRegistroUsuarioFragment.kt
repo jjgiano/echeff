@@ -20,26 +20,21 @@ class ViewModelRegistroUsuarioFragment : ViewModel(), UsuarioDao {
     fun getUsuarioLogueado(userId: String) {
         viewModelScope.launch {
             var chef = super.getChefByUserId(userId)
-            if (chef.id.isNotEmpty()) {
-                isChef.postValue(true)
-            } else {
-                var cliente = super.getClienteByUserId(userId)
-                if (cliente.id.isNotEmpty()) {
-                    isChef.postValue(false)
-                }
-            }
+            isChef.value = chef.id.isNotEmpty()
         }
     }
 
     fun addChefLogueado(chef: Chef){
         viewModelScope.launch{
             chefa.postValue(super.addChef(chef))
+            isChef.value = true
         }
     }
 
     fun addClienteLogueado(cli: Cliente){
         viewModelScope.launch{
             cliente.postValue(super.addCliente(cli))
+            isChef.value=false
         }
     }
 }

@@ -48,9 +48,6 @@
             android:id="@+id/action_homeChefFragment_to_perfilChefFragment"
             app:destination="@id/perfilChefFragment" />
         <action
-            android:id="@+id/action_homeChefFragment_to_configuracionUsuarioFragment2"
-            app:destination="@id/configuracionUsuarioFragment2" />
-        <action
             android:id="@+id/action_homeChefFragment_to_vistaPropuestasFragment"
             app:destination="@id/vistaPropuestasFragment" />
         <action
@@ -149,6 +146,9 @@
         <action
             android:id="@+id/action_perfilChefFragment_to_perfilChefConfiguracionFragment"
             app:destination="@id/perfilChefConfiguracionFragment" />
+        <action
+            android:id="@+id/action_perfilChefFragment_to_configuracionUsuarioFragment2"
+            app:destination="@id/configuracionUsuarioFragment2" />
     </fragment>
     <fragment
         android:id="@+id/configuracionUsuarioFragment2"
