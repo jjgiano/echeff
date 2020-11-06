@@ -1,11 +1,11 @@
 package ar.edu.ort.instituto.echeff.fragments
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -13,12 +13,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import ar.edu.ort.instituto.echeff.InicioActivity
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.entities.Configuracion
-import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelHomeClienteFragment
 import ar.edu.ort.instituto.echeff.fragments.viewmodel.ViewModelConfiguracionUsuarioFragment
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import com.bumptech.glide.Glide
+import com.firebase.ui.auth.AuthUI
 import com.google.android.material.snackbar.Snackbar
 
 class ConfiguracionUsuarioFragment : Fragment() {
@@ -36,9 +37,11 @@ class ConfiguracionUsuarioFragment : Fragment() {
     lateinit var switchEmail: androidx.appcompat.widget.SwitchCompat
     lateinit var buttonModificarContrasenia: Button
     lateinit var buttonModificarCBU: Button
+    lateinit var buttonGuardarCBU: Button
     lateinit var buttonCerrarSesion: Button
     lateinit var buttonBorrarCuenta: Button
     lateinit var config: Configuracion
+    lateinit var textViewCBU : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +57,7 @@ class ConfiguracionUsuarioFragment : Fragment() {
         textViewConfiguracion = v.findViewById(R.id.textViewConfiguracion)
         textViewNombreUsuario = v.findViewById(R.id.textViewNombreUsuario)
         textViewNumberLikes = v.findViewById(R.id.textViewNumberLikes)
+        textViewCBU = v.findViewById(R.id.tv_CBU)
         imageViewUsuario = v.findViewById(R.id.imageViewUsuario)
         imageViewLikes = v.findViewById(R.id.imageViewLikes)
 
@@ -64,28 +68,45 @@ class ConfiguracionUsuarioFragment : Fragment() {
 
         buttonModificarContrasenia = v.findViewById(R.id.buttonModificarContrasenia)
         buttonModificarCBU = v.findViewById(R.id.buttonModificarCBU)
+        buttonGuardarCBU = v.findViewById(R.id.buttonGuardarCBU)
         buttonCerrarSesion = v.findViewById(R.id.buttonCerrarSesion)
         buttonBorrarCuenta = v.findViewById(R.id.buttonBorrarCuenta)
+
+        buttonModificarCBU.visibility = View.INVISIBLE
+        textViewCBU.visibility = View.INVISIBLE
+        buttonGuardarCBU.visibility = View.INVISIBLE
 
         return v
     }
 
-    override fun onStart() {
-        super.onStart()
-        this.setSharedPreferences()
-        var userId = this.sharedPreferences.getString("userId","0")!!
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(super.requireActivity()).get(ViewModelConfiguracionUsuarioFragment::class.java)
-        viewModel.getConfiguracion(userId)
+
         viewModel.liveDataConfig.observe(viewLifecycleOwner, Observer { cnf ->
             this.config = cnf
             switchNotificaciones.isChecked = cnf.notificaciones
             switchNewsletter.isChecked = cnf.newsletter
             switchPromociones.isChecked = cnf.promociones
             switchEmail.isChecked = cnf.emails
+            textViewCBU.text = cnf.CBU
         })
+    }
+    override fun onStart() {
+        super.onStart()
+        this.setSharedPreferences()
+        var userId = this.sharedPreferences.getString("userId","0")!!
 
+        val ischef = sharedPreferences.getBoolean("isChef", false )
         var nombre : String = sharedPreferences.getString("userDisplayName","Nombre No encontrado")!!
         textViewNombreUsuario.text = nombre
+
+        viewModel.getConfiguracion(userId)
+
+        if (ischef) {
+            buttonModificarCBU.visibility = View.VISIBLE
+            textViewCBU.visibility = View.VISIBLE
+        }
 
         // TODO: levantar la foto del chef del firebase
         Glide
@@ -123,17 +144,41 @@ class ConfiguracionUsuarioFragment : Fragment() {
         }
 
         buttonModificarCBU.setOnClickListener {
-            Snackbar.make(it, "buttonModificarCBU.setOnClickListener", Snackbar.LENGTH_LONG).show()
+            textViewCBU.isFocusable = true
+            textViewCBU.isEnabled = true
+            textViewCBU.isClickable = true
+            buttonModificarCBU.visibility = View.INVISIBLE
+            buttonGuardarCBU.visibility = View.VISIBLE
+        }
+
+        buttonGuardarCBU.setOnClickListener {
+            config.CBU = textViewCBU.text.toString()
+            viewModel.changeConfiguracion(config)
+            buttonModificarCBU.visibility = View.VISIBLE
+            buttonGuardarCBU.visibility = View.INVISIBLE
         }
 
         buttonCerrarSesion.setOnClickListener {
-            Snackbar.make(it, "buttonCerrarSesion.setOnClickListener", Snackbar.LENGTH_LONG).show()
+
+            AuthUI.getInstance()
+                .signOut(context!!)
+                .addOnCompleteListener {
+                    sharedPreferences.edit().clear().commit();
+
+                    val intent = Intent(context, InicioActivity::class.java)
+                    startActivity(intent)
+
+                }
+
         }
 
         buttonBorrarCuenta.setOnClickListener {
             Snackbar.make(it, "buttonBorrarCuenta.setOnClickListener", Snackbar.LENGTH_LONG).show()
         }
     }
+
+
+
 
     private fun setSharedPreferences() {
         this.sharedPreferences = this.activity!!.getSharedPreferences(EcheffUtilities.PREF_NAME.valor, AppCompatActivity.MODE_PRIVATE)

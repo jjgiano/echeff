@@ -5,15 +5,16 @@ class Configuracion(
     notificaciones: Boolean,
     newsletter: Boolean,
     promociones: Boolean,
-    emails: Boolean
+    emails: Boolean,
+    CBU: String
 ) {
     var uid: String
     var notificaciones: Boolean
     var newsletter: Boolean
     var promociones: Boolean
     var emails: Boolean
-
-    constructor() : this("", false, false, false, false)
+    var CBU: String
+    constructor() : this("", false, false, false, false,"")
 
     init {
         this.uid = uid
@@ -21,5 +22,6 @@ class Configuracion(
         this.newsletter = newsletter
         this.promociones = promociones
         this.emails = emails
+        this.CBU = CBU
     }
 }

@@ -26,6 +26,7 @@ import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelPerfilChefC
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelPerfilChefFragment
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import com.bumptech.glide.Glide
+import com.getbase.floatingactionbutton.FloatingActionButton
 
 class PerfilChefFragment : Fragment() {
     lateinit var v: View
@@ -39,7 +40,9 @@ class PerfilChefFragment : Fragment() {
     lateinit var revComentarioCliente: RecyclerView
     lateinit var revHistoriasChef: RecyclerView
     lateinit var btnVerMasComentarios: Button
-    lateinit var btnConfiguracionPerfilChef: Button
+    lateinit var btnHistoriasPerfilChef: FloatingActionButton
+    lateinit var btnConfiguracionPerfilChef: FloatingActionButton
+
     lateinit var btnAgregarMeGusta: Button
 
     private var comentariosFakeList: MutableList<Comentario> = ArrayList()
@@ -73,7 +76,9 @@ class PerfilChefFragment : Fragment() {
         revComentarioCliente = v.findViewById(R.id.revComentarioCliente)
         btnVerMasComentarios = v.findViewById(R.id.btnVerMasComentarios)
         revHistoriasChef = v.findViewById(R.id.revHisotriasChef)
-        btnConfiguracionPerfilChef = v.findViewById(R.id.btnConfiguracionPerfilChef)
+        btnConfiguracionPerfilChef = v.findViewById(R.id.fabConfiguracion)
+        btnHistoriasPerfilChef = v.findViewById(R.id.fabHistorias)
+
         btnAgregarMeGusta = v.findViewById(R.id.btnAgregarMeGusta)
 
         return v
@@ -140,9 +145,14 @@ class PerfilChefFragment : Fragment() {
             viewModel.actualizarPerfil(perfil)
         }
 
-        btnConfiguracionPerfilChef.setOnClickListener() {
+        btnHistoriasPerfilChef.setOnClickListener() {
             val perfilConfiguracionChef =
                 PerfilChefFragmentDirections.actionPerfilChefFragmentToPerfilChefConfiguracionFragment();
+            v.findNavController().navigate(perfilConfiguracionChef)
+        }
+        btnConfiguracionPerfilChef.setOnClickListener() {
+            val perfilConfiguracionChef =
+                PerfilChefFragmentDirections.actionPerfilChefFragmentToConfiguracionUsuarioFragment2();
             v.findNavController().navigate(perfilConfiguracionChef)
         }
     }

@@ -14,6 +14,48 @@
         tools:context=".fragments.chef.perfil.PerfilChefFragment"
         android:paddingBottom="80dp">
 
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/floatmenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|left"
+            android:layout_margin="6dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:scrollbarAlwaysDrawHorizontalTrack="true"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:verticalScrollbarPosition="right"
+            app:fab_addButtonColorNormal="@color/orange70"
+            app:fab_addButtonColorPressed="@color/orange95"
+            app:fab_addButtonPlusIconColor="@color/black"
+            app:fab_addButtonSize="normal"
+            app:fab_expandDirection="down"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabHistorias"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_menu_gallery"
+                app:fabSize="mini"
+                app:fab_colorNormal="@color/orange80"
+                app:fab_colorPressed="@android:color/holo_blue_bright"
+                app:fab_size="mini" />
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabConfiguracion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:padding="15dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_gear"
+                app:fab_colorNormal="@color/orange80"
+                app:fab_colorPressed="@color/orange20"
+                app:fab_size="mini" />
+
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
         <TextView
             android:id="@+id/lblNombreChef"
             android:layout_width="0dp"
@@ -152,16 +194,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-        <Button
-            android:id="@+id/btnConfiguracionPerfilChef"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/ic_gear"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btnAgregarMeGusta"
