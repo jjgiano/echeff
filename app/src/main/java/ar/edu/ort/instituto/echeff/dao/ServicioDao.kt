@@ -10,7 +10,7 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
-interface ServicioDao {
+interface   ServicioDao {
 
     public suspend fun add(servicio: Servicio) {
 

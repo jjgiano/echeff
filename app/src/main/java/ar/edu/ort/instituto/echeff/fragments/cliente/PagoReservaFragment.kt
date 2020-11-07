@@ -107,6 +107,18 @@ class PagoReservaFragment : Fragment(), PropuestaDao, ReservaDao {
             viewModelPagoReserva.actualizarReserva(reserva)
 
 
+            var newServicio = Servicio(
+                "",
+                reserva.id,
+                propuesta.id,
+                EstadoServicio.ACTIVO.id,
+                propuesta.idChef,
+                reserva.idUsuario
+            )
+
+            viewModelPagoReserva.generarServicio(newServicio)
+
+
             val tarjetaParaPagar = Tarjeta(
                 idUsuario,
                 txtNombreTarjeta.text.toString(),
