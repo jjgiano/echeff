@@ -207,18 +207,18 @@ class ConfiguracionUsuarioFragment : Fragment() {
         val ischef = sharedPreferences.getBoolean("isChef", false)
         //seteo la instancia de Storage
         val storage = FirebaseStorage.getInstance()
-        var url = String()
-        var ref: StorageReference
-        if (ischef) {
-            url = chef.urlFoto
+        val url : String
+        val ref: StorageReference
+        url = if (ischef) {
+            chef.urlFoto
         } else {
-            url = cliente.urlFoto
+            cliente.urlFoto
         }
         //busco la referencia por el URL
-        if (url.startsWith("gs://", 0, true)) {
-            ref = storage.getReferenceFromUrl(url)
+        ref = if (url.startsWith("gs://", 0, true)) {
+            storage.getReferenceFromUrl(url)
         } else {
-            ref = storage.getReference(url)
+            storage.getReference(url)
         }
 
 

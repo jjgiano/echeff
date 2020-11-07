@@ -33,16 +33,16 @@ interface Validator{
 
     fun validarFecha(s : String){
 
-        var formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        var date = formatter.parse(s)
+        val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val date = formatter.parse(s) ?: Date()
 
-        var d = Calendar.getInstance()
+        val d = Calendar.getInstance()
         d.add(Calendar.DAY_OF_YEAR,DIAS_MINIMOS_PARA_SERVICIO)
 
-        var date2 = d.time
+        val date2 = d.time
 
         if (date.before(date2)){
-            throw Error("Fecha menor a ${DIAS_MINIMOS_PARA_SERVICIO} dias para servicio")
+            throw Error("Fecha menor a $DIAS_MINIMOS_PARA_SERVICIO dias para servicio")
         }
     }
 

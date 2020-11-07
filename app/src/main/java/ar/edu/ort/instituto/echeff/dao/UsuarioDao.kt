@@ -104,9 +104,9 @@ interface UsuarioDao {
         val query = questionRef
 
         try {
-            val data = query
+             query
                 .add(chef).addOnSuccessListener { result ->
-                    var id = result.id
+                    val id = result.id
                     chef.id = id
                     query.document(id).set(chef)
                 }
@@ -123,9 +123,9 @@ interface UsuarioDao {
         val query = questionRef
 
         try {
-            val data = query
+            query
                 .add(cliente).addOnSuccessListener { result ->
-                    var id = result.id
+                    val id = result.id
                     cliente.id = id
                     query.document(id).set(cliente)
                 }

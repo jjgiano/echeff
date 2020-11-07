@@ -19,9 +19,9 @@ interface PropuestaDao {
         val query = questionRef
 
         try {
-            val data = query
+            query
                 .add(propuesta).addOnSuccessListener { result ->
-                    var id = result.id
+                    val id = result.id
                     propuesta.id = id
                     query.document(id).set(propuesta)
                 }
@@ -34,7 +34,7 @@ interface PropuestaDao {
         val questionRef = Firebase.firestore.collection("propuestas")
         val query = questionRef
         try {
-            val data = query.document(propuesta.id).set(propuesta)
+            query.document(propuesta.id).set(propuesta)
         } catch (e: Exception) {
 
         }
@@ -128,7 +128,7 @@ interface PropuestaDao {
         val questionRef = Firebase.firestore.collection("propuestas")
         val query = questionRef
         try {
-            val data = query.document(propuesta.id).update("idEstadoPropuesta", estado)
+            query.document(propuesta.id).update("idEstadoPropuesta", estado)
         } catch (e: Exception) {
             Log.d("Error", e.toString())
         }

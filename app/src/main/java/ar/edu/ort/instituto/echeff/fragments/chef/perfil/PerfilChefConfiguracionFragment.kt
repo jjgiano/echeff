@@ -98,7 +98,6 @@ class PerfilChefConfiguracionFragment : Fragment() {
 
         var sharedPref: SharedPreferences = requireContext().getSharedPreferences(EcheffUtilities.PREF_NAME.valor, Context.MODE_PRIVATE)
         var idUsuario : String  = sharedPref.getString("userId","Vacio")!!
-        var nombreUsuario : String = sharedPref.getString("userDisplayName","Nombre No encontrado")!!
 
         viewModel.setBuscar(idUsuario)
 

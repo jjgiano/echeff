@@ -18,7 +18,7 @@ interface ServicioDao {
         val query = questionRef
 
         try {
-            val data = query
+            query
                 .add(servicio).addOnSuccessListener { result ->
                     var id = result.id
                     servicio.id = id
@@ -30,13 +30,13 @@ interface ServicioDao {
         }
     }
 
-    public suspend fun addProblema(problema: Problema) {
+     suspend fun addProblema(problema: Problema) {
 
         val questionRef = Firebase.firestore.collection("problemas")
         val query = questionRef
 
         try {
-            val data = query
+          query
                 .add(problema).addOnSuccessListener { result ->
                     var id = result.id
                     problema.id = id
@@ -52,7 +52,7 @@ interface ServicioDao {
         val questionRef = Firebase.firestore.collection("servicios")
         val query = questionRef
         try {
-            val data = query.document(servicio.id).set(servicio)
+           query.document(servicio.id).set(servicio)
         } catch (e: Exception) {
             Log.d("Error", e.toString())
         }
@@ -141,7 +141,7 @@ interface ServicioDao {
         val questionRef = Firebase.firestore.collection("servicios")
         val query = questionRef
         try {
-            val data = query.document(servicio.id).update("idEstadoServicio",estado)
+            query.document(servicio.id).update("idEstadoServicio",estado)
         } catch (e: Exception) {
             Log.d("Error", e.toString())
         }

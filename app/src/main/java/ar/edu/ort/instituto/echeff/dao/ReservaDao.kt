@@ -17,7 +17,7 @@ interface ReservaDao {
         val query = questionRef
 
         try {
-            val data = query
+             query
                 .add(reserva).addOnSuccessListener { result ->
                     var id = result.id
                     reserva.id = id
@@ -33,7 +33,7 @@ interface ReservaDao {
         val questionRef = Firebase.firestore.collection("reservas")
         val query = questionRef
         try {
-            val data = query.document(reserva.id).set(reserva)
+            query.document(reserva.id).set(reserva)
         } catch (e: Exception) {
             Log.d("Error", e.toString())
         }
@@ -143,7 +143,7 @@ interface ReservaDao {
         val questionRef = Firebase.firestore.collection("reservas")
         val query = questionRef
         try {
-            val data = query.document(reserva.id).update("idEstadoReserva",estado)
+            query.document(reserva.id).update("idEstadoReserva",estado)
         } catch (e: Exception) {
             Log.d("Error", e.toString())
         }

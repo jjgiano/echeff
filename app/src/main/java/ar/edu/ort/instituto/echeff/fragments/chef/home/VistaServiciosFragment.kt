@@ -130,8 +130,7 @@ class VistaServiciosFragment : Fragment(){
     }
 
     private fun onItemAConfirmarClick(position : Int){
-        var servicio = Servicio()
-        servicio=buscarServicio(listaServiciosPendientes,reservasARealizar[position].id)
+        var servicio = buscarServicio(listaServiciosPendientes,reservasARealizar[position].id)
 
         val iraservicio = VistaServiciosFragmentDirections.actionVistaPropuestasFragmentToDetalleServicioFragment(servicio)
         v.findNavController().navigate(iraservicio);
@@ -139,7 +138,7 @@ class VistaServiciosFragment : Fragment(){
     }
 
     private fun onItemFinalizadosClick(position : Int){
-        servicio=buscarServicio(listaServiciosFinalizados,reservasRealizados[position].id)
+        servicio = buscarServicio(listaServiciosFinalizados,reservasRealizados[position].id)
 
         val iraservicio = VistaServiciosFragmentDirections.actionVistaPropuestasFragmentToDetalleServicioFragment(servicio)
         v.findNavController().navigate(iraservicio);
