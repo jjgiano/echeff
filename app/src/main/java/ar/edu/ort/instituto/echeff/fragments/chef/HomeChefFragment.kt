@@ -66,13 +66,10 @@ class HomeChefFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        var sharedPref: SharedPreferences = requireContext().getSharedPreferences(EcheffUtilities.PREF_NAME.valor, Context.MODE_PRIVATE)
-        var idUsuario : String  = sharedPref.getString("userId","Vacio")!!
-        var nombreUsuario : String = sharedPref.getString("userDisplayName","Nombre No encontrado")!!
-        var chefNombre = "Hola Chef, " + nombreUsuario
+        val sharedPref: SharedPreferences = requireContext().getSharedPreferences(EcheffUtilities.PREF_NAME.valor, Context.MODE_PRIVATE)
+        val nombreUsuario : String = sharedPref.getString("userDisplayName","Nombre No encontrado")!!
 
-
-        nombreChef.text = chefNombre
+        nombreChef.text =  getString(R.string.bienvenida_chef, nombreUsuario)
 
         viewPager.setAdapter(createCardAdapter())
         // viewPager.isUserInputEnabled = false
@@ -89,7 +86,7 @@ class HomeChefFragment : Fragment() {
             }).attach()
 
         //Seteo el nombre del chef
-        nombreChef.text =  chefNombre
+        nombreChef.text =  getString(R.string.bienvenida_chef, nombreUsuario)
 
         //Boton de Navegacion
         btn_VerServicios.setOnClickListener {
