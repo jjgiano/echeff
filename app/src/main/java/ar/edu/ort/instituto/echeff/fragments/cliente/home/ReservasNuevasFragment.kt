@@ -23,7 +23,7 @@ class ReservasNuevasFragment(private var reservas: MutableList<Reserva>) : Fragm
     lateinit var sharedPreferences: SharedPreferences
     lateinit var v: View
     private lateinit var viewModel: ViewModelReservasNuevasFragment
-    var cargado : Boolean = false
+    var cargado: Boolean = false
     lateinit var rvReserva: RecyclerView
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var reservaListAdapter: ReservaListAdapter
@@ -32,10 +32,22 @@ class ReservasNuevasFragment(private var reservas: MutableList<Reserva>) : Fragm
         super.onCreate(savedInstanceState)
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        v = inflater.inflate(R.layout.fragment_reservas_nuevas, container, false)
+        rvReserva = v.findViewById(R.id.recyclerViewReservasNuevas)
+        return v
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel = ViewModelProvider(super.requireActivity()).get(ViewModelReservasNuevasFragment::class.java)
+        viewModel =
+            ViewModelProvider(super.requireActivity()).get(ViewModelReservasNuevasFragment::class.java)
         viewModel.cargar.observe(viewLifecycleOwner, Observer { flagResult ->
             cargado = flagResult
         })
@@ -44,38 +56,37 @@ class ReservasNuevasFragment(private var reservas: MutableList<Reserva>) : Fragm
             reservas = reservasResult
             rvReserva.setHasFixedSize(true)
             rvReserva.layoutManager = LinearLayoutManager(context)
-            rvReserva.adapter = VistaReservasAdapter(reservas, super.requireContext()){
-                    position -> onItemClick(position)
+            rvReserva.adapter = VistaReservasAdapter(reservas, super.requireContext()) { position ->
+                onItemClick(position)
             }
         })
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        v = inflater.inflate(R.layout.fragment_reservas_nuevas, container, false)
-        rvReserva = v.findViewById(R.id.recyclerViewReservasNuevas)
-        return v
-    }
 
     override fun onStart() {
         super.onStart()
         this.setSharedPreferences()
-        val userId = sharedPreferences.getString("userId","0")!!
+        val userId = sharedPreferences.getString("userId", "0")!!
         viewModel.setCargar(userId)
         rvReserva.setHasFixedSize(true)
         linearLayoutManager = LinearLayoutManager(context)
         rvReserva.layoutManager = linearLayoutManager
-        reservaListAdapter = ReservaListAdapter(reservas, requireContext()) { position -> onItemClick(position) }
+        reservaListAdapter =
+            ReservaListAdapter(reservas, requireContext()) { position -> onItemClick(position) }
         rvReserva.adapter = reservaListAdapter
     }
 
     private fun onItemClick(position: Int) {
-        Snackbar.make(v, "ID de la reserva nueva: " + reservas[position].id, Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(v, "ID de la reserva nueva: " + reservas[position].id, Snackbar.LENGTH_SHORT)
+            .show()
         //v.findNavController().navigate(VistaReservasFragmentDirections.actionVistaReservasFragmentToMesaAyudaFragment2());
     }
 
     private fun setSharedPreferences() {
-        this.sharedPreferences = this.activity!!.getSharedPreferences(EcheffUtilities.PREF_NAME.valor, AppCompatActivity.MODE_PRIVATE)
+        this.sharedPreferences = this.activity!!.getSharedPreferences(
+            EcheffUtilities.PREF_NAME.valor,
+            AppCompatActivity.MODE_PRIVATE
+        )
     }
 
 }

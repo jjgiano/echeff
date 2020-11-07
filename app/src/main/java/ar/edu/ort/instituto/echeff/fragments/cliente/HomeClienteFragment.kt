@@ -2,12 +2,14 @@ package ar.edu.ort.instituto.echeff.fragments.cliente
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -21,6 +23,8 @@ import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelHomeClienteFragment
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
+import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 
 class HomeClienteFragment : Fragment() {
@@ -34,14 +38,14 @@ class HomeClienteFragment : Fragment() {
     lateinit var textViewReservasPendientes: TextView
     lateinit var textViewPropuestasDestacadas: TextView
 
-    lateinit var buttonIniciarReserva: Button
     lateinit var buttonVerMisReservas: Button
-    lateinit var buttonConfiguracionPerfilCliente: Button
 
     lateinit var rvProximaReserva: RecyclerView
     lateinit var rvReservasAConfirmar: RecyclerView
     lateinit var rvReservasPendientes: RecyclerView
     lateinit var rvPropuestasDestacadas: RecyclerView
+    lateinit var topAppBar: Toolbar
+    lateinit var floatinCrearReserva: FloatingActionButton
 
     lateinit var sharedPreferences: SharedPreferences
 
@@ -110,14 +114,15 @@ class HomeClienteFragment : Fragment() {
         textViewReservasPendientes = v.findViewById(R.id.textViewReservasPendientes)
         textViewPropuestasDestacadas = v.findViewById(R.id.textViewPropuestasDestacadas)
 
-        buttonIniciarReserva = v.findViewById(R.id.buttonIniciarReserva)
+        floatinCrearReserva = v.findViewById(R.id.floatinCrearReserva)
         buttonVerMisReservas = v.findViewById(R.id.buttonVerMisReservas)
-        buttonConfiguracionPerfilCliente = v.findViewById(R.id.buttonConfiguracionPerfilCliente)
 
         rvProximaReserva = v.findViewById(R.id.rvProximaReserva)
         rvReservasAConfirmar = v.findViewById(R.id.rvReservasAConfirmar)
         rvReservasPendientes = v.findViewById(R.id.rvReservasPendientes)
         rvPropuestasDestacadas = v.findViewById(R.id.rvPropuestasDestacadas)
+
+        topAppBar = v.findViewById(R.id.topAppBar)
 
         return v
     }
@@ -125,11 +130,18 @@ class HomeClienteFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         setSharedPreferences()
+
+        topAppBar.setNavigationOnClickListener {
+            val misConfiguraciones = HomeClienteFragmentDirections.actionHomeClienteFragmentToConfiguracionUsuarioFragment2()
+            v.findNavController().navigate(misConfiguraciones)
+        }
+
+
         textViewSaludoCliente.text = "Hola, " + sharedPreferences.getString("userDisplayName", "")
         var userId = sharedPreferences.getString("userId", "0")!!
         viewModel.setCargar(userId)
 
-        buttonIniciarReserva.setOnClickListener {
+        floatinCrearReserva.setOnClickListener {
             val iniciarReservaPage = HomeClienteFragmentDirections.actionHomeClienteFragmentToFormularioReservaFragment()
             v.findNavController().navigate(iniciarReservaPage)
         }
@@ -139,10 +151,6 @@ class HomeClienteFragment : Fragment() {
             v.findNavController().navigate(verMisReservasPage)
         }
 
-        buttonConfiguracionPerfilCliente.setOnClickListener {
-            val misConfiguraciones = HomeClienteFragmentDirections.actionHomeClienteFragmentToConfiguracionUsuarioFragment2()
-            v.findNavController().navigate(misConfiguraciones)
-        }
 
     }
 

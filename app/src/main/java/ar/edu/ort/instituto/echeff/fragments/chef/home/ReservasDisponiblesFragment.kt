@@ -19,17 +19,12 @@ import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelReservasDis
 class ReservasDisponiblesFragment() : Fragment() {
 
     lateinit var v: View
-
     private lateinit var viewModel: ViewModelReservasDisponiblesFragment
     var cargado: Boolean = false
 
-    //los RecicleViews
     lateinit var rvReserva: RecyclerView
-
     private lateinit var linearLayoutManager: LinearLayoutManager
-
     private lateinit var reservaAdapterList: AdapterListReserva
-
     private var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,14 +32,13 @@ class ReservasDisponiblesFragment() : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_reservas_disponibles, container, false)
-
         rvReserva = v.findViewById(R.id.recicleView_ReservasDisponibles)
-
         return v
     }
 
@@ -56,42 +50,28 @@ class ReservasDisponiblesFragment() : Fragment() {
             ViewModelProvider(requireActivity()).get(ViewModelReservasDisponiblesFragment::class.java)
 
         viewModel.cargar.observe(viewLifecycleOwner, Observer { result ->
-
             cargado = result
-
         })
 
         viewModel.liveDataList.observe(viewLifecycleOwner, Observer { result ->
-
             reservaList = result
-
             reservaList.sortBy { it.fecha }
-
             reservaAdapterList = AdapterListReserva(
                 reservaList,
                 requireContext()
             ) { position -> onItemClick(position) }
 
             rvReserva.adapter = reservaAdapterList
-
         })
-
-
     }
 
 
     override fun onStart() {
         super.onStart()
-
         viewModel.setcargar()
-
         rvReserva.setHasFixedSize(true)
-
         linearLayoutManager = LinearLayoutManager(context)
-
         rvReserva.layoutManager = linearLayoutManager
-
-
     }
 
     private fun onItemClick(position: Int) {
