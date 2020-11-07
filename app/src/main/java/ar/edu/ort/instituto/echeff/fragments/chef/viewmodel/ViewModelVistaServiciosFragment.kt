@@ -25,10 +25,10 @@ class ViewModelVistaServiciosFragment : ViewModel(), ServicioDao, ReservaDao {
     private fun buscarDatos(idUsuario: String): Boolean {
 
         val id: String = idUsuario
-        var listaReserva: MutableList<Reserva> = ArrayList<Reserva>()
-        var listaReservaRealizados: MutableList<Reserva> = ArrayList<Reserva>()
-        var listaServiciosPendientes: MutableList<Servicio> = ArrayList<Servicio>()
-        var listaServiciosFinalizados: MutableList<Servicio> = ArrayList<Servicio>()
+        var listaReserva: MutableList<Reserva> = ArrayList()
+        var listaReservaRealizados: MutableList<Reserva> = ArrayList()
+        var listaServiciosPendientes: MutableList<Servicio>
+        var listaServiciosFinalizados: MutableList<Servicio>
 
         viewModelScope.launch {
 

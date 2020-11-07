@@ -16,9 +16,9 @@ interface PerfilChefDao {
         val query = questionRef
 
         try {
-            val data = query
+            query
                 .add(perfil).addOnSuccessListener { result ->
-                    var id = result.id
+                    val id = result.id
                     perfil.id = id
                     query.document(id).set(perfil)
                 }
@@ -31,7 +31,7 @@ interface PerfilChefDao {
         val questionRef = Firebase.firestore.collection("perfilesChef")
         val query = questionRef
         try {
-            val data = query.document(perfil.id).set(perfil)
+           query.document(perfil.id).set(perfil)
         } catch (e: Exception) {
 
         }

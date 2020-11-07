@@ -24,7 +24,7 @@ class ViewModelReportesChefFragment : ViewModel(), PropuestaDao {
     }
 
     private fun buscarPropuestas(idUsuario:String): MutableLiveData<MutableList<Propuesta>> {
-        var listaPropuestas : MutableList<Propuesta> = ArrayList<Propuesta>()
+        var listaPropuestas : MutableList<Propuesta>
         val id = idUsuario
 
 

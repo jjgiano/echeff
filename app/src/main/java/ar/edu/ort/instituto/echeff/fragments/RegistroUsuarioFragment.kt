@@ -1,16 +1,12 @@
 package ar.edu.ort.instituto.echeff.fragments
 
 import android.app.Activity.RESULT_OK
-import android.app.ProgressDialog
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.os.Process
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -101,8 +97,7 @@ class RegistroUsuarioFragment : Fragment(), UsuarioDao {
     override fun onStart() {
         super.onStart()
 
-        val id = sharedPreferences.getString("userId", null).orEmpty()
-        var esNuevo =sharedPreferences.getBoolean("isNew", true)
+        val esNuevo =sharedPreferences.getBoolean("isNew", true)
         if (!esNuevo) {
             View.INVISIBLE
             goToInicio()

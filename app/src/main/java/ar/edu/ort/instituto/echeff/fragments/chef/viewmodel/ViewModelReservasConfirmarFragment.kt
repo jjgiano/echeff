@@ -30,9 +30,9 @@ class ViewModelReservasConfirmarFragment : ViewModel(), ReservaDao, PropuestaDao
     }
 
     private fun buscarReservasAConfirmar(idUsuario:String): MutableLiveData<MutableList<Reserva>> {
-        var listaPropuestas : MutableList<Propuesta> = ArrayList<Propuesta>()
+        var listaPropuestas : MutableList<Propuesta>
         val id = idUsuario
-        var listaReserva : MutableList<Reserva> = ArrayList<Reserva>()
+        var listaReserva : MutableList<Reserva> = ArrayList()
 
         viewModelScope.launch {
             listaPropuestas = getPropuestaByChef(id)

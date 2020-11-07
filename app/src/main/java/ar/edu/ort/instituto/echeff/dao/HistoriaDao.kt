@@ -15,7 +15,7 @@ interface HistoriaDao {
         val query = questionRef
 
         try {
-            val data = query
+            query
                 .add(historia).addOnSuccessListener { result ->
                     var id = result.id
                     historia.id = id
@@ -30,7 +30,7 @@ interface HistoriaDao {
         val questionRef = Firebase.firestore.collection("historiasChef")
         val query = questionRef
         try {
-            val data = query.document(historia.id).set(historia)
+           query.document(historia.id).set(historia)
         } catch (e: Exception) {
 
         }
