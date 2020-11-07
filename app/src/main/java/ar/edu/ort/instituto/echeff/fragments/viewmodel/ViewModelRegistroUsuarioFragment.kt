@@ -7,15 +7,13 @@ import androidx.lifecycle.viewModelScope
 import ar.edu.ort.instituto.echeff.dao.UsuarioDao
 import ar.edu.ort.instituto.echeff.entities.Chef
 import ar.edu.ort.instituto.echeff.entities.Cliente
-import ar.edu.ort.instituto.echeff.entities.Configuracion
-import ar.edu.ort.instituto.echeff.entities.Usuario
 import kotlinx.coroutines.launch
 
 class ViewModelRegistroUsuarioFragment : ViewModel(), UsuarioDao {
 
     var isChef = MutableLiveData<Boolean>()
-    var chefa = MutableLiveData<Chef>()
-    var cliente = MutableLiveData<Cliente>()
+    var newChef = MutableLiveData<Chef>()
+    var newCliente = MutableLiveData<Cliente>()
 
     fun getUsuarioLogueado(userId: String) {
         viewModelScope.launch {
@@ -24,17 +22,19 @@ class ViewModelRegistroUsuarioFragment : ViewModel(), UsuarioDao {
         }
     }
 
+
     fun addChefLogueado(chef: Chef){
         viewModelScope.launch{
-            chefa.postValue(super.addChef(chef))
-            isChef.value = true
+            newChef.postValue(super.addChef(chef))
         }
     }
 
+
     fun addClienteLogueado(cli: Cliente){
         viewModelScope.launch{
-            cliente.postValue(super.addCliente(cli))
-            isChef.value=false
+            newCliente.postValue(super.addCliente(cli))
         }
     }
+
+
 }

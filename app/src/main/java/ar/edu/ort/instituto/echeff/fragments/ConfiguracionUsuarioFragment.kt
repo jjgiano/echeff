@@ -21,10 +21,10 @@ import ar.edu.ort.instituto.echeff.entities.Configuracion
 import ar.edu.ort.instituto.echeff.fragments.viewmodel.ViewModelConfiguracionUsuarioFragment
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import ar.edu.ort.instituto.echeff.utils.GlideApp
-import com.bumptech.glide.Glide
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class ConfiguracionUsuarioFragment : Fragment() {
     lateinit var viewModel: ViewModelConfiguracionUsuarioFragment
@@ -45,9 +45,9 @@ class ConfiguracionUsuarioFragment : Fragment() {
     lateinit var buttonCerrarSesion: Button
     lateinit var buttonBorrarCuenta: Button
     lateinit var config: Configuracion
-    lateinit var textViewCBU : TextView
-    var chef : Chef = Chef()
-    var cliente : Cliente = Cliente()
+    lateinit var textViewCBU: TextView
+    var chef: Chef = Chef()
+    var cliente: Cliente = Cliente()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,7 +87,8 @@ class ConfiguracionUsuarioFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(super.requireActivity()).get(ViewModelConfiguracionUsuarioFragment::class.java)
+        viewModel =
+            ViewModelProvider(super.requireActivity()).get(ViewModelConfiguracionUsuarioFragment::class.java)
 
         viewModel.liveDataConfig.observe(viewLifecycleOwner, Observer { cnf ->
             this.config = cnf
@@ -98,23 +99,25 @@ class ConfiguracionUsuarioFragment : Fragment() {
             textViewCBU.text = cnf.CBU
 
         })
-        viewModel.chef.observe(viewLifecycleOwner, Observer {result ->
+        viewModel.chef.observe(viewLifecycleOwner, Observer { result ->
             chef = result
             if (chef.id.isNotEmpty()) llenarDatos()
         })
-        viewModel.cliente.observe(viewLifecycleOwner, Observer {result ->
+        viewModel.cliente.observe(viewLifecycleOwner, Observer { result ->
             cliente = result
             if (cliente.id.isNotEmpty()) llenarDatos()
         })
 
     }
+
     override fun onStart() {
         super.onStart()
         this.setSharedPreferences()
-        var userId = this.sharedPreferences.getString("userId","0")!!
+        var userId = this.sharedPreferences.getString("userId", "0")!!
 
-        val ischef = sharedPreferences.getBoolean("isChef", false )
-        var nombre : String = sharedPreferences.getString("userDisplayName","Nombre No encontrado")!!
+        val ischef = sharedPreferences.getBoolean("isChef", false)
+        var nombre: String =
+            sharedPreferences.getString("userDisplayName", "Nombre No encontrado")!!
         textViewNombreUsuario.text = nombre
 
         viewModel.getConfiguracion(userId)
@@ -128,7 +131,11 @@ class ConfiguracionUsuarioFragment : Fragment() {
         switchNotificaciones.setOnClickListener {
             this.config.notificaciones = !this.config.notificaciones
             viewModel.changeConfiguracion(this.config)
-            Snackbar.make(it, "Valor Notificaciones: " + this.config.notificaciones, Snackbar.LENGTH_LONG).show()
+            Snackbar.make(
+                it,
+                "Valor Notificaciones: " + this.config.notificaciones,
+                Snackbar.LENGTH_LONG
+            ).show()
         }
 
         switchNewsletter.setOnClickListener {
@@ -150,7 +157,8 @@ class ConfiguracionUsuarioFragment : Fragment() {
         }
 
         buttonModificarContrasenia.setOnClickListener {
-            Snackbar.make(it, "buttonModificarContrasenia.setOnClickListener", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(it, "buttonModificarContrasenia.setOnClickListener", Snackbar.LENGTH_LONG)
+                .show()
         }
 
         buttonModificarCBU.setOnClickListener {
@@ -188,24 +196,31 @@ class ConfiguracionUsuarioFragment : Fragment() {
     }
 
 
-
-
     private fun setSharedPreferences() {
-        this.sharedPreferences = this.activity!!.getSharedPreferences(EcheffUtilities.PREF_NAME.valor, AppCompatActivity.MODE_PRIVATE)
+        this.sharedPreferences = this.activity!!.getSharedPreferences(
+            EcheffUtilities.PREF_NAME.valor,
+            AppCompatActivity.MODE_PRIVATE
+        )
     }
+
     private fun llenarDatos() {
-        val ischef = sharedPreferences.getBoolean("isChef", false )
+        val ischef = sharedPreferences.getBoolean("isChef", false)
         //seteo la instancia de Storage
         val storage = FirebaseStorage.getInstance()
         var url = String()
-
+        var ref: StorageReference
         if (ischef) {
             url = chef.urlFoto
         } else {
             url = cliente.urlFoto
         }
         //busco la referencia por el URL
-        val ref = storage.getReferenceFromUrl(url)
+        if (url.startsWith("gs://", 0, true)) {
+            ref = storage.getReferenceFromUrl(url)
+        } else {
+            ref = storage.getReference(url)
+        }
+
 
         // TODO: levantar la foto del chef del firebase
         GlideApp
