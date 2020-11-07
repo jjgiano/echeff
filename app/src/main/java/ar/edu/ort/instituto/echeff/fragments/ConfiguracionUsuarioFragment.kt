@@ -15,12 +15,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import ar.edu.ort.instituto.echeff.InicioActivity
 import ar.edu.ort.instituto.echeff.R
+import ar.edu.ort.instituto.echeff.entities.Chef
+import ar.edu.ort.instituto.echeff.entities.Cliente
 import ar.edu.ort.instituto.echeff.entities.Configuracion
 import ar.edu.ort.instituto.echeff.fragments.viewmodel.ViewModelConfiguracionUsuarioFragment
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
+import ar.edu.ort.instituto.echeff.utils.GlideApp
 import com.bumptech.glide.Glide
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.storage.FirebaseStorage
 
 class ConfiguracionUsuarioFragment : Fragment() {
     lateinit var viewModel: ViewModelConfiguracionUsuarioFragment
@@ -42,6 +46,8 @@ class ConfiguracionUsuarioFragment : Fragment() {
     lateinit var buttonBorrarCuenta: Button
     lateinit var config: Configuracion
     lateinit var textViewCBU : TextView
+    var chef : Chef = Chef()
+    var cliente : Cliente = Cliente()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,7 +96,17 @@ class ConfiguracionUsuarioFragment : Fragment() {
             switchPromociones.isChecked = cnf.promociones
             switchEmail.isChecked = cnf.emails
             textViewCBU.text = cnf.CBU
+
         })
+        viewModel.chef.observe(viewLifecycleOwner, Observer {result ->
+            chef = result
+            if (chef.id.isNotEmpty()) llenarDatos()
+        })
+        viewModel.cliente.observe(viewLifecycleOwner, Observer {result ->
+            cliente = result
+            if (cliente.id.isNotEmpty()) llenarDatos()
+        })
+
     }
     override fun onStart() {
         super.onStart()
@@ -108,12 +124,6 @@ class ConfiguracionUsuarioFragment : Fragment() {
             textViewCBU.visibility = View.VISIBLE
         }
 
-        // TODO: levantar la foto del chef del firebase
-        Glide
-            .with(super.requireContext())
-            .load("https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/2_avatar-256.png")
-            .centerInside()
-            .into(imageViewUsuario)
 
         switchNotificaciones.setOnClickListener {
             this.config.notificaciones = !this.config.notificaciones
@@ -183,6 +193,26 @@ class ConfiguracionUsuarioFragment : Fragment() {
     private fun setSharedPreferences() {
         this.sharedPreferences = this.activity!!.getSharedPreferences(EcheffUtilities.PREF_NAME.valor, AppCompatActivity.MODE_PRIVATE)
     }
+    private fun llenarDatos() {
+        val ischef = sharedPreferences.getBoolean("isChef", false )
+        //seteo la instancia de Storage
+        val storage = FirebaseStorage.getInstance()
+        var url = String()
 
+        if (ischef) {
+            url = chef.urlFoto
+        } else {
+            url = cliente.urlFoto
+        }
+        //busco la referencia por el URL
+        val ref = storage.getReferenceFromUrl(url)
+
+        // TODO: levantar la foto del chef del firebase
+        GlideApp
+            .with(this)
+            .load(ref)
+            .centerInside()
+            .into(imageViewUsuario)
+    }
 }
 

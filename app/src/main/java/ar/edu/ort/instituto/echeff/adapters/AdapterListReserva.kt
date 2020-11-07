@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import com.bumptech.glide.Glide
+import com.google.firebase.storage.FirebaseStorage
 
 
 class AdapterListReserva (private var reservaList : MutableList<Reserva>, var context: Context, val onItemClick : (Int) -> Unit) : RecyclerView.Adapter<AdapterListReserva.ReservaHolder>() {
@@ -32,6 +33,7 @@ class AdapterListReserva (private var reservaList : MutableList<Reserva>, var co
     }
 
     override fun onBindViewHolder(holder: ReservaHolder, position: Int) {
+
 
         holder.setDireccion(reservaList[position].direccion)
         holder.setComensales(reservaList[position].comensales)

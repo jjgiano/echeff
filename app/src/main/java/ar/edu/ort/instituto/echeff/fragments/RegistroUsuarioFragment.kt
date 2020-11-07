@@ -1,12 +1,14 @@
 package ar.edu.ort.instituto.echeff.fragments
 
 import android.app.Activity.RESULT_OK
+import android.app.ProgressDialog
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.os.Process
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
@@ -36,7 +38,7 @@ import java.util.*
 class RegistroUsuarioFragment : Fragment(), UsuarioDao {
 
     var storage = FirebaseStorage.getInstance()
-    val fb = Firebase.firestore
+
 
     lateinit var viewModel: ViewModelRegistroUsuarioFragment
 
@@ -56,11 +58,14 @@ class RegistroUsuarioFragment : Fragment(), UsuarioDao {
     private lateinit var profilePhotoURI: Uri
     private var diplomaPhotoURI: Uri? = null
 
+
     var esChef : Boolean = false
 
 
     fun goToInicio() {
         val id = sharedPreferences.getString("userId", null).orEmpty()
+
+
      viewModel.getUsuarioLogueado(id)
     /*    val isChef = sharedPreferences.getBoolean("isChef", false)
             val action = if (isChef) {
@@ -107,6 +112,7 @@ class RegistroUsuarioFragment : Fragment(), UsuarioDao {
         val id = sharedPreferences.getString("userId", null).orEmpty()
         var esNuevo =sharedPreferences.getBoolean("isNew", true)
         if (!esNuevo) {
+            View.INVISIBLE
             goToInicio()
         }else {
             registroUsuario()
