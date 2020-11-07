@@ -24,7 +24,7 @@ interface Validator{
     fun validarFormatoFecha(s : String){
         var formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         try {
-            var date = formatter.parse(s)
+            formatter.parse(s)
         }catch (e : ParseException){
             throw Error("Formato de fecha no valido")
         }
@@ -49,7 +49,7 @@ interface Validator{
     fun validarFormatoHora(s : String){
         var formatter = SimpleDateFormat("hh:mm", Locale.getDefault())
         try {
-            var date = formatter.parse(s)
+            formatter.parse(s)
         }catch (e : ParseException){
             throw Error("Formato de hora no valido")
         }
