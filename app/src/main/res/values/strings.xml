@@ -1,14 +1,10 @@
 <resources>
     <string name="app_name">E-CHEFF</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nombre_chef">%s</string>
-    <string name="biografia_chef">%s</string>
     <string name="cantidad_megusta_chef">%d</string>
     <string name="cantidad_comentarios_chef">%d</string>
     <string name="comentario_puntuacion_cliente">Calificacion: %d</string>
-    <string name="title_activity_login">LoginActivity</string>
-    <string name="estilo_comida_home_cliente">Estilo comida: %s</string>
     <string name="rango_precio">El valor del precio puede ser de:\n $%.2f a $%.2f</string>
     <string name="importeTotal">Importe total: $%.2f</string>
     <string name="importePorComensal">Importe por comensal: $%.2f</string>

@@ -78,8 +78,8 @@ class ReportesChefFragment : Fragment() {
             for (propuesta in propuestaList) {
                if (propuesta.idEstadoPropuesta == EstadoPropuesta.PAGADO.id) {
                    confirmadas+=1
-                   importeARecibir = importeARecibir + propuesta.importeTotal!!
-                   comensales += propuesta.importeTotal!!/propuesta.total!!
+                   importeARecibir += propuesta.importeTotal!!
+                   comensales += propuesta.importeTotal!!/ propuesta.total
 
                }
                if (propuesta.idEstadoPropuesta == EstadoPropuesta.RECHAZADO.id) {
@@ -87,8 +87,8 @@ class ReportesChefFragment : Fragment() {
                }
                if (propuesta.idEstadoPropuesta == EstadoPropuesta.FINALIZADO.id) {
                    finalizadas+=1
-                   importeObtenido = importeObtenido + propuesta.importeTotal!!
-                   comensales += propuesta.importeTotal!!/propuesta.total!!
+                   importeObtenido += propuesta.importeTotal!!
+                   comensales += propuesta.importeTotal!!/ propuesta.total
 
                }
            }

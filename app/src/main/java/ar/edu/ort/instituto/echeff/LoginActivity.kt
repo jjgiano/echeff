@@ -37,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
             if (user != null) {
                 var isNew = false
                 val metadata: FirebaseUserMetadata = user.metadata!!
-                if (metadata.creationTimestamp == metadata.lastSignInTimestamp ) {
+                if ((metadata.creationTimestamp == metadata.lastSignInTimestamp) && !sharedPreferences.contains("isNew")) {
                     isNew = true
                 }
                 editor.putString("userId", user.uid)

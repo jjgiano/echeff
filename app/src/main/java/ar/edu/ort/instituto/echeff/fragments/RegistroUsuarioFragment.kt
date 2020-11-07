@@ -65,15 +65,7 @@ class RegistroUsuarioFragment : Fragment(), UsuarioDao {
     fun goToInicio() {
         val id = sharedPreferences.getString("userId", null).orEmpty()
 
-
-     viewModel.getUsuarioLogueado(id)
-    /*    val isChef = sharedPreferences.getBoolean("isChef", false)
-            val action = if (isChef) {
-                RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeChefFragment2()
-            } else {
-                RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeClienteFragment()
-            }
-            v.findNavController().navigate(action)*/
+        viewModel.getUsuarioLogueado(id)
     }
 
 
@@ -174,7 +166,7 @@ class RegistroUsuarioFragment : Fragment(), UsuarioDao {
                 )
                 viewModel.addClienteLogueado(cl)
             }
-            goToInicio()
+
         }
 
         buttonChefDiploma.setOnClickListener {
@@ -271,14 +263,20 @@ class RegistroUsuarioFragment : Fragment(), UsuarioDao {
 
         })
 
-        viewModel.chefa.observe(viewLifecycleOwner, Observer { res ->
-            editor.putString("idRegistro", res.id)
+        viewModel.newChef.observe(viewLifecycleOwner, Observer { res ->
+            editor.putBoolean("isChef", true)
             editor.apply()
+            val action =
+                RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeChefFragment2()
+            v.findNavController().navigate(action)
         })
 
-        viewModel.cliente.observe(viewLifecycleOwner, Observer { res ->
-            editor.putString("idRegistro", res.id)
+        viewModel.newCliente.observe(viewLifecycleOwner, Observer { res ->
+            editor.putBoolean("isChef", false)
             editor.apply()
+            val action =
+                RegistroUsuarioFragmentDirections.actionRegistroUsuarioFragmentToHomeClienteFragment()
+            v.findNavController().navigate(action)
         })
 
     }
