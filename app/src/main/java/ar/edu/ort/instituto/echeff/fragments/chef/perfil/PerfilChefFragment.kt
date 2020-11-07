@@ -2,6 +2,7 @@ package ar.edu.ort.instituto.echeff.fragments.chef.perfil
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.NonNull
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -18,15 +20,18 @@ import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.adapters.ComentariosListAdapter
 import ar.edu.ort.instituto.echeff.adapters.HistoriasListAdapter
+import ar.edu.ort.instituto.echeff.entities.Chef
 import ar.edu.ort.instituto.echeff.entities.Comentario
 import ar.edu.ort.instituto.echeff.entities.Historia
 import ar.edu.ort.instituto.echeff.entities.PerfilChef
-import ar.edu.ort.instituto.echeff.fragments.chef.perfil.PerfilChefFragmentDirections
-import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelPerfilChefConfiguracionFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelPerfilChefFragment
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
+import ar.edu.ort.instituto.echeff.utils.GlideApp
 import com.bumptech.glide.Glide
+import com.bumptech.glide.module.AppGlideModule
+import ar.edu.ort.instituto.echeff.utils.MyGlideAppModule
 import com.getbase.floatingactionbutton.FloatingActionButton
+import com.google.firebase.storage.FirebaseStorage
 
 class PerfilChefFragment : Fragment() {
     lateinit var v: View
@@ -55,6 +60,7 @@ class PerfilChefFragment : Fragment() {
     private lateinit var linearLayoutManagerHistoria: LinearLayoutManager
 
     lateinit var perfil: PerfilChef
+    var chef = Chef()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,6 +100,11 @@ class PerfilChefFragment : Fragment() {
             perfil = result
 
 
+
+        })
+
+        viewModel.chef.observe(viewLifecycleOwner, Observer {result ->
+            chef = result
             llenarFichaPerfil()
         })
 
@@ -158,17 +169,23 @@ class PerfilChefFragment : Fragment() {
     }
 
     fun llenarFichaPerfil(){
+        val storage = FirebaseStorage.getInstance()
+        val ref = storage.getReferenceFromUrl(chef.urlFoto)
+
 
         txtBiografiaChef.text = perfil.bio
 
         lblCantidadComentarios.text = 5.toString()
         lblCantidadMeGusta.text = perfil.meGusta.toString()
-        Glide.with(this)
-            .load("https://sumicorp.com/wp-content/uploads/2018/10/user.png")
+        GlideApp.with(this)
+            .load(ref)
             .centerInside()
             .into(imgChefPerfil);
 
 
 
     }
+
+
+
 }
