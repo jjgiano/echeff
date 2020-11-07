@@ -28,7 +28,7 @@ class FirstScreenFragment : Fragment() {
         btnNextScreen = v.findViewById(R.id.btnNextScreen)
 
         Glide.with(this)
-            .load("https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/backgroundFirstScreen.png?alt=media&token=f7a79ed5-7aa7-4a82-aa4b-af78d4fc8693")
+            .load("https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/backgroundFirstScreen.png?alt=media&token=76622b7b-539a-4fdc-8c9e-01135c4dc2f5")
             .into(imgfirstScreenBackGround)
 
         return v

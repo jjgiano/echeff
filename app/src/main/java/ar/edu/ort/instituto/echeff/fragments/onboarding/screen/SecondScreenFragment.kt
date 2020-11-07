@@ -30,7 +30,7 @@ class SecondScreenFragment : Fragment() {
         btnComenzar = v.findViewById(R.id.btnComenzar)
 
         Glide.with(this)
-            .load("https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/backgroundSecondScreen.png?alt=media&token=886445cd-5f77-4a1d-8ada-eceac8ee9f30")
+            .load("https://firebasestorage.googleapis.com/v0/b/pf2020-echeff.appspot.com/o/backgroundSecondScreen.png?alt=media&token=fac2e817-c887-461e-a79c-bc3a5c30d886")
             .into(imgSecondScreenBackGround)
         return v
     }

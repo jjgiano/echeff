@@ -10,13 +10,13 @@
     </style>
     
     <style name="LogInTheme" parent="FirebaseUI">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/orange70</item>
+        <item name="colorPrimaryDark">@color/orange80</item>
+        <item name="colorAccent">@color/orange80</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-        <item name="android:padding">10px</item>
-        <item name="android:colorBackground">@android:color/holo_orange_dark</item>
+        <item name="android:colorBackground">@color/orange20</item>
+        <item name="android:textColor">@color/dark</item>
     </style>
 
     <style name="FirebaseUI.AuthMethodPicker.Logo">
@@ -25,6 +25,7 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:padding">24dp</item>
     </style>
+
 
     <color name="com_facebook_button_background_color_focused_disabled">#3C5A99</color>
     <color name="com_facebook_button_background_color_focused">#3C5A99</color>
