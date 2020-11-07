@@ -59,16 +59,14 @@ interface UsuarioDao {
 
         var chef: Chef = Chef()
 
-        val questionRef = Firebase.firestore.collection("chefs")
-        val query = questionRef.whereEqualTo("id", id)
+        val questionRef = Firebase.firestore.collection("chefs").document(id)
+        //val query = questionRef.whereEqualTo("id", id)
 
         try {
-            val data = query
+            val data = questionRef
                 .get()
                 .await()
-            for (document in data) {
-                chef = document.toObject<Chef>()
-            }
+                chef = data.toObject<Chef>()!!
 
 
         } catch (e: Exception) {
