@@ -9,16 +9,27 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
+import ar.edu.ort.instituto.echeff.dao.UsuarioDao
+import ar.edu.ort.instituto.echeff.entities.Cliente
 import ar.edu.ort.instituto.echeff.entities.Reserva
+import ar.edu.ort.instituto.echeff.utils.GlideApp
 import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
-class AdapterListReserva (private var reservaList : MutableList<Reserva>, var context: Context, val onItemClick : (Int) -> Unit) : RecyclerView.Adapter<AdapterListReserva.ReservaHolder>() {
+class AdapterListReserva(
+    private var reservaList: MutableList<Reserva>,
+    var context: Context,
+    val onItemClick: (Int) -> Unit
+) : RecyclerView.Adapter<AdapterListReserva.ReservaHolder>(), UsuarioDao {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReservaHolder {
-        val view =  LayoutInflater.from(parent.context).inflate(R.layout.item_reserva,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_reserva, parent, false)
         return (ReservaHolder(view))
     }
 
@@ -41,9 +52,9 @@ class AdapterListReserva (private var reservaList : MutableList<Reserva>, var co
         holder.getCardLayout().setOnClickListener {
             onItemClick(position)
         }
-        Glide
+        GlideApp
             .with(context)
-            .load(reservaList[position].idUsuario)
+            .load(holder.buscarRef(reservaList[position].idUsuario))
             .into(holder.getImageView());
 
         holder.getCardLayout().setOnClickListener {
@@ -55,34 +66,48 @@ class AdapterListReserva (private var reservaList : MutableList<Reserva>, var co
     }
 
 
-
-    class ReservaHolder (v: View) : RecyclerView.ViewHolder(v){
-
+    class ReservaHolder(v: View) : RecyclerView.ViewHolder(v), UsuarioDao {
+        lateinit var ref: StorageReference
         private var view: View
 
         init {
             this.view = v
         }
 
-        fun setDireccion(name : String) {
-            val txt : TextView = view.findViewById(R.id.text_DatoUsuario)
-            txt.text = name
-        }
-        fun setComensales(cantidad : Int) {
-            val txt : TextView = view.findViewById(R.id.text_DatosComensales)
-            txt.text = cantidad.toString()
-        }
-        fun setEstiloComida(name : String) {
-            val txt : TextView = view.findViewById(R.id.text_DatosEstiloComida)
+        fun setDireccion(name: String) {
+            val txt: TextView = view.findViewById(R.id.text_DatoUsuario)
             txt.text = name
         }
 
-        fun getCardLayout (): CardView {
+        fun setComensales(cantidad: Int) {
+            val txt: TextView = view.findViewById(R.id.text_DatosComensales)
+            txt.text = cantidad.toString()
+        }
+
+        fun setEstiloComida(name: String) {
+            val txt: TextView = view.findViewById(R.id.text_DatosEstiloComida)
+            txt.text = name
+        }
+
+        fun getCardLayout(): CardView {
             return view.findViewById(R.id.card_itemsReserva)
         }
 
-        fun getImageView () : ImageView {
+        fun getImageView(): ImageView {
             return view.findViewById(R.id.imageViewChef)
+        }
+
+        fun buscarRef(url: String): StorageReference {
+
+            val storage = FirebaseStorage.getInstance()
+            var ref: StorageReference
+            //busco la referencia por el URL
+            if (url.startsWith("gs://", 0, true)) {
+                ref = storage.getReferenceFromUrl(url)
+            } else {
+                ref = storage.getReference(url)
+            }
+            return ref
         }
 
     }

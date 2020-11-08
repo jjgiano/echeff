@@ -204,7 +204,8 @@ class ConfiguracionUsuarioFragment : Fragment() {
     }
 
     private fun llenarDatos() {
-        val ischef = sharedPreferences.getBoolean("isChef", false)
+
+       val ischef = sharedPreferences.getBoolean("isChef", false)
         //seteo la instancia de Storage
         val storage = FirebaseStorage.getInstance()
         val url : String

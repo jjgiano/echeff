@@ -99,4 +99,6 @@ class ReservasConfirmarFragment() : Fragment() {
         val irareserva = HomeChefFragmentDirections.actionHomeChefFragmentToDetallePropuestaFragment(reservaList[position])
         v.findNavController().navigate(irareserva);
     }
+
+
 }

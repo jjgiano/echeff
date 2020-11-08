@@ -20,7 +20,10 @@ import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelDetalleRese
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelFormularioPropuestaFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelReservasConfirmarFragment
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
+import ar.edu.ort.instituto.echeff.utils.GlideApp
 import com.bumptech.glide.Glide
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.fragment_inicio.view.*
 
 class FormularioPropuestaFragment : Fragment() {
@@ -200,9 +203,24 @@ class FormularioPropuestaFragment : Fragment() {
 
     fun llenarFichaReserva() {
         //lleno los datos de la reserva
-        Glide.with(this)
-            .load(cliente.urlFoto)
+        val storage = FirebaseStorage.getInstance()
+        var url = String()
+        var ref: StorageReference
+        url = cliente.urlFoto
+
+        if (!url.isNotEmpty()) url = "gs://pf2020-echeff.appspot.com/SinFoto.jpg"
+        //busco la referencia por el URL
+        if (url.startsWith("gs://", 0, true)) {
+            ref = storage.getReferenceFromUrl(url)
+        } else {
+            ref = storage.getReference(url)
+        }
+
+
+        GlideApp.with(this)
+            .load(ref)
             .into(imagenCliente)
+
         usuario.text = cliente.nombre
         comensales.text = reserva.comensales.toString()
         estilococina.text = reserva.estiloCocina

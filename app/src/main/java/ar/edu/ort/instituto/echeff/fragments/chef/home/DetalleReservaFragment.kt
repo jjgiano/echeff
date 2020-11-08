@@ -17,6 +17,7 @@ import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.entities.Cliente
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelDetalleReservaFragment
+import ar.edu.ort.instituto.echeff.utils.GlideApp
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Registry
 import com.bumptech.glide.annotation.GlideModule
@@ -24,6 +25,7 @@ import com.bumptech.glide.module.AppGlideModule
 import com.firebase.ui.storage.images.FirebaseImageLoader
 import com.google.api.Context
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import java.io.InputStream
@@ -113,16 +115,30 @@ class DetalleReservaFragment : Fragment() {
 
     fun llenarDatos() {
 
+        val storage = FirebaseStorage.getInstance()
+        var url = String()
+        var ref: StorageReference
+            url = cliente.urlFoto
+
+        if (!url.isNotEmpty()) url = "gs://pf2020-echeff.appspot.com/SinFoto.jpg"
+        //busco la referencia por el URL
+        if (url.startsWith("gs://", 0, true)) {
+            ref = storage.getReferenceFromUrl(url)
+        } else {
+            ref = storage.getReference(url)
+        }
+
+
         nombre.text = cliente.nombre
         fecha.text = reserva.fecha
         hora.text = reserva.hora
         direccion.text = reserva.direccion
         tipoCocina.text = reserva.tipoCocina
-        Glide.with(this)
-            .load(cliente.urlFoto)
+        GlideApp.with(this)
+            .load(ref)
             .into(imagenCliente)
 
-        if (reserva.tieneHorno.equals("Si"))
+        if (reserva.tieneHorno.equals("true"))
             tieneHorno.setChecked(true)
         else
             tieneHorno.setChecked(false)
