@@ -91,7 +91,7 @@ class FormularioReservaFragment : Fragment(), Validator {
             var datePicker = DatePickerDialog(
                 v.context,
                 android.R.style.Theme_DeviceDefault_Dialog,
-                DatePickerDialog.OnDateSetListener() { datePicker, year, month, date ->
+                DatePickerDialog.OnDateSetListener() { _, year, month, date ->
 
                     lateinit var strDate: String
                     lateinit var strMonth: String
@@ -123,7 +123,7 @@ class FormularioReservaFragment : Fragment(), Validator {
             var mMinute = Calendar.MINUTE
 
             var datePicker = TimePickerDialog(v.context,android.R.style.Theme_DeviceDefault_Dialog, TimePickerDialog.OnTimeSetListener(){
-                timePicker, hour, minute ->
+                    _, hour, minute ->
 
                 lateinit var strMinute : String
                 if(minute<10){

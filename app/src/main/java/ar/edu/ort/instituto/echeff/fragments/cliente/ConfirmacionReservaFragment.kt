@@ -20,8 +20,6 @@ import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelConfirmacionReservaFragment
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import com.bumptech.glide.Glide
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 
 class ConfirmacionReservaFragment : Fragment() {
     lateinit var v: View
@@ -116,7 +114,7 @@ class ConfirmacionReservaFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         this.setSharedPreferences()
         viewModel = ViewModelProvider(requireActivity()).get(ViewModelConfirmacionReservaFragment::class.java)
-        var idPropuesta = this.sharedPreferences.getString("idPropuesta","0")!!
+        val idPropuesta = this.sharedPreferences.getString("idPropuesta","0")!!
         viewModel.loadPropuesta(idPropuesta)
 
     }
