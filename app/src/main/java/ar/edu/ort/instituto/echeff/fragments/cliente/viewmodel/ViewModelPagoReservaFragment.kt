@@ -60,5 +60,4 @@ class ViewModelPagoReservaFragment : ViewModel(), ReservaDao, PropuestaDao, Serv
             add(newServicio)
         }
     }
-
 }

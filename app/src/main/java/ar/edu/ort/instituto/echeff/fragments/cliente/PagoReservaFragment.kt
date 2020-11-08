@@ -29,14 +29,14 @@ class PagoReservaFragment : Fragment(), PropuestaDao, ReservaDao {
     lateinit var reserva: Reserva
 
     lateinit var v: View
-    lateinit var textViewImporteTotal: TextView
-    lateinit var textViewImportePorComensal: TextView
-    lateinit var txtNombreTarjeta: EditText
-    lateinit var txtNumeroTarjeta: EditText
-    lateinit var txtVencimientoTarjeta: EditText
-    lateinit var txtCsvTarjeta: EditText
+    private lateinit var textViewImporteTotal: TextView
+    private lateinit var textViewImportePorComensal: TextView
+    private lateinit var txtNombreTarjeta: EditText
+    private lateinit var txtNumeroTarjeta: EditText
+    private lateinit var txtVencimientoTarjeta: EditText
+    private lateinit var txtCsvTarjeta: EditText
     lateinit var buttonConfirmarPago: Button
-    lateinit var cbxGuardarTarjeta: CheckBox
+    private lateinit var cbxGuardarTarjeta: CheckBox
 
     private lateinit var viewModelPagoReserva: ViewModelPagoReservaFragment
 
@@ -56,7 +56,7 @@ class PagoReservaFragment : Fragment(), PropuestaDao, ReservaDao {
         buttonConfirmarPago = v.findViewById(R.id.buttonConfirmarPago)
         cbxGuardarTarjeta = v.findViewById(R.id.cbxGuardarTarjeta)
 
-        return v;
+        return v
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -71,11 +71,6 @@ class PagoReservaFragment : Fragment(), PropuestaDao, ReservaDao {
             txtVencimientoTarjeta.setText(decode(tarjeta.vencimiento))
         })
 
-        viewModelPagoReserva.reserva.observe(viewLifecycleOwner, Observer { reserva ->
-            this.reserva = reserva
-            var cantTotal = propuesta.total * reserva.comensales
-            textViewImportePorComensal.text = getString(R.string.importeTotal, cantTotal)
-        })
 
         viewModelPagoReserva.propuesta.observe(viewLifecycleOwner, Observer { propuesta ->
             this.propuesta = propuesta
@@ -83,22 +78,27 @@ class PagoReservaFragment : Fragment(), PropuestaDao, ReservaDao {
             viewModelPagoReserva.getReserva(propuesta.idReserva)
         })
 
+        viewModelPagoReserva.reserva.observe(viewLifecycleOwner, Observer { reserva ->
+            this.reserva = reserva
+            val cantTotal = propuesta.total * reserva.comensales
+            textViewImportePorComensal.text = getString(R.string.importeTotal, cantTotal)
+        })
     }
 
     override fun onStart() {
         super.onStart()
 
         this.setSharedPreferences()
-        var idPropuesta = this.sharedPreferences.getString("idPropuesta", "0")!!
-        var idUsuario = sharedPreferences.getString("userId", "0")!!
+        val idPropuesta = this.sharedPreferences.getString("idPropuesta", "0")!!
+        val idUsuario = sharedPreferences.getString("userId", "0")!!
         changStatebutton(buttonConfirmarPago, formTarjetaIsValid)
         viewModelPagoReserva.getTarjeta(idUsuario)
         viewModelPagoReserva.getPropuesta(idPropuesta)
 
         //Todo si ocurre un error deberia tirar un mensaje de error
-        validate();
-        buttonConfirmarPago.setOnClickListener() {
-            // TODO: las demas propuestas de la reserva pasan a DESCARTADO
+        validate()
+        buttonConfirmarPago.setOnClickListener {
+            // TODO: las demas PROPUESTAS de la reserva pasan a DESCARTADO
 
             propuesta.idEstadoPropuesta = EstadoPropuesta.PAGADO.id
             viewModelPagoReserva.actualizarPropuesta(propuesta)
@@ -107,7 +107,7 @@ class PagoReservaFragment : Fragment(), PropuestaDao, ReservaDao {
             viewModelPagoReserva.actualizarReserva(reserva)
 
 
-            var newServicio = Servicio(
+            val newServicio = Servicio(
                 "",
                 reserva.id,
                 propuesta.id,
@@ -130,7 +130,8 @@ class PagoReservaFragment : Fragment(), PropuestaDao, ReservaDao {
             if (cbxGuardarTarjeta.isChecked) {
                 store(tarjetaParaPagar)
             }
-            var resultadoMensajeScreen =
+
+            val resultadoMensajeScreen =
                 PagoReservaFragmentDirections.actionPagoReservaFragmentToResultadoMensajeFragment(
                     TipoResultadoMensaje.PAGO_REALIZADO
                 )
@@ -159,7 +160,7 @@ class PagoReservaFragment : Fragment(), PropuestaDao, ReservaDao {
     }
 
     private fun encode(field: String): String {
-        return android.util.Base64.encodeToString(field.toByteArray(),android.util.Base64.DEFAULT);
+        return android.util.Base64.encodeToString(field.toByteArray(),android.util.Base64.DEFAULT)
     }
 
     private fun decode(fieldEncoded: String): String {
@@ -168,7 +169,7 @@ class PagoReservaFragment : Fragment(), PropuestaDao, ReservaDao {
     }
 
 
-    fun validate() {
+    private fun validate() {
         txtCsvTarjeta.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(newInput: Editable?) {
                 val content = newInput.toString()
