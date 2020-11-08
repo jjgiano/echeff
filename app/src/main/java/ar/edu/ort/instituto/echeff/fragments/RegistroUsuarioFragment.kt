@@ -258,7 +258,7 @@ class RegistroUsuarioFragment : Fragment(), UsuarioDao {
 
         })
 
-        viewModel.newChef.observe(viewLifecycleOwner, Observer { res ->
+        viewModel.newChef.observe(viewLifecycleOwner, Observer {
             editor.putBoolean("isChef", true)
             editor.apply()
             val action =
@@ -266,7 +266,7 @@ class RegistroUsuarioFragment : Fragment(), UsuarioDao {
             v.findNavController().navigate(action)
         })
 
-        viewModel.newCliente.observe(viewLifecycleOwner, Observer { res ->
+        viewModel.newCliente.observe(viewLifecycleOwner, Observer {
             editor.putBoolean("isChef", false)
             editor.apply()
             val action =

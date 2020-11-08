@@ -22,7 +22,7 @@ class ViewModelConfirmacionReservaFragment : ViewModel(), PropuestaDao, UsuarioD
 
     fun loadChef(idChef: String) {
         viewModelScope.launch {
-            var chef = super<UsuarioDao>.getChefById(idChef)
+            var chef = getChefByUserId(idChef)
             liveDataChef.postValue(chef)
         }
     }

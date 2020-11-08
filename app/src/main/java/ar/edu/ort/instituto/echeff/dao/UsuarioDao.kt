@@ -55,26 +55,6 @@ interface UsuarioDao {
         return cliente
     }
 
-    suspend fun getChefById(id: String): Chef {
-
-        var chef: Chef = Chef()
-
-        val questionRef = Firebase.firestore.collection("chefs").document(id)
-        //val query = questionRef.whereEqualTo("id", id)
-
-        try {
-            val data = questionRef
-                .get()
-                .await()
-                chef = data.toObject<Chef>()!!
-
-
-        } catch (e: Exception) {
-            Log.d("Error", e.toString())
-        }
-        return chef
-    }
-
     suspend fun getChefByUserId(userId: String): Chef {
 
         var chef: Chef = Chef()
@@ -89,7 +69,6 @@ interface UsuarioDao {
             for (document in data) {
                 chef = document.toObject<Chef>()
             }
-
 
         } catch (e: Exception) {
             Log.d("Error", e.toString())
