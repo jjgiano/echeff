@@ -19,14 +19,13 @@ import ar.edu.ort.instituto.echeff.entities.Chef
 import ar.edu.ort.instituto.echeff.entities.Cliente
 import ar.edu.ort.instituto.echeff.entities.Configuracion
 import ar.edu.ort.instituto.echeff.fragments.viewmodel.ViewModelConfiguracionUsuarioFragment
+import ar.edu.ort.instituto.echeff.utils.StorageReferenceUtiles
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import ar.edu.ort.instituto.echeff.utils.GlideApp
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 
-class ConfiguracionUsuarioFragment : Fragment() {
+class ConfiguracionUsuarioFragment : Fragment(), StorageReferenceUtiles {
     lateinit var viewModel: ViewModelConfiguracionUsuarioFragment
     lateinit var sharedPreferences: SharedPreferences
     lateinit var v: View
@@ -206,27 +205,19 @@ class ConfiguracionUsuarioFragment : Fragment() {
     private fun llenarDatos() {
 
        val ischef = sharedPreferences.getBoolean("isChef", false)
-        //seteo la instancia de Storage
-        val storage = FirebaseStorage.getInstance()
-        val url : String
-        val ref: StorageReference
+        var url : String
         url = if (ischef) {
             chef.urlFoto
         } else {
             cliente.urlFoto
         }
-        //busco la referencia por el URL
-        ref = if (url.startsWith("gs://", 0, true)) {
-            storage.getReferenceFromUrl(url)
-        } else {
-            storage.getReference(url)
-        }
 
+        if (!url.isNotEmpty()) url = EcheffUtilities.SIN_FOTO.valor
 
         // TODO: levantar la foto del chef del firebase
         GlideApp
             .with(this)
-            .load(ref)
+            .load(buscarReferencia(url))
             .centerInside()
             .into(imageViewUsuario)
     }

@@ -10,22 +10,17 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.dao.UsuarioDao
-import ar.edu.ort.instituto.echeff.entities.Cliente
 import ar.edu.ort.instituto.echeff.entities.Reserva
+import ar.edu.ort.instituto.echeff.utils.StorageReferenceUtiles
 import ar.edu.ort.instituto.echeff.utils.GlideApp
-import com.bumptech.glide.Glide
-import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
 class AdapterListReserva(
     private var reservaList: MutableList<Reserva>,
     var context: Context,
     val onItemClick: (Int) -> Unit
-) : RecyclerView.Adapter<AdapterListReserva.ReservaHolder>(), UsuarioDao {
+) : RecyclerView.Adapter<AdapterListReserva.ReservaHolder>(), StorageReferenceUtiles {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReservaHolder {
@@ -54,7 +49,7 @@ class AdapterListReserva(
         }
         GlideApp
             .with(context)
-            .load(holder.buscarRef(reservaList[position].idUsuario))
+            .load(buscarReferencia(reservaList[position].urlImg!!))
             .into(holder.getImageView());
 
         holder.getCardLayout().setOnClickListener {
@@ -97,18 +92,6 @@ class AdapterListReserva(
             return view.findViewById(R.id.imageViewChef)
         }
 
-        fun buscarRef(url: String): StorageReference {
-
-            val storage = FirebaseStorage.getInstance()
-            var ref: StorageReference
-            //busco la referencia por el URL
-            if (url.startsWith("gs://", 0, true)) {
-                ref = storage.getReferenceFromUrl(url)
-            } else {
-                ref = storage.getReference(url)
-            }
-            return ref
-        }
 
     }
 }

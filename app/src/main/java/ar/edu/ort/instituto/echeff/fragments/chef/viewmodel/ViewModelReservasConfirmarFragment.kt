@@ -1,8 +1,5 @@
 package ar.edu.ort.instituto.echeff.fragments.chef.viewmodel
 
-import android.content.Context
-import android.content.SharedPreferences
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,6 +7,7 @@ import ar.edu.ort.instituto.echeff.dao.PropuestaDao
 import ar.edu.ort.instituto.echeff.dao.ReservaDao
 import ar.edu.ort.instituto.echeff.dao.UsuarioDao
 import ar.edu.ort.instituto.echeff.entities.*
+import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import kotlinx.coroutines.launch
 
 class ViewModelReservasConfirmarFragment : ViewModel(), ReservaDao, PropuestaDao, UsuarioDao {
@@ -33,16 +31,27 @@ class ViewModelReservasConfirmarFragment : ViewModel(), ReservaDao, PropuestaDao
         var listaPropuestas : MutableList<Propuesta>
         val id = idUsuario
         var listaReserva : MutableList<Reserva> = ArrayList()
+        var cliBuscado = Cliente()
 
         viewModelScope.launch {
             listaPropuestas = getPropuestaByChef(id)
-
+             //Por cada propuesta del Chef que esta Confirmar busco la Reserva que le corresponde
             for (item in listaPropuestas) {
                 if (item.idEstadoPropuesta == EstadoPropuesta.ACONFIRMAR.id) {
                     listaReserva.add(getReservaById(item.idReserva))
 
                 }
             }
+            //Por cada reserva Busco la Foto del Usuario y la guardo en la Reserva
+            for (reserva in listaReserva) {
+                cliBuscado = getClienteByUserId(reserva.idUsuario)
+                if (cliBuscado.urlFoto.isNotEmpty()) {
+                    reserva.urlImg = cliBuscado.urlFoto
+                } else {
+                    reserva.urlImg = EcheffUtilities.SIN_FOTO.valor
+                }
+            }
+
             liveDataList.postValue(listaReserva)
         }
 
@@ -68,6 +77,8 @@ class ViewModelReservasConfirmarFragment : ViewModel(), ReservaDao, PropuestaDao
         }
       return cliente
     }
+
+
 
 }
 
