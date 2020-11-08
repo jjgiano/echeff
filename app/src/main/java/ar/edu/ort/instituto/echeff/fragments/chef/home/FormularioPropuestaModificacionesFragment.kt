@@ -8,19 +8,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
-import ar.edu.ort.instituto.echeff.entities.EstadoPropuesta
-import ar.edu.ort.instituto.echeff.entities.Propuesta
-import ar.edu.ort.instituto.echeff.entities.Reserva
-import ar.edu.ort.instituto.echeff.entities.TipoResultadoMensaje
+import ar.edu.ort.instituto.echeff.entities.*
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelDetallePropuestaFragment
+import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelDetalleReservaFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelFormularioPropuestaFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelReservasConfirmarFragment
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
+import ar.edu.ort.instituto.echeff.utils.GlideApp
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 
 class FormularioPropuestaModificacionesFragment : Fragment() {
@@ -29,6 +31,7 @@ class FormularioPropuestaModificacionesFragment : Fragment() {
     private lateinit var viewModel: ViewModelDetallePropuestaFragment
     private lateinit var viewModelPropuesta: ViewModelFormularioPropuestaFragment
     private lateinit var viewModelReserva: ViewModelReservasConfirmarFragment
+    private lateinit var viewModelDetalleReserva : ViewModelDetalleReservaFragment
 
 
 
@@ -40,7 +43,8 @@ class FormularioPropuestaModificacionesFragment : Fragment() {
     lateinit var estilococina: TextView
     lateinit var reserva: Reserva
     lateinit var servicio: TextView
-
+    lateinit var imagenCliente : ImageView
+    lateinit var cliente: Cliente
     var cargar: Boolean = false
 
     //los input de la propuesta
@@ -75,6 +79,7 @@ class FormularioPropuestaModificacionesFragment : Fragment() {
         comensales = v.findViewById(R.id.text_DatosComensales)
         estilococina = v.findViewById(R.id.text_DatosEstiloComida)
         servicio = v.findViewById(R.id.text_DatoTipoServicio)
+        imagenCliente = v.findViewById(R.id.imageViewChef)
 
 
         //Formulario Propuesta
@@ -104,7 +109,17 @@ class FormularioPropuestaModificacionesFragment : Fragment() {
             ViewModelProvider(requireActivity()).get(ViewModelFormularioPropuestaFragment::class.java)
         viewModelReserva =
             ViewModelProvider(requireActivity()).get(ViewModelReservasConfirmarFragment::class.java)
+        viewModelDetalleReserva =
+            ViewModelProvider(requireActivity()).get(ViewModelDetalleReservaFragment::class.java)
 
+
+        viewModelDetalleReserva.cliente.observe(viewLifecycleOwner, Observer { result ->
+
+            cliente = result
+
+
+            llenarFichaReserva()
+        })
 
         viewModel.buscar.observe(viewLifecycleOwner, Observer { result ->
 
@@ -134,11 +149,7 @@ class FormularioPropuestaModificacionesFragment : Fragment() {
 
         reserva =
             FormularioPropuestaModificacionesFragmentArgs.fromBundle(requireArguments()).reservaArg
-        //lleno los datos de la reserva
-        usuario.text = reserva.idUsuario.toString() //Hay que buscar el Usuario
-        comensales.text = reserva.comensales.toString()
-        estilococina.text = reserva.estiloCocina
-        servicio.text = reserva.tipoServicio
+
 
 
 
@@ -219,7 +230,7 @@ class FormularioPropuestaModificacionesFragment : Fragment() {
                 dato = item
             }
         }
-
+        viewModelDetalleReserva.setBuscar(reserva.idUsuario)
         return dato
     }
 
@@ -232,6 +243,33 @@ class FormularioPropuestaModificacionesFragment : Fragment() {
         text_Adicional.text = propuesta.adicional
         text_Total.text = propuesta.total.toString()
         text_Modificaciones.text = propuesta.modificaciones
+
+    }
+
+    fun llenarFichaReserva() {
+        //lleno los datos de la reserva
+        val storage = FirebaseStorage.getInstance()
+        var url = String()
+        var ref: StorageReference
+        url = cliente.urlFoto
+
+        if (!url.isNotEmpty()) url = "gs://pf2020-echeff.appspot.com/SinFoto.jpg"
+        //busco la referencia por el URL
+        if (url.startsWith("gs://", 0, true)) {
+            ref = storage.getReferenceFromUrl(url)
+        } else {
+            ref = storage.getReference(url)
+        }
+
+
+        GlideApp.with(this)
+            .load(ref)
+            .into(imagenCliente)
+
+        usuario.text = cliente.nombre
+        comensales.text = reserva.comensales.toString()
+        estilococina.text = reserva.estiloCocina
+        servicio.text = reserva.tipoServicio
 
     }
 }

@@ -57,14 +57,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_begin="205dp" />
+                    app:layout_constraintGuide_begin="101dp" />
 
                 <ImageView
                     android:id="@+id/imageViewChef"
                     android:layout_width="100sp"
                     android:layout_height="100sp"
                     android:layout_marginStart="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +78,8 @@
                     android:fontFamily="sans-serif-medium"
                     android:text="TextView"
                     android:textColor="#D97014"
-                    android:textSize="18sp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageViewChef"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -94,7 +94,7 @@
                     android:text="com"
                     android:textColor="#D97014"
                     app:layout_constraintStart_toStartOf="@+id/guideline15"
-                    app:layout_constraintTop_toBottomOf="@+id/text_DatoDireccion" />
+                    app:layout_constraintTop_toBottomOf="@+id/tx_DatoHora" />
 
                 <TextView
                     android:id="@+id/text_EstiloComida"
@@ -138,7 +138,7 @@
                     android:text="Comensales:"
                     android:textColor="@color/orange80"
                     app:layout_constraintEnd_toStartOf="@+id/guideline15"
-                    app:layout_constraintTop_toBottomOf="@+id/text_TituloDireccion" />
+                    app:layout_constraintTop_toBottomOf="@+id/tx_TituloHora" />
 
                 <TextView
                     android:id="@+id/text_DatoTipoServicio"
@@ -155,25 +155,27 @@
                     android:id="@+id/text_TituloDireccion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="24dp"
                     android:fontFamily="sans-serif-medium"
                     android:text="Direccion:"
                     android:textColor="@color/orange80"
-                    android:textSize="18sp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toStartOf="@+id/guideline15"
-                    app:layout_constraintTop_toBottomOf="@+id/text_DatoUsuario" />
+                    app:layout_constraintTop_toBottomOf="@+id/imageViewChef" />
 
                 <TextView
                     android:id="@+id/text_DatoDireccion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="24dp"
                     android:text="dir"
                     android:textColor="@color/orange80"
-                    android:textSize="18sp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/guideline15"
-                    app:layout_constraintTop_toBottomOf="@+id/text_DatoUsuario" />
+                    app:layout_constraintTop_toBottomOf="@+id/imageViewChef" />
 
                 <TextView
                     android:id="@+id/textView16"
@@ -218,6 +220,31 @@
                     android:textColor="@color/orange80"
                     app:layout_constraintStart_toStartOf="@+id/guideline15"
                     app:layout_constraintTop_toBottomOf="@+id/text_DatoTipoCocina" />
+
+                <TextView
+                    android:id="@+id/tx_TituloHora"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Horario:"
+                    android:textColor="@color/orange80"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline15"
+                    app:layout_constraintTop_toBottomOf="@+id/text_TituloDireccion" />
+
+                <TextView
+                    android:id="@+id/tx_DatoHora"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="8dp"
+                    android:text="hora"
+                    android:textColor="@color/orange80"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/guideline15"
+                    app:layout_constraintTop_toBottomOf="@+id/text_DatoDireccion" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

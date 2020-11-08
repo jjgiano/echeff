@@ -29,12 +29,28 @@
             app:layout_constraintStart_toStartOf="@+id/guideline6"
             app:layout_constraintTop_toTopOf="parent" />
 
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_EditarPropuesta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/button_press"
+            android:src="@android:drawable/ic_menu_edit"
+            android:text="Editar"
+            android:textColor="#FFFFFF"
+            app:backgroundTint="@color/orange80"
+            app:fabSize="mini"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.cardview.widget.CardView
             android:id="@+id/card_itemsReserva"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="8dp"
             app:cardBackgroundColor="#FFFFFF"
             app:cardCornerRadius="8dp"
             app:cardElevation="8dp"
@@ -150,6 +166,7 @@
                     android:textColor="@color/orange80"
                     app:layout_constraintStart_toStartOf="@+id/guideline15"
                     app:layout_constraintTop_toBottomOf="@+id/text_DatosEstiloComida" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -255,7 +272,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:background="@drawable/style_botones_principal"
+            android:background="@drawable/button_background"
             android:text="Guardar Propuesta"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
@@ -264,26 +281,11 @@
             app:layout_constraintTop_toBottomOf="@+id/editText_Total" />
 
         <Button
-            android:id="@+id/btn_EditarPropuesta"
-            android:layout_width="90dp"
-            android:layout_height="34dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/style_botones_secundario"
-            android:text="Editar"
-            android:textColor="#FFFFFF"
-            app:layout_constraintBottom_toTopOf="@+id/card_itemsReserva"
-            app:layout_constraintEnd_toStartOf="@+id/guideline8"
-            app:layout_constraintHorizontal_bias="0.61"
-            app:layout_constraintStart_toEndOf="@+id/text_TituloPropuesta"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
             android:id="@+id/btn_EnviarPropuesta"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:background="@drawable/style_botones_principal"
+            android:background="@drawable/button_background"
             android:text="Enviar Propuesta"
             android:textColor="#FFFFFF"
 
@@ -364,11 +366,13 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:fontFamily="sans-serif-medium"
-            android:text="Importe por Comensal"
+            android:text="Importe por Comensal (Dato Obligatorio)"
             android:textColor="@color/orange80"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@+id/guideline6"
             app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.adapters.AdapterListReserva
+import ar.edu.ort.instituto.echeff.entities.Cliente
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.fragments.chef.HomeChefFragmentDirections
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelReservasDisponiblesFragment
@@ -26,6 +27,8 @@ class ReservasDisponiblesFragment() : Fragment() {
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var reservaAdapterList: AdapterListReserva
     private var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
+
+    var cliente = Cliente()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +59,8 @@ class ReservasDisponiblesFragment() : Fragment() {
         viewModel.liveDataList.observe(viewLifecycleOwner, Observer { result ->
             reservaList = result
             reservaList.sortBy { it.fecha }
+
+
             reservaAdapterList = AdapterListReserva(
                 reservaList,
                 requireContext()

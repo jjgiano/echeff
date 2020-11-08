@@ -6,17 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
-import ar.edu.ort.instituto.echeff.entities.EstadoServicio
-import ar.edu.ort.instituto.echeff.entities.Propuesta
-import ar.edu.ort.instituto.echeff.entities.Reserva
-import ar.edu.ort.instituto.echeff.entities.Servicio
+import ar.edu.ort.instituto.echeff.entities.*
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelDetallePropuestaFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelDetalleServicioFragment
+import ar.edu.ort.instituto.echeff.utils.GlideApp
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import org.w3c.dom.Text
 
 
@@ -33,6 +34,9 @@ class DetalleServicioFragment : Fragment() {
     lateinit var tipoCocina: TextView
     lateinit var tieneHorno: TextView
     lateinit var direccion: TextView
+    lateinit var horario : TextView
+    lateinit var cliente: Cliente
+    lateinit var imagenCliente : ImageView
 
     var cargar : Boolean = false
     lateinit var servicio: Servicio
@@ -47,6 +51,8 @@ class DetalleServicioFragment : Fragment() {
     var propuesta: Propuesta = Propuesta()
     private lateinit var btn_VolverAHome: Button
     private lateinit var btn_FinalizarServicio: Button
+
+    lateinit var titulo : TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,6 +72,8 @@ class DetalleServicioFragment : Fragment() {
         tipoCocina = v.findViewById(R.id.text_DatoTipoCocina)
         tieneHorno = v.findViewById(R.id.text_DatoTieneHorno)
         direccion = v.findViewById(R.id.text_DatoDireccion)
+        imagenCliente = v.findViewById(R.id.imageViewChef)
+        horario = v.findViewById(R.id.tx_DatoHora)
 
         //Formulario Propuesta
         text_Snack = v.findViewById(R.id.tv_Snack)
@@ -76,6 +84,8 @@ class DetalleServicioFragment : Fragment() {
         text_Total = v.findViewById(R.id.tv_Total)
         btn_VolverAHome = v.findViewById(R.id.btn_VolveAlHome)
         btn_FinalizarServicio = v.findViewById(R.id.btn_FinalizarServicio)
+
+        titulo = v.findViewById(R.id.text_TituloPropuesta)
         return v
     }
 
@@ -90,11 +100,15 @@ class DetalleServicioFragment : Fragment() {
         })
         viewModel.propuesta.observe(viewLifecycleOwner, Observer { result ->
             propuesta = result
-            llenarDatos()
+            llenarDatosPropuesta()
         })
         viewModel.reserva.observe(viewLifecycleOwner, Observer { result ->
             reserva = result
-            llenarDatos()
+        })
+        viewModel.cliente.observe(viewLifecycleOwner, Observer {
+            cliente = it
+            llenarDatosReserva()
+
         })
     }
 
@@ -108,6 +122,7 @@ class DetalleServicioFragment : Fragment() {
 
         if (servicio.idEstadoServicio == EstadoServicio.FINALIZADO.id) {
             btn_FinalizarServicio.setVisibility(View.INVISIBLE);
+            titulo.text = "Servicios Realizados"
         } else {
             btn_VolverAHome.setVisibility(View.INVISIBLE);
         }
@@ -137,10 +152,48 @@ class DetalleServicioFragment : Fragment() {
 
         //lleno los datos de la reserva
         usuario.text = reserva.idUsuario.toString() //TODO:Hay que buscar el Usuario
+
+
+    }
+
+    fun llenarDatosPropuesta() {
+
+        text_Snack.text =  propuesta.snack
+        text_Entrada.text = propuesta.entrada
+        text_PlatoPricipal.text = propuesta.plato
+        text_Postre.text = propuesta.postre
+        text_Adicional.text = propuesta.adicional
+        text_Total.text = (propuesta.total*reserva.comensales).toString()
+
+
+    }
+
+    fun llenarDatosReserva() {
+        //lleno los datos de la reserva
+        val storage = FirebaseStorage.getInstance()
+        var url = String()
+        var ref: StorageReference
+        url = cliente.urlFoto
+
+        if (!url.isNotEmpty()) url = "gs://pf2020-echeff.appspot.com/SinFoto.jpg"
+        //busco la referencia por el URL
+        if (url.startsWith("gs://", 0, true)) {
+            ref = storage.getReferenceFromUrl(url)
+        } else {
+            ref = storage.getReference(url)
+        }
+
+
+        GlideApp.with(this)
+            .load(ref)
+            .into(imagenCliente)
+
+        usuario.text = cliente.nombre
         comensales.text = reserva.comensales.toString()
         estilococina.text = reserva.estiloCocina
         tipoServicio.text = reserva.tipoServicio
         direccion.text = reserva.direccion
+        horario.text = reserva.fecha +" a las " + reserva.hora
         if (reserva.tieneHorno.equals(true)) {
             tieneHorno.text = "Si"
         } else {
@@ -148,14 +201,6 @@ class DetalleServicioFragment : Fragment() {
         }
 
         tipoCocina.text = reserva.tipoCocina
-
-        //lleno datos de la Propuesta
-        text_Snack.text =  propuesta.snack
-        text_Entrada.text = propuesta.entrada
-        text_PlatoPricipal.text = propuesta.plato
-        text_Postre.text = propuesta.postre
-        text_Adicional.text = propuesta.adicional
-        text_Total.text = (propuesta.total*reserva.comensales).toString()
 
     }
 }

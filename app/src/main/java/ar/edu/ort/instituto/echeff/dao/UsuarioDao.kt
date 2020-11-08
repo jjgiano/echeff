@@ -15,16 +15,15 @@ interface UsuarioDao {
 
         var cliente: Cliente = Cliente()
 
-        val questionRef = Firebase.firestore.collection("clientes")
-        val query = questionRef.whereEqualTo("id", id)
+        val questionRef = Firebase.firestore.collection("clientes").document(id)
+ //       val query = questionRef.whereEqualTo("id", id)
 
         try {
-            val data = query
+            val data = questionRef
                 .get()
                 .await()
-            for (document in data) {
-                cliente = document.toObject<Cliente>()
-            }
+                cliente = data.toObject<Cliente>()!!
+
 
 
         } catch (e: Exception) {

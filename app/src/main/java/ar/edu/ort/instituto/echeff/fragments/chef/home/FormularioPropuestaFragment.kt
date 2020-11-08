@@ -3,6 +3,8 @@ package ar.edu.ort.instituto.echeff.fragments.chef.home
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +22,11 @@ import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelDetalleRese
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelFormularioPropuestaFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelReservasConfirmarFragment
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
+import ar.edu.ort.instituto.echeff.utils.GlideApp
 import com.bumptech.glide.Glide
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.fragment_inicio.view.*
 
 class FormularioPropuestaFragment : Fragment() {
@@ -53,8 +59,10 @@ class FormularioPropuestaFragment : Fragment() {
 
     //botones de Guardar y Enviar
     lateinit var btn_Propuesta: Button
-    lateinit var btn_EditarPropuesta: Button
+    lateinit var btn_EditarPropuesta: FloatingActionButton
     lateinit var btn_EnviarPropuesta: Button
+
+    var importeLleno = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,8 +97,8 @@ class FormularioPropuestaFragment : Fragment() {
         btn_EditarPropuesta = v.findViewById(R.id.btn_EditarPropuesta)
         btn_EnviarPropuesta = v.findViewById(R.id.btn_EnviarPropuesta)
 
-        btn_EnviarPropuesta.setVisibility(View.INVISIBLE);
-        btn_EditarPropuesta.setVisibility(View.INVISIBLE);
+        btn_EnviarPropuesta.visibility = View.INVISIBLE;
+        btn_EditarPropuesta.visibility = View.INVISIBLE;
 
 
         return v
@@ -122,12 +130,13 @@ class FormularioPropuestaFragment : Fragment() {
             requireContext().getSharedPreferences(EcheffUtilities.PREF_NAME.valor, Context.MODE_PRIVATE)
         var idUsuario: String = sharedPref.getString("userId", "Vacio")!!
 
-
+        changStatebutton(btn_Propuesta ,importeLleno)
         //Obtengo la reserva que llega por Argumentos de navegacion
         reserva =
             FormularioPropuestaFragmentArgs.fromBundle(requireArguments()).formularioPropuestaArg
         viewModelReserva.setcargar(reserva.idUsuario)
 
+        validate();
 
         //Boton de Guardar la Propuesta y cambiar los botones y blockear los EditText
         btn_Propuesta.setOnClickListener {
@@ -155,15 +164,15 @@ class FormularioPropuestaFragment : Fragment() {
             }
 
             //Cambio los botones y blockeo los textos
-            btn_EditarPropuesta.setVisibility(View.VISIBLE);
-            btn_EnviarPropuesta.setVisibility(View.VISIBLE);
-            btn_Propuesta.setVisibility(View.INVISIBLE);
-            editText_Snack.setFocusable(false)
-            editText_Entrada.setFocusable(false)
-            editText_PlatoPricipal.setFocusable(false)
-            editText_Postre.setFocusable(false)
-            editText_Adicional.setFocusable(false)
-            editText_Importe.setFocusable(false)
+            btn_EditarPropuesta.visibility = View.VISIBLE;
+            btn_EnviarPropuesta.visibility = View.VISIBLE;
+            btn_Propuesta.visibility = View.INVISIBLE;
+            editText_Snack.isFocusable = false
+            editText_Entrada.isFocusable = false
+            editText_PlatoPricipal.isFocusable = false
+            editText_Postre.isFocusable = false
+            editText_Adicional.isFocusable = false
+            editText_Importe.isFocusable = false
         }
 
         // Boton de envio de Propuesta
@@ -183,26 +192,65 @@ class FormularioPropuestaFragment : Fragment() {
             modificado = true
             //modificar la vista de los botones
 
-            btn_EnviarPropuesta.setVisibility(View.INVISIBLE);
-            btn_EditarPropuesta.setVisibility(View.INVISIBLE);
-            btn_Propuesta.setVisibility(View.VISIBLE);
+            btn_EnviarPropuesta.visibility = View.INVISIBLE;
+            btn_EditarPropuesta.visibility = View.INVISIBLE;
+            btn_Propuesta.visibility = View.VISIBLE;
 
-            editText_Snack.setFocusable(true)
-            editText_Snack.setClickable(true)
-
-            editText_Entrada.setFocusable(true)
-            editText_PlatoPricipal.setFocusable(true)
-            editText_Postre.setFocusable(true)
-            editText_Adicional.setFocusable(true)
-            editText_Importe.setFocusable(true)
+            editText_Snack.isFocusable = true
+            editText_Snack.isClickable = true
+            editText_Snack.isEnabled = true
+            editText_Entrada.isFocusable = true
+            editText_Entrada.isClickable = true
+            editText_PlatoPricipal.isFocusable = true
+            editText_PlatoPricipal.isClickable = true
+            editText_Postre.isFocusable = true
+            editText_Postre.isClickable = true
+            editText_Adicional.isFocusable = true
+            editText_Adicional.isClickable = true
+            editText_Importe.isFocusable = true
+            editText_Importe.isClickable = true
+            editText_Importe.isEnabled = true
         }
+    }
+
+    fun validate() {
+        editText_Importe.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(newInput: Editable?) {
+                val content = newInput.toString()
+                var enable = false
+               importeLleno = content.isNotEmpty()
+                changStatebutton(btn_Propuesta, importeLleno)
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+        })
+
+    }
+
+    fun changStatebutton(button: Button, enable: Boolean) {
+        button.isEnabled = enable
     }
 
     fun llenarFichaReserva() {
         //lleno los datos de la reserva
-        Glide.with(this)
-            .load(cliente.urlFoto)
+        val storage = FirebaseStorage.getInstance()
+        var url = String()
+        var ref: StorageReference
+        url = cliente.urlFoto
+
+        if (!url.isNotEmpty()) url = "gs://pf2020-echeff.appspot.com/SinFoto.jpg"
+        //busco la referencia por el URL
+        if (url.startsWith("gs://", 0, true)) {
+            ref = storage.getReferenceFromUrl(url)
+        } else {
+            ref = storage.getReference(url)
+        }
+
+
+        GlideApp.with(this)
+            .load(ref)
             .into(imagenCliente)
+
         usuario.text = cliente.nombre
         comensales.text = reserva.comensales.toString()
         estilococina.text = reserva.estiloCocina

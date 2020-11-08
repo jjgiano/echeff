@@ -16,7 +16,8 @@ class Reserva(
     estiloCocina: String,
     notas: String,
     idUsuario: String,
-    idEstadoReserva: Int
+    idEstadoReserva: Int,
+    urlImg: String? = null
 ) : Parcelable {
 
     var id: String
@@ -31,6 +32,7 @@ class Reserva(
     var notas: String
     var idUsuario: String
     var idEstadoReserva: Int
+    var urlImg: String?
 
     constructor() : this("", "", "", "", "", "", 0, "", "", "", "", 0)
     constructor(parcel: Parcel) : this(
@@ -61,6 +63,7 @@ class Reserva(
         this.notas = notas
         this.idUsuario = idUsuario
         this.idEstadoReserva = idEstadoReserva
+        this.urlImg = urlImg
     }
 
 
