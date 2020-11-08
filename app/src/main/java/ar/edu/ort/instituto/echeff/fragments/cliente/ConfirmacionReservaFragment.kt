@@ -20,6 +20,8 @@ import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelConfirmacionReservaFragment
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import com.bumptech.glide.Glide
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class ConfirmacionReservaFragment : Fragment() {
     lateinit var v: View
@@ -64,16 +66,12 @@ class ConfirmacionReservaFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        // TODO: levantar la foto del chef del firebase
-        Glide
-            .with(super.requireContext())
-            .load("https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/2_avatar-256.png")
-            .centerInside()
-            .into(imageViewChef)
 
         viewModel.liveDataChef.observe(viewLifecycleOwner, Observer { chf ->
             this.chef = chf
             textViewNombreChef.text = chef.nombre
+            loadFotoPerfilChef()
+
         })
 
         viewModel.liveDataPropuesta.observe(viewLifecycleOwner, Observer { prop ->
@@ -117,6 +115,24 @@ class ConfirmacionReservaFragment : Fragment() {
         val idPropuesta = this.sharedPreferences.getString("idPropuesta","0")!!
         viewModel.loadPropuesta(idPropuesta)
 
+    }
+
+    private fun loadFotoPerfilChef(){
+        val storage = FirebaseStorage.getInstance()
+        val url : String = chef.urlFoto
+        val ref: StorageReference
+
+        ref = if (url.startsWith("gs://", 0, true)) {
+            storage.getReferenceFromUrl(url)
+        } else {
+            storage.getReference(url)
+        }
+
+        Glide
+            .with(super.requireContext())
+            .load(ref)
+            .centerInside()
+            .into(imageViewChef)
     }
 
 }

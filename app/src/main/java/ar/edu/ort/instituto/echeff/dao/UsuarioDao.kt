@@ -54,7 +54,7 @@ interface UsuarioDao {
         }
         return cliente
     }
-    
+
     suspend fun getChefByUserId(userId: String): Chef {
 
         var chef: Chef = Chef()
