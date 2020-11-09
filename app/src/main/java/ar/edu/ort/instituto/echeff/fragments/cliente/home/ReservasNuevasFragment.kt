@@ -13,13 +13,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.adapters.ReservaListAdapter
-import ar.edu.ort.instituto.echeff.adapters.VistaReservasAdapter
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelReservasNuevasFragment
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import com.google.android.material.snackbar.Snackbar
 
-class ReservasNuevasFragment(private var reservas: MutableList<Reserva>) : Fragment() {
+class ReservasNuevasFragment() : Fragment() {
     lateinit var sharedPreferences: SharedPreferences
     lateinit var v: View
     private lateinit var viewModel: ViewModelReservasNuevasFragment
@@ -27,6 +26,7 @@ class ReservasNuevasFragment(private var reservas: MutableList<Reserva>) : Fragm
     lateinit var rvReserva: RecyclerView
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var reservaListAdapter: ReservaListAdapter
+    private var reservas: MutableList<Reserva> = ArrayList<Reserva>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,8 +46,8 @@ class ReservasNuevasFragment(private var reservas: MutableList<Reserva>) : Fragm
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel =
-            ViewModelProvider(super.requireActivity()).get(ViewModelReservasNuevasFragment::class.java)
+        viewModel = ViewModelProvider(super.requireActivity()).get(ViewModelReservasNuevasFragment::class.java)
+
         viewModel.cargar.observe(viewLifecycleOwner, Observer { flagResult ->
             cargado = flagResult
         })
@@ -56,29 +56,25 @@ class ReservasNuevasFragment(private var reservas: MutableList<Reserva>) : Fragm
             reservas = reservasResult
             rvReserva.setHasFixedSize(true)
             rvReserva.layoutManager = LinearLayoutManager(context)
-            rvReserva.adapter = VistaReservasAdapter(reservas, super.requireContext()) { position ->
+            reservaListAdapter = ReservaListAdapter(reservas, super.requireContext()) { position ->
                 onItemClick(position)
             }
+            rvReserva.adapter = reservaListAdapter
         })
     }
-
 
     override fun onStart() {
         super.onStart()
         this.setSharedPreferences()
-        val userId = sharedPreferences.getString("userId", "0")!!
+        val userId = sharedPreferences.getString("userId","0")!!
         viewModel.setCargar(userId)
         rvReserva.setHasFixedSize(true)
         linearLayoutManager = LinearLayoutManager(context)
         rvReserva.layoutManager = linearLayoutManager
-        reservaListAdapter =
-            ReservaListAdapter(reservas, requireContext()) { position -> onItemClick(position) }
-        rvReserva.adapter = reservaListAdapter
     }
 
     private fun onItemClick(position: Int) {
-        Snackbar.make(v, "ID de la reserva nueva: " + reservas[position].id, Snackbar.LENGTH_SHORT)
-            .show()
+        Snackbar.make(v, "ID de la reserva nueva: " + reservas[position].id, Snackbar.LENGTH_SHORT).show()
         //v.findNavController().navigate(VistaReservasFragmentDirections.actionVistaReservasFragmentToMesaAyudaFragment2());
     }
 
@@ -87,6 +83,13 @@ class ReservasNuevasFragment(private var reservas: MutableList<Reserva>) : Fragm
             EcheffUtilities.PREF_NAME.valor,
             AppCompatActivity.MODE_PRIVATE
         )
+    }
+
+    override fun onResume() {
+        super.onResume()
+        this.setSharedPreferences()
+        val userId = sharedPreferences.getString("userId","0")!!
+        viewModel.setCargar(userId)
     }
 
 }
