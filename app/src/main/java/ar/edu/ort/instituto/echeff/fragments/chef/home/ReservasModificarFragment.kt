@@ -28,19 +28,14 @@ class ReservasModificarFragment() : Fragment() {
     private lateinit var viewModel: ViewModelReservasModificarFragment
     var cargado: Boolean = false
 
-
     //los RecicleViews
     lateinit var rvReserva: RecyclerView
     lateinit var textoNohay: TextView
-
     private lateinit var linearLayoutManager: LinearLayoutManager
-
     private lateinit var reservaAdapterList: AdapterListReserva
-
     private var reservaList: MutableList<Reserva> = ArrayList<Reserva>()
     private lateinit var swipeRefres: SwipeRefreshLayout
-
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
