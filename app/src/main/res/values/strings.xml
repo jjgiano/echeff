@@ -1,5 +1,4 @@
-<resources
-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">E-CHEFF</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="nombre_chef">%s</string>
@@ -57,4 +56,6 @@
         <item quantity="one" translation_description="Inline error for weak password">La contraseña no es demasiado segura. Debe ser mayor a %1$d caracteres.</item>
         <item quantity="other" translation_description="Inline error for weak password">La contraseña no es demasiado segura. Debe ser mayor a %1$d caracteres.</item>
     </plurals>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

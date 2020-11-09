@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navgraph"
-    app:startDestination="@id/registroUsuarioFragment">
+    app:startDestination="@id/calificarServicioFragment">
 
     <fragment
         android:id="@+id/registroUsuarioFragment"
@@ -270,4 +270,13 @@
         android:id="@+id/reportesChefFragment"
         android:name="ar.edu.ort.instituto.echeff.fragments.chef.ReportesChefFragment"
         android:label="ReportesChefFragment" />
+    <fragment
+        android:id="@+id/calificarServicioFragment"
+        android:name="ar.edu.ort.instituto.echeff.fragments.cliente.CalificarServicioFragment"
+        android:label="fragment_calificar_servicio"
+        tools:layout="@layout/fragment_calificar_servicio" >
+        <action
+            android:id="@+id/action_calificarServicioFragment_to_resultadoMensajeFragment"
+            app:destination="@id/resultadoMensajeFragment" />
+    </fragment>
 </navigation>

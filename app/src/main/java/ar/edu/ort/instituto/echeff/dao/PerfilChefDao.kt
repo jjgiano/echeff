@@ -2,7 +2,7 @@ package ar.edu.ort.instituto.echeff.dao
 
 import android.util.Log
 import ar.edu.ort.instituto.echeff.entities.PerfilChef
-import ar.edu.ort.instituto.echeff.entities.Propuesta
+import ar.edu.ort.instituto.echeff.entities.Puntuacion
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -55,5 +55,16 @@ interface PerfilChefDao {
             Log.d("Error", e.toString())
         }
         return perfil
+    }
+
+    suspend fun addPuntuacion(puntuacion: Puntuacion){
+        val questionRef = Firebase.firestore.collection("puntuacion")
+        try {
+            questionRef
+                .add(puntuacion)
+                .await()
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+        }
     }
 }
