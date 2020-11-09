@@ -5,4 +5,5 @@ class Puntuacion(
     var mensaje: String = "",
     var idChef: String
 ) {
+    constructor(): this(0,"","")
 }
