@@ -82,6 +82,11 @@ class ResultadoMensajeFragment : Fragment() {
                 txtSegundoMensaje.text = "Su consulta va a ser respondida en las proximas horas."
                 imgIconMensaje.setImageResource(R.drawable.ic_message_orange_warn)
             }
+            TipoResultadoMensaje.COMENTARIO_ENVIADO ->{
+                txtPrimerMensaje.text = "Gracias por contarnos tu experiencia."
+                txtSegundoMensaje.text = "Gracias por elegirnos."
+                imgIconMensaje.setImageResource(R.drawable.ic_message_orange_warn)
+            }
         }
     }
 }
