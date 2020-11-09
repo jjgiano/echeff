@@ -56,7 +56,6 @@ class ReservasDisponiblesFragment() : Fragment() {
         return v
     }
 
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
