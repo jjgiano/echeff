@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="sans-serif-medium"
-            android:text="TextView"
+            android:text="0"
             android:textColor="@color/orange95"
             android:textSize="18sp"
             android:textStyle="italic"
@@ -80,7 +80,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_TituloServicios" />
 
         <TextView
-            android:id="@+id/tv_TituloPropuestasRealizadas"
+            android:id="@+id/tv_TituloPropuestasConfirmadas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -92,17 +92,42 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_TituloPropuestasCreadas" />
 
         <TextView
-            android:id="@+id/tv_datosPropuestasRealizadas"
+            android:id="@+id/tv_datosPropuestasConfirmadas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="sans-serif-medium"
-            android:text="TextView"
+            android:text="0"
             android:textColor="@color/orange95"
             android:textSize="18sp"
             android:textStyle="italic"
             app:layout_constraintStart_toStartOf="@+id/guideline10"
             app:layout_constraintTop_toBottomOf="@+id/tv_TituloPropuestasCreadas" />
+
+        <TextView
+            android:id="@+id/tv_TituloPropuestasRealizadas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Cantidad Propuestas Realizadas:  "
+            android:textColor="@color/orange80"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_TituloPropuestasConfirmadas" />
+
+        <TextView
+            android:id="@+id/tv_datosPropuestasRealizadas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="0"
+            android:textColor="@color/orange95"
+            android:textSize="18sp"
+            android:textStyle="italic"
+            app:layout_constraintStart_toStartOf="@+id/guideline10"
+            app:layout_constraintTop_toBottomOf="@+id/tv_TituloPropuestasConfirmadas" />
         <TextView
             android:id="@+id/tv_TituloPropuestasRechazadas"
             android:layout_width="wrap_content"
@@ -121,7 +146,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="sans-serif-medium"
-            android:text="TextView"
+            android:text="0"
             android:textColor="@color/orange95"
             android:textSize="18sp"
             android:textStyle="italic"
@@ -146,7 +171,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="sans-serif-medium"
-            android:text="TextView"
+            android:text="0"
             android:textColor="@color/orange95"
             android:textSize="18sp"
             android:textStyle="italic"
@@ -191,7 +216,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="sans-serif-medium"
-            android:text="TextView"
+            android:text="0"
             android:textColor="@color/orange95"
             android:textSize="18sp"
             android:textStyle="italic"
@@ -216,7 +241,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="sans-serif-medium"
-            android:text="TextView"
+            android:text="0"
             android:textColor="@color/orange95"
             android:textSize="18sp"
             android:textStyle="italic"
@@ -240,7 +265,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="sans-serif-medium"
-            android:text="TextView"
+            android:text="0"
             android:textColor="@color/orange95"
             android:textSize="18sp"
             android:textStyle="italic"

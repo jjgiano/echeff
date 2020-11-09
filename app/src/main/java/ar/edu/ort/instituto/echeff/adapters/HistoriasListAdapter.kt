@@ -9,12 +9,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.entities.Historia
+import ar.edu.ort.instituto.echeff.utils.GlideApp
+import ar.edu.ort.instituto.echeff.utils.StorageReferenceUtiles
 import com.bumptech.glide.Glide
 
 class HistoriasListAdapter(
     private var historiasList: MutableList<Historia>,
     private val context: Context
-) : RecyclerView.Adapter<HistoriasListAdapter.HistoriaHolder>() {
+) : RecyclerView.Adapter<HistoriasListAdapter.HistoriaHolder>(), StorageReferenceUtiles {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoriaHolder {
@@ -24,9 +26,9 @@ class HistoriasListAdapter(
     }
 
     override fun onBindViewHolder(holder: HistoriaHolder, position: Int) {
-        Glide
+        GlideApp
             .with(context)
-            .load(historiasList[position].urlImagen)
+            .load(buscarReferencia(historiasList[position].urlImagen))
             .into(holder.getImagenHistoriaView())
         holder.setComentarioHistoria(historiasList[position].comentario)
         holder.setCantidadMegusta(historiasList[position].cantidadMegusta)

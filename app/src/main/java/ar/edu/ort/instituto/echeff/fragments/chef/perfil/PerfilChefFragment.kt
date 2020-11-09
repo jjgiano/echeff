@@ -23,12 +23,13 @@ import ar.edu.ort.instituto.echeff.entities.Comentario
 import ar.edu.ort.instituto.echeff.entities.Historia
 import ar.edu.ort.instituto.echeff.entities.PerfilChef
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelPerfilChefFragment
+import ar.edu.ort.instituto.echeff.utils.StorageReferenceUtiles
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import ar.edu.ort.instituto.echeff.utils.GlideApp
 import com.getbase.floatingactionbutton.FloatingActionButton
-import com.google.firebase.storage.FirebaseStorage
 
-class PerfilChefFragment : Fragment() {
+
+class PerfilChefFragment : Fragment(), StorageReferenceUtiles {
     lateinit var v: View
     private lateinit var viewModel: ViewModelPerfilChefFragment
 
@@ -164,16 +165,15 @@ class PerfilChefFragment : Fragment() {
     }
 
     fun llenarFichaPerfil(){
-        val storage = FirebaseStorage.getInstance()
-        val ref = storage.getReferenceFromUrl(chef.urlFoto)
 
 
         txtBiografiaChef.text = perfil.bio
 
         lblCantidadComentarios.text = 5.toString()
         lblCantidadMeGusta.text = perfil.meGusta.toString()
+
         GlideApp.with(this)
-            .load(ref)
+            .load(buscarReferencia(chef.urlFoto))
             .centerInside()
             .into(imgChefPerfil);
 

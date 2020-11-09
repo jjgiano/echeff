@@ -15,6 +15,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
+import ar.edu.ort.instituto.echeff.adapters.AdapterListReserva
 import ar.edu.ort.instituto.echeff.adapters.ReservaListAdapter
 import ar.edu.ort.instituto.echeff.adapters.VistaReservasAdapter
 import ar.edu.ort.instituto.echeff.entities.Propuesta
@@ -69,7 +70,7 @@ class VistaServiciosFragment : Fragment(){
             reservasARealizar= result
             rvServiciosARealizar.setHasFixedSize(true)
             rvServiciosARealizar.layoutManager = LinearLayoutManager(context)
-            rvServiciosARealizar.adapter = ReservaListAdapter(reservasARealizar, requireContext()){
+            rvServiciosARealizar.adapter = AdapterListReserva(reservasARealizar, requireContext()){
                     position -> onItemAConfirmarClick(position)
             }
         })
@@ -82,7 +83,7 @@ class VistaServiciosFragment : Fragment(){
             reservasRealizados= result
             rvServiciosRealizados.setHasFixedSize(true)
             rvServiciosRealizados.layoutManager = LinearLayoutManager(context)
-            rvServiciosRealizados.adapter = ReservaListAdapter(reservasRealizados, requireContext()){
+            rvServiciosRealizados.adapter = AdapterListReserva(reservasRealizados, requireContext()){
                     position -> onItemFinalizadosClick(position)
             }
         })

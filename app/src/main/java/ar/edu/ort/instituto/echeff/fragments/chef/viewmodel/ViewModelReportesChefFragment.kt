@@ -4,13 +4,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.ort.instituto.echeff.dao.PropuestaDao
+import ar.edu.ort.instituto.echeff.dao.UsuarioDao
 import ar.edu.ort.instituto.echeff.entities.*
 import kotlinx.coroutines.launch
 
-class ViewModelReportesChefFragment : ViewModel(), PropuestaDao {
+class ViewModelReportesChefFragment : ViewModel(), PropuestaDao, UsuarioDao {
+
     var liveDataList = MutableLiveData<MutableList<Propuesta>>()
     var cargar = MutableLiveData<Boolean>()
-    var cliente : Cliente = Cliente()
+    var chef = MutableLiveData<Chef>()
+
 
 
     fun getLista(idUsuario: String): MutableList<Propuesta>? {
@@ -25,11 +28,11 @@ class ViewModelReportesChefFragment : ViewModel(), PropuestaDao {
 
     private fun buscarPropuestas(idUsuario:String): MutableLiveData<MutableList<Propuesta>> {
         var listaPropuestas : MutableList<Propuesta>
-        val id = idUsuario
-
 
         viewModelScope.launch {
-            listaPropuestas = getPropuestaByChef(id)
+            listaPropuestas = getPropuestaByChef(idUsuario)
+
+            chef.value = getChefByUserId(idUsuario)
 
             liveDataList.postValue(listaPropuestas)
         }
@@ -37,7 +40,6 @@ class ViewModelReportesChefFragment : ViewModel(), PropuestaDao {
         return liveDataList
 
     }
-
 
     fun setcargar(idUsuario:String) {
         cargar.value = false

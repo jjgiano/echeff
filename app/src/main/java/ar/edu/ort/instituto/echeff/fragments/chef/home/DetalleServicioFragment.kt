@@ -13,15 +13,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.entities.*
-import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelDetallePropuestaFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelDetalleServicioFragment
+import ar.edu.ort.instituto.echeff.utils.StorageReferenceUtiles
 import ar.edu.ort.instituto.echeff.utils.GlideApp
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-import org.w3c.dom.Text
 
 
-class DetalleServicioFragment : Fragment() {
+class DetalleServicioFragment : Fragment(), StorageReferenceUtiles {
 
     lateinit var v: View
     private lateinit var viewModel: ViewModelDetalleServicioFragment
@@ -104,6 +101,7 @@ class DetalleServicioFragment : Fragment() {
         })
         viewModel.reserva.observe(viewLifecycleOwner, Observer { result ->
             reserva = result
+
         })
         viewModel.cliente.observe(viewLifecycleOwner, Observer {
             cliente = it
@@ -148,14 +146,6 @@ class DetalleServicioFragment : Fragment() {
     }
 
 
-    fun llenarDatos() {
-
-        //lleno los datos de la reserva
-        usuario.text = reserva.idUsuario.toString() //TODO:Hay que buscar el Usuario
-
-
-    }
-
     fun llenarDatosPropuesta() {
 
         text_Snack.text =  propuesta.snack
@@ -169,23 +159,14 @@ class DetalleServicioFragment : Fragment() {
     }
 
     fun llenarDatosReserva() {
-        //lleno los datos de la reserva
-        val storage = FirebaseStorage.getInstance()
+
         var url = String()
-        var ref: StorageReference
         url = cliente.urlFoto
 
-        if (!url.isNotEmpty()) url = "gs://pf2020-echeff.appspot.com/SinFoto.jpg"
-        //busco la referencia por el URL
-        if (url.startsWith("gs://", 0, true)) {
-            ref = storage.getReferenceFromUrl(url)
-        } else {
-            ref = storage.getReference(url)
-        }
 
 
         GlideApp.with(this)
-            .load(ref)
+            .load(buscarReferencia(url))
             .into(imagenCliente)
 
         usuario.text = cliente.nombre

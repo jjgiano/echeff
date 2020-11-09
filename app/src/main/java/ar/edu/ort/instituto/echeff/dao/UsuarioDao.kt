@@ -4,6 +4,7 @@ import android.util.Log
 import ar.edu.ort.instituto.echeff.entities.Chef
 import ar.edu.ort.instituto.echeff.entities.Cliente
 import ar.edu.ort.instituto.echeff.entities.Configuracion
+import ar.edu.ort.instituto.echeff.entities.Propuesta
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -156,6 +157,16 @@ interface UsuarioDao {
             Log.d("Error", e.toString())
         }
         return config
+    }
+
+    suspend fun updateChef(chef: Chef) {
+        val questionRef = Firebase.firestore.collection("chefs")
+        val query = questionRef
+        try {
+            query.document(chef.id).set(chef)
+        } catch (e: Exception) {
+
+        }
     }
 
 

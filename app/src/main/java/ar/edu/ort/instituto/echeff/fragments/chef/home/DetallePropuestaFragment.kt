@@ -19,15 +19,12 @@ import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelDetallePropuestaFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelDetalleReservaFragment
-import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelReservasConfirmarFragment
-import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelReservasAConfirmarFragment
+import ar.edu.ort.instituto.echeff.utils.StorageReferenceUtiles
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import ar.edu.ort.instituto.echeff.utils.GlideApp
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 
 
-class DetallePropuestaFragment : Fragment() {
+class DetallePropuestaFragment : Fragment(), StorageReferenceUtiles {
 
     lateinit var v: View
     private lateinit var viewModel: ViewModelDetallePropuestaFragment
@@ -159,23 +156,11 @@ class DetallePropuestaFragment : Fragment() {
     }
 
     fun llenarFichaReserva() {
-        //lleno los datos de la reserva
-        val storage = FirebaseStorage.getInstance()
         var url = String()
-        var ref: StorageReference
         url = cliente.urlFoto
 
-        if (!url.isNotEmpty()) url = "gs://pf2020-echeff.appspot.com/SinFoto.jpg"
-        //busco la referencia por el URL
-        if (url.startsWith("gs://", 0, true)) {
-            ref = storage.getReferenceFromUrl(url)
-        } else {
-            ref = storage.getReference(url)
-        }
-
-
         GlideApp.with(this)
-            .load(ref)
+            .load(buscarReferencia(url))
             .into(imagenCliente)
 
         usuario.text = cliente.nombre
