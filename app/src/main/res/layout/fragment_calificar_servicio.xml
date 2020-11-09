@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.cliente.CalificarServicioFragment" >
+
+
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Califica tu servicio"
+        android:textColor="@color/orange80"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Contanos como fue tu experiencia"
+        android:textColor="@color/orange80"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+    <EditText
+        android:id="@+id/tbxComentario"
+        android:layout_width="366dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/style_border_bigger"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Dejanos tu comentario (opcional)"
+        android:inputType="textMultiLine"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rdbOpcionTres" />
+
+    <Button
+        android:id="@+id/btnEnviarCalificacion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/button_background"
+        android:text="Enviar calificacion"
+        android:textColor="@color/gray10"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tbxComentario" />
+
+    <ImageView
+        android:id="@+id/btnOpcionUno"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_calification"
+        android:src="@drawable/ic_laughing"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+    <ImageView
+        android:id="@+id/btnOpcionDos"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_calification"
+        android:src="@drawable/ic_laughing"
+        app:layout_constraintStart_toEndOf="@+id/btnOpcionUno"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+    <ImageView
+        android:id="@+id/btnOpcionTres"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_calification"
+        android:src="@drawable/ic_laughing"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rdbOpcionUno" />
+
+    <ImageView
+        android:id="@+id/btnOpcionCuatro"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_calification"
+        android:src="@drawable/ic_laughing"
+        app:layout_constraintStart_toEndOf="@+id/btnOpcionTres"
+        app:layout_constraintTop_toBottomOf="@+id/rdbOpcionDos" />
+
+
+    <RadioButton
+        android:id="@+id/rdbOpcionUno"
+        android:layout_width="109dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="10dp"
+        android:text="Muy buena"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnOpcionUno" />
+
+    <RadioButton
+        android:id="@+id/rdbOpcionDos"
+        android:layout_width="109dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="10dp"
+        android:text="Buena"
+        app:layout_constraintStart_toEndOf="@+id/rdbOpcionUno"
+        app:layout_constraintTop_toBottomOf="@+id/btnOpcionDos" />
+
+    <RadioButton
+        android:id="@+id/rdbOpcionCuatro"
+        android:layout_width="109dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="10dp"
+        android:text="Mala"
+        app:layout_constraintStart_toEndOf="@+id/rdbOpcionTres"
+        app:layout_constraintTop_toBottomOf="@+id/btnOpcionCuatro" />
+
+    <RadioButton
+        android:id="@+id/rdbOpcionTres"
+        android:layout_width="109dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="10dp"
+        android:text="Regular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnOpcionTres" />
+
+    <RadioGroup
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnOpcionUno" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
