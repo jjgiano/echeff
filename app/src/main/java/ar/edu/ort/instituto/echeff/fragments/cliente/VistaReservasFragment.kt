@@ -12,17 +12,11 @@ import androidx.navigation.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import ar.edu.ort.instituto.echeff.R
-import ar.edu.ort.instituto.echeff.entities.EstadoReserva
-import ar.edu.ort.instituto.echeff.entities.Propuesta
-import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.fragments.cliente.home.ReservasAConfirmarFragment
 import ar.edu.ort.instituto.echeff.fragments.cliente.home.ReservasFinalizadasFragment
 import ar.edu.ort.instituto.echeff.fragments.cliente.home.ReservasNuevasFragment
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 
 class VistaReservasFragment : Fragment() {
 
@@ -32,13 +26,9 @@ class VistaReservasFragment : Fragment() {
     lateinit var tabLayoutReservas: TabLayout
     lateinit var viewPager2Reservas: ViewPager2
 
-    var reservas: MutableList<Reserva> = ArrayList<Reserva>()
-    var propuestas: MutableList<Propuesta> = ArrayList<Propuesta>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,11 +50,10 @@ class VistaReservasFragment : Fragment() {
 
         viewPager2Reservas.setAdapter(
             VistaReservasFragment.ViewPagerAdapter(
-                requireActivity(),
-                reservas
+                requireActivity()
             )
         )
-        // viewPager.isUserInputEnabled = false
+
         TabLayoutMediator(
             tabLayoutReservas,
             viewPager2Reservas,
@@ -75,6 +64,7 @@ class VistaReservasFragment : Fragment() {
                     2 -> tab.text = "Finalizadas"
                     else -> tab.text = "undefined"
                 }
+
             }).attach()
 
         buttonTengoUnProblema.setOnClickListener {
@@ -87,22 +77,14 @@ class VistaReservasFragment : Fragment() {
 
     }
 
-    private fun onItemReservasClick(position: Int) {
-        val reserva = reservas[position]
-        Snackbar.make(v, "ID de la reserva: " + reserva.id, Snackbar.LENGTH_SHORT).show()
-    }
-
-    class ViewPagerAdapter(fragmentActivity: FragmentActivity, val reservas: MutableList<Reserva>) :
+    class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
         FragmentStateAdapter(fragmentActivity) {
         override fun createFragment(position: Int): Fragment {
-            var enviados = reservas.filter { it.idEstadoReserva == EstadoReserva.NUEVO.id }
-            var aConfirmar = reservas.filter { it.idEstadoReserva == EstadoReserva.ACONFIRMAR.id }
-            var finalizadas = reservas.filter { it.idEstadoReserva == EstadoReserva.FINALIZADA.id }
             return when (position) {
-                0 -> ReservasNuevasFragment(ArrayList(enviados))
-                1 -> ReservasAConfirmarFragment(ArrayList(aConfirmar))
-                2 -> ReservasFinalizadasFragment(ArrayList(finalizadas))
-                else -> ReservasFinalizadasFragment(ArrayList())
+                0 -> ReservasNuevasFragment()
+                1 -> ReservasAConfirmarFragment()
+                2 -> ReservasFinalizadasFragment()
+                else -> ReservasFinalizadasFragment()
             }
         }
 
