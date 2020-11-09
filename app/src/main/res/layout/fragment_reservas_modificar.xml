@@ -8,15 +8,38 @@
     tools:context=".fragments.chef.home.ReservasModificarFragment"
     tools:ignore="MissingClass">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recicleView_ReservasModificar"
+    <TextView
+        android:id="@+id/mensajeNoHay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upss!! Todavia no hay reservas"
+        android:textAlignment="center"
+        android:textColor="@color/orange20"
+        android:textSize="30sp"
+        android:textStyle="bold"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/SwipeRefresh"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/SwipeRefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="5dp"
-        android:paddingStart="5dp"
-        android:paddingLeft="5dp"
-        android:paddingTop="5dp"
-        android:paddingEnd="5dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="5dp" />
+        android:layout_height="match_parent">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recicleView_ReservasModificar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:paddingStart="5dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="5dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

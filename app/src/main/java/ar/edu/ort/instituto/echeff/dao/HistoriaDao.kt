@@ -9,6 +9,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
 interface HistoriaDao {
+
     suspend fun add(historia: Historia) {
 
         val questionRef = Firebase.firestore.collection("historiasChef")

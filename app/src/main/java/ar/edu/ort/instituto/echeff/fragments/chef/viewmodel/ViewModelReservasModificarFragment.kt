@@ -32,6 +32,8 @@ class ViewModelReservasModificarFragment : ViewModel(), ReservaDao,PropuestaDao,
         var cliBuscado = Cliente()
 
         viewModelScope.launch {
+            listaReserva.clear()
+
             listaPropuestas = getPropuestaByChef(id)
             //Por cada propuesta del Chef que esta MODIFICAR busco la Reserva que le corresponde
             for (item in listaPropuestas) {
