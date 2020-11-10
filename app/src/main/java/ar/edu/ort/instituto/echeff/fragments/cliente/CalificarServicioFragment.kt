@@ -4,15 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.RadioButton
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.entities.Puntuacion
 import ar.edu.ort.instituto.echeff.entities.TipoResultadoMensaje
 import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelCalificarServicioFragment
-import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelConfirmacionReservaFragment
 
 
 class CalificarServicioFragment : Fragment() {
@@ -27,8 +30,10 @@ class CalificarServicioFragment : Fragment() {
     private lateinit var rdbOpcionDos: RadioButton
     private lateinit var rdbOpcionTres: RadioButton
     private lateinit var rdbOpcionCuatro: RadioButton
-    private lateinit var calificarServicioViewModel: ViewModelCalificarServicioFragment
+    private lateinit var viewModel: ViewModelCalificarServicioFragment
+    private lateinit var idReserva: String
 
+    private var idChef: String = ""
     private var radioButtons = ArrayList<RadioButton>()
     private var puntacionIndicada: Int = 0
 
@@ -55,7 +60,16 @@ class CalificarServicioFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        calificarServicioViewModel = ViewModelProvider(requireActivity()).get(ViewModelCalificarServicioFragment::class.java)
+        idReserva  = CalificarServicioFragmentArgs.fromBundle(requireArguments()).idReserva
+        idChef = ""
+
+        viewModel = ViewModelProvider(requireActivity()).get(ViewModelCalificarServicioFragment::class.java)
+
+        viewModel.getPropuestaByReserva(idReserva)
+        viewModel.liveDataPropuesta.observe(viewLifecycleOwner, Observer { propuesta ->
+            //Log.e("TAG", propuesta.id);
+            idChef = propuesta.idChef
+        })
     }
 
     override fun onStart() {
@@ -73,17 +87,13 @@ class CalificarServicioFragment : Fragment() {
         createRadioListener()
 
         btnEnviarCalificacion.setOnClickListener {
-
-
-            //todo enviar el comentario a la base
-
             val puntuacionCliente = Puntuacion(
                 puntacionIndicada,
                 tbxComentario.text.toString(),
-                "15IhVH4u69feCJOGG7JMxoLBzbz1"
+                idChef
             )
 
-            calificarServicioViewModel.cargarNuevaPuntuacion(puntuacionCliente)
+            viewModel.cargarNuevaPuntuacion(puntuacionCliente)
 
             v.findNavController().navigate(
                 CalificarServicioFragmentDirections.actionCalificarServicioFragmentToResultadoMensajeFragment(
@@ -105,7 +115,7 @@ class CalificarServicioFragment : Fragment() {
         radioButtons.forEachIndexed { index, radio ->
             radio.setOnCheckedChangeListener { buttonView, isChecked ->
                 cleanCheckBoxes()
-                if (isChecked) {
+                if (isChecked && idChef.isNotEmpty()) {
                     buttonView.isChecked = true
                     btnEnviarCalificacion.isEnabled = true
                     puntacionIndicada = index + 1

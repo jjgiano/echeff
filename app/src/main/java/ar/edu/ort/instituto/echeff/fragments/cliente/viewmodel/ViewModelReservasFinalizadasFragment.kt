@@ -7,15 +7,13 @@ import ar.edu.ort.instituto.echeff.dao.ReservaDao
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import kotlinx.coroutines.launch
 
-
 class ViewModelReservasFinalizadasFragment : ViewModel(), ReservaDao {
-    var liveDataList = MutableLiveData<MutableList<Reserva>>()
-    var cargar = MutableLiveData<Boolean>()
+    var liveDataReservaList = MutableLiveData<MutableList<Reserva>>()
 
-    fun setCargar(idUsuario: String) {
-        cargar.value = true
+    fun setCargarReservasFinalizadas(idUsuario: String) {
         viewModelScope.launch {
-            liveDataList.postValue(super.getReservasFinalizadas(idUsuario))
+            liveDataReservaList.postValue(super.getReservasFinalizadas(idUsuario))
         }
     }
+
 }

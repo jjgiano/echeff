@@ -9,21 +9,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.adapters.ReservaListAdapter
-import ar.edu.ort.instituto.echeff.adapters.VistaReservasAdapter
 import ar.edu.ort.instituto.echeff.entities.Reserva
+import ar.edu.ort.instituto.echeff.fragments.cliente.VistaReservasFragmentDirections
 import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelReservasFinalizadasFragment
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
-import com.google.android.material.snackbar.Snackbar
 
 class ReservasFinalizadasFragment() : Fragment() {
     lateinit var sharedPreferences: SharedPreferences
     lateinit var v: View
     private lateinit var viewModel: ViewModelReservasFinalizadasFragment
-    var cargado : Boolean = false
     lateinit var rvReserva: RecyclerView
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var reservaListAdapter: ReservaListAdapter
@@ -35,17 +34,17 @@ class ReservasFinalizadasFragment() : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        this.setSharedPreferences()
+        val userId = sharedPreferences.getString("userId","0")!!
 
         viewModel = ViewModelProvider(super.requireActivity()).get(ViewModelReservasFinalizadasFragment::class.java)
 
-        viewModel.cargar.observe(viewLifecycleOwner, Observer { flagResult ->
-            cargado = flagResult
-        })
-
-        viewModel.liveDataList.observe(viewLifecycleOwner, Observer { reservasResult ->
+        viewModel.setCargarReservasFinalizadas(userId)
+        viewModel.liveDataReservaList.observe(viewLifecycleOwner, Observer { reservasResult ->
             reservas = reservasResult
             rvReserva.setHasFixedSize(true)
-            rvReserva.layoutManager = LinearLayoutManager(context)
+            linearLayoutManager = LinearLayoutManager(context)
+            rvReserva.layoutManager = linearLayoutManager
             reservaListAdapter = ReservaListAdapter(reservas, super.requireContext()){
                     position -> onItemClick(position)
             }
@@ -65,17 +64,11 @@ class ReservasFinalizadasFragment() : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        this.setSharedPreferences()
-        val userId = sharedPreferences.getString("userId","0")!!
-        viewModel.setCargar(userId)
-        rvReserva.setHasFixedSize(true)
-        linearLayoutManager = LinearLayoutManager(context)
-        rvReserva.layoutManager = linearLayoutManager
     }
 
     private fun onItemClick(position: Int) {
-        Snackbar.make(v, "ID de la reserva finalizada: " + reservas[position].id, Snackbar.LENGTH_SHORT).show()
-        //v.findNavController().navigate(VistaReservasFragmentDirections.actionVistaReservasFragmentToMesaAyudaFragment2());
+        var reserva = reservas[position]
+        v.findNavController().navigate(VistaReservasFragmentDirections.actionVistaReservasFragmentToCalificarServicioFragment(reserva.id));
     }
 
     private fun setSharedPreferences() {
@@ -86,7 +79,7 @@ class ReservasFinalizadasFragment() : Fragment() {
         super.onResume()
         this.setSharedPreferences()
         val userId = sharedPreferences.getString("userId","0")!!
-        viewModel.setCargar(userId)
+        viewModel.setCargarReservasFinalizadas(userId)
     }
 
 }

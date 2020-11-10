@@ -175,6 +175,9 @@
         <action
             android:id="@+id/action_vistaReservasFragment_to_mesaAyudaFragment2"
             app:destination="@id/mesaAyudaFragment2" />
+        <action
+            android:id="@+id/action_vistaReservasFragment_to_calificarServicioFragment"
+            app:destination="@id/calificarServicioFragment" />
     </fragment>
     <fragment
         android:id="@+id/mesaAyudaFragment2"
@@ -278,5 +281,8 @@
         <action
             android:id="@+id/action_calificarServicioFragment_to_resultadoMensajeFragment"
             app:destination="@id/resultadoMensajeFragment" />
+        <argument
+            android:name="idReserva"
+            app:argType="string" />
     </fragment>
 </navigation>
