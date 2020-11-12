@@ -5,13 +5,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.ort.instituto.echeff.dao.PerfilChefDao
 import ar.edu.ort.instituto.echeff.dao.PropuestaDao
+import ar.edu.ort.instituto.echeff.dao.PuntuacionDao
 import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Puntuacion
 import kotlinx.coroutines.launch
 
-class ViewModelCalificarServicioFragment : ViewModel(), PerfilChefDao, PropuestaDao {
+class ViewModelCalificarServicioFragment : ViewModel(), PuntuacionDao, PropuestaDao {
 
-    var liveDataPropuesta = MutableLiveData<Propuesta>()
+    var propuesta = MutableLiveData<Propuesta>()
+    var puntuacion = MutableLiveData<Puntuacion>()
 
     fun cargarNuevaPuntuacion(puntuacion: Puntuacion) {
         viewModelScope.launch {
@@ -21,8 +23,15 @@ class ViewModelCalificarServicioFragment : ViewModel(), PerfilChefDao, Propuesta
 
     fun getPropuestaByReserva(idReserva: String){
         viewModelScope.launch {
-            var propuesta = super.getPropuestaByReservaFinalizada(idReserva)
-            liveDataPropuesta.postValue(propuesta)
+            val result = super.getPropuestaByReservaFinalizada(idReserva)
+            propuesta.postValue(result)
+        }
+    }
+
+    fun getPuntuacionActual(idReserva: String){
+        viewModelScope.launch {
+            val result = getPuntuacionByReserva(idReserva);
+            puntuacion.postValue(result)
         }
     }
 }
