@@ -98,7 +98,7 @@ class ConfirmacionReservaFragment : Fragment() {
         }
 
         crdPerfilChef.setOnClickListener {
-            val perfilChefScreen = ConfirmacionReservaFragmentDirections.actionConfirmacionReservaFragment2ToPerfilChefFragment()
+            val perfilChefScreen = ConfirmacionReservaFragmentDirections.actionConfirmacionReservaFragment2ToPerfilChefFragment(chef)
             v.findNavController().navigate(perfilChefScreen)
         }
 

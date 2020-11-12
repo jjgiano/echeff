@@ -6,22 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.entities.Historia
 import ar.edu.ort.instituto.echeff.utils.GlideApp
 import ar.edu.ort.instituto.echeff.utils.StorageReferenceUtiles
-import com.bumptech.glide.Glide
 
 class HistoriasListAdapter(
     private var historiasList: MutableList<Historia>,
-    private val context: Context
+    private val context: Context,
+    val onItemClick: (Int) -> Unit
 ) : RecyclerView.Adapter<HistoriasListAdapter.HistoriaHolder>(), StorageReferenceUtiles {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoriaHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_historia, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.fragment_detalle_historia, parent, false)
         return HistoriaHolder(view)
     }
 
@@ -32,6 +33,9 @@ class HistoriasListAdapter(
             .into(holder.getImagenHistoriaView())
         holder.setComentarioHistoria(historiasList[position].comentario)
         holder.setCantidadMegusta(historiasList[position].cantidadMegusta)
+
+        holder.getCardLayout().setOnClickListener {
+            onItemClick(position)}
     }
 
     override fun getItemCount(): Int {
@@ -55,5 +59,9 @@ class HistoriasListAdapter(
             megustaHistoriaCliente.text =
                 view.context.getString(R.string.cantidad_megusta_chef, califiacion);
         }
+        fun getCardLayout(): CardView {
+            return view.findViewById(R.id.crdComentarioCliente)
+        }
+
     }
 }

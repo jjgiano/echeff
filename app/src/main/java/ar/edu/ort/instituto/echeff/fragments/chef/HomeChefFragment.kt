@@ -14,6 +14,7 @@ import androidx.navigation.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import ar.edu.ort.instituto.echeff.R
+import ar.edu.ort.instituto.echeff.entities.Chef
 import ar.edu.ort.instituto.echeff.fragments.chef.home.ReservasModificarFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.home.ReservasConfirmarFragment
 import ar.edu.ort.instituto.echeff.fragments.chef.home.ReservasDisponiblesFragment
@@ -36,6 +37,7 @@ class HomeChefFragment : Fragment() {
     lateinit var btn_VerServicios: FloatingActionButton
     lateinit var btn_irPerfil: FloatingActionButton
     lateinit var btn_irReportes: FloatingActionButton
+    var chef = Chef()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,8 +68,8 @@ class HomeChefFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        val sharedPref: SharedPreferences = requireContext().getSharedPreferences(EcheffUtilities.PREF_NAME.valor, Context.MODE_PRIVATE)
-        val nombreUsuario : String = sharedPref.getString("userDisplayName","Nombre No encontrado")!!
+        setSharedPreferences()
+        val nombreUsuario : String = sharedPreferences.getString("userDisplayName","Nombre No encontrado")!!
 
         nombreChef.text =  getString(R.string.bienvenida_chef, nombreUsuario)
 
@@ -96,7 +98,7 @@ class HomeChefFragment : Fragment() {
         }
         btn_irPerfil.setOnClickListener {
             val action =
-                HomeChefFragmentDirections.actionHomeChefFragmentToPerfilChefFragment()
+                HomeChefFragmentDirections.actionHomeChefFragmentToPerfilChefFragment(chef)
             v.findNavController().navigate(action)
         }
         btn_irReportes.setOnClickListener {

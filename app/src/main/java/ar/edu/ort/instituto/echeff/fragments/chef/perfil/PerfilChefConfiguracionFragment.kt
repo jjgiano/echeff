@@ -17,6 +17,7 @@ import android.widget.TextView
 import androidx.core.content.FileProvider
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.entities.Chef
 import ar.edu.ort.instituto.echeff.entities.Comentario
@@ -40,6 +41,7 @@ class PerfilChefConfiguracionFragment : Fragment(), StorageReferenceUtiles {
     private lateinit var viewModel: ViewModelPerfilChefConfiguracionFragment
     lateinit var v: View
     lateinit var btnAgregarFotoPerfil: Button
+    lateinit var btnVolverAlPerfil: Button
     lateinit var txaBiografia: TextView
     lateinit var lblContadorBio: TextView
     lateinit var btnGuardarBiografia: Button
@@ -48,10 +50,11 @@ class PerfilChefConfiguracionFragment : Fragment(), StorageReferenceUtiles {
     lateinit var lblContadorComentarioHistoria: TextView
     lateinit var btnAgregarHistoria: Button
     lateinit var btn_EditarPerfil: FloatingActionButton
-    lateinit var urlFoto : String
-    private lateinit var historiasPhotoURI: Uri
+    var urlFoto : String = ""
+    var urlFotoHistoria : String = ""
+    private  var historiasPhotoURI: Uri? = null
     private lateinit var currentPhotoPath: String
-    private lateinit var chefPhotoURI: Uri
+    private  var chefPhotoURI: Uri? = null
 
     var chef = Chef()
     lateinit var perfil: PerfilChef
@@ -75,6 +78,7 @@ class PerfilChefConfiguracionFragment : Fragment(), StorageReferenceUtiles {
         v = inflater.inflate(R.layout.fragment_perfil_chef_configuracion, container, false)
 
         btnAgregarFotoPerfil = v.findViewById(R.id.btnAgregarFotoPerfil)
+        btnVolverAlPerfil = v.findViewById(R.id.btnVolverAlPerfil)
         txaBiografia = v.findViewById(R.id.txaBiografia)
         lblContadorBio = v.findViewById(R.id.lblContadorBio)
         btnGuardarBiografia = v.findViewById(R.id.btnGuardarBiografia)
@@ -83,6 +87,7 @@ class PerfilChefConfiguracionFragment : Fragment(), StorageReferenceUtiles {
         lblContadorComentarioHistoria = v.findViewById(R.id.lblContadorComentarioHistoria)
         btnAgregarHistoria = v.findViewById(R.id.btnAgregarHistoria)
         btn_EditarPerfil = v.findViewById(R.id.fab_editar)
+
 
         btnGuardarBiografia.visibility = View.INVISIBLE;
         txaBiografia.isFocusable = false
@@ -94,6 +99,8 @@ class PerfilChefConfiguracionFragment : Fragment(), StorageReferenceUtiles {
         btnAgregarHistoria.visibility = View.INVISIBLE
         txaAgregarComentarioHistoria.visibility = View.INVISIBLE
         lblContadorComentarioHistoria.visibility = View.INVISIBLE
+        btnVolverAlPerfil.visibility = View.INVISIBLE
+
         return v
     }
 
@@ -127,9 +134,17 @@ class PerfilChefConfiguracionFragment : Fragment(), StorageReferenceUtiles {
             //HABILITO LOS BOTONES Y CUADROS DE TEXTO
             txaBiografia.isFocusable = true
             txaBiografia.isEnabled = true
+            txaBiografia.isClickable = true
+            txaBiografia.isCursorVisible = true
+            txaBiografia.isFocusableInTouchMode = true
+
             btnGuardarBiografia.visibility = View.VISIBLE;
             txaAgregarComentarioHistoria.isFocusable = true
             txaAgregarComentarioHistoria.isEnabled = true
+            txaAgregarComentarioHistoria.isClickable = true
+            txaAgregarComentarioHistoria.isCursorVisible = true
+            txaAgregarComentarioHistoria.isFocusableInTouchMode = true
+
             btnAgregarFotoHistoria.visibility = View.VISIBLE
             btnAgregarHistoria.visibility = View.VISIBLE
             txaAgregarComentarioHistoria.visibility = View.VISIBLE
@@ -140,20 +155,40 @@ class PerfilChefConfiguracionFragment : Fragment(), StorageReferenceUtiles {
         btnAgregarFotoHistoria.setOnClickListener() {
             var carpeta = "historias_Pics"
             dispatchTakePictureIntent(carpeta, 4444)
-            urlFoto = uploadImage(historiasPhotoURI, carpeta)
-
         }
 
         btnAgregarFotoPerfil.setOnClickListener() {
-            //todo agregar funcionalidad
-            chef = viewModel.chef.value!!
+
             var carpeta = "profilePics"
             dispatchTakePictureIntent(carpeta, 5555)
-            urlFoto = uploadImage(chefPhotoURI, carpeta)
+            btnVolverAlPerfil.visibility = View.VISIBLE
+            btnAgregarFotoHistoria.visibility = View.INVISIBLE
 
-            chef.urlFoto = urlFoto
+        }
 
-            viewModel.actualizarChef(chef)
+        btnVolverAlPerfil.setOnClickListener() {
+            chef = viewModel.chef.value!!
+
+            var carpeta = "profilePics"
+            var carpeta2 = "historias_Pics"
+
+            if (chefPhotoURI != null ) {
+                urlFoto = uploadImage(chefPhotoURI!!, carpeta)
+                chef.urlFoto = urlFoto
+                viewModel.actualizarChef(chef)
+            }
+
+
+            if (historiasPhotoURI != null) {
+                urlFotoHistoria = uploadImage(historiasPhotoURI!!, carpeta2)
+                armarHistoria(idUsuario)
+                viewModel.agregarHistoria(historia)
+
+            }
+
+            val perfilChef =
+                PerfilChefConfiguracionFragmentDirections.actionPerfilChefConfiguracionFragmentToPerfilChefFragment(chef);
+            v.findNavController().navigate(perfilChef)
 
         }
 
@@ -173,8 +208,6 @@ class PerfilChefConfiguracionFragment : Fragment(), StorageReferenceUtiles {
         }
 
         btnAgregarHistoria.setOnClickListener() {
-            armarHistoria(idUsuario)
-            viewModel.agregarHistoria(historia)
 
             txaAgregarComentarioHistoria.isFocusable = false
             txaAgregarComentarioHistoria.isEnabled = false
@@ -182,6 +215,8 @@ class PerfilChefConfiguracionFragment : Fragment(), StorageReferenceUtiles {
             btnAgregarHistoria.visibility = View.INVISIBLE
             txaAgregarComentarioHistoria.visibility = View.INVISIBLE
             lblContadorComentarioHistoria.visibility = View.INVISIBLE
+            btnVolverAlPerfil.visibility = View.VISIBLE
+            btnAgregarFotoHistoria.visibility = View.INVISIBLE
         }
     }
 
@@ -194,7 +229,7 @@ class PerfilChefConfiguracionFragment : Fragment(), StorageReferenceUtiles {
         this.historia.idChef = idUsuario
         this.historia.cantidadMegusta = 0
         this.historia.comentario = txaAgregarComentarioHistoria.text.toString()
-        this.historia.urlImagen = urlFoto
+        this.historia.urlImagen = urlFotoHistoria
 
     }
 
@@ -217,6 +252,7 @@ class PerfilChefConfiguracionFragment : Fragment(), StorageReferenceUtiles {
                             it
                         )
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, historiasPhotoURI)
+
                         startActivityForResult(takePictureIntent, requestCode)
                     }
                     if (requestCode == 5555) {
@@ -225,6 +261,7 @@ class PerfilChefConfiguracionFragment : Fragment(), StorageReferenceUtiles {
                             "ar.edu.ort.instituto.echeff.fileprovider",
                             it
                         )
+
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, chefPhotoURI)
                         startActivityForResult(takePictureIntent, requestCode)
                     }
