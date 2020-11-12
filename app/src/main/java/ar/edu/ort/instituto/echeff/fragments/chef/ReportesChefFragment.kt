@@ -152,7 +152,7 @@ class ReportesChefFragment : Fragment(), StorageReferenceUtiles {
             datosGrafico.add(PieHelper(porcentajeAConfirmar.toFloat()))
 
             for (puntaje in puntuacionList) {
-                if(puntaje.idPuntuacion > 2) {
+                if(puntaje.idPuntuacion < 2) {
                     conforme +=1
                 } else {
                     desconforme +=1

@@ -57,14 +57,4 @@ interface PerfilChefDao {
         return perfil
     }
 
-    suspend fun addPuntuacion(puntuacion: Puntuacion){
-        val questionRef = Firebase.firestore.collection("puntuacion")
-        try {
-            questionRef
-                .add(puntuacion)
-                .await()
-        } catch (e: Exception) {
-            Log.d("Error", e.toString())
-        }
-    }
 }
