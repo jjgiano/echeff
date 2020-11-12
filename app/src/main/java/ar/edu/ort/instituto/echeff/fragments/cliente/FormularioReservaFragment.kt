@@ -10,12 +10,10 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
-import ar.edu.ort.instituto.echeff.entities.EstadoReserva
 import ar.edu.ort.instituto.echeff.entities.Reserva
 import ar.edu.ort.instituto.echeff.validator.Validator
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import java.text.SimpleDateFormat
 import java.util.*
 
 class FormularioReservaFragment : Fragment(), Validator {
@@ -31,8 +29,8 @@ class FormularioReservaFragment : Fragment(), Validator {
     lateinit var spinnerTipoCocina : Spinner
     lateinit var cbTengoHorno : CheckBox
     lateinit var btnContinuar : Button
-    lateinit var imgBtnCalendar : ImageButton
-    lateinit var imgBtnHour : ImageButton
+    lateinit var imgBtnCalendar : ImageView
+    lateinit var imgBtnHour : ImageView
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,

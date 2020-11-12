@@ -53,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
                 startActivityForResult(
                     AuthUI.getInstance()
                         .createSignInIntentBuilder()
-                        .setLogo(R.drawable.ic_chef_hat)
+                        .setLogo(R.drawable.ic_logoecheff)
                         .setTheme(R.style.LogInTheme)
                         .setAvailableProviders(providers)
                         .build(), AUTH_REQUEST_CODE
