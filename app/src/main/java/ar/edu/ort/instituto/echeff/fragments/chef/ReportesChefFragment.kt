@@ -176,7 +176,7 @@ class ReportesChefFragment : Fragment(), StorageReferenceUtiles {
 
         imgChefPerfil = v.findViewById(R.id.imgChefPerfil)
         lblNombreChef = v.findViewById(R.id.lblNombreChef)
-        lblPropuestasConfirmadas = v.findViewById(R.id.tv_datosPropuestasRealizadas)
+        lblPropuestasConfirmadas = v.findViewById(R.id.tv_datosPropuestasConfirmadas)
         lblPropuestasRechazadas = v.findViewById(R.id.tv_datosPropuestasRechazadas)
         lblPropuestasRealizadas = v.findViewById(R.id.tv_datosPropuestasRealizadas)
         lblPorcentajeAceptacion = v.findViewById(R.id.tv_DatoEfectividadPropuestas)

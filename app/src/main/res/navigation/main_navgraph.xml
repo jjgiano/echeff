@@ -149,6 +149,12 @@
         <action
             android:id="@+id/action_perfilChefFragment_to_configuracionUsuarioFragment2"
             app:destination="@id/configuracionUsuarioFragment2" />
+        <argument
+            android:name="argChef"
+            app:argType="ar.edu.ort.instituto.echeff.entities.Chef" />
+        <action
+            android:id="@+id/action_perfilChefFragment_to_detalleHistoriaFragment"
+            app:destination="@id/detalleHistoriaFragment" />
     </fragment>
     <fragment
         android:id="@+id/configuracionUsuarioFragment2"
@@ -201,7 +207,11 @@
         android:id="@+id/perfilChefConfiguracionFragment"
         android:name="ar.edu.ort.instituto.echeff.fragments.chef.perfil.PerfilChefConfiguracionFragment"
         android:label="PerfilChefConfiguracionFragment"
-        tools:layout="@layout/fragment_perfil_chef_configuracion"/>
+        tools:layout="@layout/fragment_perfil_chef_configuracion">
+        <action
+            android:id="@+id/action_perfilChefConfiguracionFragment_to_perfilChefFragment"
+            app:destination="@id/perfilChefFragment" />
+    </fragment>
     <fragment
         android:id="@+id/formularioReservaDosFragment3"
         android:name="ar.edu.ort.instituto.echeff.fragments.cliente.FormularioReservaDosFragment"
@@ -284,5 +294,13 @@
         <argument
             android:name="idReserva"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/detalleHistoriaFragment"
+        android:name="ar.edu.ort.instituto.echeff.fragments.chef.perfil.DetalleHistoriaFragment"
+        android:label="DetalleHistoriaFragment" >
+        <argument
+            android:name="argHistoria"
+            app:argType="ar.edu.ort.instituto.echeff.entities.Historia" />
     </fragment>
 </navigation>

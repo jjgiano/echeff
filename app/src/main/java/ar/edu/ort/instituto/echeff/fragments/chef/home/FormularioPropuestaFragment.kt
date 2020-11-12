@@ -196,17 +196,33 @@ class FormularioPropuestaFragment : Fragment(), StorageReferenceUtiles {
             editText_Snack.isFocusable = true
             editText_Snack.isClickable = true
             editText_Snack.isEnabled = true
+            editText_Snack.isFocusableInTouchMode = true
+
             editText_Entrada.isFocusable = true
+            editText_Entrada.isEnabled = true
             editText_Entrada.isClickable = true
+            editText_Entrada.isFocusableInTouchMode = true
+
             editText_PlatoPricipal.isFocusable = true
+            editText_PlatoPricipal.isEnabled = true
             editText_PlatoPricipal.isClickable = true
+            editText_PlatoPricipal.isFocusableInTouchMode = true
+
             editText_Postre.isFocusable = true
+            editText_Postre.isEnabled = true
             editText_Postre.isClickable = true
+            editText_Postre.isFocusableInTouchMode = true
+
             editText_Adicional.isFocusable = true
             editText_Adicional.isClickable = true
+            editText_Adicional.isEnabled = true
+            editText_Adicional.isFocusableInTouchMode = true
+
             editText_Importe.isFocusable = true
             editText_Importe.isClickable = true
             editText_Importe.isEnabled = true
+            editText_Importe.isFocusableInTouchMode = true
+
         }
     }
 
