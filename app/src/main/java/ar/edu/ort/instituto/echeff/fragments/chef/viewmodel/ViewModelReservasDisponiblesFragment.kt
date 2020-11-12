@@ -49,7 +49,7 @@ class ViewModelReservasDisponiblesFragment : ViewModel(), ReservaDao, UsuarioDao
 
 
     fun setcargar() {
-        cargar.value
+        cargar.value = false
         buscarReservasDisponibles().value
 
     }
