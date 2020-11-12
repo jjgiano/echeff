@@ -166,8 +166,8 @@ class RegistroUsuarioFragment : Fragment(), UsuarioDao {
             buttonChefDiploma.visibility = View.INVISIBLE
             imageViewChefDiploma.visibility = View.INVISIBLE
         } else {
-            textViewDiploma =v.findViewById(R.id.textView12)
-            imageViewProfilePic = v.findViewById(R.id.imageView)
+            textViewDiploma =v.findViewById(R.id.textViewDiploma)
+            imageViewProfilePic = v.findViewById(R.id.imageViewChefDiploma)
         }
     }
 
