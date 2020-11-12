@@ -4,26 +4,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.ort.instituto.echeff.dao.HistoriaDao
-import ar.edu.ort.instituto.echeff.dao.PerfilChefDao
-import ar.edu.ort.instituto.echeff.dao.UsuarioDao
 import ar.edu.ort.instituto.echeff.entities.Chef
 import ar.edu.ort.instituto.echeff.entities.Historia
 import ar.edu.ort.instituto.echeff.entities.PerfilChef
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class ViewModelPerfilChefFragment: ViewModel(), PerfilChefDao, HistoriaDao, UsuarioDao{
+class ViewModelDetalleHistoriaFragmetn :  ViewModel(),  HistoriaDao{
 
-    var dataPerfil = MutableLiveData<PerfilChef>()
     var buscar = MutableLiveData<Boolean>()
     var listDataHistoria = MutableLiveData<MutableList<Historia>>()
-    var chef  = MutableLiveData<Chef>()
+    var chef  = MutableLiveData<Historia>()
 
-    private fun buscarPerfil(idChef: String): Boolean {
+    private fun buscarHistoria(idChef: String): Boolean {
         viewModelScope.launch {
-            delay(1000);
-            dataPerfil.value = getPerfilByIdChef(idChef)
-            chef.value = getChefByUserId(idChef)
+
             listDataHistoria.postValue(getHistorasByChef(idChef))
         }
         return true
@@ -31,13 +26,13 @@ class ViewModelPerfilChefFragment: ViewModel(), PerfilChefDao, HistoriaDao, Usua
     }
 
     fun setBuscar(idChef : String) {
-        buscar.value = buscarPerfil(idChef)
+        buscar.value = buscarHistoria(idChef)
 
     }
 
-    fun actualizarPerfil(perfilChef: PerfilChef) {
+    fun actualizarHistoria(historiaChef: Historia) {
         viewModelScope.launch {
-            update(perfilChef)
+            update(historiaChef)
         }
     }
 }

@@ -33,9 +33,10 @@ class CalificarServicioFragment : Fragment() {
     private lateinit var viewModel: ViewModelCalificarServicioFragment
     private lateinit var idReserva: String
 
-    private var idChef: String = ""
+    private lateinit var idChef: String
     private var radioButtons = ArrayList<RadioButton>()
     private var puntacionIndicada: Int = 0
+    private lateinit var puntuacion: Puntuacion
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,23 +61,36 @@ class CalificarServicioFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        idReserva  = CalificarServicioFragmentArgs.fromBundle(requireArguments()).idReserva
-        idChef = ""
+        idReserva = CalificarServicioFragmentArgs.fromBundle(requireArguments()).idReserva
 
-        viewModel = ViewModelProvider(requireActivity()).get(ViewModelCalificarServicioFragment::class.java)
+        viewModel =
+            ViewModelProvider(requireActivity()).get(ViewModelCalificarServicioFragment::class.java)
 
-        viewModel.getPropuestaByReserva(idReserva)
-        viewModel.liveDataPropuesta.observe(viewLifecycleOwner, Observer { propuesta ->
-            //Log.e("TAG", propuesta.id);
+        viewModel.propuesta.observe(viewLifecycleOwner, Observer { propuesta ->
             idChef = propuesta.idChef
+        })
+
+        viewModel.puntuacion.observe(viewLifecycleOwner, Observer { puntuacion ->
+            this.puntuacion = puntuacion
+            if (puntuacion.idChef.isNotEmpty()) {
+                btnEnviarCalificacion.isEnabled = false
+                btnEnviarCalificacion.text = "YA CALIFICADO"
+                tbxComentario.setText(puntuacion.mensaje)
+                tbxComentario.isEnabled = false
+                setValueRadioButton(puntuacion.idPuntuacion)
+                disableRadioButtons()
+            }else{
+                createRadioListener()
+            }
         })
     }
 
     override fun onStart() {
         super.onStart()
+        viewModel.getPuntuacionActual(idReserva)
+        viewModel.getPropuestaByReserva(idReserva)
 
         radioButtons = ArrayList()
-
         radioButtons.add(rdbOpcionUno)
         radioButtons.add(rdbOpcionDos)
         radioButtons.add(rdbOpcionTres)
@@ -84,13 +98,12 @@ class CalificarServicioFragment : Fragment() {
 
         btnEnviarCalificacion.isEnabled = false
 
-        createRadioListener()
-
         btnEnviarCalificacion.setOnClickListener {
             val puntuacionCliente = Puntuacion(
                 puntacionIndicada,
                 tbxComentario.text.toString(),
-                idChef
+                idChef,
+                idReserva
             )
 
             viewModel.cargarNuevaPuntuacion(puntuacionCliente)
@@ -121,6 +134,16 @@ class CalificarServicioFragment : Fragment() {
                     puntacionIndicada = index + 1
                 }
             }
+        }
+    }
+
+    private fun setValueRadioButton(id: Int) {
+        radioButtons[id - 1].isChecked = true
+    }
+
+    private fun disableRadioButtons() {
+        radioButtons.forEach { radio ->
+            radio.isEnabled = false
         }
     }
 }

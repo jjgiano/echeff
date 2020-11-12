@@ -170,15 +170,15 @@ class FormularioPropuestaModificacionesFragment : Fragment(), StorageReferenceUt
             viewModelPropuesta.modificarPropuesta(propuesta)
 
             //Cambio los botones y blockeo los textos
-            btn_EditarPropuesta.setVisibility(View.VISIBLE);
-            btn_EnviarPropuesta.setVisibility(View.VISIBLE);
-            btn_Propuesta.setVisibility(View.INVISIBLE);
-            text_Snack.setFocusable(false)
-            text_Entrada.setFocusable(false)
-            text_PlatoPricipal.setFocusable(false)
-            text_Postre.setFocusable(false)
-            text_Adicional.setFocusable(false)
-            text_Total.setFocusable(false)
+            btn_EditarPropuesta.visibility = View.VISIBLE;
+            btn_EnviarPropuesta.visibility = View.VISIBLE;
+            btn_Propuesta.visibility = View.INVISIBLE;
+            text_Snack.isFocusable = false
+            text_Entrada.isFocusable = false
+            text_PlatoPricipal.isFocusable = false
+            text_Postre.isFocusable = false
+            text_Adicional.isFocusable = false
+            text_Total.isFocusable = false
         }
         // Boton de envio de Propuesta
         btn_EnviarPropuesta.setOnClickListener {
@@ -194,28 +194,39 @@ class FormularioPropuestaModificacionesFragment : Fragment(), StorageReferenceUt
 
             //modificar la vista de los botones
 
-            btn_EnviarPropuesta.setVisibility(View.INVISIBLE);
-            btn_EditarPropuesta.setVisibility(View.INVISIBLE);
-            btn_Propuesta.setVisibility(View.VISIBLE);
+            btn_EnviarPropuesta.visibility = View.INVISIBLE;
+            btn_EditarPropuesta.visibility = View.INVISIBLE;
+            btn_Propuesta.visibility = View.VISIBLE;
 
-            text_Snack.setFocusable(true)
-            text_Snack.setClickable(true)
-            text_Snack.setEnabled(true)
-            text_Entrada.setFocusable(true)
-            text_Entrada.setClickable(true)
-            text_Entrada.setEnabled(true)
-            text_PlatoPricipal.setFocusable(true)
-            text_PlatoPricipal.setClickable(true)
-            text_PlatoPricipal.setEnabled(true)
-            text_Postre.setFocusable(true)
-            text_Postre.setClickable(true)
-            text_Postre.setEnabled(true)
-            text_Adicional.setFocusable(true)
-            text_Adicional.setClickable(true)
-            text_Adicional.setEnabled(true)
-            text_Total.setFocusable(true)
-            text_Total.setClickable(true)
-            text_Total.setEnabled(true)
+            text_Snack.isFocusable = true
+            text_Snack.isClickable = true
+            text_Snack.isEnabled = true
+            text_Snack.isFocusableInTouchMode = true
+
+            text_Entrada.isFocusable = true
+            text_Entrada.isClickable = true
+            text_Entrada.isEnabled = true
+            text_Entrada.isFocusableInTouchMode = true
+
+            text_PlatoPricipal.isFocusable = true
+            text_PlatoPricipal.isClickable = true
+            text_PlatoPricipal.isEnabled = true
+            text_PlatoPricipal.isFocusableInTouchMode = true
+
+            text_Postre.isFocusable = true
+            text_Postre.isClickable = true
+            text_Postre.isEnabled = true
+            text_Postre.isFocusableInTouchMode = true
+
+            text_Adicional.isFocusable = true
+            text_Adicional.isClickable = true
+            text_Adicional.isEnabled = true
+            text_Adicional.isFocusableInTouchMode = true
+
+            text_Total.isFocusable = true
+            text_Total.isClickable = true
+            text_Total.isEnabled = true
+            text_Total.isFocusableInTouchMode = true
 
 
         }

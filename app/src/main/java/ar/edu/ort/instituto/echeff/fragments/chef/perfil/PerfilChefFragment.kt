@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -27,11 +28,14 @@ import ar.edu.ort.instituto.echeff.utils.StorageReferenceUtiles
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import ar.edu.ort.instituto.echeff.utils.GlideApp
 import com.getbase.floatingactionbutton.FloatingActionButton
+import com.getbase.floatingactionbutton.FloatingActionsMenu
+
 
 
 class PerfilChefFragment : Fragment(), StorageReferenceUtiles {
     lateinit var v: View
     private lateinit var viewModel: ViewModelPerfilChefFragment
+    lateinit var sharedPreferences: SharedPreferences
 
     lateinit var imgChefPerfil: ImageView
     lateinit var lblNombreChef: TextView
@@ -41,6 +45,7 @@ class PerfilChefFragment : Fragment(), StorageReferenceUtiles {
     lateinit var revComentarioCliente: RecyclerView
     lateinit var revHistoriasChef: RecyclerView
     lateinit var btnVerMasComentarios: Button
+    lateinit var btnFloatMenu : FloatingActionsMenu
     lateinit var btnHistoriasPerfilChef: FloatingActionButton
     lateinit var btnConfiguracionPerfilChef: FloatingActionButton
 
@@ -80,7 +85,7 @@ class PerfilChefFragment : Fragment(), StorageReferenceUtiles {
         revHistoriasChef = v.findViewById(R.id.revHisotriasChef)
         btnConfiguracionPerfilChef = v.findViewById(R.id.fabConfiguracion)
         btnHistoriasPerfilChef = v.findViewById(R.id.fabHistorias)
-
+        btnFloatMenu = v.findViewById(R.id.floatmenu)
         btnAgregarMeGusta = v.findViewById(R.id.btnAgregarMeGusta)
 
         return v
@@ -94,9 +99,6 @@ class PerfilChefFragment : Fragment(), StorageReferenceUtiles {
         viewModel.dataPerfil.observe(viewLifecycleOwner, Observer { result ->
 
             perfil = result
-
-
-
         })
 
         viewModel.chef.observe(viewLifecycleOwner, Observer {result ->
@@ -106,23 +108,30 @@ class PerfilChefFragment : Fragment(), StorageReferenceUtiles {
 
         viewModel.listDataHistoria.observe(viewLifecycleOwner, Observer{ historias ->
             historiasList = historias
-            historiasListAdapter = HistoriasListAdapter(historiasList, requireContext())
+            historiasListAdapter = HistoriasListAdapter(historiasList,   requireContext()) { position -> onItemClick(position) }
             revHistoriasChef.adapter = historiasListAdapter
         })
     }
 
+
     override fun onStart() {
         super.onStart()
+        setSharedPreferences()
 
+        var idUsuario : String  = sharedPreferences.getString("userId","Vacio")!!
+        var nombreUsuario : String = sharedPreferences.getString("userDisplayName","Nombre No encontrado")!!
+        var eschef : Boolean = sharedPreferences.getBoolean("isChef",false)
 
-        var sharedPref: SharedPreferences = requireContext().getSharedPreferences(EcheffUtilities.PREF_NAME.valor, Context.MODE_PRIVATE)
-        var idUsuario : String  = sharedPref.getString("userId","Vacio")!!
-        var nombreUsuario : String = sharedPref.getString("userDisplayName","Nombre No encontrado")!!
+        if (!eschef) {
+            btnFloatMenu.visibility = View.INVISIBLE
+            chef = PerfilChefFragmentArgs.fromBundle(requireArguments()).argChef
+            lblNombreChef.text =chef.nombre
+            viewModel.setBuscar(chef.idUsuario)
 
-
-        lblNombreChef.text =nombreUsuario
-        viewModel.setBuscar(idUsuario)
-
+        } else {
+            lblNombreChef.text = nombreUsuario
+            viewModel.setBuscar(idUsuario)
+        }
         //Configuracion
         linearLayoutManagerComentario = LinearLayoutManager(context)
         revComentarioCliente.setHasFixedSize(true)
@@ -147,7 +156,7 @@ class PerfilChefFragment : Fragment(), StorageReferenceUtiles {
         }
 
         btnAgregarMeGusta.setOnClickListener() {
-            perfil.meGusta += 1;
+            if (!eschef) perfil.meGusta += 1;
             lblCantidadMeGusta.text = perfil.meGusta.toString()
             viewModel.actualizarPerfil(perfil)
         }
@@ -164,22 +173,32 @@ class PerfilChefFragment : Fragment(), StorageReferenceUtiles {
         }
     }
 
+   private fun onItemClick(position: Int) {
+        val irAHistoria =
+            PerfilChefFragmentDirections.actionPerfilChefFragmentToDetalleHistoriaFragment(historiasList[position])
+        v.findNavController().navigate(irAHistoria);
+    }
+
     fun llenarFichaPerfil(){
-
-
         txtBiografiaChef.text = perfil.bio
-
         lblCantidadComentarios.text = 5.toString()
         lblCantidadMeGusta.text = perfil.meGusta.toString()
 
-        GlideApp.with(this)
+        GlideApp
+            .with(this)
             .load(buscarReferencia(chef.urlFoto))
             .centerInside()
             .into(imgChefPerfil);
 
-
-
     }
+
+    private fun setSharedPreferences() {
+        this.sharedPreferences = this.activity!!.getSharedPreferences(
+            EcheffUtilities.PREF_NAME.valor,
+            AppCompatActivity.MODE_PRIVATE
+        )
+    }
+
 
 
 
