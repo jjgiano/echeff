@@ -81,7 +81,9 @@ class RegistroUsuarioFragment : Fragment(), UsuarioDao {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-            v = inflater.inflate(layout, container, false)
+
+
+        v = inflater.inflate(layout, container, false)
 
             setViewRegistro(opcion)
 
@@ -165,9 +167,6 @@ class RegistroUsuarioFragment : Fragment(), UsuarioDao {
 
             buttonChefDiploma.visibility = View.INVISIBLE
             imageViewChefDiploma.visibility = View.INVISIBLE
-        } else {
-            textViewDiploma =v.findViewById(R.id.textViewDiploma)
-            imageViewProfilePic = v.findViewById(R.id.imageViewChefDiploma)
         }
     }
 
