@@ -372,7 +372,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
         <TextView
-            android:id="@+id/textViewDiploma2"
+            android:id="@+id/txt_TituloModificaciones"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -388,10 +388,11 @@
             android:id="@+id/tv_Modificaciones"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:background="@drawable/style_border_bigger"
             android:padding="5sp"
             android:paddingStart="5sp"
-            android:paddingLeft="5sp"
+            android:paddingLeft="10sp"
             android:paddingTop="5sp"
             android:paddingEnd="5sp"
             android:paddingRight="5sp"
@@ -400,7 +401,7 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline8"
             app:layout_constraintStart_toStartOf="@+id/guideline6"
-            app:layout_constraintTop_toBottomOf="@+id/textViewDiploma" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_TituloModificaciones" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
