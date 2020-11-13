@@ -202,7 +202,11 @@
         android:name="ar.edu.ort.instituto.echeff.fragments.chef.perfil.PerfilChefComentariosFragment"
         android:label="PerfilChefComentariosFragment"
         tools:layout="@layout/fragment_perfil_chef_comentarios"
-        />
+        >
+        <argument
+            android:name="ChefComentarioArg"
+            app:argType="ar.edu.ort.instituto.echeff.entities.Chef" />
+    </fragment>
     <fragment
         android:id="@+id/perfilChefConfiguracionFragment"
         android:name="ar.edu.ort.instituto.echeff.fragments.chef.perfil.PerfilChefConfiguracionFragment"

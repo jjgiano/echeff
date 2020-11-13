@@ -103,7 +103,8 @@ class CalificarServicioFragment : Fragment() {
                 puntacionIndicada,
                 tbxComentario.text.toString(),
                 idChef,
-                idReserva
+                idReserva,
+                ""
             )
 
             viewModel.cargarNuevaPuntuacion(puntuacionCliente)

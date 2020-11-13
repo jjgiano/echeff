@@ -17,7 +17,7 @@ class Reserva(
     notas: String,
     idUsuario: String,
     idEstadoReserva: Int,
-    urlImg: String? = null
+    urlImg: String?
 ) : Parcelable {
 
     var id: String
@@ -34,7 +34,7 @@ class Reserva(
     var idEstadoReserva: Int
     var urlImg: String?
 
-    constructor() : this("", "", "", "", "", "", 0, "", "", "", "", 0)
+    constructor() : this("", "", "", "", "", "", 0, "", "", "", "", 0,"")
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
@@ -47,7 +47,8 @@ class Reserva(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
-        parcel.readInt()
+        parcel.readInt(),
+        parcel.readString()!!
     )
 
     init {
@@ -80,6 +81,7 @@ class Reserva(
         parcel.writeString(notas)
         parcel.writeString(idUsuario)
         parcel.writeInt(idEstadoReserva)
+        parcel.writeString(urlImg)
     }
 
     override fun describeContents(): Int {

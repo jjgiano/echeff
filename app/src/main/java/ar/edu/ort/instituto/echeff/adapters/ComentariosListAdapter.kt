@@ -9,12 +9,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.entities.Comentario
+import ar.edu.ort.instituto.echeff.entities.Puntuacion
+import ar.edu.ort.instituto.echeff.utils.GlideApp
+import ar.edu.ort.instituto.echeff.utils.StorageReferenceUtiles
 import com.bumptech.glide.Glide
 
 class ComentariosListAdapter(
-    private var comentarioList: MutableList<Comentario>,
+    private var comentarioList: MutableList<Puntuacion>,
     private val context: Context
-) : RecyclerView.Adapter<ComentariosListAdapter.ComentarioHolder>() {
+) : RecyclerView.Adapter<ComentariosListAdapter.ComentarioHolder>(), StorageReferenceUtiles {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ComentarioHolder {
@@ -25,13 +28,13 @@ class ComentariosListAdapter(
     }
 
     override fun onBindViewHolder(holder: ComentarioHolder, position: Int) {
-        holder.setComentario(comentarioList[position].comentario)
-        holder.setCalificacion(comentarioList[position].califiacion)
+        holder.setComentario(comentarioList[position].mensaje)
+        holder.setCalificacion(comentarioList[position].idPuntuacion)
 
-        Glide
+        GlideApp
             .with(context)
-            .load(comentarioList[position].urlAvatar)
-            .centerCrop()
+            .load(buscarReferencia(comentarioList[position].urlImg!!))
+            .centerInside()
             .into(holder.getAvatarView())
     }
 
