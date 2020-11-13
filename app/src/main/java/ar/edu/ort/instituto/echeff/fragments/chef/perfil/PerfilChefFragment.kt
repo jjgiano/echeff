@@ -1,6 +1,6 @@
 package ar.edu.ort.instituto.echeff.fragments.chef.perfil
 
-import android.content.Context
+
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -17,12 +17,8 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
-import ar.edu.ort.instituto.echeff.adapters.ComentariosListAdapter
 import ar.edu.ort.instituto.echeff.adapters.HistoriasListAdapter
-import ar.edu.ort.instituto.echeff.entities.Chef
-import ar.edu.ort.instituto.echeff.entities.Comentario
-import ar.edu.ort.instituto.echeff.entities.Historia
-import ar.edu.ort.instituto.echeff.entities.PerfilChef
+import ar.edu.ort.instituto.echeff.entities.*
 import ar.edu.ort.instituto.echeff.fragments.chef.viewmodel.ViewModelPerfilChefFragment
 import ar.edu.ort.instituto.echeff.utils.StorageReferenceUtiles
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
@@ -49,13 +45,15 @@ class PerfilChefFragment : Fragment(), StorageReferenceUtiles {
     lateinit var btnHistoriasPerfilChef: FloatingActionButton
     lateinit var btnConfiguracionPerfilChef: FloatingActionButton
 
+    //Datos de la Puntiacion
+    lateinit var imgUsuario : ImageView
+    lateinit var txtComentarioCliente : TextView
+    lateinit var txtCalificacionCliente: TextView
+
     lateinit var btnAgregarMeGusta: Button
 
-    private var comentariosFakeList: MutableList<Comentario> = ArrayList()
+    private var puntuacionList: MutableList<Puntuacion> = ArrayList()
     private var historiasList: MutableList<Historia> = ArrayList()
-
-    private lateinit var comentariosListAdapter: ComentariosListAdapter
-    private lateinit var linearLayoutManagerComentario: LinearLayoutManager
 
     private lateinit var historiasListAdapter: HistoriasListAdapter
     private lateinit var linearLayoutManagerHistoria: LinearLayoutManager
@@ -80,13 +78,15 @@ class PerfilChefFragment : Fragment(), StorageReferenceUtiles {
         lblCantidadMeGusta = v.findViewById(R.id.lblCantidadMeGusta)
         lblCantidadComentarios = v.findViewById(R.id.lblCantidadComentarios)
         txtBiografiaChef = v.findViewById(R.id.txtBiografiaChef)
-        revComentarioCliente = v.findViewById(R.id.revComentarioCliente)
         btnVerMasComentarios = v.findViewById(R.id.btnVerMasComentarios)
         revHistoriasChef = v.findViewById(R.id.revHisotriasChef)
         btnConfiguracionPerfilChef = v.findViewById(R.id.fabConfiguracion)
         btnHistoriasPerfilChef = v.findViewById(R.id.fabHistorias)
         btnFloatMenu = v.findViewById(R.id.floatmenu)
         btnAgregarMeGusta = v.findViewById(R.id.btnAgregarMeGusta)
+        imgUsuario = v.findViewById(R.id.imgHistoria)
+        txtComentarioCliente = v.findViewById(R.id.txtComentarioCliente)
+        txtCalificacionCliente = v.findViewById(R.id.txtCalificacionCliente)
 
         return v
     }
@@ -110,7 +110,13 @@ class PerfilChefFragment : Fragment(), StorageReferenceUtiles {
             historiasList = historias
             historiasListAdapter = HistoriasListAdapter(historiasList,   requireContext()) { position -> onItemClick(position) }
             revHistoriasChef.adapter = historiasListAdapter
+
         })
+        viewModel.listDataPuntuacion.observe(viewLifecycleOwner, Observer { puntuaciones ->
+            puntuacionList = puntuaciones
+            llenarPuntuacion()
+        })
+
     }
 
 
@@ -133,25 +139,15 @@ class PerfilChefFragment : Fragment(), StorageReferenceUtiles {
             viewModel.setBuscar(idUsuario)
         }
         //Configuracion
-        linearLayoutManagerComentario = LinearLayoutManager(context)
-        revComentarioCliente.setHasFixedSize(true)
-        revComentarioCliente.layoutManager = linearLayoutManagerComentario
-
         linearLayoutManagerHistoria = LinearLayoutManager(context)
         revHistoriasChef.isNestedScrollingEnabled = false
         revHistoriasChef.layoutManager = linearLayoutManagerHistoria
 
 
-
-        comentariosListAdapter = ComentariosListAdapter(comentariosFakeList, requireContext())
-        revComentarioCliente.adapter = comentariosListAdapter
-
-
-
         //Listeners
         btnVerMasComentarios.setOnClickListener() {
             val perfilComentarioChef =
-                PerfilChefFragmentDirections.actionPerfilChefFragmentToPerfilChefComentariosFragment()
+                PerfilChefFragmentDirections.actionPerfilChefFragmentToPerfilChefComentariosFragment(chef)
             v.findNavController().navigate(perfilComentarioChef)
         }
 
@@ -179,7 +175,7 @@ class PerfilChefFragment : Fragment(), StorageReferenceUtiles {
         v.findNavController().navigate(irAHistoria);
     }
 
-    fun llenarFichaPerfil(){
+    private fun llenarFichaPerfil(){
         txtBiografiaChef.text = perfil.bio
         lblCantidadComentarios.text = 5.toString()
         lblCantidadMeGusta.text = perfil.meGusta.toString()
@@ -189,6 +185,20 @@ class PerfilChefFragment : Fragment(), StorageReferenceUtiles {
             .load(buscarReferencia(chef.urlFoto))
             .centerInside()
             .into(imgChefPerfil);
+
+    }
+
+    private fun llenarPuntuacion(){
+        var item = puntuacionList.size -1
+
+        txtComentarioCliente.text = puntuacionList[item].mensaje
+        txtCalificacionCliente.text = "Puntuacion: " + puntuacionList[item].idPuntuacion.toString()
+
+        GlideApp
+            .with(this)
+            .load(buscarReferencia(puntuacionList[item].urlImg!!))
+            .centerInside()
+            .into(imgUsuario);
 
     }
 
