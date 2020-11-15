@@ -59,6 +59,7 @@ class CalificarServicioFragment : Fragment() {
         return v
     }
 
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         idReserva = CalificarServicioFragmentArgs.fromBundle(requireArguments()).idReserva
@@ -73,14 +74,19 @@ class CalificarServicioFragment : Fragment() {
         viewModel.puntuacion.observe(viewLifecycleOwner, Observer { puntuacion ->
             this.puntuacion = puntuacion
             if (puntuacion.idChef.isNotEmpty()) {
+                setValueRadioButton(puntuacion.idPuntuacion)
+                disableRadioButtons()
                 btnEnviarCalificacion.isEnabled = false
                 btnEnviarCalificacion.text = "YA CALIFICADO"
                 tbxComentario.setText(puntuacion.mensaje)
                 tbxComentario.isEnabled = false
-                setValueRadioButton(puntuacion.idPuntuacion)
-                disableRadioButtons()
             }else{
+                btnEnviarCalificacion.text = "ENVIAR CALIFICACION"
+                tbxComentario.setText("")
+                cleanCheckBoxes()
+                btnEnviarCalificacion.isEnabled = false
                 createRadioListener()
+                enableRadioButtons()
             }
         })
     }
@@ -145,6 +151,11 @@ class CalificarServicioFragment : Fragment() {
     private fun disableRadioButtons() {
         radioButtons.forEach { radio ->
             radio.isEnabled = false
+        }
+    }
+    private fun enableRadioButtons() {
+        radioButtons.forEach { radio ->
+            radio.isEnabled = true
         }
     }
 }

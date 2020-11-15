@@ -8,7 +8,8 @@
     <fragment
         android:id="@+id/inicioFragment"
         android:name="ar.edu.ort.instituto.echeff.fragments.InicioFragment"
-        android:label="InicioFragment" >
+        android:label="InicioFragment"
+        tools:layout="@layout/fragment_inicio">
         <action
             android:id="@+id/action_inicioFragment_to_viewPagerFragment"
             app:destination="@id/viewPagerFragment" />
