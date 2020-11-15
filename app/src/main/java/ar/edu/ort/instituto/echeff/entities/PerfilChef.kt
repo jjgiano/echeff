@@ -6,7 +6,7 @@ class PerfilChef(id: String, idChef: String, bio: String, meGusta:Int) {
     var id: String
     var meGusta: Int
 
-    constructor() : this("", "", "", 1)
+    constructor() : this("", "", "", 0)
 
     init {
         this.id = id

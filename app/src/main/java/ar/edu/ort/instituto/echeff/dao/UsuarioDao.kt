@@ -5,6 +5,10 @@ import ar.edu.ort.instituto.echeff.entities.Chef
 import ar.edu.ort.instituto.echeff.entities.Cliente
 import ar.edu.ort.instituto.echeff.entities.Configuracion
 import ar.edu.ort.instituto.echeff.entities.Propuesta
+import com.google.android.gms.tasks.RuntimeExecutionException
+import com.google.firebase.auth.EmailAuthProvider
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -169,5 +173,32 @@ interface UsuarioDao {
         }
     }
 
+    suspend fun cambiarPassword (pass: String, passOld : String)  {
+        val user = FirebaseAuth.getInstance().currentUser;
+        val credential = EmailAuthProvider
+            .getCredential(user?.email!!, passOld)
 
+             user!!.reauthenticate(credential).addOnSuccessListener() {
+                     user!!.updatePassword(pass).addOnCompleteListener {
+                         if (!it.isSuccessful) throw Error(it.result.toString())
+                     }
+
+             }.addOnFailureListener() {e ->
+                throw Error(e.message)
+             }
+    }
+
+    suspend fun reAutenticarUsuario (passOld : String) {
+        val user = FirebaseAuth.getInstance().currentUser!!
+
+        val credential = EmailAuthProvider
+            .getCredential(user.email!!, passOld)
+
+        try {
+            user.reauthenticate(credential)
+        } catch ( e : Exception) {
+            Log.d("Error", "User re-authenticated.")
+            throw Error(e.message.toString())
+        }
+    }
 }

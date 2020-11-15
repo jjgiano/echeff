@@ -13,6 +13,13 @@ interface Validator{
     val DIAS_MINIMOS_PARA_SERVICIO : Int
         get() = 3
 
+    val MAX_LENGHT_PASS : Int
+        get() = 6
+
+    val MAX_LENGHT_CBU : Int
+        get() = 22
+
+
     fun validarEmail(s : String) : Boolean{
         return !TextUtils.isEmpty(this.toString()) && android.util.Patterns.EMAIL_ADDRESS.matcher(this.toString()).matches()
     }
@@ -74,6 +81,18 @@ interface Validator{
     fun valirdarNoEsNulo(s: String){
         if(s.isNullOrEmpty()){
             throw Error("No puede estar vacio. Ingrese entre 1 y ${CANT_MAX_COMENSALES}")
+        }
+    }
+
+    fun validarLargoDeContrasenia (s: String) {
+        if (s.length < MAX_LENGHT_PASS)   {
+            throw   Error("La contraseña debe tener ${MAX_LENGHT_PASS} caracteres como minimo")
+        }
+    }
+
+    fun validarLargoCBU (s: String) {
+        if (s.length < MAX_LENGHT_CBU)   {
+            throw   Error("El CBU debe tener ${MAX_LENGHT_CBU} caracteres como minimo")
         }
     }
 

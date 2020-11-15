@@ -177,7 +177,7 @@ class PerfilChefFragment : Fragment(), StorageReferenceUtiles {
 
     private fun llenarFichaPerfil(){
         txtBiografiaChef.text = perfil.bio
-        lblCantidadComentarios.text = 5.toString()
+        lblCantidadComentarios.text = puntuacionList.size.toString()
         lblCantidadMeGusta.text = perfil.meGusta.toString()
 
         GlideApp
@@ -189,16 +189,29 @@ class PerfilChefFragment : Fragment(), StorageReferenceUtiles {
     }
 
     private fun llenarPuntuacion(){
-        var item = puntuacionList.size -1
+        if (puntuacionList.size > 0) {
+            var item = puntuacionList.size - 1
 
-        txtComentarioCliente.text = puntuacionList[item].mensaje
-        txtCalificacionCliente.text = "Puntuacion: " + puntuacionList[item].idPuntuacion.toString()
+            txtComentarioCliente.text = puntuacionList[item].mensaje
+            txtCalificacionCliente.text =
+                "Puntuacion: " + puntuacionList[item].idPuntuacion.toString()
 
-        GlideApp
-            .with(this)
-            .load(buscarReferencia(puntuacionList[item].urlImg!!))
-            .centerInside()
-            .into(imgUsuario);
+            GlideApp
+                .with(this)
+                .load(buscarReferencia(puntuacionList[item].urlImg!!))
+                .centerInside()
+                .into(imgUsuario);
+        } else {
+            txtComentarioCliente.text = "SIN COMENTARIOS"
+            txtCalificacionCliente.text =
+                "Puntuacion: " + 0
+
+            GlideApp
+                .with(this)
+                .load(buscarReferencia(""))
+                .centerInside()
+                .into(imgUsuario);
+        }
 
     }
 

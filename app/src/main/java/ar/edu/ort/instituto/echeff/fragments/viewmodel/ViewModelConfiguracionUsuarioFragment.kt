@@ -1,5 +1,6 @@
 package ar.edu.ort.instituto.echeff.fragments.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,8 +19,8 @@ class ViewModelConfiguracionUsuarioFragment : ViewModel(), UsuarioDao {
     fun getConfiguracion(uid: String) {
         viewModelScope.launch {
             var config = super.getConfiguracionByUID(uid)
-            if (config.uid.isEmpty()){
-               config = super.createConfiguracion(uid)
+            if (config.uid.isEmpty()) {
+                config = super.createConfiguracion(uid)
             }
             cliente.value = getClienteByUserId(uid)
             chef.value = getChefByUserId(uid)
@@ -34,4 +35,7 @@ class ViewModelConfiguracionUsuarioFragment : ViewModel(), UsuarioDao {
             liveDataConfig.postValue(config)
         }
     }
+
+
+
 }
