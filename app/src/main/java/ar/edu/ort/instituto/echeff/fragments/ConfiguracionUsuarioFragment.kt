@@ -1,8 +1,10 @@
 package ar.edu.ort.instituto.echeff.fragments
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,19 +15,25 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.InicioActivity
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.entities.Chef
 import ar.edu.ort.instituto.echeff.entities.Cliente
 import ar.edu.ort.instituto.echeff.entities.Configuracion
+import ar.edu.ort.instituto.echeff.fragments.chef.HomeChefFragmentDirections
 import ar.edu.ort.instituto.echeff.fragments.viewmodel.ViewModelConfiguracionUsuarioFragment
 import ar.edu.ort.instituto.echeff.utils.StorageReferenceUtiles
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import ar.edu.ort.instituto.echeff.utils.GlideApp
+import ar.edu.ort.instituto.echeff.validator.Validator
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.fragment_configuracion_usuario.*
 
-class ConfiguracionUsuarioFragment : Fragment(), StorageReferenceUtiles {
+class ConfiguracionUsuarioFragment : Fragment(), StorageReferenceUtiles, Validator {
     lateinit var viewModel: ViewModelConfiguracionUsuarioFragment
     lateinit var sharedPreferences: SharedPreferences
     lateinit var v: View
@@ -45,6 +53,9 @@ class ConfiguracionUsuarioFragment : Fragment(), StorageReferenceUtiles {
     lateinit var buttonBorrarCuenta: Button
     lateinit var config: Configuracion
     lateinit var textViewCBU: TextView
+    lateinit var textPasword : TextView
+    var mensaje = ""
+
     var chef: Chef = Chef()
     var cliente: Cliente = Cliente()
 
@@ -80,6 +91,7 @@ class ConfiguracionUsuarioFragment : Fragment(), StorageReferenceUtiles {
         buttonModificarCBU.visibility = View.INVISIBLE
         textViewCBU.visibility = View.INVISIBLE
         buttonGuardarCBU.visibility = View.INVISIBLE
+
 
         return v
     }
@@ -124,6 +136,7 @@ class ConfiguracionUsuarioFragment : Fragment(), StorageReferenceUtiles {
         if (ischef) {
             buttonModificarCBU.visibility = View.VISIBLE
             textViewCBU.visibility = View.VISIBLE
+            textViewCBU.isEnabled = false
         }
 
 
@@ -156,23 +169,29 @@ class ConfiguracionUsuarioFragment : Fragment(), StorageReferenceUtiles {
         }
 
         buttonModificarContrasenia.setOnClickListener {
-            Snackbar.make(it, "buttonModificarContrasenia.setOnClickListener", Snackbar.LENGTH_LONG)
-                .show()
+            val action =
+                ConfiguracionUsuarioFragmentDirections.actionConfiguracionUsuarioFragment2ToModificarContraseniaFragment()
+            v.findNavController().navigate(action)
         }
+
 
         buttonModificarCBU.setOnClickListener {
             textViewCBU.isFocusable = true
             textViewCBU.isEnabled = true
             textViewCBU.isClickable = true
+            textViewCBU.isFocusableInTouchMode = true
             buttonModificarCBU.visibility = View.INVISIBLE
             buttonGuardarCBU.visibility = View.VISIBLE
         }
 
         buttonGuardarCBU.setOnClickListener {
-            config.CBU = textViewCBU.text.toString()
-            viewModel.changeConfiguracion(config)
-            buttonModificarCBU.visibility = View.VISIBLE
-            buttonGuardarCBU.visibility = View.INVISIBLE
+            if (validar()) {
+                config.CBU = textViewCBU.text.toString()
+                viewModel.changeConfiguracion(config)
+                buttonModificarCBU.visibility = View.VISIBLE
+                buttonGuardarCBU.visibility = View.INVISIBLE
+                textViewCBU.isEnabled = false
+            }
         }
 
         buttonCerrarSesion.setOnClickListener {
@@ -190,10 +209,36 @@ class ConfiguracionUsuarioFragment : Fragment(), StorageReferenceUtiles {
         }
 
         buttonBorrarCuenta.setOnClickListener {
-            Snackbar.make(it, "buttonBorrarCuenta.setOnClickListener", Snackbar.LENGTH_LONG).show()
+            AuthUI.getInstance()
+                .delete(context!!)
+                .addOnCompleteListener {
+                    sharedPreferences.edit().clear().commit();
+
+                    val intent = Intent(context, InicioActivity::class.java)
+                    startActivity(intent)
+
+                }
         }
     }
 
+    private fun validar():Boolean {
+        var valido = true
+        clearErrors()
+
+            try {
+                validarLargoCBU(textViewCBU.text.toString())
+            } catch (e: Error) {
+                textViewCBU.error = e.message
+                valido = false
+            }
+
+        return valido
+    }
+
+    private fun clearErrors(){
+        textViewCBU.error = null
+
+    }
 
     private fun setSharedPreferences() {
         this.sharedPreferences = this.activity!!.getSharedPreferences(
@@ -221,5 +266,23 @@ class ConfiguracionUsuarioFragment : Fragment(), StorageReferenceUtiles {
             .centerInside()
             .into(imageViewUsuario)
     }
+
+  /*  private fun cambiarContrasenia(newPassword:String){
+        /*val user = FirebaseAuth.getInstance().currentUser;
+
+
+        user!!.updatePassword(newPassword)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d(TAG, "Contraseña actualizada!!!")
+                    Snackbar.make(v, "Contraseña actualizada!!!", Snackbar.LENGTH_LONG).show()
+                } else {
+                    Log.d(TAG, "Error al cambiar la contraseña")
+                    Snackbar.make(v, "Error al cambiar la contraseña", Snackbar.LENGTH_LONG).show()
+                }
+            }*/
+
+    }*/
+
 }
 

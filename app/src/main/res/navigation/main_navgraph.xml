@@ -160,7 +160,11 @@
         android:id="@+id/configuracionUsuarioFragment2"
         android:name="ar.edu.ort.instituto.echeff.fragments.ConfiguracionUsuarioFragment"
         android:label="fragment_configuracion_usuario"
-        tools:layout="@layout/fragment_configuracion_usuario" />
+        tools:layout="@layout/fragment_configuracion_usuario" >
+        <action
+            android:id="@+id/action_configuracionUsuarioFragment2_to_modificarContraseniaFragment"
+            app:destination="@id/modificarContraseniaFragment" />
+    </fragment>
     <fragment
         android:id="@+id/vistaPropuestasFragment"
         android:name="ar.edu.ort.instituto.echeff.fragments.chef.home.VistaServiciosFragment"
@@ -307,4 +311,9 @@
             android:name="argHistoria"
             app:argType="ar.edu.ort.instituto.echeff.entities.Historia" />
     </fragment>
+    <fragment
+        android:id="@+id/modificarContraseniaFragment"
+        android:name="ar.edu.ort.instituto.echeff.fragments.ModificarContraseniaFragment"
+        android:label="fragment_modificar__contrasenia"
+        tools:layout="@layout/fragment_modificar__contrasenia" />
 </navigation>
