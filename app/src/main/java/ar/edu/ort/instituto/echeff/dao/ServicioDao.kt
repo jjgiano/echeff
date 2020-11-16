@@ -78,18 +78,19 @@ interface   ServicioDao {
         return servicioList
     }
 
-    suspend fun getServiciosPendientes(): MutableList<Servicio> {
+    suspend fun getServiciosPendientesByCliente(idCliente: String): MutableList<Servicio> {
 
-        var servicioList: MutableList<Servicio> = ArrayList<Servicio>()
+        var servicioList: MutableList<Servicio> = ArrayList()
 
         val questionRef = Firebase.firestore.collection("servicios")
         val query = questionRef.whereEqualTo("idEstadoServicio",EstadoServicio.ACTIVO.id)
+            .whereEqualTo("idCliente",idCliente)
         try {
             val data = query
                 .get()
                 .await()
             for (document in data) {
-                servicioList.add(document.toObject<Servicio>())
+                servicioList.add(document.toObject())
             }
         } catch (e: Exception) {
             Log.d("Error", e.toString())

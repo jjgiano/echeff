@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_homeClienteFragment_to_detalleReservaFragment2"
             app:destination="@id/detalleReservaFragment" />
+        <action
+            android:id="@+id/action_homeClienteFragment_to_detalleServicioFragment"
+            app:destination="@id/detalleServicioFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeChefFragment"
@@ -280,6 +283,13 @@
         <action
             android:id="@+id/action_detalleServicioFragment_to_homeChefFragment"
             app:destination="@id/homeChefFragment" />
+        <action
+            android:id="@+id/action_detalleServicioFragment_to_homeClienteFragment"
+            app:destination="@id/homeClienteFragment" />
+        <argument
+            android:name="isUser"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/resultadoMensajeFragment"
