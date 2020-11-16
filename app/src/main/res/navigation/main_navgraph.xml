@@ -198,6 +198,9 @@
         <action
             android:id="@+id/action_vistaReservasFragment_to_calificarServicioFragment"
             app:destination="@id/calificarServicioFragment" />
+        <action
+            android:id="@+id/action_vistaReservasFragment_to_detalleReservaFragment"
+            app:destination="@id/detalleReservaFragment" />
     </fragment>
     <fragment
         android:id="@+id/mesaAyudaFragment2"
