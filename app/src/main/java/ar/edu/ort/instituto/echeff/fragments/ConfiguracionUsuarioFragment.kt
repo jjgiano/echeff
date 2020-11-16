@@ -34,9 +34,9 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_configuracion_usuario.*
 
 class ConfiguracionUsuarioFragment : Fragment(), StorageReferenceUtiles, Validator {
-    lateinit var viewModel: ViewModelConfiguracionUsuarioFragment
-    lateinit var sharedPreferences: SharedPreferences
     lateinit var v: View
+
+    lateinit var sharedPreferences: SharedPreferences
     lateinit var textViewConfiguracion: TextView
     lateinit var textViewNombreUsuario: TextView
     lateinit var textViewNumberLikes: TextView
@@ -51,13 +51,13 @@ class ConfiguracionUsuarioFragment : Fragment(), StorageReferenceUtiles, Validat
     lateinit var buttonGuardarCBU: Button
     lateinit var buttonCerrarSesion: Button
     lateinit var buttonBorrarCuenta: Button
-    lateinit var config: Configuracion
     lateinit var textViewCBU: TextView
-    lateinit var textPasword : TextView
-    var mensaje = ""
+
+    lateinit var viewModel: ViewModelConfiguracionUsuarioFragment
 
     var chef: Chef = Chef()
     var cliente: Cliente = Cliente()
+    var config: Configuracion = Configuracion()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -259,30 +259,12 @@ class ConfiguracionUsuarioFragment : Fragment(), StorageReferenceUtiles, Validat
 
         if (!url.isNotEmpty()) url = EcheffUtilities.SIN_FOTO.valor
 
-        // TODO: levantar la foto del chef del firebase
         GlideApp
             .with(this)
             .load(buscarReferencia(url))
             .centerInside()
             .into(imageViewUsuario)
     }
-
-  /*  private fun cambiarContrasenia(newPassword:String){
-        /*val user = FirebaseAuth.getInstance().currentUser;
-
-
-        user!!.updatePassword(newPassword)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.d(TAG, "Contraseña actualizada!!!")
-                    Snackbar.make(v, "Contraseña actualizada!!!", Snackbar.LENGTH_LONG).show()
-                } else {
-                    Log.d(TAG, "Error al cambiar la contraseña")
-                    Snackbar.make(v, "Error al cambiar la contraseña", Snackbar.LENGTH_LONG).show()
-                }
-            }*/
-
-    }*/
 
 }
 
