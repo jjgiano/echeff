@@ -41,6 +41,8 @@ class ConfirmacionReservaFragment : Fragment() {
     lateinit var buttonModificar: Button
     lateinit var buttonConfirmar: Button
     lateinit var crdPerfilChef: ConstraintLayout
+    lateinit var btnVolverHome : Button
+    lateinit var textViewConfirmaReserva: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,6 +62,8 @@ class ConfirmacionReservaFragment : Fragment() {
         buttonModificar = v.findViewById(R.id.buttonModificar)
         buttonConfirmar = v.findViewById(R.id.buttonConfirmar)
         crdPerfilChef = v.findViewById(R.id.crdPerfilChef)
+        btnVolverHome = v.findViewById(R.id.volverAlHome)
+        textViewConfirmaReserva = v.findViewById(R.id.textViewConfirmaReserva)
 
         return v
     }
@@ -83,7 +87,12 @@ class ConfirmacionReservaFragment : Fragment() {
             textViewAdicionales.text = propuesta.adicional
             textViewImporteTotal.text = propuesta.total.toString()
             viewModel.loadChef(propuesta.idChef)
+            this.textViewConfirmaReserva.text = "Confirma la Propuesta"
+            onPropuestaDestacada()
         })
+
+
+
 
         buttonModificar.setOnClickListener {
             sharedPreferences.edit().putString("idPropuesta", propuesta.id).apply()
@@ -135,4 +144,18 @@ class ConfirmacionReservaFragment : Fragment() {
             .into(imageViewChef)
     }
 
+    private fun onPropuestaDestacada(){
+        if (propuesta.destacada!!) {
+            this.textViewConfirmaReserva.text = "Reserva Destacada"
+            this.buttonConfirmar.visibility = View.GONE
+            this.buttonModificar.visibility = View.GONE
+            btnVolverHome.visibility = View.VISIBLE
+
+            btnVolverHome.setOnClickListener {
+                val homeClienteScreen =
+                    ConfirmacionReservaFragmentDirections.actionConfirmacionReservaFragment2ToHomeClienteFragment()
+                v.findNavController().navigate(homeClienteScreen)
+            }
+        }
+    }
 }

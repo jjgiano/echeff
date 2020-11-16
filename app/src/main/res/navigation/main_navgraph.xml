@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_homeClienteFragment_to_vistaReservasFragment"
             app:destination="@id/vistaReservasFragment" />
+        <action
+            android:id="@+id/action_homeClienteFragment_to_detalleReservaFragment2"
+            app:destination="@id/detalleReservaFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeChefFragment"
@@ -119,6 +122,13 @@
         <action
             android:id="@+id/action_detalleReservaFragment_to_formularioPropuestaFragment"
             app:destination="@id/formularioPropuestaFragment" />
+        <argument
+            android:name="isUser"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_detalleReservaFragment_to_homeClienteFragment"
+            app:destination="@id/homeClienteFragment" />
     </fragment>
     <fragment
         android:id="@+id/formularioPropuestaFragment"

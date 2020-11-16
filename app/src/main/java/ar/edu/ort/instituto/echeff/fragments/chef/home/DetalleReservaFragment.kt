@@ -39,6 +39,7 @@ class DetalleReservaFragment : Fragment(), StorageReferenceUtiles {
     lateinit var imagenCliente: ImageView
 
     private lateinit var btn_ArmaPropuesta : Button
+    private lateinit var btnVolverHome : Button
     var cargar = false
     var cliente : Cliente = Cliente()
     var urlImagenCLiente : String = ""
@@ -69,6 +70,7 @@ class DetalleReservaFragment : Fragment(), StorageReferenceUtiles {
         notas = v.findViewById(R.id.text_DatoNotas)
         imagenCliente = v.findViewById(R.id.imageView_Cliente)
         btn_ArmaPropuesta = v.findViewById(R.id.btn_ArmaPropuesta)
+        btnVolverHome = v.findViewById(R.id.btnVolverHome)
         tieneHorno.isEnabled = false
         return v
     }
@@ -88,18 +90,27 @@ class DetalleReservaFragment : Fragment(), StorageReferenceUtiles {
         super.onStart()
 
         reserva = DetalleReservaFragmentArgs.fromBundle(requireArguments()).argReserva
-
+        val isUser = DetalleReservaFragmentArgs.fromBundle(requireArguments()).isUser
         viewModel.setBuscar(reserva.idUsuario)
 
-
-
-        btn_ArmaPropuesta.setOnClickListener {
-            val action =
-                DetalleReservaFragmentDirections.actionDetalleReservaFragmentToFormularioPropuestaFragment(
-                    reserva
-                )
-            v.findNavController().navigate(action)
+        if (isUser) {
+            btnVolverHome.visibility = View.VISIBLE
+            btn_ArmaPropuesta.visibility = View.GONE
+            btnVolverHome.setOnClickListener {
+                v.findNavController()
+                    .navigate(DetalleReservaFragmentDirections.actionDetalleReservaFragmentToHomeClienteFragment())
+            }
+        }else{
+            btnVolverHome.visibility = View.GONE
+            btn_ArmaPropuesta.setOnClickListener {
+                val action =
+                    DetalleReservaFragmentDirections.actionDetalleReservaFragmentToFormularioPropuestaFragment(
+                        reserva
+                    )
+                v.findNavController().navigate(action)
+            }
         }
+
     }
 
 

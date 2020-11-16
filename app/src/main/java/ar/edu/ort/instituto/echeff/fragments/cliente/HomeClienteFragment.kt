@@ -161,19 +161,22 @@ class HomeClienteFragment : Fragment() {
 
     private fun onItemReservaPendienteClick(position: Int) {
         val pendiente = reservasPendientes[position]
-        Snackbar.make(v,"LA RESERVA LO TIENE EL CHEF AHORA: " + pendiente.id, Snackbar.LENGTH_SHORT).show()
+        val verResrvaScreen = HomeClienteFragmentDirections.actionHomeClienteFragmentToDetalleReservaFragment2(pendiente, true)
+        v.findNavController().navigate(verResrvaScreen)
     }
 
     private fun onItemPropuestaAConfirmarClick(position: Int) {
         val aConfirmar: Propuesta = propuestasAConfirmar[position]
         sharedPreferences.edit().putString("idPropuesta", aConfirmar.id).apply()
-        var confirmacionReservaScreen = HomeClienteFragmentDirections.actionHomeClienteFragmentToConfirmacionReservaFragment2()
+        val confirmacionReservaScreen = HomeClienteFragmentDirections.actionHomeClienteFragmentToConfirmacionReservaFragment2()
         v.findNavController().navigate(confirmacionReservaScreen)
     }
 
     private fun onItemPropuestaDestacadaClick(position: Int) {
         val destacada = propuestas[position]
-        Snackbar.make(v, "ID de la reserva destacada: " + destacada.id, Snackbar.LENGTH_SHORT).show()
+        sharedPreferences.edit().putString("idPropuesta", destacada.id).apply()
+        val propuestaDestacadaScreen = HomeClienteFragmentDirections.actionHomeClienteFragmentToConfirmacionReservaFragment2()
+        v.findNavController().navigate(propuestaDestacadaScreen)
     }
 
     private fun setSharedPreferences() {
