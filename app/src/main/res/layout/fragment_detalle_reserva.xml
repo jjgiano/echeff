@@ -314,5 +314,21 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline7"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintTop_toBottomOf="@+id/text_DatoNotas" />
+
+        <Button
+            android:id="@+id/btnVolverHome"
+            android:layout_width="365sp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/style_botones_principal"
+            android:clickable="true"
+            android:text="Volver al Home"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline7"
+            app:layout_constraintStart_toStartOf="@+id/guideline5"
+            app:layout_constraintTop_toBottomOf="@+id/text_DatoNotas" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

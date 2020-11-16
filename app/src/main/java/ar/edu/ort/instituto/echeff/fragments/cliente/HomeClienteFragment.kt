@@ -2,7 +2,6 @@ package ar.edu.ort.instituto.echeff.fragments.cliente
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,11 +20,10 @@ import ar.edu.ort.instituto.echeff.adapters.VistaPropuestasAdapter
 import ar.edu.ort.instituto.echeff.adapters.VistaReservasAdapter
 import ar.edu.ort.instituto.echeff.entities.Propuesta
 import ar.edu.ort.instituto.echeff.entities.Reserva
+import ar.edu.ort.instituto.echeff.entities.Servicio
 import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelHomeClienteFragment
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 
 class HomeClienteFragment : Fragment() {
     lateinit var v: View
@@ -49,10 +47,11 @@ class HomeClienteFragment : Fragment() {
 
     lateinit var sharedPreferences: SharedPreferences
 
-    var reservasProximas: MutableList<Reserva> = ArrayList<Reserva>()
-    var propuestasAConfirmar: MutableList<Propuesta> = ArrayList<Propuesta>()
-    var reservasPendientes: MutableList<Reserva> = ArrayList<Reserva>()
-    var propuestas: MutableList<Propuesta> = ArrayList<Propuesta>()
+    var reservasProximas: MutableList<Reserva> = ArrayList()
+    var propuestasAConfirmar: MutableList<Propuesta> = ArrayList()
+    var reservasPendientes: MutableList<Reserva> = ArrayList()
+    var propuestas: MutableList<Propuesta> = ArrayList()
+    var serviciosPendientes: MutableList<Servicio> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,6 +99,10 @@ class HomeClienteFragment : Fragment() {
             rvPropuestasDestacadas.adapter = VistaPropuestasAdapter(propuestas, super.requireContext()){
                     position -> onItemPropuestaDestacadaClick(position)
             }
+        })
+
+        viewModel.serviciosPendientes.observe(viewLifecycleOwner, Observer { result ->
+            serviciosPendientes = result
         })
 
     }
@@ -155,28 +158,43 @@ class HomeClienteFragment : Fragment() {
     }
 
     private fun onItemReservaProximaClick(position: Int) {
-        val proxima = reservasProximas[position]
-        Snackbar.make(v, "LA RESERVA YA SE PAGO: " + proxima.id, Snackbar.LENGTH_LONG).show()
+        var proximoServicio = buscarServicio(serviciosPendientes,reservasProximas[position].id)
+        val verDetalleServicioScreen = HomeClienteFragmentDirections.actionHomeClienteFragmentToDetalleServicioFragment(proximoServicio,true)
+        v.findNavController().navigate(verDetalleServicioScreen)
     }
 
     private fun onItemReservaPendienteClick(position: Int) {
         val pendiente = reservasPendientes[position]
-        Snackbar.make(v,"LA RESERVA LO TIENE EL CHEF AHORA: " + pendiente.id, Snackbar.LENGTH_SHORT).show()
+        val verResrvaScreen = HomeClienteFragmentDirections.actionHomeClienteFragmentToDetalleReservaFragment2(pendiente, true)
+        v.findNavController().navigate(verResrvaScreen)
     }
 
     private fun onItemPropuestaAConfirmarClick(position: Int) {
         val aConfirmar: Propuesta = propuestasAConfirmar[position]
         sharedPreferences.edit().putString("idPropuesta", aConfirmar.id).apply()
-        var confirmacionReservaScreen = HomeClienteFragmentDirections.actionHomeClienteFragmentToConfirmacionReservaFragment2()
+        val confirmacionReservaScreen = HomeClienteFragmentDirections.actionHomeClienteFragmentToConfirmacionReservaFragment2()
         v.findNavController().navigate(confirmacionReservaScreen)
     }
 
     private fun onItemPropuestaDestacadaClick(position: Int) {
         val destacada = propuestas[position]
-        Snackbar.make(v, "ID de la reserva destacada: " + destacada.id, Snackbar.LENGTH_SHORT).show()
+        sharedPreferences.edit().putString("idPropuesta", destacada.id).apply()
+        val propuestaDestacadaScreen = HomeClienteFragmentDirections.actionHomeClienteFragmentToConfirmacionReservaFragment2()
+        v.findNavController().navigate(propuestaDestacadaScreen)
     }
 
     private fun setSharedPreferences() {
         this.sharedPreferences = this.activity!!.getSharedPreferences(EcheffUtilities.PREF_NAME.valor, AppCompatActivity.MODE_PRIVATE)
+    }
+
+
+    private fun buscarServicio(servicios : MutableList<Servicio>, idReserva: String) : Servicio {
+        var servicio = Servicio()
+        for (item in servicios) {
+            if (item.idReserva.equals(idReserva)) {
+                servicio = item
+            }
+        }
+        return servicio
     }
 }

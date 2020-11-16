@@ -115,6 +115,7 @@ class DetalleServicioFragment : Fragment(), StorageReferenceUtiles {
         super.onStart()
 
         servicio = DetalleServicioFragmentArgs.fromBundle(requireArguments()).servicioArg
+        val isUser = DetalleServicioFragmentArgs.fromBundle(requireArguments()).isUser
 
         viewModel.setBuscar(servicio)
 
@@ -122,13 +123,24 @@ class DetalleServicioFragment : Fragment(), StorageReferenceUtiles {
             btn_FinalizarServicio.setVisibility(View.INVISIBLE);
             titulo.text = "Servicios Realizados"
         } else {
-            btn_VolverAHome.setVisibility(View.INVISIBLE);
+            if(isUser){
+                btn_FinalizarServicio.setVisibility(View.INVISIBLE);
+            }else{
+                btn_VolverAHome.setVisibility(View.INVISIBLE);
+            }
         }
 
         btn_VolverAHome.setOnClickListener {
-            val action =
-                DetalleServicioFragmentDirections.actionDetalleServicioFragmentToHomeChefFragment()
-            v.findNavController().navigate(action)
+            if (isUser) {
+                val action =
+                    DetalleServicioFragmentDirections.actionDetalleServicioFragmentToHomeClienteFragment()
+                v.findNavController().navigate(action)
+            } else {
+
+                val action =
+                    DetalleServicioFragmentDirections.actionDetalleServicioFragmentToHomeChefFragment()
+                v.findNavController().navigate(action)
+            }
         }
 
         btn_FinalizarServicio.setOnClickListener {

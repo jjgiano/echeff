@@ -170,10 +170,14 @@ class PerfilChefFragment : Fragment(), StorageReferenceUtiles {
             v.findNavController().navigate(perfilConfiguracionChef)
         }
 
-        btn_backHome.setOnClickListener() {
-            val perfilConfiguracionChef =
-                PerfilChefFragmentDirections.actionPerfilChefFragmentToHomeChefFragment();
-            v.findNavController().navigate(perfilConfiguracionChef)
+        if (eschef) {
+            btn_backHome.setOnClickListener() {
+                val perfilConfiguracionChef =
+                    PerfilChefFragmentDirections.actionPerfilChefFragmentToHomeChefFragment();
+                v.findNavController().navigate(perfilConfiguracionChef)
+            }
+        }else{
+            btn_backHome.visibility = View.GONE
         }
     }
 

@@ -34,6 +34,12 @@
         <action
             android:id="@+id/action_homeClienteFragment_to_vistaReservasFragment"
             app:destination="@id/vistaReservasFragment" />
+        <action
+            android:id="@+id/action_homeClienteFragment_to_detalleReservaFragment2"
+            app:destination="@id/detalleReservaFragment" />
+        <action
+            android:id="@+id/action_homeClienteFragment_to_detalleServicioFragment"
+            app:destination="@id/detalleServicioFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeChefFragment"
@@ -119,6 +125,13 @@
         <action
             android:id="@+id/action_detalleReservaFragment_to_formularioPropuestaFragment"
             app:destination="@id/formularioPropuestaFragment" />
+        <argument
+            android:name="isUser"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_detalleReservaFragment_to_homeClienteFragment"
+            app:destination="@id/homeClienteFragment" />
     </fragment>
     <fragment
         android:id="@+id/formularioPropuestaFragment"
@@ -188,6 +201,9 @@
         <action
             android:id="@+id/action_vistaReservasFragment_to_calificarServicioFragment"
             app:destination="@id/calificarServicioFragment" />
+        <action
+            android:id="@+id/action_vistaReservasFragment_to_detalleReservaFragment"
+            app:destination="@id/detalleReservaFragment" />
     </fragment>
     <fragment
         android:id="@+id/mesaAyudaFragment2"
@@ -267,6 +283,13 @@
         <action
             android:id="@+id/action_detalleServicioFragment_to_homeChefFragment"
             app:destination="@id/homeChefFragment" />
+        <action
+            android:id="@+id/action_detalleServicioFragment_to_homeClienteFragment"
+            app:destination="@id/homeClienteFragment" />
+        <argument
+            android:name="isUser"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/resultadoMensajeFragment"

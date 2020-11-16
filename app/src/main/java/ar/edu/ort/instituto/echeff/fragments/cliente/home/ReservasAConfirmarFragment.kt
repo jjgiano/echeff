@@ -9,15 +9,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.adapters.ReservaListAdapter
-import ar.edu.ort.instituto.echeff.adapters.VistaReservasAdapter
 import ar.edu.ort.instituto.echeff.entities.Reserva
+import ar.edu.ort.instituto.echeff.fragments.cliente.VistaReservasFragmentDirections
 import ar.edu.ort.instituto.echeff.fragments.cliente.viewmodel.ViewModelReservasAConfirmarFragment
 import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
-import com.google.android.material.snackbar.Snackbar
 
 class ReservasAConfirmarFragment() : Fragment() {
     lateinit var sharedPreferences: SharedPreferences
@@ -74,8 +74,7 @@ class ReservasAConfirmarFragment() : Fragment() {
     }
 
     private fun onItemClick(position: Int) {
-        Snackbar.make(v, "ID de la reserva a confirmar: " + reservas[position].id, Snackbar.LENGTH_SHORT).show()
-        //v.findNavController().navigate(HomeClienteFragmentDirections.actionHomeClienteFragmentToConfirmacionReservaFragment2());
+        v.findNavController().navigate(VistaReservasFragmentDirections.actionVistaReservasFragmentToDetalleReservaFragment(reservas[position], true))
     }
 
     private fun setSharedPreferences() {
