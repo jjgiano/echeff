@@ -199,6 +199,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lblNombreChef" />
 
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_backHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/orange70"
+            android:backgroundTint="@color/orange70"
+            android:clickable="true"
+            app:backgroundTint="@color/orange70"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/abc_vector_test" />
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="0dp"

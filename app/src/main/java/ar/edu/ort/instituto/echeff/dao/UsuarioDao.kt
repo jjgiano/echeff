@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.RuntimeExecutionException
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -21,14 +22,13 @@ interface UsuarioDao {
         var cliente: Cliente = Cliente()
 
         val questionRef = Firebase.firestore.collection("clientes").document(id)
- //       val query = questionRef.whereEqualTo("id", id)
+        //       val query = questionRef.whereEqualTo("id", id)
 
         try {
             val data = questionRef
                 .get()
                 .await()
-                cliente = data.toObject<Cliente>()!!
-
+            cliente = data.toObject<Cliente>()!!
 
 
         } catch (e: Exception) {
@@ -87,7 +87,7 @@ interface UsuarioDao {
         val query = questionRef
 
         try {
-             query
+            query
                 .add(chef).addOnSuccessListener { result ->
                     val id = result.id
                     chef.id = id
@@ -173,32 +173,44 @@ interface UsuarioDao {
         }
     }
 
-    suspend fun cambiarPassword (pass: String, passOld : String)  {
+    suspend fun cambiarPassword(pass: String, passOld: String) {
         val user = FirebaseAuth.getInstance().currentUser;
         val credential = EmailAuthProvider
             .getCredential(user?.email!!, passOld)
 
-             user!!.reauthenticate(credential).addOnSuccessListener() {
-                     user!!.updatePassword(pass).addOnCompleteListener {
-                         if (!it.isSuccessful) throw Error(it.result.toString())
-                     }
+        user!!.reauthenticate(credential).addOnSuccessListener() {
+            user!!.updatePassword(pass).addOnCompleteListener {
+                if (!it.isSuccessful) throw Error(it.result.toString())
+            }
 
-             }.addOnFailureListener() {e ->
-                throw Error(e.message)
-             }
-    }
+        }.addOnFailureListener() {
 
-    suspend fun reAutenticarUsuario (passOld : String) {
-        val user = FirebaseAuth.getInstance().currentUser!!
-
-        val credential = EmailAuthProvider
-            .getCredential(user.email!!, passOld)
-
-        try {
-            user.reauthenticate(credential)
-        } catch ( e : Exception) {
-            Log.d("Error", "User re-authenticated.")
-            throw Error(e.message.toString())
         }
     }
+
+    suspend fun cambiarPass(pass: String, passOld: String)  {
+        var user = FirebaseAuth.getInstance().currentUser!!;
+        var email = user.email!!;
+        var credential = EmailAuthProvider
+            .getCredential(email, passOld)
+        var error = ""
+
+        user.reauthenticate(credential).addOnCompleteListener {
+            if (it.isSuccessful) {
+                user.updatePassword(pass).addOnCompleteListener {
+                    if (!it.isSuccessful()) {
+                       throw Error( "Hubo un problema. Pruebe mas tarde")
+                    } else {
+                        error = ""
+                    }
+                }
+
+            } else {
+                throw  Error("Error de contraseña")
+            }
+        }
+
+    }
 }
+
+

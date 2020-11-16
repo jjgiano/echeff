@@ -69,6 +69,7 @@ class DetalleReservaFragment : Fragment(), StorageReferenceUtiles {
         notas = v.findViewById(R.id.text_DatoNotas)
         imagenCliente = v.findViewById(R.id.imageView_Cliente)
         btn_ArmaPropuesta = v.findViewById(R.id.btn_ArmaPropuesta)
+        tieneHorno.isEnabled = false
         return v
     }
 

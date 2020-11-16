@@ -44,6 +44,7 @@ class PerfilChefFragment : Fragment(), StorageReferenceUtiles {
     lateinit var btnFloatMenu : FloatingActionsMenu
     lateinit var btnHistoriasPerfilChef: FloatingActionButton
     lateinit var btnConfiguracionPerfilChef: FloatingActionButton
+    lateinit var btn_backHome : FloatingActionButton
 
     //Datos de la Puntiacion
     lateinit var imgUsuario : ImageView
@@ -87,6 +88,7 @@ class PerfilChefFragment : Fragment(), StorageReferenceUtiles {
         imgUsuario = v.findViewById(R.id.imgHistoria)
         txtComentarioCliente = v.findViewById(R.id.txtComentarioCliente)
         txtCalificacionCliente = v.findViewById(R.id.txtCalificacionCliente)
+        btn_backHome = v.findViewById(R.id.fab_backHome)
 
         return v
     }
@@ -165,6 +167,12 @@ class PerfilChefFragment : Fragment(), StorageReferenceUtiles {
         btnConfiguracionPerfilChef.setOnClickListener() {
             val perfilConfiguracionChef =
                 PerfilChefFragmentDirections.actionPerfilChefFragmentToConfiguracionUsuarioFragment2();
+            v.findNavController().navigate(perfilConfiguracionChef)
+        }
+
+        btn_backHome.setOnClickListener() {
+            val perfilConfiguracionChef =
+                PerfilChefFragmentDirections.actionPerfilChefFragmentToHomeChefFragment();
             v.findNavController().navigate(perfilConfiguracionChef)
         }
     }
