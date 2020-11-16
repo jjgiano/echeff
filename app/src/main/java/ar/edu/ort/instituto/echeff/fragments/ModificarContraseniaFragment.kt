@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.fragments.viewmodel.ViewModelModificarContraseniaFragment
 import ar.edu.ort.instituto.echeff.validator.Validator
@@ -18,10 +19,10 @@ class ModificarContraseniaFragment : Fragment(), Validator {
 
     private lateinit var viewModel: ViewModelModificarContraseniaFragment
     lateinit var v: View
-    lateinit var txOldPass : TextView
-    lateinit var txNewPass : TextView
-    lateinit var txRepitPass : TextView
-    lateinit var bt_ModificaPass : Button
+    lateinit var txOldPass: TextView
+    lateinit var txNewPass: TextView
+    lateinit var txRepitPass: TextView
+    lateinit var bt_ModificaPass: Button
 
     var mensaje = ""
 
@@ -42,7 +43,8 @@ class ModificarContraseniaFragment : Fragment(), Validator {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity()).get(ViewModelModificarContraseniaFragment::class.java)
+        viewModel =
+            ViewModelProvider(requireActivity()).get(ViewModelModificarContraseniaFragment::class.java)
 
     }
 
@@ -55,20 +57,35 @@ class ModificarContraseniaFragment : Fragment(), Validator {
         bt_ModificaPass.setOnClickListener {
 
             if (validar(1)) {
+                try {
+                    viewModel.changePassword(txRepitPass.text.toString(), txOldPass.text.toString())
+                } catch (e: Error) {
+                    mensaje = e.message.toString()
+                }
 
-                mensaje =  viewModel.changePassword(txRepitPass.text.toString(), txOldPass.text.toString())
-                if (mensaje.equals("")) Snackbar.make(it, "Contraseña actualizada!!!", Snackbar.LENGTH_LONG).show()
+                if (mensaje.equals("")) Snackbar.make(
+                    it,
+                    "Contraseña actualizada!!!",
+                    Snackbar.LENGTH_LONG
+                ).show()
                 else Snackbar.make(it, mensaje, Snackbar.LENGTH_LONG).show()
+
+                txOldPass.text=""
+                txNewPass.text=""
+                txRepitPass.text = ""
+
             }
 
-
+            val action =
+                ModificarContraseniaFragmentDirections.actionModificarContraseniaFragmentToHomeChefFragment()
+            v.findNavController().navigate(action)
         }
     }
 
-    private fun validar(opc : Int):Boolean {
+    private fun validar(opc: Int): Boolean {
         var valido = true
         clearErrors()
-        if (opc==1) {
+        if (opc == 1) {
             try {
                 validarLargoDeContrasenia(txOldPass.text.toString())
             } catch (e: Error) {
@@ -88,20 +105,19 @@ class ModificarContraseniaFragment : Fragment(), Validator {
                 valido = false
             }
             if (!txNewPass.text.toString().equals(txRepitPass.text.toString())) {
-                  txRepitPass.error = "Las contraseña debe ser Iguales"
-                  valido = false
+                txRepitPass.error = "Las contraseña debe ser Iguales"
+                valido = false
             }
 
         }
         return valido
     }
 
-    private fun clearErrors(){
+    private fun clearErrors() {
         txOldPass.error = null
         txNewPass.error = null
         txRepitPass.error = null
     }
-
 
 
 }

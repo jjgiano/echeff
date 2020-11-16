@@ -315,5 +315,9 @@
         android:id="@+id/modificarContraseniaFragment"
         android:name="ar.edu.ort.instituto.echeff.fragments.ModificarContraseniaFragment"
         android:label="fragment_modificar__contrasenia"
-        tools:layout="@layout/fragment_modificar__contrasenia" />
+        tools:layout="@layout/fragment_modificar__contrasenia" >
+        <action
+            android:id="@+id/action_modificarContraseniaFragment_to_homeChefFragment"
+            app:destination="@id/homeChefFragment" />
+    </fragment>
 </navigation>
