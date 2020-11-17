@@ -101,7 +101,7 @@ class DetalleServicioFragment : Fragment(), StorageReferenceUtiles {
         })
         viewModel.reserva.observe(viewLifecycleOwner, Observer { result ->
             reserva = result
-
+            llenarDatosPropuesta()
         })
         viewModel.cliente.observe(viewLifecycleOwner, Observer {
             cliente = it
