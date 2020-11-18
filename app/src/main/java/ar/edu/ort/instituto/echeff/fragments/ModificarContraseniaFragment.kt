@@ -1,5 +1,6 @@
 package ar.edu.ort.instituto.echeff.fragments
 
+import android.content.SharedPreferences
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,10 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import ar.edu.ort.instituto.echeff.R
 import ar.edu.ort.instituto.echeff.fragments.viewmodel.ViewModelModificarContraseniaFragment
+import ar.edu.ort.instituto.echeff.utils.EcheffUtilities
 import ar.edu.ort.instituto.echeff.validator.Validator
 import com.google.android.material.snackbar.Snackbar
 
@@ -23,6 +27,7 @@ class ModificarContraseniaFragment : Fragment(), Validator {
     lateinit var txNewPass: TextView
     lateinit var txRepitPass: TextView
     lateinit var bt_ModificaPass: Button
+    lateinit var sharedPreferences : SharedPreferences
 
     var mensaje = ""
 
@@ -51,7 +56,9 @@ class ModificarContraseniaFragment : Fragment(), Validator {
     override fun onStart() {
         super.onStart()
         clearErrors()
+        setSharedPreferences()
 
+        var eschef : Boolean = sharedPreferences.getBoolean("isChef",false)
 
 
         bt_ModificaPass.setOnClickListener {
@@ -75,9 +82,10 @@ class ModificarContraseniaFragment : Fragment(), Validator {
                 txRepitPass.text = ""
 
             }
+            var action : NavDirections? = null
+            if (eschef)  action = ModificarContraseniaFragmentDirections.actionModificarContraseniaFragmentToHomeChefFragment()
+            else action = ModificarContraseniaFragmentDirections.actionModificarContraseniaFragmentToHomeClienteFragment()
 
-            val action =
-                ModificarContraseniaFragmentDirections.actionModificarContraseniaFragmentToHomeChefFragment()
             v.findNavController().navigate(action)
         }
     }
@@ -119,5 +127,11 @@ class ModificarContraseniaFragment : Fragment(), Validator {
         txRepitPass.error = null
     }
 
+    private fun setSharedPreferences() {
+        this.sharedPreferences = this.activity!!.getSharedPreferences(
+            EcheffUtilities.PREF_NAME.valor,
+            AppCompatActivity.MODE_PRIVATE
+        )
+    }
 
 }

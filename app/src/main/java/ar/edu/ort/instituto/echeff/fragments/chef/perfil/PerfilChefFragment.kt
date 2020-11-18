@@ -210,7 +210,7 @@ class PerfilChefFragment : Fragment(), StorageReferenceUtiles {
 
             GlideApp
                 .with(this)
-                .load(buscarReferencia(puntuacionList[item].urlImg!!))
+                .load(buscarReferencia(""))
                 .centerInside()
                 .into(imgUsuario);
         } else {
