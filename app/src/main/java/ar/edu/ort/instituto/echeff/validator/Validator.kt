@@ -91,7 +91,7 @@ interface Validator{
     }
 
     fun validarLargoCBU (s: String) {
-        if (s.length == MAX_LENGHT_CBU)   {
+        if (s.length != MAX_LENGHT_CBU)   {
             throw   Error("El CBU debe tener ${MAX_LENGHT_CBU} caracteres como minimo")
         }
     }

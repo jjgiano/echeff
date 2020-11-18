@@ -342,5 +342,8 @@
         <action
             android:id="@+id/action_modificarContraseniaFragment_to_homeChefFragment"
             app:destination="@id/homeChefFragment" />
+        <action
+            android:id="@+id/action_modificarContraseniaFragment_to_homeClienteFragment"
+            app:destination="@id/homeClienteFragment" />
     </fragment>
 </navigation>
