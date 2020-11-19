@@ -153,7 +153,7 @@ class PagoReservaFragment : Fragment(), PropuestaDao, ReservaDao {
             encode(tarjeta.nombre),
             encode(tarjeta.numero),
             encode(tarjeta.vencimiento),
-            encode("superSecret:D")
+            encode("superSecreto:D")
         )
         viewModelPagoReserva.setTarjeta(tarjetaEncodeadaAGuardar)
 
